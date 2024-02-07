@@ -41,7 +41,9 @@ public class ServerModel {
     public void processOrder(Order order) throws Exception{
         checkAvailability(order);
         updateMenu(order);
-        orderList.add(order); //if it reaches here, means the order is successful, therefore add to orderList
+
+        Order successfulOrder = new Order(order);
+        orderList.add(successfulOrder);//if it reaches here, means the order is successful, therefore add to orderList
     }
 
     private void updateMenu(Order order) throws Exception {
