@@ -15,8 +15,7 @@ public class Food extends Product {
 
     //getters setters
 
-
-    public double getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
