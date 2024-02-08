@@ -7,10 +7,10 @@ public class Order {
     private Customer customer;
     private List<Product> orders;
     private String timeStamp;
-    private double totalPrice;
-    private boolean status;
-    private int ID;
-    private static int count = 0;
+    private double totalPrice; //for successful order
+    private boolean status; //for successful order
+    private int ID; //for successful order
+    private static int count = 0; //for successful order
 
     /**This constructor will be mainly used in client side*/
     public Order(Customer customer, List<Product> orders, String timeStamp) {
@@ -45,7 +45,7 @@ public class Order {
             }
         }
 
-        //setting the order ID
+        //setting the order ID through incrementation
         synchronized (this){
             ++count;
             this.ID = count;

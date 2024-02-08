@@ -1,5 +1,7 @@
 package shared;
 
+import java.util.List;
+
 /**This class represents a customer object
  * @author Stephen Coloma*/
 public class Customer {
@@ -8,6 +10,7 @@ public class Customer {
     private String address;
     private String email;
     private String password;
+    private List<Order> orderHistory;
 
     //constructors
     public Customer(String name, String username, String address, String email, String password) {
@@ -18,11 +21,16 @@ public class Customer {
         this.password = password;
     }
 
+    /*This constructor will only be used for customer login. The customer object has already been made and saved in the system*/
+    public Customer(Customer customer){
+        //TODO: IMPLEMENT THIS CUSTOMER CONSTRUCTOR
+    }
+
     //getters setters
+
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -57,6 +65,14 @@ public class Customer {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Order> getOrderHistory() {
+        return orderHistory;
+    }
+
+    public void setOrderHistory(List<Order> orderHistory) {
+        this.orderHistory = orderHistory;
     }
 
     @Override

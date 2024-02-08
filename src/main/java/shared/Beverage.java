@@ -10,8 +10,8 @@ public class Beverage extends Product{
     private HashMap<String, Double> sizePrice;
 
     //constructor
-    public Beverage(String productName, char productType, double productReview, int productReviewCount, int sQuantity, int mQuantity, int lQuantity, double sPrice, double mPrice, double lPrice) {
-        super(productName, productType, productReview, productReviewCount);
+    public Beverage(String productName, char productType, double productReview, int productReviewCount, String productDescription, int sQuantity, int mQuantity, int lQuantity, double sPrice, double mPrice, double lPrice) {
+        super(productName, productType, productReview, productReviewCount, productDescription);
 
         HashMap<String, Integer> sizeQuantity = new HashMap<>(3);
         sizeQuantity.put("small", sQuantity);

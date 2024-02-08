@@ -27,6 +27,9 @@ public class ServerModel {
         beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/java/server/model/beverage_menu.xml"));
         customerAccountList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/java/server/model/customer_account_list.xml"));
         orderList = (List<Order>) XMLUtility.loadXMLData(new File("src/main/java/server/model/order_list.xml"));
+
+        /*Todo
+           1. When the server is closed by the admin, it must write all these data in the necessary xmk files to be used for another run*/
     }
 
 
@@ -38,14 +41,27 @@ public class ServerModel {
      * 4. Save the order to orders list
      * 5. Return true
      * 2. */
-    public void processOrder(Order order) throws Exception{
-        checkAvailability(order);
+    public boolean processOrder(Order order) throws Exception{
+        checkAvailability(order); //order that is not successful
         updateMenu(order);
 
-        Order successfulOrder = new Order(order);
-        orderList.add(successfulOrder);//if it reaches here, means the order is successful, therefore add to orderList
+        Order successfulOrder = new Order(order); //if it reaches here, means the order is successful
+
+        // therefore add to orderList for the admin
+        orderList.add(successfulOrder);
+
+        //then add the order in the orderList of the customer in the customerList
+        for (Customer customer: customerAccountList) {
+            if (customer.getUsername().equals(order.getCustomer().getUsername())){
+                customer.getOrderHistory().add(order); //add the successful order to the customerOrderHistory
+            }
+        }
+
+        return true; //temporary. If it reaches here, order is successful
     }
 
+    /**This method update the product in the menu there are available products. Synchronization is handled here already.
+     * @throws Exception if the product in the menu is out of stocks */
     private void updateMenu(Order order) throws Exception {
         for (Product product: order.getOrders()) {
             if (product instanceof Food){
@@ -72,6 +88,9 @@ public class ServerModel {
         }
     }
 
+    /**This method checks the availability of products in the menu based on the customer's order.
+     * @param order, client of the order
+     * @throws Exception if the product menu is out of stocks. */
     private void checkAvailability(Order order) throws Exception{
         for (Product product: order.getOrders()) {
             if (product instanceof Food){ //check first what type of product
@@ -98,4 +117,26 @@ public class ServerModel {
             }
         }
     }
+
+    /**This method handles all the signup processes from the client.
+     * @param customerSignup new account that tries to create an account.
+     *
+     * Algorithm:
+     * 1. Check the list of customers if the customer that that tries to sign up already exists.
+     * 2. If exists, throws an exception  "Account exists"
+     * 3. If not, add the customer to the list, then return true. true means account is created. */
+    public synchronized boolean processSignUp(Customer customerSignup) throws Exception{
+        String signUpUsername = customerSignup.getUsername();
+
+        for (Customer customerAccount: customerAccountList) {
+            if (customerAccount.getUsername().equals(signUpUsername)){
+                throw new Exception("Account exists");
+            }
+        }
+
+        //if it reaches here, means unique username,proceed to adding to list
+        customerAccountList.add(customerSignup);
+        return true;
+    }
+
 }

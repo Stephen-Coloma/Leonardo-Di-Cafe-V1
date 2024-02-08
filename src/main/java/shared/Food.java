@@ -7,8 +7,8 @@ public class Food extends Product {
     private double price;
 
     //constructors
-    public Food(String productName, char productType, double productReview, int productReviewCount, int quantity, double price) {
-        super(productName, productType, productReview, productReviewCount);
+    public Food(String productName, char productType, double productReview, int productReviewCount, String productDescription, int quantity, double price) {
+        super(productName, productType, productReview, productReviewCount, productDescription);
         this.quantity = quantity;
         this.price = price;
     }

@@ -9,13 +9,15 @@ public abstract class Product {
     private char productType;
     private double productReview; //average of 1-5
     private int productReviewCount;
+    private String productDescription;
 
     //constructor
-    public Product(String productName, char productType, double productReview, int productReviewCount) {
+    public Product(String productName, char productType, double productReview, int productReviewCount, String productDescription) {
         this.productName = productName;
         this.productType = productType;
         this.productReview = productReview;
         this.productReviewCount = productReviewCount;
+        this.productDescription = productDescription;
     }
 
     //getters setters
@@ -47,6 +49,14 @@ public abstract class Product {
 
     public void setProductReviewCount(int productReviewCount) {
         this.productReviewCount = productReviewCount;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 
     /**This method updates the productReview and productReviewCount in a synchronized manner*/
