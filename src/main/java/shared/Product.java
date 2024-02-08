@@ -10,8 +10,9 @@ public abstract class Product {
     private double productReview; //average of 1-5
     private int productReviewCount;
     private String productDescription;
+    private int amountSold;
 
-    //constructor
+    /**A constructor initializes the details of the classes whose direct descendant of this class.*/
     public Product(String productName, char productType, double productReview, int productReviewCount, String productDescription) {
         this.productName = productName;
         this.productType = productType;
@@ -24,7 +25,6 @@ public abstract class Product {
     public String getProductName(){
         return productName;
     };
-
     public char getProductType(){
         return productType;
     };
@@ -32,13 +32,13 @@ public abstract class Product {
     public double getProductReview(){
         return productReview;
     };
+
     public int getProductReviewCount() {
         return productReviewCount;
     }
     public void setProductName(String productName) {
         this.productName = productName;
     }
-
     public void setProductType(char productType) {
         this.productType = productType;
     }
@@ -57,6 +57,14 @@ public abstract class Product {
 
     public void setProductDescription(String productDescription) {
         this.productDescription = productDescription;
+    }
+
+    public int getAmountSold() {
+        return amountSold;
+    }
+
+    public void setAmountSold(int amountSold) {
+        this.amountSold = amountSold;
     }
 
     /**This method updates the productReview and productReviewCount in a synchronized manner*/

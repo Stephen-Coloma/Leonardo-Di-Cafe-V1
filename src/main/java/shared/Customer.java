@@ -1,5 +1,6 @@
 package shared;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**This class represents a customer object
@@ -12,7 +13,7 @@ public class Customer {
     private String password;
     private List<Order> orderHistory;
 
-    //constructors
+    /**Constructor for customer object*/
     public Customer(String name, String username, String address, String email, String password) {
         this.name = name;
         this.username = username;
@@ -21,9 +22,15 @@ public class Customer {
         this.password = password;
     }
 
-    /*This constructor will only be used for customer login. The customer object has already been made and saved in the system*/
+    /**This constructor will be used only for customer login. The customer object has already been made and saved in the system*/
     public Customer(Customer customer){
-        //TODO: IMPLEMENT THIS CUSTOMER CONSTRUCTOR
+        this.name = customer.getName();
+        this.username = customer.getUsername();
+        this.address = customer.getAddress();
+        this.email = customer.getEmail();
+        this.password = customer.getPassword();
+
+        this.orderHistory = new ArrayList<>(); //initializes the arraylist
     }
 
     //getters setters

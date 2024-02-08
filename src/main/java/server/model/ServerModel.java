@@ -1,12 +1,10 @@
 package server.model;
 
-import server.Server;
 import shared.*;
 import util.XMLUtility;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 
 /**Server Model class holds the data that will eventually accessed by all the clients.
@@ -124,7 +122,7 @@ public class ServerModel {
      * Algorithm:
      * 1. Check the list of customers if the customer that that tries to sign up already exists.
      * 2. If exists, throws an exception  "Account exists"
-     * 3. If not, add the customer to the list, then return true. true means account is created. */
+     * 3. If not, create a new Customer out of a customer and add it to the list*/
     public synchronized boolean processSignUp(Customer customerSignup) throws Exception{
         String signUpUsername = customerSignup.getUsername();
 
@@ -134,9 +132,35 @@ public class ServerModel {
             }
         }
 
-        //if it reaches here, means unique username,proceed to adding to list
-        customerAccountList.add(customerSignup);
+        Customer customer =  new Customer(customerSignup); //this creates a customer that has orderHistory in it
+        customerAccountList.add(customer);
         return true;
     }
 
+    /**This method handles all the login processes from the client.
+     * @param username username
+     * @param password password
+     * @return the objects to be loaded in client side
+     * @throws Exception when login credentials is invalid
+     *
+     * Algorithm:
+     * 1. Check all customer in customerAccountList and see if it matches username and password.
+     * 2. If not, thrown an exception called "invalid credentials"
+     * 3. if account exist, get the accounts from the account list, get the foodMenu and beverageMenu
+     * return foodMenu, beverageMenu and customer
+     */
+    public Object[] processLogin(String username, String password) throws Exception{
+        for (Customer customerAccount: customerAccountList) {
+            //account
+            if (customerAccount.getUsername().equals(username) && customerAccount.getPassword().equals(password)){
+                HashMap<String, Food> clientFoodMenuToLoad = new HashMap<>(foodMenu);
+                HashMap<String, Beverage> clientBeverageMenuToLoad = new HashMap<>(beverageMenu);
+                Object[] sendToClient = new Object[]{customerAccount, clientFoodMenuToLoad, clientBeverageMenuToLoad};
+
+                //return to controller
+                return sendToClient;
+            }
+        }
+        throw new Exception("Invalid credentials");
+    }
 }

@@ -69,6 +69,10 @@ public class Beverage extends Product{
                     sizeQuantity.put(size, quantity);
                     throw new Exception("Out of Stocks");
                 }
+
+                //reaches here means no error updating the value
+                int sold =  super.getAmountSold() + 1;
+                super.setAmountSold(sold);
             }
         }else if (size.equals("medium")){
             synchronized (this){
@@ -81,6 +85,10 @@ public class Beverage extends Product{
                     sizeQuantity.put(size, quantity);
                     throw new Exception("Out of Stocks");
                 }
+
+                //reaches here means no error updating the value
+                int sold =  super.getAmountSold() + 1;
+                super.setAmountSold(sold);
             }
         }else if (size.equals("large")){
             synchronized (this){
@@ -93,10 +101,17 @@ public class Beverage extends Product{
                     sizeQuantity.put(size, quantity);
                     throw new Exception("Out of Stocks");
                 }
+
+                //reaches here means no error updating the value
+                int sold =  super.getAmountSold() + 1;
+                super.setAmountSold(sold);
             }
         }
     }
 
+    /**This method is used to update quantity of the variation of the beverage for a given amount of order
+     It accommodates multiple threads but will only allow one thread to make an update to a specific size
+     @throws Exception when out of stocks*/
     public void updateQuantity(String size, int count) throws Exception{
         if (size.equals("small")){
             synchronized (this){
@@ -108,6 +123,10 @@ public class Beverage extends Product{
                     sizeQuantity.put(size, temp);
                     throw new Exception("Out of Stocks");
                 }
+
+                //reaches here means no error updating the value
+                int sold = super.getAmountSold() + count;
+                super.setAmountSold(sold);
             }
         }else if (size.equals("medium")){
             synchronized (this){
@@ -119,6 +138,10 @@ public class Beverage extends Product{
                     sizeQuantity.put(size, temp);
                     throw new Exception("Out of Stocks");
                 }
+
+                //reaches here means no error updating the value
+                int sold = super.getAmountSold() + count;
+                super.setAmountSold(sold);
             }
         }else if (size.equals("large")){
             synchronized (this){
@@ -130,6 +153,10 @@ public class Beverage extends Product{
                     sizeQuantity.put(size, temp);
                     throw new Exception("Out of Stocks");
                 }
+
+                //reaches here means no error updating the value
+                int sold = super.getAmountSold() + count;
+                super.setAmountSold(sold);
             }
         }
     }

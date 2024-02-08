@@ -14,7 +14,6 @@ public class Food extends Product {
     }
 
     //getters setters
-
     public int getQuantity() {
         return quantity;
     }
@@ -43,6 +42,10 @@ public class Food extends Product {
             quantity = temp;
             throw new Exception("Out of stocks");
         }
+
+        //reaches here means no error updating the value
+        int sold = super.getAmountSold() + count;
+        super.setAmountSold(sold);
     }
 
     /**This method updates the quantity of the product by the quantity ordered by a single client
@@ -54,5 +57,9 @@ public class Food extends Product {
             quantity++; //reverting back the changes
             throw new Exception("Out of stocks");
         }
+
+        //reaches here means no error updating the value
+        int sold =  super.getAmountSold() + 1;
+        super.setAmountSold(sold);
     }
 }
