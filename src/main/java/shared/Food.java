@@ -1,5 +1,8 @@
 package shared;
 
+import javafx.scene.image.Image;
+import util.exception.OutOfStockException;
+
 /**This class represents a food object where there is no variation for it.
  * @author  Stephen Coloma*/
 public class Food extends Product {
@@ -7,8 +10,8 @@ public class Food extends Product {
     private double price;
 
     //constructors
-    public Food(String productName, char productType, double productReview, int productReviewCount, String productDescription, int quantity, double price) {
-        super(productName, productType, productReview, productReviewCount, productDescription);
+    public Food(String name, char type, double review, int reviewCount, Image image, String description, int quantity, double price) {
+        super(name, type, review, reviewCount, image, description);
         this.quantity = quantity;
         this.price = price;
     }
@@ -40,7 +43,7 @@ public class Food extends Product {
 
         if (quantity<0){
             quantity = temp;
-            throw new Exception("Out of stocks");
+            throw new OutOfStockException("Out of stock");
         }
 
         //reaches here means no error updating the value
@@ -55,7 +58,7 @@ public class Food extends Product {
 
         if (quantity < 0){
             quantity++; //reverting back the changes
-            throw new Exception("Out of stocks");
+            throw new OutOfStockException("Out of stock");
         }
 
         //reaches here means no error updating the value

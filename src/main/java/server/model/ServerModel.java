@@ -2,6 +2,9 @@ package server.model;
 
 import shared.*;
 import util.XMLUtility;
+import util.exception.AccountExistsException;
+import util.exception.InvalidCredentialsException;
+import util.exception.OutOfStockException;
 
 import java.io.File;
 import java.util.HashMap;
@@ -59,21 +62,21 @@ public class ServerModel {
     }
 
     /**This method update the product in the menu there are available products. Synchronization is handled here already.
-     * @throws Exception if the product in the menu is out of stocks */
+     * @throws Exception if the product in the menu is out of stock */
     private void updateMenu(Order order) throws Exception {
         for (Product product: order.getOrders()) {
             if (product instanceof Food){
                 Food food = (Food) product; //cast it
                 int orderQuantity = food.getQuantity();
 
-                Food productListed = foodMenu.get(food.getProductName());
+                Food productListed = foodMenu.get(food.getName());
 
                 //updates the menu
                 productListed.updateQuantity(orderQuantity); // this throws an exception
             }else if (product instanceof Beverage){
                 Beverage beverage = (Beverage) product;
 
-                Beverage productListed = beverageMenu.get(beverage.getProductName());
+                Beverage productListed = beverageMenu.get(beverage.getName());
 
                 //for each variation of the beverage order
                 //small = 10
@@ -88,15 +91,15 @@ public class ServerModel {
 
     /**This method checks the availability of products in the menu based on the customer's order.
      * @param order, client of the order
-     * @throws Exception if the product menu is out of stocks. */
+     * @throws Exception if the product menu is out of stock. */
     private void checkAvailability(Order order) throws Exception{
         for (Product product: order.getOrders()) {
             if (product instanceof Food){ //check first what type of product
                 Food food = (Food) product; //cast it
 
-                if (food.getQuantity() > foodMenu.get(food.getProductName()).getQuantity()){
+                if (food.getQuantity() > foodMenu.get(food.getName()).getQuantity()){
                     //checks if the order food quantity is greater than what is on the menu
-                    throw new Exception("Out of stocks");
+                    throw new OutOfStockException("Out of stock");
                 }
             }else if (product instanceof Beverage){
                 Beverage beverage = (Beverage) product;
@@ -107,9 +110,9 @@ public class ServerModel {
                 // large = 3
                 for (String variation: beverage.getSizeQuantity().keySet()) {
                     int variationQuantity = beverage.getVariationQuantity(variation); //small = 10;
-                    int variationAvailableOnMenu = beverageMenu.get(beverage.getProductName()).getVariationQuantity(variation);
+                    int variationAvailableOnMenu = beverageMenu.get(beverage.getName()).getVariationQuantity(variation);
                     if (variationQuantity > variationAvailableOnMenu){
-                        throw new Exception("Out of stocks");
+                        throw new OutOfStockException("Out of stock");
                     }
                 }
             }
@@ -128,7 +131,7 @@ public class ServerModel {
 
         for (Customer customerAccount: customerAccountList) {
             if (customerAccount.getUsername().equals(signUpUsername)){
-                throw new Exception("Account exists");
+                throw new AccountExistsException("Account exists");
             }
         }
 
@@ -161,6 +164,6 @@ public class ServerModel {
                 return sendToClient;
             }
         }
-        throw new Exception("Invalid credentials");
+        throw new InvalidCredentialsException("Invalid credentials");
     }
 }

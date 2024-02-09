@@ -1,5 +1,8 @@
 package shared;
 
+import javafx.scene.image.Image;
+import util.exception.OutOfStockException;
+
 import java.util.HashMap;
 
 /**This class represents a beverage object where there is a variation for the product.
@@ -10,8 +13,8 @@ public class Beverage extends Product{
     private HashMap<String, Double> sizePrice;
 
     //constructor
-    public Beverage(String productName, char productType, double productReview, int productReviewCount, String productDescription, int sQuantity, int mQuantity, int lQuantity, double sPrice, double mPrice, double lPrice) {
-        super(productName, productType, productReview, productReviewCount, productDescription);
+    public Beverage(String name, char type, double review, int reviewCount, Image image, String description, int sQuantity, int mQuantity, int lQuantity, double sPrice, double mPrice, double lPrice) {
+        super(name, type, review, reviewCount, image, description);
 
         HashMap<String, Integer> sizeQuantity = new HashMap<>(3);
         sizeQuantity.put("small", sQuantity);
@@ -67,7 +70,7 @@ public class Beverage extends Product{
                 if (quantity < 0){
                     quantity++;
                     sizeQuantity.put(size, quantity);
-                    throw new Exception("Out of Stocks");
+                    throw new OutOfStockException("Out of Stock");
                 }
 
                 //reaches here means no error updating the value
@@ -83,7 +86,7 @@ public class Beverage extends Product{
                 if (quantity < 0){
                     quantity++;
                     sizeQuantity.put(size, quantity);
-                    throw new Exception("Out of Stocks");
+                    throw new OutOfStockException("Out of Stock");
                 }
 
                 //reaches here means no error updating the value
@@ -99,7 +102,7 @@ public class Beverage extends Product{
                 if (quantity < 0){
                     quantity++;
                     sizeQuantity.put(size, quantity);
-                    throw new Exception("Out of Stocks");
+                    throw new OutOfStockException("Out of Stock");
                 }
 
                 //reaches here means no error updating the value
@@ -121,7 +124,7 @@ public class Beverage extends Product{
 
                 if (left < 0){
                     sizeQuantity.put(size, temp);
-                    throw new Exception("Out of Stocks");
+                    throw new OutOfStockException("Out of Stock");
                 }
 
                 //reaches here means no error updating the value
@@ -136,7 +139,7 @@ public class Beverage extends Product{
 
                 if (left < 0){
                     sizeQuantity.put(size, temp);
-                    throw new Exception("Out of Stocks");
+                    throw new OutOfStockException("Out of Stock");
                 }
 
                 //reaches here means no error updating the value
@@ -151,7 +154,7 @@ public class Beverage extends Product{
 
                 if (left < 0){
                     sizeQuantity.put(size, temp);
-                    throw new Exception("Out of Stocks");
+                    throw new OutOfStockException("Out of Stock");
                 }
 
                 //reaches here means no error updating the value
