@@ -3,10 +3,13 @@ module LeonardoDiCafe {
     requires javafx.fxml;
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
+    requires java.logging;
 
     opens client to javafx.fxml;
     opens server to javafx.fxml;
+    opens server.controller.temporarycontroller to javafx.fxml;
 
+    exports server.controller.temporarycontroller to javafx.fxml;
     exports client;
     exports server;
 }
