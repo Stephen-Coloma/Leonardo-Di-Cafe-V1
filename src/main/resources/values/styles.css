@@ -1,5 +1,5 @@
 .star-button {
-    -fx-background-image: url('resources/images/client/orderHistory/star_empty.png');
+    -fx-background-image: url('../images/client/orderHistory/star_empty.png');
     -fx-background-color: transparent;
     -fx-background-size: contain;
     -fx-background-repeat: no-repeat;
@@ -11,5 +11,5 @@
 }
 
 .star-button:selected {
-      -fx-background-image: url('resources/images/client/orderHistory/star_filled.png');
+    -fx-background-image: url('../images/client/orderHistory/star_filled.png');
 }
