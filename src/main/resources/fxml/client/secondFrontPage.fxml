@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="455.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Rectangle fill="#634921" height="46.0" stroke="BLACK" strokeType="INSIDE" width="807.0" />
+        <Text fill="WHITE" layoutX="43.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Leonardo Di’Cafe">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Text>
+        <ImageView fitHeight="35.0" fitWidth="21.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../image/others/coffeeCup.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="225.0" fitWidth="794.0" layoutX="12.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../images/client/landingPage/mainPage.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="orderNowButton" layoutX="141.0" layoutY="292.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="238.0" style="-fx-background-color: #A38157;" text="ORDER NOW" textFill="WHITE" />
+        <Button fx:id="orderHistoryButton" layoutX="427.0" layoutY="292.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="238.0" style="-fx-background-color: #A38157;" text="ORDER HISTORY" textFill="WHITE" />
+        <Rectangle fill="#faf0e5" height="103.0" layoutX="8.0" layoutY="347.0" stroke="#a38157" strokeType="INSIDE" width="791.0" />
+        <Text layoutX="24.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Featured Items" />
+        <ImageView fitHeight="68.0" fitWidth="97.0" layoutX="124.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../images/client/landingPage/bread.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="63.0" fitWidth="121.0" layoutX="258.0" layoutY="358.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../images/client/landingPage/cookies.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="68.0" fitWidth="97.0" layoutX="404.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../images/client/landingPage/drinks.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="68.0" fitWidth="97.0" layoutX="546.0" layoutY="354.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../images/client/landingPage/cupcake.png" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="63.0" fitWidth="106.0" layoutX="681.0" layoutY="357.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../images/client/landingPage/cake.png" />
+            </image>
+        </ImageView>
+        <Text layoutX="154.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BREAD" />
+        <Text layoutX="287.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COOKIES" />
+        <Text layoutX="432.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COFFEE" />
+        <Text layoutX="562.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUP CAKES" />
+        <Text layoutX="712.0" layoutY="444.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CAKES" />
+    </children>
+</AnchorPane>
