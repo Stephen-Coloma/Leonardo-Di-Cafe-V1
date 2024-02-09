@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="455.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
+<AnchorPane prefHeight="455.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <Pane prefHeight="455.0" prefWidth="810.0">
          <children>
@@ -82,7 +82,7 @@
                         </HBox>
                         <PasswordField fx:id="passwordField" prefHeight="33.0" prefWidth="262.0" promptText="Minimun of Six Characters" />
                         <Pane layoutX="10.0" layoutY="57.0" prefHeight="14.0" prefWidth="282.0" VBox.vgrow="ALWAYS" />
-                        <Button id="meow" fx:id="createAccountButton" mnemonicParsing="false" onAction="#switchToScene2" prefHeight="31.0" prefWidth="285.0" style="-fx-background-color: #A38157;" text="Create Account" textFill="WHITE">
+                        <Button id="meow" fx:id="createAccountButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="285.0" style="-fx-background-color: #A38157;" text="Create Account" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
