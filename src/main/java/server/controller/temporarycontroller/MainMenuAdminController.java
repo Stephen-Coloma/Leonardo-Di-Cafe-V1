@@ -67,13 +67,52 @@ public class MainMenuAdminController implements Initializable{
     public void viewAccountsPage(MouseEvent actionEvent) throws IOException{
         loadPage("viewAccountsPage");
     }
-    public void viewAddProductsPage(MouseEvent mouseEvent) {
+    public void viewAddProductsPage(MouseEvent mouseEvent) throws IOException{
         loadPage("addProductsPage");
     }
+
+    //TODO: add other pages (fxml)
     public void logout(MouseEvent actionEvent) {
         System.exit(0);
     }
+    public void viewOrdersButtonEntered(MouseEvent mouseEvent) {
+        viewOrderButton.setStyle("-fx-background-color: lightgray;");
+    }
 
+    public void viewOrdersButtonExited(MouseEvent mouseEvent) {
+        viewOrderButton.setStyle("-fx-background-color: transparent;");
+    }
+    public void viewAccountsButtonEntered(MouseEvent mouseEvent) {
+        viewAccountsButton.setStyle("-fx-background-color: lightgray;");
+    }
+    public void viewAccountsButtonExited(MouseEvent mouseEvent) {
+        viewAccountsButton.setStyle("-fx-background-color: transparent;");
+    }
+    public void viewInventoryButtonEntered(MouseEvent mouseEvent) {
+        viewInventoryButton.setStyle("-fx-background-color: lightgray;");
+    }
+    public void viewInventoryButtonExited(MouseEvent mouseEvent) {
+        viewInventoryButton.setStyle("-fx-background-color: transparent;");
+    }
+    public void addProductsPageButtonEntered(MouseEvent mouseEvent) {
+        addProductsPageButton.setStyle("-fx-background-color: lightgray;");
+    }
+    public void addProductsPageButtonExited(MouseEvent mouseEvent) {
+        addProductsPageButton.setStyle("-fx-background-color: transparent;");
+    }
+    public void viewAnalyticsButtonEntered(MouseEvent mouseEvent) {
+        viewAnalyticsButton.setStyle("-fx-background-color: lightgray;");
+    }
+    public void viewAnalyticsButtonExited(MouseEvent mouseEvent) {
+        viewAnalyticsButton.setStyle("-fx-background-color: transparent;");
+    }
+
+    public void logoutButtonEntered(MouseEvent mouseEvent) {
+        logoutButton.setStyle("-fx-background-color: #B83B26;");
+    }
+    public void logoutButtonExited(MouseEvent mouseEvent) {
+        logoutButton.setStyle("-fx-background-color:  #dc472d;");
+    }
 
 
 

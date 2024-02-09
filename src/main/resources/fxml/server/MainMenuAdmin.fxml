@@ -19,32 +19,32 @@
                         <Font name="Arial Narrow" size="12.0" />
                     </font>
                 </Button>
-                <Button fx:id="viewOrderButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#viewOrderPage" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="View Orders" textAlignment="CENTER">
+                <Button fx:id="viewOrderButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#viewOrderPage" onMouseEntered="#viewOrdersButtonEntered" onMouseExited="#viewOrdersButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="View Orders" textAlignment="CENTER">
                     <font>
                         <Font name="Arial Narrow" size="12.0" />
                     </font>
                 </Button>
-                <Button fx:id="viewAccountsButton" alignment="CENTER" layoutX="10.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#viewAccountsPage"  prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="View Accounts" textAlignment="CENTER">
+                <Button fx:id="viewAccountsButton" alignment="CENTER" layoutX="10.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#viewAccountsPage" onMouseEntered="#viewAccountsButtonEntered" onMouseExited="#viewAccountsButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="View Accounts" textAlignment="CENTER">
                     <font>
                         <Font name="Arial Narrow" size="12.0" />
                     </font>
                 </Button>
-                <Button fx:id="viewInventoryButton" alignment="CENTER" layoutX="10.0" layoutY="107.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="View Inventory" textAlignment="CENTER">
+                <Button fx:id="viewInventoryButton" alignment="CENTER" layoutX="10.0" layoutY="107.0" mnemonicParsing="false" onMouseEntered="#viewInventoryButtonEntered" onMouseExited="#viewInventoryButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="View Inventory" textAlignment="CENTER">
                     <font>
                         <Font name="Arial Narrow" size="12.0" />
                     </font>
                 </Button>
-                <Button fx:id="addProductsPageButton" alignment="CENTER" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onMouseClicked="#viewAddProductsPage" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="Add Products" textAlignment="CENTER">
+                <Button fx:id="addProductsPageButton" alignment="CENTER" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onMouseClicked="#viewAddProductsPage" onMouseEntered="#addProductsPageButtonEntered" onMouseExited="#addProductsPageButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="Add Products" textAlignment="CENTER">
                     <font>
                         <Font name="Arial Narrow" size="12.0" />
                     </font>
                 </Button>
-                <Button fx:id="viewAnalyticsButton" alignment="CENTER" layoutX="10.0" layoutY="177.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="Analytics" textAlignment="CENTER">
+                <Button fx:id="viewAnalyticsButton" alignment="CENTER" layoutX="10.0" layoutY="177.0" mnemonicParsing="false" onMouseEntered="#viewAnalyticsButtonEntered" onMouseExited="#viewAnalyticsButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="Analytics" textAlignment="CENTER">
                     <font>
                         <Font name="Arial Narrow" size="12.0" />
                     </font>
                 </Button>
-                <Button fx:id="logoutButton" alignment="CENTER" layoutX="10.0" layoutY="212.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: #dc472d;" text="Logout" textAlignment="CENTER" textFill="WHITE">
+                <Button fx:id="logoutButton" alignment="CENTER" layoutX="10.0" layoutY="212.0" mnemonicParsing="false" onMouseClicked="#logout" onMouseEntered="#logoutButtonEntered" onMouseExited="#logoutButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: #dc472d;" text="Logout" textAlignment="CENTER" textFill="WHITE">
                     <font>
                         <Font name="Arial Rounded MT Bold" size="12.0" />
                     </font>
