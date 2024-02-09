@@ -34,7 +34,7 @@
                 </Text>
                 <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="138.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../images/client/landingPage/coffeeCup.png" />
+                        <Image url="@../../images/client/accountLogin/coffeeCup.png" />
                     </image></ImageView>
             </children>
         </Pane>
