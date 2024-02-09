@@ -61,7 +61,7 @@ public class MainMenuAdminController implements Initializable{
     }
 
     public void viewAccountsPage(MouseEvent actionEvent) throws IOException{
-        //loadPage("viewAccountsPage");
+        loadPage("AccountsListPage");
     }
     public void viewAddProductsPage(MouseEvent mouseEvent) throws IOException{
        // loadPage("addProductsPage");
