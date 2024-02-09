@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="348.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+      <Pane opacity="0.91" prefHeight="348.0" prefWidth="400.0">
+         <children>
+            <Pane prefHeight="34.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <Label layoutX="161.0" layoutY="11.0" text="Select Variation" textFill="#66382a">
+                     <font>
+                        <Font name="System Bold" size="10.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="363.0" layoutY="5.0" mnemonicParsing="false" style="-fx-background-color: white;" text="X" textFill="#634921">
+                     <font>
+                        <Font name="SansSerif Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+            <Pane layoutX="1.0" layoutY="34.0" prefHeight="314.0" prefWidth="400.0" style="-fx-background-color: #ECE9E3;">
+               <children>
+                  <Pane layoutX="14.0" layoutY="14.0" prefHeight="94.0" prefWidth="367.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #FFFFFF;">
+                     <children>
+                        <HBox layoutY="2.0" prefHeight="91.0" prefWidth="367.0">
+                           <children>
+                              <Pane prefHeight="94.0" prefWidth="5.0" />
+                              <VBox prefHeight="94.0" prefWidth="105.0">
+                                 <children>
+                                    <Pane prefHeight="2.0" prefWidth="106.0" />
+                                    <Label prefHeight="11.0" prefWidth="34.0" text="Item 1">
+                                       <font>
+                                          <Font name="System Bold" size="11.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Product Details">
+                                       <font>
+                                          <Font size="9.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Stock Availability: 100">
+                                       <font>
+                                          <Font size="9.0" />
+                                       </font>
+                                    </Label>
+                                    <Pane layoutX="10.0" layoutY="10.0" prefHeight="27.0" prefWidth="106.0" />
+                                    <Label text="P 180.00 - P190.00">
+                                       <font>
+                                          <Font name="System Bold" size="10.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <Pane layoutX="10.0" layoutY="10.0" prefHeight="94.0" prefWidth="102.0" />
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Pane prefHeight="4.0" prefWidth="138.0" />
+                                    <ImageView fitHeight="81.0" fitWidth="142.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../images/client/variation/cake.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </Pane>
+                  <Pane layoutX="13.0" layoutY="130.0" prefHeight="85.0" prefWidth="368.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #FFFFFF;">
+                     <children>
+                        <Line endX="185.0" layoutX="182.0" layoutY="59.0" startX="-181.0" />
+                        <Pane layoutY="125.0" prefHeight="46.0" prefWidth="368.0">
+                           <children>
+                              <Button layoutX="12.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="348.0" style="-fx-background-color: #A38157;" text="P 560.00 ADD TO CART" textFill="WHITE">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </Pane>
+                        <CheckBox layoutX="9.0" layoutY="5.0" mnemonicParsing="false" prefHeight="11.0" prefWidth="54.0" text="Small">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </CheckBox>
+                        <Label layoutX="30.0" layoutY="16.0" text="Stock: 12">
+                           <font>
+                              <Font size="6.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="311.0" layoutY="6.0" text="P 180.00">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="312.0" layoutY="36.0" text="P 0.00">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="312.0" layoutY="63.0" text="P 380.00">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
+                        <CheckBox layoutX="9.0" layoutY="61.0" mnemonicParsing="false" prefHeight="11.0" prefWidth="54.0" text="Large">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </CheckBox>
+                        <CheckBox layoutX="9.0" layoutY="33.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="62.0" text="Medium">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </CheckBox>
+                        <Label layoutX="30.0" layoutY="47.0" text="Stock: 12">
+                           <font>
+                              <Font size="6.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="30.0" layoutY="74.0" text="Stock: 12">
+                           <font>
+                              <Font size="6.0" />
+                           </font>
+                        </Label>
+                        <Line endX="185.0" layoutX="182.0" layoutY="29.0" startX="-181.0" />
+                        <HBox layoutX="82.0" layoutY="6.0" prefHeight="16.0" prefWidth="53.0">
+                           <children>
+                              <Button mnemonicParsing="false" prefHeight="18.0" prefWidth="18.0" style="-fx-background-color: #E1D0BB;" text="-">
+                                 <font>
+                                    <Font name="Arial Bold" size="8.0" />
+                                 </font>
+                              </Button>
+                              <Label alignment="CENTER" prefHeight="18.0" prefWidth="20.0" text="1" />
+                              <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="17.0" style="-fx-background-color: #D6B48B;" text="+">
+                                 <font>
+                                    <Font size="8.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="82.0" layoutY="34.0" prefHeight="16.0" prefWidth="53.0">
+                           <children>
+                              <Button mnemonicParsing="false" prefHeight="18.0" prefWidth="18.0" style="-fx-background-color: #E1D0BB;" text="-">
+                                 <font>
+                                    <Font name="Arial Bold" size="8.0" />
+                                 </font>
+                              </Button>
+                              <Label alignment="CENTER" prefHeight="18.0" prefWidth="20.0" text="1" />
+                              <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="17.0" style="-fx-background-color: #D6B48B;" text="+">
+                                 <font>
+                                    <Font size="8.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="82.0" layoutY="63.0" prefHeight="16.0" prefWidth="53.0">
+                           <children>
+                              <Button mnemonicParsing="false" prefHeight="18.0" prefWidth="18.0" style="-fx-background-color: #E1D0BB;" text="-">
+                                 <font>
+                                    <Font name="Arial Bold" size="8.0" />
+                                 </font>
+                              </Button>
+                              <Label alignment="CENTER" prefHeight="18.0" prefWidth="20.0" text="1" />
+                              <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="17.0" style="-fx-background-color: #D6B48B;" text="+">
+                                 <font>
+                                    <Font size="8.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
