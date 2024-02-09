@@ -2,6 +2,8 @@ package server.controller.temporarycontroller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -32,10 +34,47 @@ public class OrdersListPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //adds the view button to the table
         addViewButtonToTable();
+        //adds the confirm button to the table
         addConfirmButtonToTable();
+        //set search functionality for search text field
+        setSearchOrderTextFieldListener();
+
     }
 
+    private void setSearchOrderTextFieldListener() {
+        // Create a FilteredList to filter the items in the table
+        FilteredList<Order> filteredData = new FilteredList<>(orderTableView.getItems(), p -> true);
+
+        // Bind the FilteredList to the search bar text property
+        searchOrderTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(order -> {
+                // If search bar is empty, display all items
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Convert search query to lowercase for case-insensitive search
+                String lowerCaseFilterString = newValue.toLowerCase();
+
+                // Filter by order ID and customer name
+                if (order.getCustomer().getName().toLowerCase().contains(lowerCaseFilterString) ||
+                        String.valueOf(order.getID()).contains(lowerCaseFilterString)) {
+                    return true; // Match found
+                }
+
+                return false; // No match found
+            });
+        });
+
+        // Wrap the filtered list in a SortedList
+        SortedList<Order> sortedData = new SortedList<>(filteredData);
+
+        // Bind the sorted list to the table
+        sortedData.comparatorProperty().bind(orderTableView.comparatorProperty());
+        orderTableView.setItems(sortedData);
+    }
 
     private void addViewButtonToTable() {
         TableColumn<Order, Void> viewColumn = new TableColumn<>("");

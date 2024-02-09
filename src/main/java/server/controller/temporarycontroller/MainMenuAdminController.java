@@ -64,7 +64,7 @@ public class MainMenuAdminController implements Initializable{
         loadPage("AccountsListPage");
     }
     public void viewAddProductsPage(MouseEvent mouseEvent) throws IOException{
-       // loadPage("addProductsPage");
+       loadPage("AddProductsPage");
     }
 
     //TODO: add other pages (fxml)
