@@ -24,31 +24,28 @@ public class MainMenuAdminController implements Initializable{
     @FXML
     private AnchorPane anchorPane;
     @FXML
-    Button homeButton;
+    private Button homeButton;
     @FXML
-    Button viewOrderButton;
+    private Button viewOrderButton;
     @FXML
-    Button viewAccountsButton;
+    private Button viewAccountsButton;
     @FXML
-    Button viewInventoryButton;
+    private Button viewInventoryButton;
     @FXML
-    Button viewAnalyticsButton;
+    private Button viewAnalyticsButton;
     @FXML
-    Button addProductsPageButton;
+    private Button addProductsPageButton;
     @FXML
-    Button logoutButton;
-
+    private Button logoutButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
-
-
     private void loadPage(String page){
         Parent root=null;
         try {
-            root = FXMLLoader.load(getClass().getResource(page+".fxml"));
+            root = FXMLLoader.load(getClass().getResource("/fxml/server/"+page+".fxml"));
         } catch (IOException e) {
             Logger.getLogger(MainMenuAdminController.class.getName()).log(Level.SEVERE,null, e);
         }
@@ -56,25 +53,26 @@ public class MainMenuAdminController implements Initializable{
         borderPane.setCenter(root);
     }
 
-
     public void viewHomePage(MouseEvent mouseEvent) throws IOException{
         borderPane.setCenter(anchorPane);
     }
     public void viewOrderPage(MouseEvent actionEvent) throws IOException{
-        loadPage("viewOrderPage");
+        loadPage("OrdersListPage");
     }
 
     public void viewAccountsPage(MouseEvent actionEvent) throws IOException{
-        loadPage("viewAccountsPage");
+        //loadPage("viewAccountsPage");
     }
     public void viewAddProductsPage(MouseEvent mouseEvent) throws IOException{
-        loadPage("addProductsPage");
+       // loadPage("addProductsPage");
     }
 
     //TODO: add other pages (fxml)
     public void logout(MouseEvent actionEvent) {
         System.exit(0);
     }
+
+
     public void viewOrdersButtonEntered(MouseEvent mouseEvent) {
         viewOrderButton.setStyle("-fx-background-color: lightgray;");
     }
@@ -113,7 +111,11 @@ public class MainMenuAdminController implements Initializable{
     public void logoutButtonExited(MouseEvent mouseEvent) {
         logoutButton.setStyle("-fx-background-color:  #dc472d;");
     }
+    public void homeButtonEntered(MouseEvent mouseEvent) {
+        homeButton.setStyle("-fx-background-color: lightgray;");
+    }
 
-
-
+    public void homeButtonExited(MouseEvent mouseEvent) {
+        homeButton.setStyle("-fx-background-color: transparent;");
+    }
 }
