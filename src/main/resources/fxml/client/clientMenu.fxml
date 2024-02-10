@@ -364,7 +364,7 @@
             </Pane>
          </content>
       </ScrollPane>
-      <Button fx:id="checkoutButton" layoutX="710.0" layoutY="414.0" mnemonicParsing="false" onAction="#showCheckoutUI" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: #A38157;" text="CHECKOUT P0" textFill="WHITE">
+      <Button fx:id="checkoutButton" layoutX="710.0" layoutY="414.0" mnemonicParsing="false" onAction="#showCheckoutUI" onMouseEntered="#checkoutButtonEntered" onMouseExited="#checkoutButtonExited" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: #A38157;" text="CHECKOUT P0" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -394,7 +394,7 @@
             <Image url="@../../images/client/menu/menu_emptybasket.png" />
          </image>
       </ImageView>
-      <Button fx:id="orderHistoryButton" layoutX="710.0" layoutY="450.0" mnemonicParsing="false" onAction="#showOrderHistoryUI" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3;" text="ORDER HISTORY" textFill="#a38157">
+      <Button fx:id="orderHistoryMenuButton" layoutX="710.0" layoutY="450.0" mnemonicParsing="false" onAction="#showOrderHistoryUI" onMouseEntered="#orderHistoryMenuButtonEntered" onMouseExited="#orderHistoryMenuButtonExited" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3;" text="ORDER HISTORY" textFill="#a38157">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

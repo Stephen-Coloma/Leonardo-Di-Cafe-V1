@@ -1,10 +1,14 @@
 package client.controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -15,6 +19,36 @@ public class Controller {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
+    @FXML
+    private Button loginButton;
+    @FXML
+    private Button loginButtonFrontPage;
+    @FXML
+    private Button registerButtonFrontPage;
+    @FXML
+    private Button createAccountButton;
+
+    @FXML
+    private Button orderNowButton;
+    @FXML
+    private Button orderHistoryButton;
+
+    @FXML
+    private Button checkoutButton;
+
+    @FXML
+    private Button orderHistoryMenuButton;
+
+    @FXML
+    private Button placeOrderButton;
+
+    @FXML
+    private Button addToCartButton;
+
+    @FXML
+    private Button orderHistoryExit;
+
 
     public void showLoginUI (ActionEvent event) throws IOException {
 
@@ -131,6 +165,97 @@ public class Controller {
         stage.show();
     }
 
+    public void loginFrontPageButtonEntered(MouseEvent event){
+        loginButtonFrontPage.setStyle("-fx-background-color: lightgray;");
+        loginButtonFrontPage.setTextFill(Paint.valueOf("Black"));
+    }
+    public void loginFrontPageButtonExited(MouseEvent event){
+        loginButtonFrontPage.setStyle("-fx-background-color:  #A38157;");
+        loginButtonFrontPage.setTextFill(Paint.valueOf("White"));
+    }
+    public void registerFrontPageButtonEntered(MouseEvent event){
+        registerButtonFrontPage.setStyle("-fx-background-color: lightgray;");
+        registerButtonFrontPage.setTextFill(Paint.valueOf("Black"));
+    }
+    public void registerFrontPageButtonExited(MouseEvent event){
+        registerButtonFrontPage.setStyle("-fx-background-color:  #A38157;");
+        registerButtonFrontPage.setTextFill(Paint.valueOf("White"));
+    }
 
+    public void loginPageButtonEntered(MouseEvent event){
+        loginButton.setStyle("-fx-background-color: lightgray;");
+        loginButton.setTextFill(Paint.valueOf("Black"));
+    }
+    public void loginPageButtonExited(MouseEvent event){
+        loginButton.setStyle("-fx-background-color:  #A38157;");
+        loginButton.setTextFill(Paint.valueOf("White"));
+    }
 
+    public void createAccountButtonEntered(MouseEvent event){
+        createAccountButton.setStyle("-fx-background-color: lightgray;");
+        createAccountButton.setTextFill(Paint.valueOf("Black"));
+    }
+    public void createAccountButtonExited(MouseEvent event){
+        createAccountButton.setStyle("-fx-background-color:  #A38157;");
+        createAccountButton.setTextFill(Paint.valueOf("White"));
+    }
+    public void orderNowButtonEntered(MouseEvent event){
+        orderNowButton.setStyle("-fx-background-color: lightgray;");
+        orderNowButton.setTextFill(Paint.valueOf("Black"));
+    }
+    public void orderNowButtonExited(MouseEvent event){
+        orderNowButton.setStyle("-fx-background-color:  #A38157;");
+        orderNowButton.setTextFill(Paint.valueOf("White"));
+    }
+    public void orderHistoryButtonEntered(MouseEvent event){
+        orderHistoryButton.setStyle("-fx-background-color: lightgray;");
+        orderHistoryButton.setTextFill(Paint.valueOf("Black"));
+    }
+    public void orderHistoryButtonExited(MouseEvent event){
+        orderHistoryButton.setStyle("-fx-background-color:  #A38157;");
+        orderHistoryButton.setTextFill(Paint.valueOf("White"));
+    }
+    public void checkoutButtonEntered(MouseEvent event){
+        checkoutButton.setStyle("-fx-background-color: lightgray;");
+        checkoutButton.setTextFill(Paint.valueOf("Black"));
+    }
+    public void checkoutButtonExited(MouseEvent event){
+        checkoutButton.setStyle("-fx-background-color:  #A38157;");
+        checkoutButton.setTextFill(Paint.valueOf("White"));
+    }
+    public void orderHistoryMenuButtonEntered(MouseEvent event){
+        orderHistoryMenuButton.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 3");
+        orderHistoryMenuButton.setTextFill(Paint.valueOf("black"));
+    }
+    public void orderHistoryMenuButtonExited(MouseEvent event){
+        orderHistoryMenuButton.setStyle("-fx-background-color:  #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3");
+        orderHistoryMenuButton.setTextFill(Paint.valueOf("#A38157"));
+    }
+
+    public void placeOrderButtonEntered(MouseEvent event){
+        placeOrderButton.setStyle("-fx-background-color: lightgray;");
+        placeOrderButton.setTextFill(Paint.valueOf("Black"));
+    }
+    public void placeOrderButtonExited(MouseEvent event){
+        placeOrderButton.setStyle("-fx-background-color:  #A38157;");
+        placeOrderButton.setTextFill(Paint.valueOf("White"));
+    }
+
+    public void addToCartButtonEntered(MouseEvent event){
+        addToCartButton.setStyle("-fx-background-color: lightgray;");
+        addToCartButton.setTextFill(Paint.valueOf("Black"));
+    }
+    public void addToCartButtonExited(MouseEvent event){
+        addToCartButton.setStyle("-fx-background-color:  #A38157;");
+        addToCartButton.setTextFill(Paint.valueOf("White"));
+    }
+
+    public void orderHistoryExitButtonEntered(MouseEvent event){
+        orderHistoryExit.setStyle("-fx-background-color: white;");
+        orderHistoryExit.setTextFill(Paint.valueOf("red"));
+    }
+    public void orderHistoryExitButtonExited(MouseEvent event){
+        orderHistoryExit.setStyle("-fx-background-color:  #FFFFFF;");
+        orderHistoryExit.setTextFill(Paint.valueOf("Black"));
+    }
 }

@@ -266,7 +266,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <Button fx:id="oderHistoryExit" layoutX="360.0" layoutY="17.0" mnemonicParsing="false" onAction="#orderHistoryExit" prefHeight="13.0" prefWidth="23.0" style="-fx-background-color: white;" text="X">
+            <Button fx:id="orderHistoryExit" layoutX="360.0" layoutY="17.0" mnemonicParsing="false" onAction="#orderHistoryExit" onMouseEntered="#orderHistoryExitButtonEntered" onMouseExited="#orderHistoryExitButtonExited" prefHeight="13.0" prefWidth="23.0" style="-fx-background-color: white;" text="X">
                <font>
                   <Font name="SansSerif Bold" size="12.0" />
                </font>
