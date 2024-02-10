@@ -128,7 +128,108 @@ public class XMLUtility {
         return null;
     }
 
+    /**
+     * Loads the beverage menu available in the server from a xml file.
+     * @param filePath the path where the xml file is located
+     * @return the Object that represents the list of beverages available
+     */
     private static Object loadBeverageMenu(File filePath){
+        HashMap<String, Beverage> beverageMenu = new HashMap<>();
+
+        try {
+            dbf = DocumentBuilderFactory.newInstance();
+            db = dbf.newDocumentBuilder();
+            document = db.parse(filePath);
+
+            Element root = document.getDocumentElement();
+            NodeList beverageList = root.getElementsByTagName("beverage");
+
+            for (int i = 0; i < beverageList.getLength(); i++) {
+                Node beverage = beverageList.item(i);
+
+                String name = "";
+                char type = ' ';
+                double review = 0;
+                int reviewCount = 0;
+                Image image = null;
+                String description = "";
+                int amountSold = 0;
+                int sQuantity = 0;
+                int mQuantity = 0;
+                int lQuantity = 0;
+                double sPrice = 0;
+                double mPrice = 0;
+                double lPrice = 0;
+
+                NodeList beverageDetails = beverage.getChildNodes();
+                for (int j = 0; j < beverageDetails.getLength(); j++) {
+                    Node beverageDetail = beverageDetails.item(j);
+
+                    switch (beverageDetail.getNodeName()) {
+                        case "name" -> name = beverageDetail.getTextContent();
+                        case "type" -> type = beverageDetail.getTextContent().charAt(0);
+                        case "review" -> review = Double.parseDouble(beverageDetail.getTextContent());
+                        case "reviewCount" -> reviewCount = Integer.parseInt(beverageDetail.getTextContent());
+                        case "image" -> {
+                            String filename = beverageDetail.getTextContent();
+                            String path = "src/main/resources/fxml/productimages/" + filename;
+                            try {
+                                image = new Image(new FileInputStream(path));
+                            } catch (Exception e) {
+                                System.out.println("image not loaded");
+                                e.printStackTrace();
+                            }
+                        }
+                        case "description" -> description = beverageDetail.getTextContent();
+                        case "amountSold" -> amountSold = Integer.parseInt(beverageDetail.getTextContent());
+                        case "quantities" -> {
+                            NodeList quantityList = beverageDetail.getChildNodes();
+                            for (int k = 0; k < quantityList.getLength(); k++) {
+                                Node quantityNode = quantityList.item(k);
+
+                                if (quantityNode.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element quantityElement = (Element) quantityNode;
+                                    String size = quantityElement.getAttribute("size");
+                                    int quantity = Integer.parseInt(quantityElement.getTextContent());
+                                    switch (size) {
+                                        case "small" -> sQuantity = quantity;
+                                        case "medium" -> mQuantity = quantity;
+                                        case "large" -> lQuantity = quantity;
+                                    }
+                                }
+                            }
+                        }
+                        case "prices" -> {
+                            NodeList pricesList = beverageDetail.getChildNodes();
+                            for (int l = 0; l < pricesList.getLength(); l++) {
+                                Node priceNode = pricesList.item(l);
+
+                                if (priceNode.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element priceElement = (Element) priceNode;
+                                    String size = priceElement.getAttribute("size");
+                                    Double price = Double.parseDouble(priceElement.getTextContent());
+                                    switch (size) {
+                                        case "small" -> sPrice = price;
+                                        case "medium" -> mPrice = price;
+                                        case "large" -> lPrice = price;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Beverage beverageToAdd = new Beverage(name, type, review, reviewCount, image, description, sQuantity, mQuantity, lQuantity, sPrice, mPrice, lPrice);
+                beverageToAdd.setAmountSold(amountSold);
+                beverageMenu.put(beverageToAdd.getName(), beverageToAdd);
+            }
+            System.out.println(beverageMenu.get("Mona Lisa Macchiato"));
+            System.out.println(beverageMenu.get("Virtuvian Vanilla Latte"));
+            System.out.println(beverageMenu.get("Renaissance Ristretto"));
+            return beverageMenu;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 

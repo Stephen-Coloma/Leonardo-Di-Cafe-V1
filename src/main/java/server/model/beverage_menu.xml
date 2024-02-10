@@ -1,0 +1,287 @@
+<beveragemenu>
+    <beverage name="Mona Lisa Macchiato">
+        <name>Mona Lisa Macchiato</name>
+        <type>b</type>
+        <review>4.8</review>
+        <reviewCount>35</reviewCount>
+        <image>sample.png</image>
+        <description>A classic macchiato with a twist of caramel drizzle, creating a masterpiece in every cup.</description>
+        <amountSold>200</amountSold>
+        <quantities>
+            <quantity size="small">25</quantity>
+            <quantity size="medium">18</quantity>
+            <quantity size="large">8</quantity>
+        </quantities>
+        <prices>
+            <price size="small">50</price>
+            <price size="medium">75</price>
+            <price size="large">90</price>
+        </prices>
+    </beverage>
+    <beverage name="Virtuvian Vanilla Latte">
+        <name>Virtuvian Vanilla Latte</name>
+        <type>b</type>
+        <review>4.5</review>
+        <reviewCount>24</reviewCount>
+        <image>sample.png</image>
+        <description>A harmonious blend of espresso, steamed milk, and vanilla.</description>
+        <amountSold>180</amountSold>
+        <quantities>
+            <quantity size="small">21</quantity>
+            <quantity size="medium">17</quantity>
+            <quantity size="large">9</quantity>
+        </quantities>
+        <prices>
+            <price size="small">55</price>
+            <price size="medium">80</price>
+            <price size="large">95</price>
+        </prices>
+    </beverage>
+    <beverage name="Renaissance Ristretto">
+        <name>Renaissance Ristretto</name>
+        <type>b</type>
+        <review>4.7</review>
+        <reviewCount>35</reviewCount>
+        <image>sample.png</image>
+        <description>A bold, concentrated espresso shot.</description>
+        <amountSold>150</amountSold>
+        <quantities>
+            <quantity size="small">20</quantity>
+            <quantity size="medium">19</quantity>
+            <quantity size="large">8</quantity>
+        </quantities>
+        <prices>
+            <price size="small">45</price>
+            <price size="medium">70</price>
+            <price size="large">85</price>
+        </prices>
+    </beverage>
+    <beverage name="Da Vinci Doppio">
+        <name>Da Vinci Doppio</name>
+        <type>b</type>
+        <review>4.9</review>
+        <reviewCount>44</reviewCount>
+        <image>sample.png</image>
+        <description>A double shot of espresso, as innovative as Leonardo himself.</description>
+        <amountSold>220</amountSold>
+        <quantities>
+            <quantity size="small">42</quantity>
+            <quantity size="medium">35</quantity>
+            <quantity size="large">23</quantity>
+        </quantities>
+        <prices>
+            <price size="small">60</price>
+            <price size="medium">85</price>
+            <price size="large">100</price>
+        </prices>
+    </beverage>
+    <beverage name="Florentine Cappuccino">
+        <name>Florentine Cappuccino</name>
+        <type>b</type>
+        <review>4.6</review>
+        <reviewCount>42</reviewCount>
+        <image>sample.png</image>
+        <description>A smooth cappuccino with a dusting of cocoa powder.</description>
+        <amountSold>190</amountSold>
+        <quantities>
+            <quantity size="small">40</quantity>
+            <quantity size="medium">31</quantity>
+            <quantity size="large">22</quantity>
+        </quantities>
+        <prices>
+            <price size="small">65</price>
+            <price size="medium">90</price>
+            <price size="large">105</price>
+        </prices>
+    </beverage>
+    <beverage name="Venetian Velvet Affogato">
+        <name>Venetian Velvet Affogato</name>
+        <type>b</type>
+        <review>4.8</review>
+        <reviewCount>22</reviewCount>
+        <image>sample.png</image>
+        <description>Vanilla gelato "drowned" in a shot of hot espresso.</description>
+        <amountSold>170</amountSold>
+        <quantities>
+            <quantity size="small">20</quantity>
+            <quantity size="medium">18</quantity>
+            <quantity size="large">11</quantity>
+        </quantities>
+        <prices>
+            <price size="small">70</price>
+            <price size="medium">95</price>
+            <price size="large">110</price>
+        </prices>
+    </beverage>
+    <beverage name="Tuscan Tiramisu Latte">
+        <name>Tuscan Tiramisu Latte</name>
+        <type>b</type>
+        <review>4.4</review>
+        <reviewCount>24</reviewCount>
+        <image>sample.png</image>
+        <description>Inspired by Italy's famous dessert, combining espresso, frothed milk, and flavors of mascarpone.</description>
+        <amountSold>160</amountSold>
+        <quantities>
+            <quantity size="small">23</quantity>
+            <quantity size="medium">20</quantity>
+            <quantity size="large">19</quantity>
+        </quantities>
+        <prices>
+            <price size="small">75</price>
+            <price size="medium">100</price>
+            <price size="large">115</price>
+        </prices>
+    </beverage>
+    <beverage name="Sfumato Earl Grey">
+        <name>Sfumato Earl Grey</name>
+        <type>b</type>
+        <review>4.3</review>
+        <reviewCount>26</reviewCount>
+        <image>sample.png</image>
+        <description>Delicate layers of bergamot and lavender.</description>
+        <amountSold>140</amountSold>
+        <quantities>
+            <quantity size="small">32</quantity>
+            <quantity size="medium">27</quantity>
+            <quantity size="large">20</quantity>
+        </quantities>
+        <prices>
+            <price size="small">40</price>
+            <price size="medium">65</price>
+            <price size="large">80</price>
+        </prices>
+    </beverage>
+    <beverage name="Galleria Green Tea">
+        <name>Galleria Green Tea</name>
+        <type>b</type>
+        <review>4.6</review>
+        <reviewCount>30</reviewCount>
+        <image>sample.png</image>
+        <description>A vibrant Sencha green tea.</description>
+        <amountSold>130</amountSold>
+        <quantities>
+            <quantity size="small">20</quantity>
+            <quantity size="medium">31</quantity>
+            <quantity size="large">20</quantity>
+        </quantities>
+        <prices>
+            <price size="small">45</price>
+            <price size="medium">70</price>
+            <price size="large">85</price>
+        </prices>
+    </beverage>
+    <beverage name="Medici Mint Herbal">
+        <name>Medici Mint Herbal</name>
+        <type>b</type>
+        <review>4.5</review>
+        <reviewCount>35</reviewCount>
+        <image>sample.png</image>
+        <description>A caffeine-free, refreshing mint tea.</description>
+        <amountSold>120</amountSold>
+        <quantities>
+            <quantity size="small">33</quantity>
+            <quantity size="medium">30</quantity>
+            <quantity size="large">29</quantity>
+        </quantities>
+        <prices>
+            <price size="small">35</price>
+            <price size="medium">60</price>
+            <price size="large">75</price>
+        </prices>
+    </beverage>
+    <beverage name="Inventor's Iced Coffee">
+        <name>Inventor's Iced Coffee</name>
+        <type>b</type>
+        <review>4.7</review>
+        <reviewCount>44</reviewCount>
+        <image>sample.png</image>
+        <description>Cold brew coffee with a secret syrup.</description>
+        <amountSold>210</amountSold>
+        <quantities>
+            <quantity size="small">23</quantity>
+            <quantity size="medium">19</quantity>
+            <quantity size="large">10</quantity>
+        </quantities>
+        <prices>
+            <price size="small">55</price>
+            <price size="medium">80</price>
+            <price size="large">95</price>
+        </prices>
+    </beverage>
+    <beverage name="Painter's Peach Iced Tea">
+        <name>Painter's Peach Iced Tea</name>
+        <type>b</type>
+        <review>4.8</review>
+        <reviewCount>22</reviewCount>
+        <image>sample.png</image>
+        <description>Sweet peach nectar blended with cold-brew tea.</description>
+        <amountSold>180</amountSold>
+        <quantities>
+            <quantity size="small">33</quantity>
+            <quantity size="medium">27</quantity>
+            <quantity size="large">20</quantity>
+        </quantities>
+        <prices>
+            <price size="small">50</price>
+            <price size="medium">75</price>
+            <price size="large">90</price>
+        </prices>
+    </beverage>
+    <beverage name="Sculptor's Sparkling Lemonade">
+        <name>Sculptor's Sparkling Lemonade</name>
+        <type>b</type>
+        <review>4.9</review>
+        <reviewCount>41</reviewCount>
+        <image>sample.png</image>
+        <description>A fizzy, handcrafted lemonade.</description>
+        <amountSold>190</amountSold>
+        <quantities>
+            <quantity size="small">37</quantity>
+            <quantity size="medium">32</quantity>
+            <quantity size="large">33</quantity>
+        </quantities>
+        <prices>
+            <price size="small">45</price>
+            <price size="medium">70</price>
+            <price size="large">85</price>
+        </prices>
+    </beverage>
+    <beverage name="The Last Supper Hot Chocolate">
+        <name>The Last Supper Hot Chocolate</name>
+        <type>b</type>
+        <review>4.8</review>
+        <reviewCount>20</reviewCount>
+        <image>sample.png</image>
+        <description>A rich and decadent hot chocolate.</description>
+        <amountSold>160</amountSold>
+        <quantities>
+            <quantity size="small">20</quantity>
+            <quantity size="medium">23</quantity>
+            <quantity size="large">21</quantity>
+        </quantities>
+        <prices>
+            <price size="small">50</price>
+            <price size="medium">75</price>
+            <price size="large">90</price>
+        </prices>
+    </beverage>
+    <beverage name="Codex Chai Latte">
+        <name>Codex Chai Latte</name>
+        <type>b</type>
+        <review>4.7</review>
+        <reviewCount>24</reviewCount>
+        <image>sample.png</image>
+        <description>A spiced chai latte, complex and intriguing.</description>
+        <amountSold>150</amountSold>
+        <quantities>
+            <quantity size="small">34</quantity>
+            <quantity size="medium">33</quantity>
+            <quantity size="large">30</quantity>
+        </quantities>
+        <prices>
+            <price size="small">55</price>
+            <price size="medium">80</price>
+            <price size="large">95</price>
+        </prices>
+    </beverage>
+</beveragemenu>
