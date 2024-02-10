@@ -83,7 +83,7 @@
                         <Line endX="185.0" layoutX="182.0" layoutY="59.0" startX="-181.0" />
                         <Pane layoutY="125.0" prefHeight="46.0" prefWidth="368.0">
                            <children>
-                              <Button fx:id="addToCartButton" layoutX="12.0" layoutY="10.0" mnemonicParsing="false" onAction="#addToCart" onMouseEntered="#addToCartButtonEntered" onMouseExited="#addToCartButtonExited" prefHeight="25.0" prefWidth="348.0" style="-fx-background-color: #A38157;" text="P 560.00 ADD TO CART" textFill="WHITE">
+                              <Button fx:id="addToCartButton" layoutX="12.0" layoutY="10.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="25.0" prefWidth="348.0" style="-fx-background-color: #A38157;" text="P 560.00 ADD TO CART" textFill="WHITE">
                                  <font>
                                     <Font size="11.0" />
                                  </font>

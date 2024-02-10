@@ -7,7 +7,9 @@ module LeonardoDiCafe {
 
     opens client to javafx.fxml;
     opens server to javafx.fxml;
+    opens client.controller to javafx.fxml;
 
     exports client;
     exports server;
+    exports client.controller;
 }
