@@ -30,14 +30,18 @@ public class OrderHistory {
     private Image starEmptyImage;
 
     public void initialize() {
-        starFilledImage = new Image(getClass().getResourceAsStream("/resources/images/client/orderHistory/star_empty.png"));
-        starEmptyImage = new Image(getClass().getResourceAsStream("/resources/images/client/orderHistory/star_empty.png"));
+        try {
+            starFilledImage = new Image(getClass().getResourceAsStream("/resources/images/client/orderHistory/star_empty.png"));
+            starEmptyImage = new Image(getClass().getResourceAsStream("/resources/images/client/orderHistory/star_empty.png"));
 
-        setupRatingStars(star1, star2, star3, star4, star5);
-        // ... setup other stars ...
+            setupRatingStars(star1, star2, star3, star4, star5);
+            // ... setup other stars ...
 
-        // Load XML file
-        loadXMLFile();
+            // Load XML file
+            loadXMLFile();
+        } catch (NullPointerException e) {
+            e.printStackTrace(); // Print the stack trace to identify the cause of the NullPointerException
+        }
     }
 
     private void setupRatingStars(ToggleButton... stars) {

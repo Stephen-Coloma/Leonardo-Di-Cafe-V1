@@ -428,7 +428,7 @@
                         <HBox layoutX="10.0" layoutY="244.0" prefHeight="35.0" prefWidth="386.0">
                            <children>
                               <Pane prefHeight="35.0" prefWidth="15.0" />
-                              <Button fx:id="placeOrderButton" mnemonicParsing="false" onAction="#placeOrder" onMouseEntered="#placeOrderButtonEntered" onMouseExited="#placeOrderButtonExited" prefHeight="33.0" prefWidth="360.0" style="-fx-background-color: #634921;" text="PLACE ORDER" textFill="WHITE">
+                              <Button fx:id="placeOrderButton" mnemonicParsing="false" onAction="#placeOrder" prefHeight="33.0" prefWidth="360.0" style="-fx-background-color: #634921;" text="PLACE ORDER" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>

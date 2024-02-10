@@ -26,8 +26,8 @@
                 <Image url="@../../images/client/landingPage/mainPage.png" />
             </image>
         </ImageView>
-        <Button fx:id="loginButtonFrontPage" layoutX="141.0" layoutY="292.0" mnemonicParsing="false" onAction="#showLoginUI" onMouseEntered="#loginFrontPageButtonEntered" onMouseExited="#loginFrontPageButtonExited" prefHeight="46.0" prefWidth="238.0" style="-fx-background-color: #A38157;" text="LOG IN" textFill="WHITE" />
-        <Button fx:id="registerButtonFrontPage" layoutX="427.0" layoutY="292.0" mnemonicParsing="false" onAction="#showRegistrationUI" onMouseEntered="#registerFrontPageButtonEntered" onMouseExited="#registerFrontPageButtonExited" prefHeight="46.0" prefWidth="238.0" style="-fx-background-color: #A38157;" text="REGISTER" textFill="WHITE" />
+        <Button fx:id="loginButton" layoutX="141.0" layoutY="292.0" mnemonicParsing="false" onAction="#showLoginUI" prefHeight="46.0" prefWidth="238.0" style="-fx-background-color: #A38157;" text="LOG IN" textFill="WHITE" />
+        <Button fx:id="registerButton" layoutX="427.0" layoutY="292.0" mnemonicParsing="false" onAction="#showRegistrationUI" prefHeight="46.0" prefWidth="238.0" style="-fx-background-color: #A38157;" text="REGISTER" textFill="WHITE" />
         <Rectangle fill="#faf0e5" height="103.0" layoutX="8.0" layoutY="347.0" stroke="#a38157" strokeType="INSIDE" width="791.0" />
         <Text layoutX="24.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Featured Items" />
         <ImageView fitHeight="68.0" fitWidth="97.0" layoutX="124.0" layoutY="356.0" pickOnBounds="true" preserveRatio="true">
