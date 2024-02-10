@@ -61,6 +61,17 @@ public class Order {
         }
     }
 
+    /**This constructor will be used only for reading order_list.xml */
+    public Order(Customer customer, List<Product> orders, int id, String timeStamp, double totalPrice, boolean status){
+        this.customer = customer;
+        this.orders = orders;
+        this.ID = id;
+        this.timeStamp = timeStamp;
+        this.totalPrice = totalPrice;
+        this.status = status;
+    }
+
+
     public Customer getCustomer() {
         return customer;
     }
