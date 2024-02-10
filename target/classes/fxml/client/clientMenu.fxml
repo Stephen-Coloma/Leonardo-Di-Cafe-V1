@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="872.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="872.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.Controller">
    <children>
       <AnchorPane layoutX="703.0" layoutY="43.0" prefHeight="447.0" prefWidth="169.0" style="-fx-background-color: #ffffff;" />
       <AnchorPane layoutY="-1.0" prefHeight="45.0" prefWidth="872.0" style="-fx-background-color: #634921;">
@@ -227,7 +227,7 @@
                               <VBox prefHeight="89.0" prefWidth="20.0">
                                  <children>
                                     <Pane prefHeight="63.0" prefWidth="0.0" />
-                                    <Button mnemonicParsing="false" prefWidth="6.0" style="-fx-background-color: #ECE9E3;" text="+" textFill="#634921">
+                                    <Button fx:id="addToCardButton" mnemonicParsing="false" onAction="#showSelectVariationUI" prefWidth="6.0" style="-fx-background-color: #ECE9E3;" text="+" textFill="#634921">
                                        <font>
                                           <Font name="System Bold" size="16.0" />
                                        </font>
@@ -326,7 +326,7 @@
                         </Button>
                         <ImageView fitHeight="76.0" fitWidth="134.0" layoutX="93.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@/images/client/menu/menu_productimage.png" />
+                              <Image url="@../../images/client/menu/menu_productimage.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -340,7 +340,7 @@
                         </Label>
                         <ImageView fitHeight="76.0" fitWidth="134.0" layoutX="93.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@/images/client/menu/menu_productimage.png" />
+                              <Image url="@../../images/client/menu/menu_productimage.png" />
                            </image>
                         </ImageView>
                         <Button layoutX="220.0" layoutY="58.0" mnemonicParsing="false" style="-fx-background-color: #ECE9E3;" text="+" textFill="#634921">
@@ -364,7 +364,7 @@
             </Pane>
          </content>
       </ScrollPane>
-      <Button layoutX="710.0" layoutY="414.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: #A38157;" text="CHECKOUT P0" textFill="WHITE">
+      <Button fx:id="checkoutButton" layoutX="710.0" layoutY="414.0" mnemonicParsing="false" onAction="#showCheckoutUI" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: #A38157;" text="CHECKOUT P0" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -394,7 +394,7 @@
             <Image url="@../../images/client/menu/menu_emptybasket.png" />
          </image>
       </ImageView>
-      <Button layoutX="710.0" layoutY="450.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3;" text="ORDER HISTORY" textFill="#a38157">
+      <Button fx:id="orderHistoryButton" layoutX="710.0" layoutY="450.0" mnemonicParsing="false" onAction="#showOrderHistoryUI" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3;" text="ORDER HISTORY" textFill="#a38157">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
