@@ -118,25 +118,24 @@ public class Controller {
         stage.close();
     }
 
-    public void showSelectVariationUI (ActionEvent event) throws IOException {
-
+    public void showSelectVariationUI(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/selectVariation.fxml"));
         root = loader.load();
 
         Stage selectVariationStage = new Stage();
         Scene selectVariationScene = new Scene(root);
 
-        selectVariationStage.initOwner(stage);
+        selectVariationStage.initOwner(((Node)event.getSource()).getScene().getWindow()); // Get the owner window
 
         selectVariationStage.initModality(Modality.APPLICATION_MODAL);
-
         selectVariationStage.initStyle(StageStyle.DECORATED);
 
         selectVariationStage.setScene(selectVariationScene);
-        selectVariationStage.show();
+        selectVariationStage.showAndWait(); // Use showAndWait if you want to make it modal
     }
 
-    public void addToCart(ActionEvent event){
+    public void addToCart(ActionEvent event) throws IOException {
+        showSelectVariationUI(event);
 
         Node source = (Node) event.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
