@@ -1,35 +1,233 @@
 <foodmenu>
-    <food name = "Red Velvet Cupcake">
-        <name>Red Velvet Cupcake</name>
+    <food name="Caprese Canvas">
+        <name>Caprese Canvas</name>
         <type>f</type>
-        <review>4.6</review>
-        <reviewCount>24</reviewCount>
+        <review>4.5</review>
+        <reviewCount>18</reviewCount>
         <image>sample.png</image>
-        <description>Delight in our Red Velvet Cupcake: moist, cocoa-infused cake topped with creamy, tangy frosting. A heavenly treat for any occasion.</description>
-        <amountSold>145</amountSold>
-        <quantity>34</quantity>
-        <price>45</price>
+        <description>Fresh mozzarella, tomato, and basil drizzled with balsamic glaze, on a canvas of arugula.</description>
+        <amountSold>120</amountSold>
+        <quantity>20</quantity>
+        <price>15</price>
     </food>
-    <food name = "Carrot Cake">
-        <name>Carrot Cake</name>
+    <food name="Inventor's Insalata">
+        <name>Inventor's Insalata</name>
+        <type>f</type>
+        <review>4.4</review>
+        <reviewCount>22</reviewCount>
+        <image>sample.png</image>
+        <description>A mix of greens, artichoke hearts, olives, and sun-dried tomatoes, dressed in a lemon-herb vinaigrette.</description>
+        <amountSold>95</amountSold>
+        <quantity>25</quantity>
+        <price>12</price>
+    </food>
+    <food name="Sculptor's Ciabatta Bites">
+        <name>Sculptor's Ciabatta Bites</name>
+        <type>f</type>
+        <review>4.7</review>
+        <reviewCount>30</reviewCount>
+        <image>sample.png</image>
+        <description>Toasted ciabatta, topped with ricotta, pear, and honey, sprinkled with crushed walnuts.</description>
+        <amountSold>130</amountSold>
+        <quantity>30</quantity>
+        <price>10</price>
+    </food>
+    <food name="Renaissance Antipasto">
+        <name>Renaissance Antipasto</name>
+        <type>f</type>
+        <review>4.8</review>
+        <reviewCount>25</reviewCount>
+        <image>sample.png</image>
+        <description>A selection of Italian meats, cheeses, and marinated vegetables, perfect for sharing.</description>
+        <amountSold>110</amountSold>
+        <quantity>15</quantity>
+        <price>18</price>
+    </food>
+    <food name="Da Vinci Dip Trio">
+        <name>Da Vinci Dip Trio</name>
+        <type>f</type>
+        <review>4.9</review>
+        <reviewCount>20</reviewCount>
+        <image>sample.png</image>
+        <description>Hummus, olive tapenade, and roasted red pepper dip served with artisanal bread.</description>
+        <amountSold>140</amountSold>
+        <quantity>20</quantity>
+        <price>14</price>
+    </food>
+    <food name="Medici Meatball Sub">
+        <name>Medici Meatball Sub</name>
+        <type>f</type>
+        <review>4.3</review>
+        <reviewCount>19</reviewCount>
+        <image>sample.png</image>
+        <description>Homemade meatballs in marinara sauce, topped with melted provolone on a toasted baguette.</description>
+        <amountSold>85</amountSold>
+        <quantity>20</quantity>
+        <price>13</price>
+    </food>
+    <food name="Florentine Chicken Pesto Panini">
+        <name>Florentine Chicken Pesto Panini</name>
+        <type>f</type>
+        <review>4.5</review>
+        <reviewCount>21</reviewCount>
+        <image>sample.png</image>
+        <description>Grilled chicken, mozzarella, tomatoes, and pesto pressed in a ciabatta.</description>
+        <amountSold>90</amountSold>
+        <quantity>25</quantity>
+        <price>14</price>
+    </food>
+    <food name="Venetian Veggie Wrap">
+        <name>Venetian Veggie Wrap</name>
+        <type>f</type>
+        <review>4.4</review>
+        <reviewCount>20</reviewCount>
+        <image>sample.png</image>
+        <description>Roasted vegetables, goat cheese, and arugula wrapped in a spinach tortilla, served with a side of pesto.</description>
+        <amountSold>100</amountSold>
+        <quantity>30</quantity>
+        <price>12</price>
+    </food>
+    <food name="Tuscan Tuna Melt">
+        <name>Tuscan Tuna Melt</name>
         <type>f</type>
         <review>4.2</review>
-        <reviewCount>35</reviewCount>
+        <reviewCount>18</reviewCount>
         <image>sample.png</image>
-        <description>Enjoy our Carrot Cake: a moist and flavorful delight, rich with shredded carrots, warm spices, and topped with smooth cream cheese frosting.</description>
-        <amountSold>100</amountSold>
-        <quantity>10</quantity>
-        <price>30</price>
+        <description>Tuna, capers, and red onions, with a touch of lemon aioli, melted with fontina cheese on sourdough.</description>
+        <amountSold>75</amountSold>
+        <quantity>20</quantity>
+        <price>11</price>
     </food>
-    <food name = "Croissant">
-        <name>Croissant</name>
+    <food name="Minestrone Masterpiece">
+        <name>Minestrone Masterpiece</name>
         <type>f</type>
-        <review>4.1</review>
-        <reviewCount>15</reviewCount>
+        <review>4.6</review>
+        <reviewCount>22</reviewCount>
         <image>sample.png</image>
-        <description>Savor our Croissant: a buttery, flaky pastry, expertly crafted to perfection. Light, airy, and golden brown, it's the ultimate indulgence for breakfast or any time of day.</description>
-        <amountSold>15</amountSold>
-        <quantity>50</quantity>
+        <description>A hearty vegetable and bean soup, simmered in a tomato-based broth.</description>
+        <amountSold>110</amountSold>
+        <quantity>30</quantity>
+        <price>9</price>
+    </food>
+    <food name="Sfumato Squash Soup">
+        <name>Sfumato Squash Soup</name>
+        <type>f</type>
+        <review>4.7</review>
+        <reviewCount>25</reviewCount>
+        <image>sample.png</image>
+        <description>Butternut squash soup with a hint of nutmeg and cream, creating a smooth, velvety texture.</description>
+        <amountSold>120</amountSold>
+        <quantity>20</quantity>
         <price>10</price>
+    </food>
+    <food name="Mona Lisa Margherita Pizza">
+        <name>Mona Lisa Margherita Pizza</name>
+        <type>f</type>
+        <review>4.8</review>
+        <reviewCount>30</reviewCount>
+        <image>sample.png</image>
+        <description>A classic margherita pizza, with fresh mozzarella, tomatoes, and basil.</description>
+        <amountSold>130</amountSold>
+        <quantity>25</quantity>
+        <price>16</price>
+    </food>
+    <food name="Codex Carbonara">
+        <name>Codex Carbonara</name>
+        <type>f</type>
+        <review>4.5</review>
+        <reviewCount>28</reviewCount>
+        <image>sample.png</image>
+        <description>Spaghetti tossed in a creamy egg sauce with pancetta and Parmesan, sprinkled with pepper.</description>
+        <amountSold>95</amountSold>
+        <quantity>20</quantity>
+        <price>14</price>
+    </food>
+    <food name="Vitruvian Veal Milanese">
+        <name>Vitruvian Veal Milanese</name>
+        <type>f</type>
+        <review>4.4</review>
+        <reviewCount>17</reviewCount>
+        <image>sample.png</image>
+        <description>Breaded veal cutlets, fried to golden perfection, served with a lemon wedge and arugula salad.</description>
+        <amountSold>80</amountSold>
+        <quantity>15</quantity>
+        <price>18</price>
+    </food>
+    <food name="Sistine Salmon">
+        <name>Sistine Salmon</name>
+        <type>f</type>
+        <review>4.7</review>
+        <reviewCount>26</reviewCount>
+        <image>sample.png</image>
+        <description>Oven-roasted salmon with a herb crust, served alongside roasted Mediterranean vegetables.</description>
+        <amountSold>105</amountSold>
+        <quantity>20</quantity>
+        <price>17</price>
+    </food>
+    <food name="Gallery Gnocchi">
+        <name>Gallery Gnocchi</name>
+        <type>f</type>
+        <review>4.8</review>
+        <reviewCount>29</reviewCount>
+        <image>sample.png</image>
+        <description>Potato gnocchi in a sage and butter sauce, garnished with grated Parmesan.</description>
+        <amountSold>90</amountSold>
+        <quantity>25</quantity>
+        <price>15</price>
+    </food>
+    <food name="Last Supper Lemon Tiramisu">
+        <name>Last Supper Lemon Tiramisu</name>
+        <type>f</type>
+        <review>4.9</review>
+        <reviewCount>31</reviewCount>
+        <image>sample.png</image>
+        <description>A citrusy twist on the classic tiramisu, layered with lemon mascarpone and ladyfingers.</description>
+        <amountSold>140</amountSold>
+        <quantity>20</quantity>
+        <price>12</price>
+    </food>
+    <food name="Inventive Italian Gelato">
+        <name>Inventive Italian Gelato</name>
+        <type>f</type>
+        <review>4.7</review>
+        <reviewCount>27</reviewCount>
+        <image>sample.png</image>
+        <description>A selection of house-made gelatos, featuring both classic and inventive flavors.</description>
+        <amountSold>150</amountSold>
+        <quantity>30</quantity>
+        <price>8</price>
+    </food>
+    <food name="Raphael's Ricotta Cheesecake">
+        <name>Raphael's Ricotta Cheesecake</name>
+        <type>f</type>
+        <review>4.6</review>
+        <reviewCount>23</reviewCount>
+        <image>sample.png</image>
+        <description>A light, fluffy cheesecake made with ricotta, drizzled with a berry compote.</description>
+        <amountSold>85</amountSold>
+        <quantity>15</quantity>
+        <price>10</price>
+    </food>
+    <food name="Florentine Fruit Tart">
+        <name>Florentine Fruit Tart</name>
+        <type>f</type>
+        <review>4.5</review>
+        <reviewCount>20</reviewCount>
+        <image>sample.png</image>
+        <description>A buttery tart shell filled with pastry cream and topped with fresh, seasonal fruits.</description>
+        <amountSold>95</amountSold>
+        <quantity>18</quantity>
+        <price>13</price>
+    </food>
+    <food name="Da Vinci's Dark Chocolate Mousse">
+        <name>Da Vinci's Dark Chocolate Mousse</name>
+        <type>f</type>
+        <review>4.9</review>
+        <reviewCount>32</reviewCount>
+        <image>sample.png</image>
+        <description>A rich and velvety dark chocolate mousse, garnished with gold leaf for a touch of elegance.</description>
+        <amountSold>130</amountSold>
+        <quantity>20</quantity>
+        <price>11</price>
     </food>
 </foodmenu>
