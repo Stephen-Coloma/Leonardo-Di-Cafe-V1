@@ -66,8 +66,12 @@ public class MainMenuAdminController implements Initializable{
     public void viewAddProductsPage(MouseEvent mouseEvent) throws IOException{
        loadPage("AddProductsPage");
     }
-
-    //TODO: add other pages (fxml)
+    public void viewInventoryPage(MouseEvent mouseEvent) throws IOException{
+        loadPage("InventoryPage");
+    }
+    public void viewAnalyticsPage(MouseEvent mouseEvent) throws IOException{
+        loadPage("AnalyticsPage");
+    }
     public void logout(MouseEvent actionEvent) {
         System.exit(0);
     }

@@ -29,7 +29,7 @@
                         <Font name="Arial Narrow" size="12.0" />
                     </font>
                 </Button>
-                <Button fx:id="viewInventoryButton" alignment="CENTER" layoutX="10.0" layoutY="107.0" mnemonicParsing="false" onMouseEntered="#viewInventoryButtonEntered" onMouseExited="#viewInventoryButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="View Inventory" textAlignment="CENTER">
+                <Button fx:id="viewInventoryButton" alignment="CENTER" layoutX="10.0" layoutY="107.0" mnemonicParsing="false" onMouseClicked="#viewInventoryPage" onMouseEntered="#viewInventoryButtonEntered" onMouseExited="#viewInventoryButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="View Inventory" textAlignment="CENTER">
                     <font>
                         <Font name="Arial Narrow" size="12.0" />
                     </font>
@@ -39,7 +39,7 @@
                         <Font name="Arial Narrow" size="12.0" />
                     </font>
                 </Button>
-                <Button fx:id="viewAnalyticsButton" alignment="CENTER" layoutX="10.0" layoutY="177.0" mnemonicParsing="false" onMouseEntered="#viewAnalyticsButtonEntered" onMouseExited="#viewAnalyticsButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="Analytics" textAlignment="CENTER">
+                <Button fx:id="viewAnalyticsButton" alignment="CENTER" layoutX="10.0" layoutY="177.0" mnemonicParsing="false" onMouseClicked="#viewAnalyticsPage" onMouseEntered="#viewAnalyticsButtonEntered" onMouseExited="#viewAnalyticsButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="Analytics" textAlignment="CENTER">
                     <font>
                         <Font name="Arial Narrow" size="12.0" />
                     </font>

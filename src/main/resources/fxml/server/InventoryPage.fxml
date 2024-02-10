@@ -1,30 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.temporarycontroller.InventoryPageController">
     <children>
         <Text fill="#593117" layoutX="20.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INVENTORY">
             <font>
-                <Font name="System Bold" size="29.0" />
+                <Font name="Arial Black" size="29.0" />
             </font>
         </Text>
-        <TextField fx:id="searchField" layoutX="420.0" layoutY="41.0" prefHeight="26.0" prefWidth="165.0" promptText="Search" style="-fx-background-color: #ffffff;" />
-        <ScrollPane layoutX="20.0" layoutY="79.0" prefHeight="309.0" prefWidth="564.0">
+        <TextField fx:id="searchInventoryTextField" layoutX="420.0" layoutY="41.0" prefHeight="26.0" prefWidth="165.0" promptText="Search" style="-fx-background-color: #ffffff;" />
+        <ScrollPane layoutX="20.0" layoutY="79.0" prefHeight="310.0" prefWidth="573.0">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="552.0">
                     <children>
-                        <TableView prefHeight="310.0" prefWidth="554.0">
+                        <TableView fx:id="inventoryTableView" prefHeight="310.0" prefWidth="548.0">
                             <columns>
-                                <TableColumn fx:id="productColumn" prefWidth="184.0" text="Product" />
-                                <TableColumn fx:id="quantityColumn" prefWidth="184.0" text="Quantity" />
-                                <TableColumn fx:id="typesOfProductColumn" prefWidth="184.0" text="Type of Products" />
+                                <TableColumn fx:id="productNameColumn" prefWidth="145.99999696016312" text="Product Name" />
+                                <TableColumn fx:id="typeColumn" prefWidth="122.80000305175781" text="Type" />
+                                <TableColumn fx:id="quantityColumn" prefWidth="151.5999755859375" text="Quantity" />
                             </columns>
                         </TableView>
                     </children>
