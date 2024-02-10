@@ -19,6 +19,15 @@ public class Order {
         this.timeStamp = timeStamp;
     }
 
+    /**This constructor will be used only for reading from the database*/
+    public Order( List<Product> productList, String timeStamp, double totalPrice, boolean status, int id){
+        this.orders = productList;
+        this.timeStamp = timeStamp;
+        this.totalPrice = totalPrice;
+        this.status = status;
+        this.ID = id;
+    }
+
     /**This constructor should be use only for an order that is pushed successfully in the system */
     public Order(Order successfullOrder){
         //copy details
@@ -106,6 +115,9 @@ public class Order {
                 "customer=" + customer +
                 ", orders=" + orders +
                 ", timeStamp='" + timeStamp + '\'' +
+                ", totalPrice=" + totalPrice +
+                ", status=" + status +
+                ", ID=" + ID +
                 '}';
     }
 }

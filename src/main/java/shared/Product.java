@@ -86,4 +86,15 @@ public abstract class Product {
 
         this.review = updatedReview;
     }
+
+    @Override
+    public String toString() {
+        return "name='" + name + '\'' +
+                ", type=" + type +
+                ", review=" + review +
+                ", reviewCount=" + reviewCount +
+                ", image=" + image +
+                ", description='" + description + '\'' +
+                ", amountSold=" + amountSold ;
+    }
 }

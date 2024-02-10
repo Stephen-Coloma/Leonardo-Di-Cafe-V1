@@ -65,4 +65,13 @@ public class Food extends Product {
         int sold =  super.getAmountSold() + 1;
         super.setAmountSold(sold);
     }
+
+    @Override
+    public String toString() {
+        String concat = super.toString();
+        return "Food{" + concat +
+                "quantity=" + quantity +
+                ", price=" + price +
+                '}';
+    }
 }

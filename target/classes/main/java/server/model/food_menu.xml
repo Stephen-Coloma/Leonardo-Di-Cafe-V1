@@ -1,0 +1,35 @@
+<foodmenu>
+    <food name = "Red Velvet Cupcake">
+        <name>Red Velvet Cupcake</name>
+        <type>f</type>
+        <review>4.6</review>
+        <reviewCount>24</reviewCount>
+        <image>sample.png</image>
+        <description>Delight in our Red Velvet Cupcake: moist, cocoa-infused cake topped with creamy, tangy frosting. A heavenly treat for any occasion.</description>
+        <amountSold>145</amountSold>
+        <quantity>34</quantity>
+        <price>45</price>
+    </food>
+    <food name = "Carrot Cake">
+        <name>Carrot Cake</name>
+        <type>f</type>
+        <review>4.2</review>
+        <reviewCount>35</reviewCount>
+        <image>sample.png</image>
+        <description>Enjoy our Carrot Cake: a moist and flavorful delight, rich with shredded carrots, warm spices, and topped with smooth cream cheese frosting.</description>
+        <amountSold>100</amountSold>
+        <quantity>10</quantity>
+        <price>30</price>
+    </food>
+    <food name = "Croissant">
+        <name>Croissant</name>
+        <type>f</type>
+        <review>4.1</review>
+        <reviewCount>15</reviewCount>
+        <image>sample.png</image>
+        <description>Savor our Croissant: a buttery, flaky pastry, expertly crafted to perfection. Light, airy, and golden brown, it's the ultimate indulgence for breakfast or any time of day.</description>
+        <amountSold>15</amountSold>
+        <quantity>50</quantity>
+        <price>10</price>
+    </food>
+</foodmenu>

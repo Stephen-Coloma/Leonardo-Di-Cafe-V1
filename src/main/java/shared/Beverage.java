@@ -166,7 +166,8 @@ public class Beverage extends Product{
 
     @Override
     public String toString() {
-        return "Beverage{" +
+        String concat = super.toString();
+        return "Beverage{" + concat +
                 "sizeQuantity=" + sizeQuantity +
                 ", sizePrice=" + sizePrice +
                 '}';

@@ -33,6 +33,17 @@ public class Customer {
         this.orderHistory = new ArrayList<>(); //initializes the arraylist
     }
 
+    /**This constructor will only be used for reading from the xml file*/
+    public Customer(Customer customer, List<Order> orderHistory){
+        this.name = customer.getName();
+        this.username = customer.getUsername();
+        this.address = customer.getAddress();
+        this.email = customer.getEmail();
+        this.password = customer.getPassword();
+
+        this.orderHistory = orderHistory;
+    }
+
     //getters setters
 
     public String getName() {
@@ -90,6 +101,7 @@ public class Customer {
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", orderHistory=" + orderHistory +
                 '}';
     }
 }
