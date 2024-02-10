@@ -17,7 +17,7 @@
         </Button>
         <ImageView fitHeight="23.0" fitWidth="21.0" layoutX="25.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../resources/images/server/filterIcon.png" />
+                <Image url="@../../images/server/filterIcon.png" />
             </image>
         </ImageView>
         <Label layoutX="165.0" layoutY="41.0" text="FOOD" textFill="#593117">
