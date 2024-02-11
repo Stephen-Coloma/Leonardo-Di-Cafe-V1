@@ -12,8 +12,12 @@ import java.util.*;
 import java.util.stream.IntStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import static java.util.stream.Collectors.toMap;
 
 public class XMLUtility {
@@ -439,7 +443,151 @@ public class XMLUtility {
         }
         return "";
     } // end of getElementValue
+    public static void saveCustomerAccounts(List<Customer> customerList) {
+        String filePath =  "src/main/java/server/model/temp_customer_account_list.xml";
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.newDocument();
 
+            // Create the root element <accounts>
+            Element rootElement = doc.createElement("accounts");
+            doc.appendChild(rootElement);
+
+            // Iterate over customer accounts
+            for (Customer customer : customerList) {
+                // Create customer element <customer>
+                Element customerElement = doc.createElement("customer");
+                customerElement.setAttribute("name", customer.getName());
+                rootElement.appendChild(customerElement);
+
+                // Create customer details elements
+                Element nameElement = doc.createElement("name");
+                nameElement.appendChild(doc.createTextNode(customer.getName()));
+                customerElement.appendChild(nameElement);
+
+                Element usernameElement = doc.createElement("username");
+                usernameElement.appendChild(doc.createTextNode(customer.getUsername()));
+                customerElement.appendChild(usernameElement);
+
+                Element addressElement = doc.createElement("address");
+                addressElement.appendChild(doc.createTextNode(customer.getAddress()));
+                customerElement.appendChild(addressElement);
+
+                Element emailElement = doc.createElement("email");
+                emailElement.appendChild(doc.createTextNode(customer.getEmail()));
+                customerElement.appendChild(emailElement);
+
+                Element passwordElement = doc.createElement("password");
+                passwordElement.appendChild(doc.createTextNode(customer.getPassword()));
+                customerElement.appendChild(passwordElement);
+
+                // Create order history element <orderHistory>
+                Element orderHistoryElement = doc.createElement("orderHistory");
+                orderHistoryElement.setAttribute("list", "order history");
+                customerElement.appendChild(orderHistoryElement);
+
+                // Iterate over orders in order history
+                for (Order order : customer.getOrderHistory()) {
+                    // Create order element <order>
+                    Element orderElement = doc.createElement("order");
+                    orderHistoryElement.appendChild(orderElement);
+
+                    // Iterate over products in the order
+                    for (Product product : order.getOrders()) {
+                        // Create product element <product>
+                        Element productElement = doc.createElement("product");
+                        orderElement.appendChild(productElement);
+
+                        // Add product details
+                        Element productNameElement = doc.createElement("name");
+                        productNameElement.appendChild(doc.createTextNode(product.getName()));
+                        productElement.appendChild(productNameElement);
+
+                        Element productTypeElement = doc.createElement("type");
+                        productTypeElement.appendChild(doc.createTextNode(String.valueOf(product.getType())));
+                        productElement.appendChild(productTypeElement);
+
+                        Element productReviewElement = doc.createElement("review");
+                        productReviewElement.appendChild(doc.createTextNode(String.valueOf(product.getReview())));
+                        productElement.appendChild(productReviewElement);
+
+
+                        Element imageElement = doc.createElement("image");
+                        String imageURL= product.getImage().getUrl();
+                        File imageFile = new File(imageURL);
+                        imageElement.appendChild(doc.createTextNode(imageFile.getName()));
+                        productElement.appendChild(imageElement);
+
+                        if (product instanceof Food) {
+                            // For Food products
+                            // Add quantity element
+                            Element productQuantityElement = doc.createElement("quantity");
+                            productQuantityElement.appendChild(doc.createTextNode(String.valueOf(((Food) product).getQuantity())));
+                            productElement.appendChild(productQuantityElement);
+                        } else if (product instanceof Beverage) {
+                            // For Beverage products
+                            Beverage beverage = (Beverage) product;
+
+                            // Iterate over sizeQuantity map entries
+                            for (Map.Entry<String, Integer> entry : beverage.getSizeQuantity().entrySet()) {
+                                String size = entry.getKey();
+                                Integer quantity = entry.getValue();
+
+                                // Check if quantity is greater than 0
+                                if (quantity > 0) {
+                                    // Create size element
+                                    Element sizeElement = doc.createElement("size");
+                                    sizeElement.appendChild(doc.createTextNode(size));
+                                    productElement.appendChild(sizeElement);
+
+                                    // Create quantity element
+                                    Element quantityElement = doc.createElement("quantity");
+                                    quantityElement.appendChild(doc.createTextNode(String.valueOf(quantity)));
+                                    productElement.appendChild(quantityElement);
+
+                                }
+                            }
+                        }
+
+                    }
+
+
+                    // Add order details
+                    Element timeStampElement = doc.createElement("timeStamp");
+                    timeStampElement.appendChild(doc.createTextNode(order.getTimeStamp()));
+                    orderElement.appendChild(timeStampElement);
+
+                    Element totalPriceElement = doc.createElement("totalPrice");
+                    totalPriceElement.appendChild(doc.createTextNode(String.valueOf(order.getTotalPrice())));
+                    orderElement.appendChild(totalPriceElement);
+
+                    Element statusElement = doc.createElement("status");
+                    statusElement.appendChild(doc.createTextNode(String.valueOf(order.isStatus())));
+                    orderElement.appendChild(statusElement);
+
+                    Element idElement = doc.createElement("id");
+                    idElement.appendChild(doc.createTextNode(String.valueOf(order.getID())));
+                    orderElement.appendChild(idElement);
+                }//end of for each Order in the list
+
+
+            }//end of for each Customer in the List
+
+            // Write the content into XML file
+            tf = TransformerFactory.newInstance();
+            transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(filePath));
+            transformer.transform(source, result);
+
+            System.out.println("XML file saved successfully!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     // HELPER METHOD
     /**
      * Creates a new JavaFX Image object from the given filename.
