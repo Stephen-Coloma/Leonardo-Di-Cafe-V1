@@ -1,5 +1,8 @@
 package shared;
 
+import javafx.scene.image.Image;
+import util.exception.OutOfStockException;
+
 import java.util.HashMap;
 
 /**This class represents a beverage object where there is a variation for the product.
@@ -10,8 +13,8 @@ public class Beverage extends Product{
     private HashMap<String, Double> sizePrice;
 
     //constructor
-    public Beverage(String productName, char productType, double productReview, int productReviewCount, int sQuantity, int mQuantity, int lQuantity, double sPrice, double mPrice, double lPrice) {
-        super(productName, productType, productReview, productReviewCount);
+    public Beverage(String name, char type, double review, int reviewCount, Image image, String description, int sQuantity, int mQuantity, int lQuantity, double sPrice, double mPrice, double lPrice) {
+        super(name, type, review, reviewCount, image, description);
 
         HashMap<String, Integer> sizeQuantity = new HashMap<>(3);
         sizeQuantity.put("small", sQuantity);
@@ -67,8 +70,12 @@ public class Beverage extends Product{
                 if (quantity < 0){
                     quantity++;
                     sizeQuantity.put(size, quantity);
-                    throw new Exception("Out of Stocks");
+                    throw new OutOfStockException("Out of Stock");
                 }
+
+                //reaches here means no error updating the value
+                int sold =  super.getAmountSold() + 1;
+                super.setAmountSold(sold);
             }
         }else if (size.equals("medium")){
             synchronized (this){
@@ -79,8 +86,12 @@ public class Beverage extends Product{
                 if (quantity < 0){
                     quantity++;
                     sizeQuantity.put(size, quantity);
-                    throw new Exception("Out of Stocks");
+                    throw new OutOfStockException("Out of Stock");
                 }
+
+                //reaches here means no error updating the value
+                int sold =  super.getAmountSold() + 1;
+                super.setAmountSold(sold);
             }
         }else if (size.equals("large")){
             synchronized (this){
@@ -91,12 +102,19 @@ public class Beverage extends Product{
                 if (quantity < 0){
                     quantity++;
                     sizeQuantity.put(size, quantity);
-                    throw new Exception("Out of Stocks");
+                    throw new OutOfStockException("Out of Stock");
                 }
+
+                //reaches here means no error updating the value
+                int sold =  super.getAmountSold() + 1;
+                super.setAmountSold(sold);
             }
         }
     }
 
+    /**This method is used to update quantity of the variation of the beverage for a given amount of order
+     It accommodates multiple threads but will only allow one thread to make an update to a specific size
+     @throws Exception when out of stocks*/
     public void updateQuantity(String size, int count) throws Exception{
         if (size.equals("small")){
             synchronized (this){
@@ -106,8 +124,12 @@ public class Beverage extends Product{
 
                 if (left < 0){
                     sizeQuantity.put(size, temp);
-                    throw new Exception("Out of Stocks");
+                    throw new OutOfStockException("Out of Stock");
                 }
+
+                //reaches here means no error updating the value
+                int sold = super.getAmountSold() + count;
+                super.setAmountSold(sold);
             }
         }else if (size.equals("medium")){
             synchronized (this){
@@ -117,8 +139,12 @@ public class Beverage extends Product{
 
                 if (left < 0){
                     sizeQuantity.put(size, temp);
-                    throw new Exception("Out of Stocks");
+                    throw new OutOfStockException("Out of Stock");
                 }
+
+                //reaches here means no error updating the value
+                int sold = super.getAmountSold() + count;
+                super.setAmountSold(sold);
             }
         }else if (size.equals("large")){
             synchronized (this){
@@ -128,15 +154,20 @@ public class Beverage extends Product{
 
                 if (left < 0){
                     sizeQuantity.put(size, temp);
-                    throw new Exception("Out of Stocks");
+                    throw new OutOfStockException("Out of Stock");
                 }
+
+                //reaches here means no error updating the value
+                int sold = super.getAmountSold() + count;
+                super.setAmountSold(sold);
             }
         }
     }
 
     @Override
     public String toString() {
-        return "Beverage{" +
+        String concat = super.toString();
+        return "Beverage{" + concat +
                 "sizeQuantity=" + sizeQuantity +
                 ", sizePrice=" + sizePrice +
                 '}';
