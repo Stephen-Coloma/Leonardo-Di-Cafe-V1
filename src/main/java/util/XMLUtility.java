@@ -91,7 +91,7 @@ public class XMLUtility {
                             review =  Double.parseDouble(foodDetail.getTextContent());
                             break;
                         case "reviewCount":
-                            reviewCount =  Integer.parseInt(foodDetail.getTextContent());
+                            reviewCount =  (int) Double.parseDouble(foodDetail.getTextContent());
                             break;
                         case "image":
                             String fileName = foodDetail.getTextContent();
@@ -101,10 +101,10 @@ public class XMLUtility {
                             description =  foodDetail.getTextContent();
                             break;
                         case "amountSold":
-                            amountSold = Integer.parseInt(foodDetail.getTextContent());
+                            amountSold = (int) Double.parseDouble(foodDetail.getTextContent());
                             break;
                         case "quantity":
-                            quantity = Integer.parseInt(foodDetail.getTextContent()) ;
+                            quantity = (int) Double.parseDouble(foodDetail.getTextContent()) ;
                             break;
                         case "price":
                             price =  Double.parseDouble(foodDetail.getTextContent());
@@ -148,16 +148,16 @@ public class XMLUtility {
                             String name = getElementValue(beverage, "name");
                             char type = getElementValue(beverage, "type").charAt(0);
                             double review = Double.parseDouble(getElementValue(beverage, "review"));
-                            int reviewCount = Integer.parseInt(getElementValue(beverage, "reviewCount"));
+                            int reviewCount = (int) Double.parseDouble(getElementValue(beverage, "reviewCount"));
                             Image image = getImage(getElementValue(beverage, "image"));
                             String description = getElementValue(beverage, "description");
-                            int amountSold = Integer.parseInt(getElementValue(beverage, "amountSold"));
+                            int amountSold = (int) Double.parseDouble(getElementValue(beverage, "amountSold"));
 
                             Map<String, Integer> quantityList = IntStream.range(0, beverage.getElementsByTagName("quantity").getLength())
                                     .mapToObj(i -> (Element) beverage.getElementsByTagName("quantity").item(i))
                                     .collect(toMap(
                                             e -> e.getAttribute("size"),
-                                            e -> Integer.parseInt(e.getTextContent())
+                                            e -> (int) Double.parseDouble(e.getTextContent())
                                     ));
 
                             Map<String, Double> priceList = IntStream.range(0, beverage.getElementsByTagName("price").getLength())
@@ -230,7 +230,7 @@ public class XMLUtility {
                             String imageName = productElement.getElementsByTagName("image").item(0).getTextContent();
                             Image prodImage = getImage(imageName);
                             String prodSize = productElement.getElementsByTagName("size").item(0).getTextContent();
-                            int prodQuantity = Integer.parseInt(productElement.getElementsByTagName("quantity").item(0).getTextContent());
+                            int prodQuantity = (int) Double.parseDouble(productElement.getElementsByTagName("quantity").item(0).getTextContent());
 
                             Product product = null;
                             if (prodType == 'f') {
@@ -255,7 +255,7 @@ public class XMLUtility {
                     }
 
                     // Parse order details
-                    int id = Integer.parseInt(orderElement.getElementsByTagName("orderID").item(0).getTextContent());
+                    int id = (int) Double.parseDouble(orderElement.getElementsByTagName("orderID").item(0).getTextContent());
                     String timeStamp = orderElement.getElementsByTagName("timeStamp").item(0).getTextContent();
                     double totalPrice = Double.parseDouble(orderElement.getElementsByTagName("totalPrice").item(0).getTextContent());
                     boolean status = Boolean.parseBoolean(orderElement.getElementsByTagName("status").item(0).getTextContent());
@@ -500,6 +500,154 @@ public class XMLUtility {
         }
     } // end of saveBeverageMenu
 
+    /**This method saves the customer list to an xml file*/
+    public static void saveCustomerAccounts(List<Customer> customerList) {
+        File file =  new File("src/main/java/server/model/customer_account_list.xml");
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.newDocument();
+
+            // Create the root element <accounts>
+            Element rootElement = doc.createElement("accounts");
+            doc.appendChild(rootElement);
+
+            // Iterate over customer accounts
+            for (Customer customer : customerList) {
+                // Create customer element <customer>
+                Element customerElement = doc.createElement("customer");
+                customerElement.setAttribute("name", customer.getName());
+                rootElement.appendChild(customerElement);
+
+                // Create customer details elements
+                Element nameElement = doc.createElement("name");
+                nameElement.appendChild(doc.createTextNode(customer.getName()));
+                customerElement.appendChild(nameElement);
+
+                Element usernameElement = doc.createElement("username");
+                usernameElement.appendChild(doc.createTextNode(customer.getUsername()));
+                customerElement.appendChild(usernameElement);
+
+                Element addressElement = doc.createElement("address");
+                addressElement.appendChild(doc.createTextNode(customer.getAddress()));
+                customerElement.appendChild(addressElement);
+
+                Element emailElement = doc.createElement("email");
+                emailElement.appendChild(doc.createTextNode(customer.getEmail()));
+                customerElement.appendChild(emailElement);
+
+                Element passwordElement = doc.createElement("password");
+                passwordElement.appendChild(doc.createTextNode(customer.getPassword()));
+                customerElement.appendChild(passwordElement);
+
+                // Create order history element <orderHistory>
+                Element orderHistoryElement = doc.createElement("orderHistory");
+                orderHistoryElement.setAttribute("list", "order history");
+                customerElement.appendChild(orderHistoryElement);
+
+                // Iterate over orders in order history
+                for (Order order : customer.getOrderHistory()) {
+                    // Create order element <order>
+                    Element orderElement = doc.createElement("order");
+                    orderHistoryElement.appendChild(orderElement);
+
+                    // Iterate over products in the order
+                    for (Product product : order.getOrders()) {
+                        // Create product element <product>
+                        Element productElement = doc.createElement("product");
+                        orderElement.appendChild(productElement);
+
+                        // Add product details
+                        Element productNameElement = doc.createElement("name");
+                        productNameElement.appendChild(doc.createTextNode(product.getName()));
+                        productElement.appendChild(productNameElement);
+
+                        Element productTypeElement = doc.createElement("type");
+                        productTypeElement.appendChild(doc.createTextNode(String.valueOf(product.getType())));
+                        productElement.appendChild(productTypeElement);
+
+                        Element productReviewElement = doc.createElement("review");
+                        productReviewElement.appendChild(doc.createTextNode(String.valueOf(product.getReview())));
+                        productElement.appendChild(productReviewElement);
+
+
+                        Element imageElement = doc.createElement("image");
+                        String imageURL= product.getImage().getUrl();
+                        File imageFile = new File(imageURL);
+                        imageElement.appendChild(doc.createTextNode(imageFile.getName()));
+                        productElement.appendChild(imageElement);
+
+                        if (product instanceof Food) {
+                            // For Food products
+                            // Add quantity element
+                            Element productQuantityElement = doc.createElement("quantity");
+                            productQuantityElement.appendChild(doc.createTextNode(String.valueOf(((Food) product).getQuantity())));
+                            productElement.appendChild(productQuantityElement);
+                        } else if (product instanceof Beverage) {
+                            // For Beverage products
+                            Beverage beverage = (Beverage) product;
+
+                            // Iterate over sizeQuantity map entries
+                            for (Map.Entry<String, Integer> entry : beverage.getSizeQuantity().entrySet()) {
+                                String size = entry.getKey();
+                                Integer quantity = entry.getValue();
+
+                                // Check if quantity is greater than 0
+                                if (quantity > 0) {
+                                    // Create size element
+                                    Element sizeElement = doc.createElement("size");
+                                    sizeElement.appendChild(doc.createTextNode(size));
+                                    productElement.appendChild(sizeElement);
+
+                                    // Create quantity element
+                                    Element quantityElement = doc.createElement("quantity");
+                                    quantityElement.appendChild(doc.createTextNode(String.valueOf(quantity)));
+                                    productElement.appendChild(quantityElement);
+
+                                }
+                            }
+                        }
+
+                    }
+
+
+                    // Add order details
+                    Element timeStampElement = doc.createElement("timeStamp");
+                    timeStampElement.appendChild(doc.createTextNode(order.getTimeStamp()));
+                    orderElement.appendChild(timeStampElement);
+
+                    Element totalPriceElement = doc.createElement("totalPrice");
+                    totalPriceElement.appendChild(doc.createTextNode(String.valueOf(order.getTotalPrice())));
+                    orderElement.appendChild(totalPriceElement);
+
+                    Element statusElement = doc.createElement("status");
+                    statusElement.appendChild(doc.createTextNode(String.valueOf(order.isStatus())));
+                    orderElement.appendChild(statusElement);
+
+                    Element idElement = doc.createElement("id");
+                    idElement.appendChild(doc.createTextNode(String.valueOf(order.getID())));
+                    orderElement.appendChild(idElement);
+                }//end of for each Order in the list
+
+
+            }//end of for each Customer in the List
+
+            // Write the content into XML file
+            tf = TransformerFactory.newInstance();
+            transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,"yes");
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(file);
+            transformer.transform(source, result);
+
+            System.out.println("XML file saved successfully!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**Helper method*/
     private static Customer processCustomerElement(Node customer) {
         String name = ((Element) customer).getAttribute("name");
@@ -574,7 +722,7 @@ public class XMLUtility {
                     status = Boolean.parseBoolean(orderDetailElement.getTextContent());
                     break;
                 case "id":
-                    id = Integer.parseInt(orderDetailElement.getTextContent());
+                    id = (int) Double.parseDouble(orderDetailElement.getTextContent());
                     break;
             }
         }
@@ -603,7 +751,7 @@ public class XMLUtility {
                     prodType = productDetail.getTextContent().charAt(0);
                     break;
                 case "review":
-                    prodReview = Integer.parseInt(productDetail.getTextContent());
+                    prodReview = (int) Double.parseDouble(productDetail.getTextContent());
                     break;
                 case "image":
                     String fileName = productDetail.getTextContent();
@@ -613,7 +761,7 @@ public class XMLUtility {
                     prodSize = productDetail.getTextContent();
                     break;
                 case "quantity":
-                    prodQuantity = Integer.parseInt(productDetail.getTextContent());
+                    prodQuantity = (int) Double.parseDouble(productDetail.getTextContent());
                     break;
             }
         }
@@ -637,7 +785,6 @@ public class XMLUtility {
         }
         return null;
     }
-
     // HELPER METHOD
     /**
      * Retrieves the text content of the first occurrence of the specified tag name within the parent element.
@@ -652,7 +799,6 @@ public class XMLUtility {
         }
         return "";
     } // end of getElementValue
-
     // HELPER METHOD
     /**
      * Creates a new JavaFX Image object from the given filename.

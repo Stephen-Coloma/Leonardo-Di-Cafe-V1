@@ -8,17 +8,17 @@
         <orderHistory list="order history">
             <order>
                 <product>
-                    <name>Espresso Roast</name>
+                    <name>Black Iced Coffee</name>
                     <type>b</type>
-                    <review>5</review>
-                    <image>sample.png</image>
+                    <review>5.0</review>
+                    <image>Black Iced Coffee.png</image>
                     <size>small</size>
                     <quantity>2</quantity>
                 </product>
                 <product>
                     <name>French Roast</name>
                     <type>b</type>
-                    <review>4</review>
+                    <review>4.0</review>
                     <image>sample.png</image>
                     <size>medium</size>
                     <quantity>1</quantity>
@@ -26,19 +26,19 @@
                 <product>
                     <name>Croissant</name>
                     <type>f</type>
-                    <review>3</review>
+                    <review>3.0</review>
                     <image>sample.png</image>
                     <quantity>1</quantity>
                 </product>
                 <product>
                     <name>Red Velvet Cupcake</name>
                     <type>f</type>
-                    <review>5</review>
+                    <review>5.0</review>
                     <image>sample.png</image>
                     <quantity>5</quantity>
                 </product>
                 <timeStamp>12/23/2023</timeStamp>
-                <totalPrice>345</totalPrice>
+                <totalPrice>345.0</totalPrice>
                 <status>true</status>
                 <id>0</id>
             </order>
@@ -46,13 +46,13 @@
                 <product>
                     <name>Cappuccino</name>
                     <type>b</type>
-                    <review>4</review>
+                    <review>4.0</review>
                     <image>sample.png</image>
                     <size>large</size>
                     <quantity>2</quantity>
                 </product>
                 <timeStamp>12/29/2023</timeStamp>
-                <totalPrice>45</totalPrice>
+                <totalPrice>45.0</totalPrice>
                 <status>true</status>
                 <id>1</id>
             </order>
@@ -60,12 +60,12 @@
                 <product>
                     <name>Carrot Cake</name>
                     <type>f</type>
-                    <review>4</review>
+                    <review>4.0</review>
                     <image>sample.png</image>
                     <quantity>1</quantity>
                 </product>
                 <timeStamp>01/05/2024</timeStamp>
-                <totalPrice>55</totalPrice>
+                <totalPrice>55.0</totalPrice>
                 <status>true</status>
                 <id>2</id>
             </order>
@@ -82,7 +82,7 @@
                 <product>
                     <name>Espresso Roast</name>
                     <type>b</type>
-                    <review>5</review>
+                    <review>5.0</review>
                     <image>sample.png</image>
                     <size>small</size>
                     <quantity>2</quantity>
@@ -90,7 +90,7 @@
                 <product>
                     <name>French Roast</name>
                     <type>b</type>
-                    <review>4</review>
+                    <review>4.0</review>
                     <image>sample.png</image>
                     <size>medium</size>
                     <quantity>1</quantity>
@@ -98,19 +98,19 @@
                 <product>
                     <name>Croissant</name>
                     <type>f</type>
-                    <review>3</review>
+                    <review>3.0</review>
                     <image>sample.png</image>
                     <quantity>1</quantity>
                 </product>
                 <product>
                     <name>Red Velvet Cupcake</name>
                     <type>f</type>
-                    <review>5</review>
+                    <review>5.0</review>
                     <image>sample.png</image>
                     <quantity>5</quantity>
                 </product>
                 <timeStamp>12/23/2023</timeStamp>
-                <totalPrice>345</totalPrice>
+                <totalPrice>345.0</totalPrice>
                 <status>true</status>
                 <id>0</id>
             </order>
@@ -118,13 +118,13 @@
                 <product>
                     <name>Cappuccino</name>
                     <type>b</type>
-                    <review>4</review>
+                    <review>4.0</review>
                     <image>sample.png</image>
                     <size>large</size>
                     <quantity>2</quantity>
                 </product>
                 <timeStamp>12/29/2023</timeStamp>
-                <totalPrice>45</totalPrice>
+                <totalPrice>45.0</totalPrice>
                 <status>true</status>
                 <id>1</id>
             </order>
@@ -132,12 +132,12 @@
                 <product>
                     <name>Carrot Cake</name>
                     <type>f</type>
-                    <review>4</review>
+                    <review>4.0</review>
                     <image>sample.png</image>
                     <quantity>1</quantity>
                 </product>
                 <timeStamp>01/05/2024</timeStamp>
-                <totalPrice>55</totalPrice>
+                <totalPrice>55.0</totalPrice>
                 <status>true</status>
                 <id>2</id>
             </order>
