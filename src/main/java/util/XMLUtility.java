@@ -12,8 +12,12 @@ import java.util.*;
 import java.util.stream.IntStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import static java.util.stream.Collectors.toMap;
 
 public class XMLUtility {
@@ -113,6 +117,102 @@ public class XMLUtility {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    /**
+     * Saves the food menu to an XML file.
+     *
+     * @param foodMenu A Map containing food items with their names as keys and Food objects as values.
+     * @param filePath
+     */
+    public static void saveFoodMenu(Map<String, Food> foodMenu, File filePath) {
+        File file = new File("src/main/java/server/model/food_menu.xml");
+
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setIgnoringElementContentWhitespace(true);
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document document = db.parse(file);
+
+            Element root = document.getDocumentElement();
+
+            for (Food food : foodMenu.values()) {
+                String foodName = food.getName();
+
+                NodeList existingFoods = document.getElementsByTagName("food");
+                boolean foodExists = false;
+
+                for (int i = 0; i < existingFoods.getLength(); i++) {
+                    Node node = existingFoods.item(i);
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        Element existingFood = (Element) node;
+                        String existingName = getElementValue(existingFood, "name");
+                        if (existingName.equals(foodName)) {
+                            foodExists = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!foodExists) {
+                    Element foodElement = document.createElement("food");
+                    foodElement.setAttribute("name", food.getName());
+                    root.appendChild(foodElement);
+
+                    Element nameElement = document.createElement("name");
+                    nameElement.appendChild(document.createTextNode(food.getName()));
+                    foodElement.appendChild(nameElement);
+
+                    Element typeElement = document.createElement("type");
+                    typeElement.appendChild(document.createTextNode(String.valueOf(food.getType())));
+                    foodElement.appendChild(typeElement);
+
+                    Element reviewElement = document.createElement("review");
+                    reviewElement.appendChild(document.createTextNode(String.valueOf(food.getReview())));
+                    foodElement.appendChild(reviewElement);
+
+                    Element reviewCountElement = document.createElement("reviewCount");
+                    reviewCountElement.appendChild(document.createTextNode(String.valueOf(food.getReviewCount())));
+                    foodElement.appendChild(reviewCountElement);
+
+                    Element imageElement = document.createElement("image");
+                    //String filename = String.valueOf(food.getImage().getUrl()); // Assuming getImage returns the file name
+                    String filename = String.valueOf(food.getImage());
+                    imageElement.appendChild(document.createTextNode(filename));
+                    foodElement.appendChild(imageElement);
+
+                    Element descriptionElement = document.createElement("description");
+                    descriptionElement.appendChild(document.createTextNode(food.getDescription()));
+                    foodElement.appendChild(descriptionElement);
+
+                    Element amountSoldElement = document.createElement("amountSold");
+                    amountSoldElement.appendChild(document.createTextNode(String.valueOf(food.getAmountSold())));
+                    foodElement.appendChild(amountSoldElement);
+
+                    Element quantityElement = document.createElement("quantity");
+                    quantityElement.appendChild(document.createTextNode(String.valueOf(food.getQuantity())));
+                    foodElement.appendChild(quantityElement);
+
+                    Element priceElement = document.createElement("price");
+                    priceElement.appendChild(document.createTextNode(String.valueOf(food.getPrice())));
+                    foodElement.appendChild(priceElement);
+                }
+            }
+
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(file);
+            transformer.transform(source, result);
+
+            System.out.println("Food menu has been updated and written to file: " + file.getAbsolutePath());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
