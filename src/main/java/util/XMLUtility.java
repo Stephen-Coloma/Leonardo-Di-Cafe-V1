@@ -8,14 +8,13 @@ import org.w3c.dom.NodeList;
 import shared.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.IllegalFormatCodePointException;
-import java.util.List;
+import java.util.*;
+import java.util.stream.IntStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import static java.util.stream.Collectors.toMap;
 
 public class XMLUtility {
     //Builder and Transformers
@@ -135,94 +134,76 @@ public class XMLUtility {
             db = dbf.newDocumentBuilder();
             document = db.parse(filePath);
 
-            Element root = document.getDocumentElement();
-            NodeList beverageList = root.getElementsByTagName("beverage");
+            NodeList beverageList = document.getElementsByTagName("beverage");
 
-            for (int i = 0; i < beverageList.getLength(); i++) {
-                Node beverage = beverageList.item(i);
+            IntStream.range(0, beverageList.getLength())
+                    .mapToObj(beverageList::item)
+                    .forEach(beverageNode -> {
+                        if (beverageNode.getNodeType() == Node.ELEMENT_NODE) {
+                            Element beverage = (Element) beverageNode;
 
-                String name = "";
-                char type = ' ';
-                double review = 0;
-                int reviewCount = 0;
-                Image image = null;
-                String description = "";
-                int amountSold = 0;
-                int sQuantity = 0;
-                int mQuantity = 0;
-                int lQuantity = 0;
-                double sPrice = 0;
-                double mPrice = 0;
-                double lPrice = 0;
+                            String name = getElementValue(beverage, "name");
+                            char type = getElementValue(beverage, "type").charAt(0);
+                            double review = Double.parseDouble(getElementValue(beverage, "review"));
+                            int reviewCount = Integer.parseInt(getElementValue(beverage, "reviewCount"));
+                            Image image = getImage(getElementValue(beverage, "image"));
+                            String description = getElementValue(beverage, "description");
+                            int amountSold = Integer.parseInt(getElementValue(beverage, "amountSold"));
 
-                NodeList beverageDetails = beverage.getChildNodes();
-                for (int j = 0; j < beverageDetails.getLength(); j++) {
-                    Node beverageDetail = beverageDetails.item(j);
+                            Map<String, Integer> quantityList = IntStream.range(0, beverage.getElementsByTagName("quantity").getLength())
+                                    .mapToObj(i -> (Element) beverage.getElementsByTagName("quantity").item(i))
+                                    .collect(toMap(
+                                            e -> e.getAttribute("size"),
+                                            e -> Integer.parseInt(e.getTextContent())
+                                    ));
 
-                    switch (beverageDetail.getNodeName()) {
-                        case "name" -> name = beverageDetail.getTextContent();
-                        case "type" -> type = beverageDetail.getTextContent().charAt(0);
-                        case "review" -> review = Double.parseDouble(beverageDetail.getTextContent());
-                        case "reviewCount" -> reviewCount = Integer.parseInt(beverageDetail.getTextContent());
-                        case "image" -> {
-                            String filename = beverageDetail.getTextContent();
-                            String path = "src/main/resources/fxml/productimages/" + filename;
-                            try {
-                                image = new Image(new FileInputStream(path));
-                            } catch (Exception e) {
-                                System.out.println("image not loaded");
-                                e.printStackTrace();
-                            }
+                            Map<String, Double> priceList = IntStream.range(0, beverage.getElementsByTagName("price").getLength())
+                                    .mapToObj(i -> (Element) beverage.getElementsByTagName("price").item(i))
+                                    .collect(toMap(
+                                            e -> e.getAttribute("size"),
+                                            e -> Double.parseDouble(e.getTextContent())
+                                    ));
+
+                            Beverage beverageToAdd = new Beverage(
+                                    name, type, review, reviewCount, image, description,
+                                    quantityList.getOrDefault("small", 0),
+                                    quantityList.getOrDefault("medium", 0),
+                                    quantityList.getOrDefault("large", 0),
+                                    priceList.getOrDefault("small", 0.0),
+                                    priceList.getOrDefault("medium", 0.0),
+                                    priceList.getOrDefault("large", 0.0)
+                            );
+                            beverageToAdd.setAmountSold(amountSold);
+                            beverageMenu.put(beverageToAdd.getName(), beverageToAdd);
+
                         }
-                        case "description" -> description = beverageDetail.getTextContent();
-                        case "amountSold" -> amountSold = Integer.parseInt(beverageDetail.getTextContent());
-                        case "quantities" -> {
-                            NodeList quantityList = beverageDetail.getChildNodes();
-                            for (int k = 0; k < quantityList.getLength(); k++) {
-                                Node quantityNode = quantityList.item(k);
+                    });
 
-                                if (quantityNode.getNodeType() == Node.ELEMENT_NODE) {
-                                    Element quantityElement = (Element) quantityNode;
-                                    String size = quantityElement.getAttribute("size");
-                                    int quantity = Integer.parseInt(quantityElement.getTextContent());
-                                    switch (size) {
-                                        case "small" -> sQuantity = quantity;
-                                        case "medium" -> mQuantity = quantity;
-                                        case "large" -> lQuantity = quantity;
-                                    }
-                                }
-                            }
-                        }
-                        case "prices" -> {
-                            NodeList pricesList = beverageDetail.getChildNodes();
-                            for (int l = 0; l < pricesList.getLength(); l++) {
-                                Node priceNode = pricesList.item(l);
+            System.out.println(beverageMenu.get("Mona Lisa Macchiato"));
+            System.out.println(beverageMenu.get("Virtuvian Vanilla Latte"));
+            System.out.println(beverageMenu.get("Renaissance Ristretto"));
 
-                                if (priceNode.getNodeType() == Node.ELEMENT_NODE) {
-                                    Element priceElement = (Element) priceNode;
-                                    String size = priceElement.getAttribute("size");
-                                    Double price = Double.parseDouble(priceElement.getTextContent());
-                                    switch (size) {
-                                        case "small" -> sPrice = price;
-                                        case "medium" -> mPrice = price;
-                                        case "large" -> lPrice = price;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+            System.out.println();
+            System.out.println(beverageMenu.get("Mona Lisa Macchiato").getName());
+            System.out.println(beverageMenu.get("Mona Lisa Macchiato").getSizeQuantity());
+            System.out.println(beverageMenu.get("Mona Lisa Macchiato").getSizePrice());
 
-                Beverage beverageToAdd = new Beverage(name, type, review, reviewCount, image, description, sQuantity, mQuantity, lQuantity, sPrice, mPrice, lPrice);
-                beverageToAdd.setAmountSold(amountSold);
-                beverageMenu.put(beverageToAdd.getName(), beverageToAdd);
-            }
+            System.out.println();
+            System.out.println(beverageMenu.get("Virtuvian Vanilla Latte").getName());
+            System.out.println(beverageMenu.get("Virtuvian Vanilla Latte").getSizeQuantity());
+            System.out.println(beverageMenu.get("Virtuvian Vanilla Latte").getSizePrice());
+
+            System.out.println();
+            System.out.println(beverageMenu.get("Renaissance Ristretto").getName());
+            System.out.println(beverageMenu.get("Renaissance Ristretto").getSizeQuantity());
+            System.out.println(beverageMenu.get("Renaissance Ristretto").getSizePrice());
+
             return beverageMenu;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
-    }
+    } // end of loadBeverageMenu
 
     /**This method loads the orders from a xml file. These orders are order summary for the server admin to access.*/
     private static Object loadOrders(File filePath) {
@@ -273,20 +254,20 @@ public class XMLUtility {
                             if (prodType == 'f') {
                                 product = new Food(prodName, prodType, prodReview, 0, prodImage, "", prodQuantity, 0);
                             }else if (prodType == 'b'){
-                                    int sQuantity = 0;
-                                    int mQuantity = 0;
-                                    int lQuantity = 0;
+                                int sQuantity = 0;
+                                int mQuantity = 0;
+                                int lQuantity = 0;
 
-                                    if (prodSize.equals("small")){
-                                        sQuantity = prodQuantity;
-                                    }else if (prodSize.equals("medium")){
-                                        mQuantity = prodQuantity;
-                                    }else if (prodSize.equals("large")){
-                                        lQuantity = prodQuantity;
-                                    }
+                                if (prodSize.equals("small")){
+                                    sQuantity = prodQuantity;
+                                }else if (prodSize.equals("medium")){
+                                    mQuantity = prodQuantity;
+                                }else if (prodSize.equals("large")){
+                                    lQuantity = prodQuantity;
+                                }
                                 product = new Beverage(prodName, prodType, prodReview, 0, prodImage, null, sQuantity, mQuantity, lQuantity, 0,0,0);
                             }
-                                    
+
                             productList.add(product);
                         }
                     }
@@ -476,4 +457,35 @@ public class XMLUtility {
         }
         return null;
     }
+
+    // HELPER METHOD
+    /**
+     * Retrieves the text content of the first occurrence of the specified tag name within the parent element.
+     * @param parentElement the parent element to retrieve the text content
+     * @param tagName the name of the tag whose content is to be retrieved
+     * @return the content of the first occurrence of the specified tag name
+     */
+    private static String getElementValue(Element parentElement, String tagName) {
+        NodeList nodeList = parentElement.getElementsByTagName(tagName);
+        if (nodeList.getLength() > 0) {
+            return nodeList.item(0).getTextContent();
+        }
+        return "";
+    } // end of getElementValue
+
+    // HELPER METHOD
+    /**
+     * Creates a new JavaFX Image object from the given filename.
+     * @param filename the path to the image file
+     * @return the Image object created from the specified file
+     */
+    private static Image getImage(String filename) {
+        try {
+            return new Image(new FileInputStream("src/main/resources/fxml/productimages/" + filename));
+        } catch (Exception e) {
+            System.out.println("image not loaded");
+            e.printStackTrace();
+        }
+        return null;
+    } // end of getImage
 }
