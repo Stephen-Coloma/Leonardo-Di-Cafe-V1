@@ -12,8 +12,16 @@ import java.util.*;
 import java.util.stream.IntStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
 import static java.util.stream.Collectors.toMap;
 
 public class XMLUtility {
@@ -120,7 +128,7 @@ public class XMLUtility {
      * @param filePath the path where the xml file is located
      * @return the Object that represents the list of beverages available
      */
-    private static Object loadBeverageMenu(File filePath){
+    private static Object loadBeverageMenu(File filePath) {
         HashMap<String, Beverage> beverageMenu = new HashMap<>();
 
         try {
@@ -286,6 +294,114 @@ public class XMLUtility {
         }
         return customerAccountList;
     }
+
+    /**
+     * Saves the provided beverage menu to an XML file.
+     * @param beverageMenu a map containing beverage names as keys and Beverage objects as values.
+     */
+    public static void saveBeverageMenu(Map<String, Beverage> beverageMenu) {
+        File file = new File("src/main/java/server/model/beverage_menu.xml");
+
+        try {
+            dbf = DocumentBuilderFactory.newInstance();
+            dbf.setIgnoringElementContentWhitespace(true);
+            db = dbf.newDocumentBuilder();
+            document = db.parse(file);
+            //document = db.newDocument();
+
+            Element root = document.getDocumentElement();
+
+            //Element root = document.createElement("beveragemenu");
+            //document.appendChild(root);
+
+            for (Beverage beverage : beverageMenu.values()) {
+                String beverageName = beverage.getName();
+
+                NodeList existingBeverages = document.getElementsByTagName("beverage");
+                boolean beverageExists = false;
+
+                for (int i = 0; i < existingBeverages.getLength(); i++) {
+                    Node node = existingBeverages.item(i);
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        Element existingBeverage = (Element) node;
+                        String existingName = getElementValue(existingBeverage, "name");
+                        if (existingName.equals(beverageName)) {
+                            beverageExists = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!beverageExists) {
+                    Element beverageElement = document.createElement("beverage");
+                    beverageElement.setAttribute("name", beverage.getName());
+                    root.appendChild(beverageElement);
+
+                    Element nameElement = document.createElement("name");
+                    nameElement.appendChild(document.createTextNode(beverage.getName()));
+                    beverageElement.appendChild(nameElement);
+
+                    Element typeElement = document.createElement("type");
+                    typeElement.appendChild(document.createTextNode(String.valueOf(beverage.getType())));
+                    beverageElement.appendChild(typeElement);
+
+                    Element reviewElement = document.createElement("review");
+                    reviewElement.appendChild(document.createTextNode(String.valueOf(beverage.getReview())));
+                    beverageElement.appendChild(reviewElement);
+
+                    Element reviewCountElement = document.createElement("reviewCount");
+                    reviewCountElement.appendChild(document.createTextNode(String.valueOf(beverage.getReviewCount())));
+                    beverageElement.appendChild(reviewCountElement);
+
+                    Element imageElement = document.createElement("image");
+                    String filename = beverage.getImage().getUrl();
+                    File imageFile = new File(filename);
+                    imageElement.appendChild(document.createTextNode(imageFile.getName()));
+                    beverageElement.appendChild(imageElement);
+
+                    Element descriptionElement = document.createElement("description");
+                    descriptionElement.appendChild(document.createTextNode(beverage.getDescription()));
+                    beverageElement.appendChild(descriptionElement);
+
+                    Element amountSoldElement = document.createElement("amountSold");
+                    amountSoldElement.appendChild(document.createTextNode(String.valueOf(beverage.getAmountSold())));
+                    beverageElement.appendChild(amountSoldElement);
+
+                    Element quantitiesElement = document.createElement("quantities");
+                    for (Map.Entry<String, Integer> entry : beverage.getSizeQuantity().entrySet()) {
+                        Element quantityElement = document.createElement("quantity");
+                        quantityElement.setAttribute("size", entry.getKey());
+                        quantityElement.appendChild(document.createTextNode(String.valueOf(entry.getValue())));
+                        quantitiesElement.appendChild(quantityElement);
+                    }
+                    beverageElement.appendChild(quantitiesElement);
+
+                    Element pricesElement = document.createElement("prices");
+                    for (Map.Entry<String, Double> entry : beverage.getSizePrice().entrySet()) {
+                        Element priceElement = document.createElement("price");
+                        priceElement.setAttribute("size", entry.getKey());
+                        priceElement.appendChild(document.createTextNode(String.valueOf(entry.getValue())));
+                        pricesElement.appendChild(priceElement);
+                    }
+                    beverageElement.appendChild(pricesElement);
+                }
+            }
+            cleanDocument(document);
+
+            tf = TransformerFactory.newInstance();
+            transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(file);
+            transformer.transform(source, result);
+
+            System.out.println("Beverage menu has been updated and written to file: " + file.getAbsolutePath());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    } // end of saveBeverageMenu
 
     /**Helper method*/
     private static Customer processCustomerElement(Node customer) {
@@ -454,4 +570,26 @@ public class XMLUtility {
         }
         return null;
     } // end of getImage
+
+    // HELPER METHOD
+    /**
+     * Cleans the provided XML Document by removing empty text nodes.
+     * @param doc the Document to be cleaned
+     * @throws XPathExpressionException occurs if there is an error during node evaluation
+     */
+    private static void cleanDocument(Document doc) throws XPathExpressionException {
+        XPathFactory xpathFactory = XPathFactory.newInstance();
+        // XPath to find empty text nodes
+        XPathExpression xpathExp = xpathFactory
+                .newXPath()
+                .compile("//text()[normalize-space(.) = '']");
+        NodeList emptyTextNodes = (NodeList) xpathExp
+                .evaluate(doc, XPathConstants.NODESET);
+
+        // Remove each empty text node from document.
+        for (int i = 0; i < emptyTextNodes.getLength(); i++) {
+            Node emptyTextNode = emptyTextNodes.item(i);
+            emptyTextNode.getParentNode().removeChild(emptyTextNode);
+        }
+    } // end of cleanDocument
 }
