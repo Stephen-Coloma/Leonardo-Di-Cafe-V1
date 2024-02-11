@@ -17,6 +17,10 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -269,103 +273,131 @@ public class XMLUtility {
 
     /**
      * Saves a list of orders to an XML file.
-     * This method serializes a list of Order objects into an XML format and saves it to the specified file.
-     * It creates a structured XML document with elements representing each order.
      *
-     * @param filePath the file path where the XML data will be saved
-     * @param orders the list of orders to be serialized and saved
+     * @param orderList A map containing orders with customer names as keys and corresponding Order objects as values.
      */
-    public static void saveOrders(File filePath, List<Order> orders) {
+    public static void saveOrders(List<Order> orderList) {
+        File file = new File("src/main/java/server/model/order_list.xml");
+
         try {
-            // Initialize XML document creation tools
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document document = dBuilder.newDocument();
+            dbf = DocumentBuilderFactory.newInstance();
+            dbf.setIgnoringElementContentWhitespace(true);
+            db = dbf.newDocumentBuilder();
+            document = db.parse(file);
+            //document = db.newDocument();
 
-            // Create the root <orders> element to encapsulate all orders
-            Element rootElement = document.createElement("orders");
-            document.appendChild(rootElement);
+            // Clean the document
+            cleanDocument(document);
 
-            for (Order order : orders) {
-                // Create an <order> element for each order
-                Element orderElement = document.createElement("order");
-                rootElement.appendChild(orderElement);
+            Element root = document.getDocumentElement();
 
-                // Add customer details within <customer> element
-                Element customerElement = document.createElement("customer");
-                orderElement.appendChild(customerElement);
 
-                // Fill in the customer information
-                createElement(document, customerElement, "name", order.getCustomer().getName());
-                createElement(document, customerElement, "username", order.getCustomer().getUsername());
-                createElement(document, customerElement, "address", order.getCustomer().getAddress());
+            for (Order order : orderList) {
 
-                // Process each product in the order
-                for (Product product : order.getOrders()) {
-                    Element productElement = document.createElement("product");
-                    orderElement.appendChild(productElement);
+                String orderName = order.getCustomer().getName();
 
-                    // Add product details
-                    createElement(document, productElement, "name", product.getName());
-                    createElement(document, productElement, "type", String.valueOf(product.getType()));
-                    createElement(document, productElement, "review", String.valueOf(product.getReview()));
-                    // Handle product image
-                    if (product.getImage() != null) {
-                        // Assuming getImageUrl() is a method to retrieve the image URL or path
-                        createElement(document, productElement, "image", product.getImage().getUrl());
-                    }
+                NodeList existingOrders = document.getElementsByTagName("order");
+                boolean orderExists = false;
 
-                    if (product instanceof Beverage) {
-                        Beverage beverage = (Beverage) product;
-
-                        // Iterate over each size variation of the beverage
-                        for (Map.Entry<String, Integer> sizeEntry : beverage.getSizeQuantity().entrySet()) {
-                            String size = sizeEntry.getKey();
-                            Integer quantity = sizeEntry.getValue();
-                            Double price = beverage.getSizePrice().get(size);
-
-                            // Create a <variation> element for each size
-                            Element variationElement = document.createElement("variation");
-                            productElement.appendChild(variationElement);
-
-                            // Add size, quantity, and price details to the variation element
-                            createElement(document, variationElement, "size", size);
-                            createElement(document, variationElement, "quantity", String.valueOf(quantity));
-                            createElement(document, variationElement, "price", String.valueOf(price));
-                            // Check if product has an image and add <image> element
-                            String imagePath = getProductImagePath(product.getName());
-                            if (imagePath != null && !imagePath.isEmpty()) {
-                                createElement(document, productElement, "image", imagePath);
-                            }
-
+                for(int i = 0; i < existingOrders.getLength(); i++){
+                    Node node = existingOrders.item(i);
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        Element existingOrder = (Element) node;
+                        String existingName = getElementValue(existingOrder, "name");
+                        if (existingName.equals(orderName)) {
+                            orderExists = true;
+                            break;
                         }
-
-                    } else if (product instanceof Food) {
-                        Food food = (Food) product;
-                        createElement(document, productElement, "quantity", String.valueOf(food.getQuantity()));
                     }
                 }
 
-                // Add order metadata
-                createElement(document, orderElement, "orderID", String.valueOf(order.getID()));
-                createElement(document, orderElement, "timeStamp", order.getTimeStamp());
-                createElement(document, orderElement, "totalPrice", String.valueOf(order.getTotalPrice()));
-                createElement(document, orderElement, "status", String.valueOf(order.isStatus()));
+                if (!orderExists) {
+                    Element orderElement = document.createElement("order");
+                    root.appendChild(orderElement);
+
+                    Element customerElement = document.createElement("customer");
+                    orderElement.appendChild(customerElement);
+
+                    createElement(document, customerElement, "name", order.getCustomer().getName());
+                    createElement(document, customerElement, "username", order.getCustomer().getUsername());
+                    createElement(document, customerElement, "address", order.getCustomer().getAddress());
+
+                    for (Product product : order.getOrders()) {
+                        Element productElement = document.createElement("product");
+                        orderElement.appendChild(productElement);
+
+                        createElement(document, productElement, "name", product.getName());
+                        createElement(document, productElement, "type", String.valueOf(product.getType()));
+                        createElement(document, productElement, "review", String.valueOf(product.getReview()));
+
+                        if (product.getImage() != null) {
+                            createElement(document, productElement, "image", product.getImage().getUrl());
+                        }
+
+                        if (product instanceof Beverage) {
+                            Beverage beverage = (Beverage) product;
+
+                            for (Map.Entry<String, Integer> sizeEntry : beverage.getSizeQuantity().entrySet()) {
+                                String size = sizeEntry.getKey();
+                                Integer quantity = sizeEntry.getValue();
+                                Double price = beverage.getSizePrice().get(size);
+
+                                Element variationElement = document.createElement("variation");
+                                productElement.appendChild(variationElement);
+
+                                createElement(document, variationElement, "size", size);
+                                createElement(document, variationElement, "quantity", String.valueOf(quantity));
+                                createElement(document, variationElement, "price", String.valueOf(price));
+
+                                if (beverage.getImage() != null) {
+                                    createElement(document, variationElement, "image", beverage.getImage().getUrl());
+                                }
+                            }
+                        } else if (product instanceof Food) {
+                            Food food = (Food) product;
+                            createElement(document, productElement, "quantity", String.valueOf(food.getQuantity()));
+                        }
+                    }
+
+                    createElement(document, orderElement, "orderID", String.valueOf(order.getID()));
+                    createElement(document, orderElement, "timeStamp", order.getTimeStamp());
+                    createElement(document, orderElement, "totalPrice", String.valueOf(order.getTotalPrice()));
+                    createElement(document, orderElement, "status", String.valueOf(order.isStatus()));
+                }
             }
 
-            // Configure transformer to format output
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = tf.newTransformer();
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
-            // Save the document to the file
             DOMSource source = new DOMSource(document);
-            StreamResult result = new StreamResult(filePath);
+            StreamResult result = new StreamResult(file);
             transformer.transform(source, result);
+
+            System.out.println("Orders have been updated and written to file: " + file.getAbsolutePath());
+
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void cleanDocument(Document document) throws XPathExpressionException {
+            /* SOURCE on the code to clean the xml document:
+             https://stackoverflow.com/questions/978810/how-to-strip-whitespace-only-text-nodes-from-a-dom-before-serialization
+            */
+        XPathFactory xpathFactory = XPathFactory.newInstance();
+
+        XPathExpression xpathExp = xpathFactory
+                .newXPath()
+                .compile("//text()[normalize-space(.) = '']");
+        NodeList emptyTextNodes = (NodeList) xpathExp
+                .evaluate(document, XPathConstants.NODESET);
+
+        for (int i = 0; i < emptyTextNodes.getLength(); i++) {
+            Node emptyTextNode = emptyTextNodes.item(i);
+            emptyTextNode.getParentNode().removeChild(emptyTextNode);
         }
     }
 
