@@ -12,8 +12,12 @@ import java.util.*;
 import java.util.stream.IntStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import static java.util.stream.Collectors.toMap;
 
 public class XMLUtility {
@@ -261,6 +265,146 @@ public class XMLUtility {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Saves a list of orders to an XML file.
+     * This method serializes a list of Order objects into an XML format and saves it to the specified file.
+     * It creates a structured XML document with elements representing each order.
+     *
+     * @param filePath the file path where the XML data will be saved
+     * @param orders the list of orders to be serialized and saved
+     */
+    public static void saveOrders(File filePath, List<Order> orders) {
+        try {
+            // Initialize XML document creation tools
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document document = dBuilder.newDocument();
+
+            // Create the root <orders> element to encapsulate all orders
+            Element rootElement = document.createElement("orders");
+            document.appendChild(rootElement);
+
+            for (Order order : orders) {
+                // Create an <order> element for each order
+                Element orderElement = document.createElement("order");
+                rootElement.appendChild(orderElement);
+
+                // Add customer details within <customer> element
+                Element customerElement = document.createElement("customer");
+                orderElement.appendChild(customerElement);
+
+                // Fill in the customer information
+                createElement(document, customerElement, "name", order.getCustomer().getName());
+                createElement(document, customerElement, "username", order.getCustomer().getUsername());
+                createElement(document, customerElement, "address", order.getCustomer().getAddress());
+
+                // Process each product in the order
+                for (Product product : order.getOrders()) {
+                    Element productElement = document.createElement("product");
+                    orderElement.appendChild(productElement);
+
+                    // Add product details
+                    createElement(document, productElement, "name", product.getName());
+                    createElement(document, productElement, "type", String.valueOf(product.getType()));
+                    createElement(document, productElement, "review", String.valueOf(product.getReview()));
+                    // Handle product image
+                    if (product.getImage() != null) {
+                        // Assuming getImageUrl() is a method to retrieve the image URL or path
+                        createElement(document, productElement, "image", product.getImage().getUrl());
+                    }
+
+                    if (product instanceof Beverage) {
+                        Beverage beverage = (Beverage) product;
+
+                        // Iterate over each size variation of the beverage
+                        for (Map.Entry<String, Integer> sizeEntry : beverage.getSizeQuantity().entrySet()) {
+                            String size = sizeEntry.getKey();
+                            Integer quantity = sizeEntry.getValue();
+                            Double price = beverage.getSizePrice().get(size);
+
+                            // Create a <variation> element for each size
+                            Element variationElement = document.createElement("variation");
+                            productElement.appendChild(variationElement);
+
+                            // Add size, quantity, and price details to the variation element
+                            createElement(document, variationElement, "size", size);
+                            createElement(document, variationElement, "quantity", String.valueOf(quantity));
+                            createElement(document, variationElement, "price", String.valueOf(price));
+                            // Check if product has an image and add <image> element
+                            String imagePath = getProductImagePath(product.getName());
+                            if (imagePath != null && !imagePath.isEmpty()) {
+                                createElement(document, productElement, "image", imagePath);
+                            }
+
+                        }
+
+                    } else if (product instanceof Food) {
+                        Food food = (Food) product;
+                        createElement(document, productElement, "quantity", String.valueOf(food.getQuantity()));
+                    }
+                }
+
+                // Add order metadata
+                createElement(document, orderElement, "orderID", String.valueOf(order.getID()));
+                createElement(document, orderElement, "timeStamp", order.getTimeStamp());
+                createElement(document, orderElement, "totalPrice", String.valueOf(order.getTotalPrice()));
+                createElement(document, orderElement, "status", String.valueOf(order.isStatus()));
+            }
+
+            // Configure transformer to format output
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            // Save the document to the file
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(filePath);
+            transformer.transform(source, result);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Helper Method
+     * Create an element with text content to a parent element in an XML document.
+     * This is method used to simplify the addition of elements to the document.
+     *
+     * @param doc the XML document
+     * @param parent the parent element
+     * @param name the tag name of the new element
+     * @param value the text content of the new element
+     */
+    private static void createElement(Document doc, Element parent, String name, String value) {
+        // Create a new element with the given tag name
+        Element element = doc.createElement(name);
+        // Set the text content of this element
+        element.appendChild(doc.createTextNode(value));
+        // Append this element as a child of the parent element
+        parent.appendChild(element);
+    }
+
+    /**
+     * Helper metjod
+     * Retrieves the image path for a given product name.
+     * This method converts the product name to match the naming convention of the image files.
+     *
+     * @param productName The name of the product.
+     * @return The image file path, assuming the file exists.
+     */
+    private static String getProductImagePath(String productName) {
+        // The base directory where product images are stored
+        String baseDir = "src/main/resources/productimages/";
+
+        // Convert the product name to the expected image file name format
+        String sanitizedProductName = productName.trim().replace(" ", "_") + ".png";
+
+        // Construct the full image path
+        return baseDir + sanitizedProductName;
     }
 
     /**This method loads the customer accounts from a xml file where it was saved.
