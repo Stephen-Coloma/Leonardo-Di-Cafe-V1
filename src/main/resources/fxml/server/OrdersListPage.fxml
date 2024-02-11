@@ -4,30 +4,30 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.temporarycontroller.OrdersListPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="738.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.temporarycontroller.OrdersListPageController">
     <top>
-        <Pane prefHeight="51.0" prefWidth="627.0" BorderPane.alignment="CENTER">
+        <Pane prefHeight="61.0" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="14.0" layoutY="13.0" text="LIST OF ORDERS" textFill="#634921">
+                <Label layoutX="14.0" layoutY="15.0" text="LIST OF ORDERS" textFill="#634921">
                     <font>
-                        <Font name="Arial Black" size="17.0" />
+                        <Font name="Arial Black" size="22.0" />
                     </font>
                 </Label>
-                <TextField fx:id="searchOrderTextField" layoutX="320.0" layoutY="13.0" promptText="Search by Order Number" />
+                <TextField fx:id="searchOrderTextField" layoutX="792.0" layoutY="19.0" prefHeight="25.0" prefWidth="194.0" promptText="Search by Order Number" />
             </children>
         </Pane>
     </top>
     <center>
-        <ScrollPane prefHeight="344.0" prefWidth="594.0" BorderPane.alignment="CENTER">
+        <ScrollPane prefHeight="344.0" prefWidth="594.0" style="-fx-background-color: #ECE9E3;" BorderPane.alignment="CENTER">
             <content>
-                <TableView fx:id="orderTableView" prefHeight="336.0" prefWidth="647.0">
+                <TableView fx:id="orderTableView" prefHeight="677.0" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;">
                     <columns>
-                        <TableColumn fx:id="orderIDColumn" prefWidth="56.400008380413055" text="Order ID" />
-                        <TableColumn fx:id="dateAndTimeColumn" prefWidth="110.60000610351562" text="Date and Time" />
-                        <TableColumn fx:id="customerColumn" prefWidth="70.20001220703125" text="Customer " />
-                        <TableColumn fx:id="addressColumn" prefWidth="98.5999755859375" text="Address" />
-                        <TableColumn fx:id="totalColumn" prefWidth="93.5999755859375" text="Total" />
-                        <TableColumn fx:id="statusColumn" prefWidth="75.0" text="Status" />
+                        <TableColumn fx:id="orderIDColumn" prefWidth="122.0" text="Order ID" />
+                        <TableColumn fx:id="dateAndTimeColumn" prefWidth="172.0" text="Date and Time" />
+                        <TableColumn fx:id="customerColumn" prefWidth="199.0" text="Customer " />
+                        <TableColumn fx:id="addressColumn" prefWidth="245.0" text="Address" />
+                        <TableColumn fx:id="totalColumn" prefWidth="121.0" text="Total" />
+                        <TableColumn fx:id="statusColumn" prefWidth="138.0" text="Status" />
                     </columns>
                 </TableView>
             </content>
