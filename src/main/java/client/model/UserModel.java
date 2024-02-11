@@ -133,7 +133,40 @@ public class UserModel {
     } // End of registerUser Method
 
     public boolean validateCredentials(String username, String password) {
-        // Logic to check if the provided username and password match
-        return this.username.equals(username) && this.password.equals(password);
-    }
+       try {
+           // Load the XML file
+           File xmlFile = new File("users.xml");
+           DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+           DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+           Document document = dBuilder.parse(xmlFile);
+
+           // Get the list of the user elements
+           NodeList userList = document.getElementsByTagName("user");
+
+           // Iterate through the user elements
+           for (int i =0; i<userList.getLength(); i++) {
+               Element userElement = (Element) userList.item(i);
+
+               // Extract username and password from the current user element
+               String storedUsername = userElement.getAttribute("username");
+               String storedPassword = userElement.getAttribute("password");
+
+               // Check if the provided username matches the stored username
+               if (storedUsername.equals(username)) {
+                   // If the username match, check if the password match
+                   if (storedPassword.equals(password)) {
+                       // Password matches, return true
+                       return true;
+                   } else {
+                       // Passwords do not match, return false
+                       return false;
+                   }
+               }
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       // Username not found, return false
+        return false;
+    }// End of validateCredentials Method
 }// End of UserModel Class
