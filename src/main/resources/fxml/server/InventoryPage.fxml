@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.temporarycontroller.InventoryPageController">
+    <children>
+        <Text fill="#593117" layoutX="20.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INVENTORY">
+            <font>
+                <Font name="Arial Black" size="29.0" />
+            </font>
+        </Text>
+        <TextField fx:id="searchInventoryTextField" layoutX="420.0" layoutY="41.0" prefHeight="26.0" prefWidth="165.0" promptText="Search" style="-fx-background-color: #ffffff;" />
+        <ScrollPane layoutX="20.0" layoutY="79.0" prefHeight="310.0" prefWidth="573.0">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="310.0" prefWidth="552.0">
+                    <children>
+                        <TableView fx:id="inventoryTableView" prefHeight="310.0" prefWidth="548.0">
+                            <columns>
+                                <TableColumn fx:id="productNameColumn" prefWidth="145.99999696016312" text="Product Name" />
+                                <TableColumn fx:id="typeColumn" prefWidth="122.80000305175781" text="Type" />
+                                <TableColumn fx:id="quantityColumn" prefWidth="151.5999755859375" text="Quantity" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>
