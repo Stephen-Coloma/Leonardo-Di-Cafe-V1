@@ -87,13 +87,7 @@ public class XMLUtility {
                             break;
                         case "image":
                             String fileName = foodDetail.getTextContent();
-                            String path = "src/main/resources/fxml/productimages/" + fileName;
-                            try {
-                                image = new Image(new FileInputStream(path));
-                            }catch (Exception e){
-                                System.out.println("image not loaded");
-                                e.printStackTrace();
-                            }
+                            image = getImage(fileName);
                             break;
                         case "description":
                             description =  foodDetail.getTextContent();
@@ -178,26 +172,6 @@ public class XMLUtility {
 
                         }
                     });
-
-            System.out.println(beverageMenu.get("Mona Lisa Macchiato"));
-            System.out.println(beverageMenu.get("Virtuvian Vanilla Latte"));
-            System.out.println(beverageMenu.get("Renaissance Ristretto"));
-
-            System.out.println();
-            System.out.println(beverageMenu.get("Mona Lisa Macchiato").getName());
-            System.out.println(beverageMenu.get("Mona Lisa Macchiato").getSizeQuantity());
-            System.out.println(beverageMenu.get("Mona Lisa Macchiato").getSizePrice());
-
-            System.out.println();
-            System.out.println(beverageMenu.get("Virtuvian Vanilla Latte").getName());
-            System.out.println(beverageMenu.get("Virtuvian Vanilla Latte").getSizeQuantity());
-            System.out.println(beverageMenu.get("Virtuvian Vanilla Latte").getSizePrice());
-
-            System.out.println();
-            System.out.println(beverageMenu.get("Renaissance Ristretto").getName());
-            System.out.println(beverageMenu.get("Renaissance Ristretto").getSizeQuantity());
-            System.out.println(beverageMenu.get("Renaissance Ristretto").getSizePrice());
-
             return beverageMenu;
         } catch (Exception e) {
             e.printStackTrace();
@@ -245,8 +219,7 @@ public class XMLUtility {
                             double prodReview = Double.parseDouble(productElement.getElementsByTagName("review").item(0).getTextContent());
                             // Parse image
                             String imageName = productElement.getElementsByTagName("image").item(0).getTextContent();
-                            String imagePath = "src/main/resources/fxml/productimages/" + imageName;
-                            Image prodImage = new Image(new FileInputStream(imagePath));
+                            Image prodImage = getImage(imageName);
                             String prodSize = productElement.getElementsByTagName("size").item(0).getTextContent();
                             int prodQuantity = Integer.parseInt(productElement.getElementsByTagName("quantity").item(0).getTextContent());
 
@@ -421,13 +394,7 @@ public class XMLUtility {
                     break;
                 case "image":
                     String fileName = productDetail.getTextContent();
-                    String path = "src/main/resources/fxml/productimages/" + fileName;
-                    try {
-                        prodImage = new Image(new FileInputStream(path));
-                    }catch (Exception e){
-                        System.out.println("image not loaded");
-                        e.printStackTrace();
-                    }
+                    prodImage = getImage(fileName);
                     break;
                 case "size":
                     prodSize = productDetail.getTextContent();
@@ -481,9 +448,8 @@ public class XMLUtility {
      */
     private static Image getImage(String filename) {
         try {
-            return new Image(new FileInputStream("src/main/resources/fxml/productimages/" + filename));
+            return new Image("file:src/main/resources/productimages/" + filename);
         } catch (Exception e) {
-            System.out.println("image not loaded");
             e.printStackTrace();
         }
         return null;
