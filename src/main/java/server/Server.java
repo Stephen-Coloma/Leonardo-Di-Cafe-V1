@@ -31,12 +31,13 @@ public class Server extends Application {
 
             ServerModel model = new ServerModel();
             ServerView view = new ServerView(stage);
+            ServerController controller = new ServerController(model, view);
 
             view.runInterface();
 
             while (view.UIExit()) {
                 Socket client = server.accept();
-                ServerController controller = new ServerController(client, model, view);
+                controller.setClientSocket(client);
                 executorService.submit(controller::run);
             }
         } catch (IOException ioException) {

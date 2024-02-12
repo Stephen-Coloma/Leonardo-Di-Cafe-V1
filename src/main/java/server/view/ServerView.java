@@ -38,20 +38,5 @@ public class ServerView {
         return stage.isShowing();
     }
 
-    /*
-    @Override
-    public void start(Stage stage) {
-        try {
-            System.out.println("Loading Admin Interface");
-            BorderPane root = FXMLLoader.load(getClass().getResource("/fxml/server/MainMenuAdminPage.fxml"));
-            Scene scene = new Scene(root);
-            stage.setTitle("LEONARDO D' Cafe [ADMIN]");
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-    }
 
-     */
 } // end of ServerView class
