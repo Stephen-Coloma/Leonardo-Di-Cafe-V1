@@ -82,7 +82,7 @@
                         </HBox>
                         <PasswordField fx:id="passwordField" prefHeight="33.0" prefWidth="262.0" promptText="Minimun of Six Characters" />
                         <Pane layoutX="10.0" layoutY="57.0" prefHeight="14.0" prefWidth="282.0" VBox.vgrow="ALWAYS" />
-                        <Button id="meow" fx:id="createAccountButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="285.0" onAction="#showLoginUI" onMouseEntered="#createAccountButtonEntered" onMouseExited="#createAccountButtonExited" style="-fx-background-color: #A38157;" text="Create Account" textFill="WHITE">
+                        <Button id="meow" fx:id="createAccountButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="285.0" onMouseEntered="#createAccountButtonEntered" onMouseExited="#createAccountButtonExited" style="-fx-background-color: #A38157;" text="Create Account" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
@@ -90,7 +90,7 @@
                         <Pane layoutX="10.0" layoutY="396.0" prefHeight="14.0" prefWidth="282.0" VBox.vgrow="ALWAYS" />
                         <Line endX="155.60003662109375" endY="-3.0517578125E-5" startX="-100.0" strokeWidth="1.5" style="-fx-stroke: #C8BCA9;" />
                         <Pane layoutX="10.0" layoutY="403.0" prefHeight="14.0" prefWidth="282.0" VBox.vgrow="ALWAYS" />
-                        <CheckBox fx:id="termsAndServiceCheckBox" mnemonicParsing="false" text="By submitting your request you agree to our " textFill="#545454">
+                        <CheckBox fx:id="termsAndServicesCheckBox" mnemonicParsing="false" text="By submitting your request you agree to our " textFill="#545454">
                            <font>
                               <Font size="11.0" />
                            </font>

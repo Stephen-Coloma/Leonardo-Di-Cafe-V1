@@ -24,10 +24,6 @@ public class MainController {
     public Button mainMenuFoodButton;
     @FXML
     public Button mainMenuBeveragesButton;
-    @FXML
-    private Button orderNowButton;
-    @FXML
-    private Button orderHistoryButton;
 
     @FXML
     private Button checkoutButton;
@@ -105,22 +101,6 @@ public class MainController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
-    public void orderNowButtonEntered(MouseEvent event){
-        orderNowButton.setStyle("-fx-background-color: lightgray;");
-        orderNowButton.setTextFill(Paint.valueOf("Black"));
-    }
-    public void orderNowButtonExited(MouseEvent event){
-        orderNowButton.setStyle("-fx-background-color:  #A38157;");
-        orderNowButton.setTextFill(Paint.valueOf("White"));
-    }
-    public void orderHistoryButtonEntered(MouseEvent event){
-        orderHistoryButton.setStyle("-fx-background-color: lightgray;");
-        orderHistoryButton.setTextFill(Paint.valueOf("Black"));
-    }
-    public void orderHistoryButtonExited(MouseEvent event){
-        orderHistoryButton.setStyle("-fx-background-color:  #A38157;");
-        orderHistoryButton.setTextFill(Paint.valueOf("White"));
     }
     public void checkoutButtonEntered(MouseEvent event){
         checkoutButton.setStyle("-fx-background-color: lightgray;");

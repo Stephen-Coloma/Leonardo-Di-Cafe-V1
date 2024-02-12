@@ -18,19 +18,20 @@ public class FrontPageController {
     private Button loginButtonFrontPage;
     @FXML
     private Button registerButtonFrontPage;
+    @FXML
+    private LoginPageController loginPageController;
+    @FXML
+    private SignUpController signUpController;
 
+    private FXMLLoader loader;
+    private Parent root;
     private void loadPage(String page, ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader((getClass().getResource("/fxml/client/"+page+".fxml")));
-        Parent root=null;
-        Stage stage=null;
-        Scene scene=null;
+        loader = new FXMLLoader((getClass().getResource("/fxml/client/"+page+".fxml")));
 
         root = loader.load();
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
         stage.setScene(scene);
-
-
         stage.show();
     }
 
@@ -40,6 +41,7 @@ public class FrontPageController {
     public void showRegistrationUI (ActionEvent event) throws IOException {
         loadPage("signup", event);
     }
+
     public void loginFrontPageButtonEntered(MouseEvent event){
         loginButtonFrontPage.setStyle("-fx-background-color: lightgray;");
         loginButtonFrontPage.setTextFill(Paint.valueOf("Black"));
@@ -55,5 +57,53 @@ public class FrontPageController {
     public void registerFrontPageButtonExited(MouseEvent event){
         registerButtonFrontPage.setStyle("-fx-background-color:  #A38157;");
         registerButtonFrontPage.setTextFill(Paint.valueOf("White"));
+    }
+
+    public Button getLoginButtonFrontPage() {
+        return loginButtonFrontPage;
+    }
+
+    public void setLoginButtonFrontPage(Button loginButtonFrontPage) {
+        this.loginButtonFrontPage = loginButtonFrontPage;
+    }
+
+    public Button getRegisterButtonFrontPage() {
+        return registerButtonFrontPage;
+    }
+
+    public void setRegisterButtonFrontPage(Button registerButtonFrontPage) {
+        this.registerButtonFrontPage = registerButtonFrontPage;
+    }
+
+    public LoginPageController getLoginPageController() {
+        return loginPageController;
+    }
+
+    public void setLoginPageController(LoginPageController loginPageController) {
+        this.loginPageController = loginPageController;
+    }
+
+    public SignUpController getSignUpController() {
+        return signUpController;
+    }
+
+    public void setSignUpController(SignUpController signUpController) {
+        this.signUpController = signUpController;
+    }
+
+    public FXMLLoader getLoader() {
+        return loader;
+    }
+
+    public void setLoader(FXMLLoader loader) {
+        this.loader = loader;
+    }
+
+    public Parent getRoot() {
+        return root;
+    }
+
+    public void setRoot(Parent root) {
+        this.root = root;
     }
 }

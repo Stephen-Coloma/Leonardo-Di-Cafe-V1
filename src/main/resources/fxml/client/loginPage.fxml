@@ -55,9 +55,9 @@
                 <Text layoutX="71.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
                 <Text layoutX="71.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
                 <PasswordField fx:id="passwordField" layoutX="65.0" layoutY="219.0" prefHeight="26.0" prefWidth="272.0" promptText="Enter Password" text="" />
-                <Button fx:id="loginButton" layoutX="72.0" layoutY="351.0" mnemonicParsing="false" onAction="#showFrontPage" onMouseEntered="#loginPageButtonEntered" onMouseExited="#loginPageButtonExited" prefHeight="26.0" prefWidth="272.0" style="-fx-background-color: #A38157;" text="LOG IN" textFill="WHITE" />
+                <Button fx:id="loginButton" layoutX="72.0" layoutY="351.0" mnemonicParsing="false" onMouseEntered="#loginPageButtonEntered" onMouseExited="#loginPageButtonExited" prefHeight="26.0" prefWidth="272.0" style="-fx-background-color: #A38157;" text="LOG IN" textFill="WHITE" />
                 <Label fx:id="forgotPasswordTextLabel" layoutX="74.0" layoutY="411.0" text="Forgot Password" underline="true" />
-                <TextField fx:id="emailTextField" layoutX="65.0" layoutY="152.0" prefHeight="26.0" prefWidth="272.0" promptText="Enter Username" />
+                <TextField fx:id="usernameTextField" layoutX="65.0" layoutY="152.0" prefHeight="26.0" prefWidth="272.0" promptText="Enter Username" />
             </children>
         </Pane>
     </children>
