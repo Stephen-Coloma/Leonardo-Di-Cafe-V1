@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ServerView {
-    //private FXMLLoader loader;
+    private FXMLLoader loader;
     private Stage stage;
 
     public ServerView(Stage stage) {
@@ -20,9 +20,9 @@ public class ServerView {
     public void runInterface() {
         Platform.runLater(() -> {
             try {
-
                 System.out.println("Loading Admin Interface");
-                BorderPane root = FXMLLoader.load(getClass().getResource("/fxml/server/MainMenuAdminPage.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/fxml/server/MainMenuAdminPage.fxml"));
+                BorderPane root = loader.load();
                 Scene scene = new Scene(root);
                 stage.setTitle("LEONARDO D' Cafe [ADMIN]");
                 stage.setScene(scene);
@@ -34,9 +34,11 @@ public class ServerView {
 
     }
 
+    public FXMLLoader getLoader() {
+        return loader;
+    }
+
     public boolean UIExit() {
         return stage.isShowing();
     }
-
-
 } // end of ServerView class

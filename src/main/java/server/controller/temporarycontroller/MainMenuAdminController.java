@@ -37,45 +37,107 @@ public class MainMenuAdminController implements Initializable{
     private Button addProductsPageButton;
     @FXML
     private Button logoutButton;
+    @FXML
+    private AccountsListPageController accountsListPageController;
+    @FXML
+    private AddProductsPageController addProductsPageController;
+    @FXML
+    private AnalyticsPageController analyticsPageController;
+    @FXML
+    private InventoryPageController inventoryPageController;
+    @FXML
+    private OrdersListPageController ordersListPageController;
+    private FXMLLoader loader;
+    private Parent root;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
-    private void loadPage(String page){
-        Parent root=null;
+
+    private FXMLLoader loadPage(String page){
+        FXMLLoader loader = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/fxml/server/"+page+".fxml"));
+            loader = new FXMLLoader(getClass().getResource("/fxml/server/"+page+".fxml"));
+            root = loader.load();
+            //Parent root = FXMLLoader.load(getClass().getResource("/fxml/server/"+page+".fxml"));
         } catch (IOException e) {
             Logger.getLogger(MainMenuAdminController.class.getName()).log(Level.SEVERE,null, e);
         }
-
         borderPane.setCenter(root);
+        return loader;
     }
 
     public void viewHomePage(MouseEvent mouseEvent) throws IOException{
         borderPane.setCenter(anchorPane);
     }
     public void viewOrderPage(MouseEvent actionEvent) throws IOException{
-        loadPage("OrdersListPage");
+        loader = loadPage("OrdersListPage");
     }
 
     public void viewAccountsPage(MouseEvent actionEvent) throws IOException{
-        loadPage("AccountsListPage");
+        loader = loadPage("AccountsListPage");
+        accountsListPageController = loader.getController();
     }
     public void viewAddProductsPage(MouseEvent mouseEvent) throws IOException{
-       loadPage("AddProductsPage");
+       loader = loadPage("AddProductsPage");
+       addProductsPageController = loader.getController();
     }
     public void viewInventoryPage(MouseEvent mouseEvent) throws IOException{
-        loadPage("InventoryPage");
+        loader = loadPage("InventoryPage");
+        inventoryPageController = loader.getController();
     }
     public void viewAnalyticsPage(MouseEvent mouseEvent) throws IOException{
-        loadPage("AnalyticsPage");
+        loader = loadPage("AnalyticsPage");
+        analyticsPageController = loader.getController();
     }
     public void logout(MouseEvent actionEvent) {
         System.exit(0);
     }
 
+    public FXMLLoader getLoader() {
+        return loader;
+    }
+
+    public AccountsListPageController getAccountsListPageController() {
+        return accountsListPageController;
+    }
+
+    public AddProductsPageController getAddProductsPageController() {
+        return addProductsPageController;
+    }
+
+    public AnalyticsPageController getAnalyticsPageController() {
+        return analyticsPageController;
+    }
+
+    public InventoryPageController getInventoryPageController() {
+        return inventoryPageController;
+    }
+
+    public OrdersListPageController getOrdersListPageController() {
+        return ordersListPageController;
+    }
+
+    public Button getHomeButton() {
+        return homeButton;
+    }
+
+    public Button getViewAccountsButton() {
+        return viewAccountsButton;
+    }
+
+    public Button getViewOrderButton() {
+        return viewOrderButton;
+    }
+
+    public Button getViewInventoryButton() {
+        return viewInventoryButton;
+    }
+
+    public Button getViewAnalyticsButton() {
+        return viewAnalyticsButton;
+    }
 
     public void viewOrdersButtonEntered(MouseEvent mouseEvent) {
         viewOrderButton.setStyle("-fx-background-color: lightgray;");

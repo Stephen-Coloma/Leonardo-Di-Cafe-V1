@@ -1,33 +1,61 @@
 package server.controller.temporarycontroller;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.util.Callback;
+import shared.Beverage;
+import shared.Food;
 import shared.Product;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class InventoryPageController implements Initializable {
     @FXML
-    private TableColumn productNameColumn;
+    private TableColumn<Product, String> productNameColumn;
     @FXML
-    private TableColumn typeColumn;
+    private TableColumn<Product, String> typeColumn;
     @FXML
-    private TableColumn quantityColumn;
+    private TableColumn<Product, Integer> quantityColumn;
     @FXML
-    private TableView inventoryTableView;
+    private TableView<Product> inventoryTableView;
     @FXML
     private TextField searchInventoryTextField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        productNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getType())));
+        quantityColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getQuantity()).asObject());
+
         addPlusButtonToTable();
         addMinusButtonToTable();
         setInventoryTextFieldListener();
+    }
+
+    public void populateTableFromMap(HashMap<String, Food> foodMenu, HashMap<String, Beverage> beverageMenu) {
+        ObservableList<Product> productList = FXCollections.observableArrayList();
+
+        for (Map.Entry<String, Food> entry : foodMenu.entrySet()) {
+            Food food = entry.getValue();
+            productList.add(food);
+        }
+
+        for (Map.Entry<String, Beverage> entry : beverageMenu.entrySet()) {
+            Beverage beverage = entry.getValue();
+            productList.add(beverage);
+        }
+
+        inventoryTableView.setItems(productList);
     }
 
     private void setInventoryTextFieldListener() {

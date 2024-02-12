@@ -164,6 +164,10 @@ public class Beverage extends Product{
         }
     }
 
+    public int getQuantity() {
+        return sizeQuantity.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
     @Override
     public String toString() {
         String concat = super.toString();

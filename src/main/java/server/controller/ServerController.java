@@ -1,29 +1,47 @@
 package server.controller;
 
-import server.controller.temporarycontroller.AccountsListPageController;
+import javafx.application.Platform;
+import server.controller.temporarycontroller.*;
 import server.model.ServerModel;
 import server.view.ServerView;
+import shared.Beverage;
 import shared.Customer;
+import shared.Food;
+import util.XMLUtility;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInput;
-import java.net.Socket;
-import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.HashMap;
 
 public class ServerController {
-    private ServerModel model;
-    private ServerView view;
+    private final ServerModel model;
+    private final ServerView view;
     private Socket clientSocket;
     private ObjectInputStream streamReader;
     private ObjectOutputStream streamWriter;
+    private AccountsListPageController accountsListPageController;
+    private AddProductsPageController addProductsPageController;
+    private AnalyticsPageController analyticsPageController;
+    private InventoryPageController inventoryPageController;
+    private MainMenuAdminController mainMenuAdminController;
+    private OrdersListPageController ordersListPageController;
 
     public ServerController(ServerModel model, ServerView view) {
         this.model = model;
         this. view = view;
-        loadViewData();
+
+        Platform.runLater(() -> {
+            System.out.println("Obtained Main Menu Controller");
+            mainMenuAdminController = view.getLoader().getController();
+
+            setComponentActions();
+            System.out.println("Successfully added actions");
+        });
     } // end of constructor
 
     public void setClientSocket(Socket clientSocket) {
@@ -31,8 +49,16 @@ public class ServerController {
     }
 
     // TODO
-    private void loadViewData() {
-        // this loads all the xml data needed by the server view
+    private void setComponentActions() {
+        mainMenuAdminController.getViewInventoryButton().setOnAction(actionEvent -> {
+            HashMap<String, Beverage> beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/java/server/model/beverage_menu.xml"));
+            HashMap<String, Food> foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/java/server/model/food_menu.xml"));
+
+            Platform.runLater(() -> {
+                inventoryPageController = mainMenuAdminController.getInventoryPageController();
+                inventoryPageController.populateTableFromMap(foodMenu, beverageMenu);
+            });
+        });
     }
 
     // TODO
@@ -42,7 +68,6 @@ public class ServerController {
             streamWriter = new ObjectOutputStream(clientSocket.getOutputStream());
 
             listenToClient();
-
         } catch (IOException ioException) {
             ioException.printStackTrace();
         } catch (ClassNotFoundException e) {

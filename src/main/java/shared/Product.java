@@ -87,6 +87,10 @@ public abstract class Product {
         this.review = updatedReview;
     }
 
+    public int getQuantity() {
+        return 0;
+    }
+
     @Override
     public String toString() {
         return "name='" + name + '\'' +

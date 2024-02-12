@@ -31,9 +31,9 @@ public class Server extends Application {
 
             ServerModel model = new ServerModel();
             ServerView view = new ServerView(stage);
+            view.runInterface();
             ServerController controller = new ServerController(model, view);
 
-            view.runInterface();
 
             while (view.UIExit()) {
                 Socket client = server.accept();
