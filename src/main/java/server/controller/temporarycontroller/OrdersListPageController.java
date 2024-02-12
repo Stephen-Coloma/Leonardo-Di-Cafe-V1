@@ -2,6 +2,12 @@ package server.controller.temporarycontroller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
@@ -12,13 +18,14 @@ import javafx.util.Duration;
 import shared.Order;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class OrdersListPageController implements Initializable {
     @FXML
     private TableView<Order> orderTableView;
     @FXML
-    private TableColumn<Order, String> orderIDColumn;
+    private TableColumn<Order, Integer> orderIDColumn;
     @FXML
     private TableColumn<Order, String> dateAndTimeColumn;
     @FXML
@@ -26,7 +33,7 @@ public class OrdersListPageController implements Initializable {
     @FXML
     private TableColumn<Order, String> addressColumn;
     @FXML
-    private TableColumn<Order, String> totalColumn;
+    private TableColumn<Order, Double> totalColumn;
     @FXML
     private TableColumn<Order, String> statusColumn;
     @FXML
@@ -34,14 +41,34 @@ public class OrdersListPageController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        orderIDColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getID()).asObject());
+        dateAndTimeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTimeStamp()));
+        customerColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomer().getName()));
+        addressColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomer().getAddress()));
+        totalColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTotalPrice()).asObject());
+        statusColumn.setCellValueFactory(cellData -> {
+            boolean status = cellData.getValue().isStatus();
+            return new SimpleStringProperty(status ? "Received" : "Not Received");
+        });
+
+
         //adds the view button to the table
         addViewButtonToTable();
         //adds the confirm button to the table
         addConfirmButtonToTable();
         //set search functionality for search text field
         setSearchOrderTextFieldListener();
-
     }
+
+    public void populateTableFromList(List<Order> list) {
+        ObservableList<Order> orderList = FXCollections.observableArrayList();
+
+        for (Order entry : list) {
+            orderList.add(entry);
+        }
+
+        orderTableView.setItems(orderList);
+    } // end of populateTableFromList
 
     private void setSearchOrderTextFieldListener() {
         // Create a FilteredList to filter the items in the table

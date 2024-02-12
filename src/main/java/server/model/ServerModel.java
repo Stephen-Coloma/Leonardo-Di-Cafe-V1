@@ -7,6 +7,11 @@ import util.exception.InvalidCredentialsException;
 import util.exception.OutOfStockException;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.AclFileAttributeView;
 import java.util.HashMap;
 import java.util.List;
@@ -166,5 +171,48 @@ public class ServerModel {
             }
         }
         throw new InvalidCredentialsException("Invalid credentials");
+    }
+
+    /**
+     * Copies an image file from the specified absolute path to a destination directory.
+     * @param absolutePath the absolute path of the source image file
+     * @param newFileName the new filename for the copied image file
+     * @return the filename with the extension of the copied image file.
+     */
+    public String copyImage(String absolutePath, String newFileName) {
+        String resourceDirectory = "src/main/resources/productimages/";
+
+        File file = new File(absolutePath);
+        if (file.exists()) {
+            try {
+                Path sourcePath = file.toPath();
+                Path destinationPath = Path.of(resourceDirectory + newFileName);
+
+                Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+                return destinationPath.toString();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.err.println("File does not exist: " + absolutePath);
+        }
+        return null;
+    } // end of copyImage
+
+    public HashMap<String, Food> getFoodMenu() {
+        return foodMenu;
+    }
+
+    public HashMap<String, Beverage> getBeverageMenu() {
+        return beverageMenu;
+    }
+
+    public List<Customer> getCustomerAccountList() {
+        return customerAccountList;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
     }
 }

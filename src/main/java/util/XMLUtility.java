@@ -307,84 +307,63 @@ public class XMLUtility {
             dbf.setIgnoringElementContentWhitespace(true);
             db = dbf.newDocumentBuilder();
             document = db.parse(file);
-            //document = db.newDocument();
+            document = db.newDocument();
 
-            Element root = document.getDocumentElement();
-
-            //Element root = document.createElement("beveragemenu");
-            //document.appendChild(root);
+            Element root = document.createElement("beveragemenu");
+            document.appendChild(root);
 
             for (Beverage beverage : beverageMenu.values()) {
-                String beverageName = beverage.getName();
+                Element beverageElement = document.createElement("beverage");
+                beverageElement.setAttribute("name", beverage.getName());
+                root.appendChild(beverageElement);
 
-                NodeList existingBeverages = document.getElementsByTagName("beverage");
-                boolean beverageExists = false;
+                Element nameElement = document.createElement("name");
+                nameElement.appendChild(document.createTextNode(beverage.getName()));
+                beverageElement.appendChild(nameElement);
 
-                for (int i = 0; i < existingBeverages.getLength(); i++) {
-                    Node node = existingBeverages.item(i);
-                    if (node.getNodeType() == Node.ELEMENT_NODE) {
-                        Element existingBeverage = (Element) node;
-                        String existingName = getElementValue(existingBeverage, "name");
-                        if (existingName.equals(beverageName)) {
-                            beverageExists = true;
-                            break;
-                        }
-                    }
+                Element typeElement = document.createElement("type");
+                typeElement.appendChild(document.createTextNode(String.valueOf(beverage.getType())));
+                beverageElement.appendChild(typeElement);
+
+                Element reviewElement = document.createElement("review");
+                reviewElement.appendChild(document.createTextNode(String.valueOf(beverage.getReview())));
+                beverageElement.appendChild(reviewElement);
+
+                Element reviewCountElement = document.createElement("reviewCount");
+                reviewCountElement.appendChild(document.createTextNode(String.valueOf(beverage.getReviewCount())));
+                beverageElement.appendChild(reviewCountElement);
+
+                Element imageElement = document.createElement("image");
+                String filename = beverage.getImage().getUrl();
+                File imageFile = new File(filename);
+                imageElement.appendChild(document.createTextNode(imageFile.getName()));
+                beverageElement.appendChild(imageElement);
+
+                Element descriptionElement = document.createElement("description");
+                descriptionElement.appendChild(document.createTextNode(beverage.getDescription()));
+                beverageElement.appendChild(descriptionElement);
+
+                Element amountSoldElement = document.createElement("amountSold");
+                amountSoldElement.appendChild(document.createTextNode(String.valueOf(beverage.getAmountSold())));
+                beverageElement.appendChild(amountSoldElement);
+
+                Element quantitiesElement = document.createElement("quantities");
+                for (Map.Entry<String, Integer> entry : beverage.getSizeQuantity().entrySet()) {
+                    Element quantityElement = document.createElement("quantity");
+                    quantityElement.setAttribute("size", entry.getKey());
+                    quantityElement.appendChild(document.createTextNode(String.valueOf(entry.getValue())));
+                    quantitiesElement.appendChild(quantityElement);
                 }
+                beverageElement.appendChild(quantitiesElement);
 
-                if (!beverageExists) {
-                    Element beverageElement = document.createElement("beverage");
-                    beverageElement.setAttribute("name", beverage.getName());
-                    root.appendChild(beverageElement);
-
-                    Element nameElement = document.createElement("name");
-                    nameElement.appendChild(document.createTextNode(beverage.getName()));
-                    beverageElement.appendChild(nameElement);
-
-                    Element typeElement = document.createElement("type");
-                    typeElement.appendChild(document.createTextNode(String.valueOf(beverage.getType())));
-                    beverageElement.appendChild(typeElement);
-
-                    Element reviewElement = document.createElement("review");
-                    reviewElement.appendChild(document.createTextNode(String.valueOf(beverage.getReview())));
-                    beverageElement.appendChild(reviewElement);
-
-                    Element reviewCountElement = document.createElement("reviewCount");
-                    reviewCountElement.appendChild(document.createTextNode(String.valueOf(beverage.getReviewCount())));
-                    beverageElement.appendChild(reviewCountElement);
-
-                    Element imageElement = document.createElement("image");
-                    String filename = beverage.getImage().getUrl();
-                    File imageFile = new File(filename);
-                    imageElement.appendChild(document.createTextNode(imageFile.getName()));
-                    beverageElement.appendChild(imageElement);
-
-                    Element descriptionElement = document.createElement("description");
-                    descriptionElement.appendChild(document.createTextNode(beverage.getDescription()));
-                    beverageElement.appendChild(descriptionElement);
-
-                    Element amountSoldElement = document.createElement("amountSold");
-                    amountSoldElement.appendChild(document.createTextNode(String.valueOf(beverage.getAmountSold())));
-                    beverageElement.appendChild(amountSoldElement);
-
-                    Element quantitiesElement = document.createElement("quantities");
-                    for (Map.Entry<String, Integer> entry : beverage.getSizeQuantity().entrySet()) {
-                        Element quantityElement = document.createElement("quantity");
-                        quantityElement.setAttribute("size", entry.getKey());
-                        quantityElement.appendChild(document.createTextNode(String.valueOf(entry.getValue())));
-                        quantitiesElement.appendChild(quantityElement);
-                    }
-                    beverageElement.appendChild(quantitiesElement);
-
-                    Element pricesElement = document.createElement("prices");
-                    for (Map.Entry<String, Double> entry : beverage.getSizePrice().entrySet()) {
-                        Element priceElement = document.createElement("price");
-                        priceElement.setAttribute("size", entry.getKey());
-                        priceElement.appendChild(document.createTextNode(String.valueOf(entry.getValue())));
-                        pricesElement.appendChild(priceElement);
-                    }
-                    beverageElement.appendChild(pricesElement);
+                Element pricesElement = document.createElement("prices");
+                for (Map.Entry<String, Double> entry : beverage.getSizePrice().entrySet()) {
+                    Element priceElement = document.createElement("price");
+                    priceElement.setAttribute("size", entry.getKey());
+                    priceElement.appendChild(document.createTextNode(String.valueOf(entry.getValue())));
+                    pricesElement.appendChild(priceElement);
                 }
+                beverageElement.appendChild(pricesElement);
             }
             cleanDocument(document);
 

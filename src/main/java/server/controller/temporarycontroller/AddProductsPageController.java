@@ -29,7 +29,6 @@ public class AddProductsPageController implements Initializable {
     @FXML
     private TextField productDescriptionTextField;
 
-
     //MENU AND MENU BUTTONS
     @FXML
     private MenuButton typeOfProductMenuButton;
@@ -37,7 +36,6 @@ public class AddProductsPageController implements Initializable {
     private MenuItem foodMenuItem;
     @FXML
     private MenuItem beverageMenuItem;
-
 
     //SIZES TEXT FIELDS
     @FXML
@@ -48,14 +46,12 @@ public class AddProductsPageController implements Initializable {
     private TextField largePriceTextField;
 
     //QUANTITY TEXT FIELDS
-
     @FXML
     private TextField mainQuantityTextField;
     @FXML
     private TextField mediumQuantityTextField;
     @FXML
     private TextField largeQuantityTextField;
-
 
     //LABELS
     @FXML
@@ -71,7 +67,6 @@ public class AddProductsPageController implements Initializable {
     @FXML
     private Label largeQuantityLabel;
 
-
     @FXML
     private Label imageLabel;
     @FXML
@@ -82,8 +77,6 @@ public class AddProductsPageController implements Initializable {
 
     @FXML
     private ImageView sampleImageView;
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -172,8 +165,11 @@ public class AddProductsPageController implements Initializable {
     public void addProductButtonExited(MouseEvent mouseEvent) {
         addProductButton.setStyle("-fx-background-color: #634921;");
     }
+
+
     //----TEST METHOD ONLY----
     public void addProductClicked(MouseEvent mouseEvent) {
+        /*
         productName = productNameTextField.getText();
         productDescription = productDescriptionTextField.getText();
         if(typeOfProductMenuButton.getText().equals("Food")){
@@ -185,6 +181,8 @@ public class AddProductsPageController implements Initializable {
         System.out.println("Product Description: "+ productDescription);
         System.out.println("Quantity: " +quantity);
         System.out.println("Price: P" +price);
+
+         */
 
     }
     //-----TEST METHOD-----
@@ -215,6 +213,50 @@ public class AddProductsPageController implements Initializable {
             imageLabel.setText("Image chosen");
             imageLabel.setTextFill(Paint.valueOf("GREEN"));
         }
+    }
+
+    public Button getAddProductButton() {
+        return addProductButton;
+    }
+
+    public MenuButton getTypeOfProductMenuButton() {
+        return typeOfProductMenuButton;
+    }
+
+    public TextField getProductNameTextField() {
+        return productNameTextField;
+    }
+
+    public TextField getProductDescriptionTextField() {
+        return productDescriptionTextField;
+    }
+
+    public TextField getMainPriceTextField() {
+        return mainPriceTextField;
+    }
+
+    public TextField getMediumPriceTextField() {
+        return mediumPriceTextField;
+    }
+
+    public TextField getLargePriceTextField() {
+        return largePriceTextField;
+    }
+
+    public TextField getMainQuantityTextField() {
+        return mainQuantityTextField;
+    }
+
+    public TextField getMediumQuantityTextField() {
+        return mediumQuantityTextField;
+    }
+
+    public TextField getLargeQuantityTextField() {
+        return largeQuantityTextField;
+    }
+
+    public TextField getImageTextField() {
+        return imageTextField;
     }
 }
 

@@ -73,6 +73,7 @@ public class MainMenuAdminController implements Initializable{
     }
     public void viewOrderPage(MouseEvent actionEvent) throws IOException{
         loader = loadPage("OrdersListPage");
+        ordersListPageController = loader.getController();
     }
 
     public void viewAccountsPage(MouseEvent actionEvent) throws IOException{
@@ -137,6 +138,10 @@ public class MainMenuAdminController implements Initializable{
 
     public Button getViewAnalyticsButton() {
         return viewAnalyticsButton;
+    }
+
+    public Button getAddProductsPageButton() {
+        return addProductsPageButton;
     }
 
     public void viewOrdersButtonEntered(MouseEvent mouseEvent) {

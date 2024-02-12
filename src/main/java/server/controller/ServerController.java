@@ -1,12 +1,11 @@
 package server.controller;
 
 import javafx.application.Platform;
+import javafx.scene.image.Image;
 import server.controller.temporarycontroller.*;
 import server.model.ServerModel;
 import server.view.ServerView;
-import shared.Beverage;
-import shared.Customer;
-import shared.Food;
+import shared.*;
 import util.XMLUtility;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
@@ -16,7 +15,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ServerController {
     private final ServerModel model;
@@ -46,7 +47,7 @@ public class ServerController {
 
     public void setClientSocket(Socket clientSocket) {
         this.clientSocket = clientSocket;
-    }
+    } // end of setClientSocket
 
     // TODO
     private void setComponentActions() {
@@ -59,7 +60,62 @@ public class ServerController {
                 inventoryPageController.populateTableFromMap(foodMenu, beverageMenu);
             });
         });
-    }
+
+        mainMenuAdminController.getViewOrderButton().setOnAction(actionEvent -> {
+            List<Order> orderList = (ArrayList<Order>) XMLUtility.loadXMLData(new File("src/main/java/server/model/order_list.xml"));
+
+            Platform.runLater(() -> {
+                ordersListPageController = mainMenuAdminController.getOrdersListPageController();
+                ordersListPageController.populateTableFromList(orderList);
+            });
+        });
+
+        mainMenuAdminController.getViewAccountsButton().setOnAction(actionEvent -> {
+            List<Customer> accountList = (ArrayList<Customer>) XMLUtility.loadXMLData(new File("src/main/java/server/model/customer_account_list.xml"));
+
+            Platform.runLater(() -> {
+                accountsListPageController = mainMenuAdminController.getAccountsListPageController();
+                accountsListPageController.populateTableFromList(accountList);
+            });
+        });
+
+        mainMenuAdminController.getAddProductsPageButton().setOnAction(actionEvent -> {
+            Platform.runLater(() -> {
+                addProductsPageController = mainMenuAdminController.getAddProductsPageController();
+                addProductsPageController.getAddProductButton().setOnAction(actionEvent1 -> {
+                    addProduct();
+                });
+            });
+        });
+    } // end of setComponentActions
+
+    public void addProduct() {
+        if (addProductsPageController.getTypeOfProductMenuButton().getText().equals("food")) {
+
+        } else {
+            String name = addProductsPageController.getProductNameTextField().getText().trim();
+            char type = 'b';
+            double review = 0.0;
+            int reviewCount = 0;
+            String description = addProductsPageController.getProductDescriptionTextField().getText();
+            int sQuantity = Integer.parseInt(addProductsPageController.getMainQuantityTextField().getText());
+            int mQuantity = Integer.parseInt(addProductsPageController.getMediumQuantityTextField().getText());
+            int lQuantity = Integer.parseInt(addProductsPageController.getLargeQuantityTextField().getText());
+            double sPrice = Double.parseDouble(addProductsPageController.getMainPriceTextField().getText());
+            double mPrice = Double.parseDouble(addProductsPageController.getMediumPriceTextField().getText());
+            double lPrice = Double.parseDouble(addProductsPageController.getLargePriceTextField().getText());
+
+            String absolutePath = new File(addProductsPageController.getImageTextField().getText()).getAbsolutePath();
+            String extension = absolutePath.substring(absolutePath.lastIndexOf('.'));
+            String copiedImagePath = model.copyImage(absolutePath, name + extension);
+
+            Image image = new Image("file:" + copiedImagePath);
+
+            Beverage beverage = new Beverage(name, type, review, reviewCount, image, description, sQuantity, mQuantity, lQuantity, sPrice, mPrice, lPrice);
+            System.out.println(beverage);
+            //model.getBeverageMenu().put(name, beverage);
+        }
+    } // end of addProduct
 
     // TODO
     public void run() {
@@ -82,7 +138,7 @@ public class ServerController {
                 handleClientRequest(data);
             }
         }
-    }
+    } // end of listenToClient
 
     // TODO
     private void handleClientRequest(Object[] message) {
@@ -114,7 +170,7 @@ public class ServerController {
                 }
             }
         }
-    }
+    } // end of handleClientRequest
 
     private void sendData(String code, Object data) {
         Object[] response = {code, data};
@@ -123,5 +179,5 @@ public class ServerController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
+    } // end of sendData
 } // end of ServerController
