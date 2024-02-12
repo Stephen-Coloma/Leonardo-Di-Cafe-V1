@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="59.0" prefWidth="304.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="checkoutItemCard" prefHeight="59.0" prefWidth="304.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox layoutX="9.0" prefHeight="58.0" prefWidth="294.0">
          <children>
@@ -17,18 +17,18 @@
                   <Pane prefHeight="6.0" prefWidth="48.0" />
                   <ImageView fx:id="itemImage" fitHeight="46.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/client/checkout/bread.jpg" />
+                        <Image url="@../../productimages/Pistachio%20Cupcake.png" />
                      </image>
                   </ImageView>
                   <Pane prefHeight="6.0" prefWidth="48.0" />
                </children>
             </VBox>
-            <Pane prefHeight="58.0" prefWidth="55.0" />
+            <Pane prefHeight="58.0" prefWidth="54.0" />
             <VBox prefHeight="58.0" prefWidth="165.0">
                <children>
-                  <Pane prefHeight="5.0" prefWidth="100.0" />
-                  <Label fx:id="itemName" text="Item 1" />
-                  <Label fx:id="itemSizeLabel" text="Size: Small ">
+                  <Pane prefHeight="8.0" prefWidth="120.0" />
+                  <Label fx:id="itemName" prefHeight="18.0" prefWidth="120.0" text="Item 1" />
+                  <Label fx:id="itemSizeLabel" prefHeight="16.0" prefWidth="34.0" text="Size: Small ">
                      <font>
                         <Font size="7.0" />
                      </font>

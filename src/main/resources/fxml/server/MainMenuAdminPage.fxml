@@ -74,7 +74,7 @@
             <children>
                 <ImageView fx:id="iconImageView" blendMode="SRC_ATOP" fitHeight="150.0" fitWidth="200.0" layoutX="166.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../images/server/adminIcon.png" />
+                        <Image url="@../../productimages/Pistachio Cupcake.png" />
                     </image>
                 </ImageView>
                 <Label layoutX="235.0" layoutY="215.0" text="ADMIN" textFill="#634921">

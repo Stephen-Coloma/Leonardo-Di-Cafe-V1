@@ -9,16 +9,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="99.0" prefWidth="256.0" style="-fx-background-color: #ECE9E3; -fx-border-radius: 3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ClientMenuCard">
+<Pane fx:id="clientMenuCard" prefHeight="99.0" prefWidth="256.0" style="-fx-background-color: #ECE9E3; -fx-border-radius: 3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ClientMenuCard">
    <children>
       <HBox prefHeight="100.0" prefWidth="256.0">
          <children>
-            <VBox prefHeight="119.0" prefWidth="88.0">
+            <Pane prefHeight="100.0" prefWidth="17.0" />
+            <VBox prefHeight="88.0" prefWidth="114.0">
                <children>
-                  <Pane prefHeight="47.0" prefWidth="99.0" />
-                  <Label fx:id="productNameLabel" text="Product Name">
+                  <Pane prefHeight="21.0" prefWidth="114.0" />
+                  <Label fx:id="productNameLabel" prefHeight="16.0" prefWidth="114.0" text="Product Name">
                      <font>
-                        <Font name="System Bold" size="12.0" />
+                        <Font name="System Bold" size="11.0" />
                      </font>
                   </Label>
                   <Label fx:id="productDetailsLabel" prefHeight="8.0" prefWidth="99.0" text="Product Details">
@@ -26,21 +27,26 @@
                         <Font size="9.0" />
                      </font>
                   </Label>
-                  <Pane prefHeight="95.0" prefWidth="99.0" />
+                  <Label fx:id="productRatingLabel" layoutX="10.0" layoutY="35.0" prefHeight="8.0" prefWidth="99.0" text="Ratings: 4.6" textFill="#2cb14d">
+                     <font>
+                        <Font name="System Bold" size="8.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="28.0" prefWidth="114.0" />
                   <Label fx:id="productPriceLabel" text="P 180.00">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Pane prefHeight="60.0" prefWidth="99.0" />
+                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="21.0" prefWidth="114.0" />
                </children>
             </VBox>
-            <VBox prefHeight="100.0" prefWidth="116.0">
+            <VBox prefHeight="100.0" prefWidth="85.0">
                <children>
                   <Pane prefHeight="12.0" prefWidth="134.0" />
-                  <ImageView fx:id="productImage" fitHeight="84.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="productImage" fitHeight="81.0" fitWidth="88.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/client/menu/menu_productimage.png" />
+                        <Image url="@../../productimages/Pistachio%20Cupcake.png" />
                      </image>
                   </ImageView>
                </children>
