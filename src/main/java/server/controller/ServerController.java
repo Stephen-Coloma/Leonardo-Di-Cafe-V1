@@ -1,6 +1,7 @@
 package server.controller;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import server.controller.temporarycontroller.*;
 import server.model.ServerModel;
@@ -58,6 +59,11 @@ public class ServerController {
             Platform.runLater(() -> {
                 inventoryPageController = mainMenuAdminController.getInventoryPageController();
                 inventoryPageController.populateTableFromMap(foodMenu, beverageMenu);
+
+                inventoryPageController.getSaveChangesButton().setOnAction(actionEvent1 -> {
+                    ObservableList<Object> productList = inventoryPageController.getItems();
+                    model.updateMenuFromInventory(productList);
+                });
             });
         });
 

@@ -33,6 +33,9 @@ public class Food extends Product {
         this.price = price;
     }
 
+    public synchronized void incrementQuantity() throws Exception {
+        quantity++;
+    }
 
     /**This method updates the quantity of the product for every successful order
      * @throws Exception when the quantity cannot accommodate the order*/

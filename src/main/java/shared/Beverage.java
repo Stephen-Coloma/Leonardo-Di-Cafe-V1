@@ -56,6 +56,13 @@ public class Beverage extends Product{
         return sizePrice.get(size);
     }
 
+
+    public synchronized void incrementQuantity(String size) {
+        int quantity = sizeQuantity.get(size);
+        quantity++;
+        sizeQuantity.put(size, quantity);
+    } // end of incrementQuantity method
+
     /**This method is used to update quantity of the variation of the beverage.
      It accommodates multiple threads but will only allow one thread to make an update to a specific size
      @throws Exception when out of stocks*/

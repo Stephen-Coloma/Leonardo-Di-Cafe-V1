@@ -1,5 +1,6 @@
 package server.model;
 
+import javafx.collections.ObservableList;
 import shared.*;
 import util.XMLUtility;
 import util.exception.AccountExistsException;
@@ -37,6 +38,24 @@ public class ServerModel {
 
         /*Todo
            1. When the server is closed by the admin, it must write all these data in the necessary xmk files to be used for another run*/
+    }
+
+    public void updateMenuFromInventory(ObservableList<Object> list) {
+        HashMap<String, Food> newFoodMenu = new HashMap<>();
+        HashMap<String, Beverage> newBeverageMenu = new HashMap<>();
+
+        for (Object entry : list) {
+            if (entry instanceof Food food) {
+                newFoodMenu.put(food.getName(), food);
+            } else if (entry instanceof Beverage beverage) {
+                newBeverageMenu.put(beverage.getName(), beverage);
+            }
+        }
+
+        System.out.println(foodMenu);
+        System.out.println(newFoodMenu);
+        System.out.println(beverageMenu);
+        System.out.println(newBeverageMenu);
     }
 
 

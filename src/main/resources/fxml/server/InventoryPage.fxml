@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="717.6" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.temporarycontroller.InventoryPageController">
+<AnchorPane prefHeight="717.6" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.temporarycontroller.InventoryPageController">
     <children>
         <Text fill="#593117" layoutX="20.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INVENTORY">
             <font>
@@ -16,9 +12,9 @@
             </font>
         </Text>
         <TextField fx:id="searchInventoryTextField" layoutX="749.0" layoutY="19.0" prefHeight="26.0" prefWidth="232.0" promptText="Search" style="-fx-background-color: #ffffff;" />
-        <ScrollPane layoutY="61.0" prefHeight="657.0" prefWidth="1000.0">
+        <ScrollPane layoutY="61.0" prefHeight="612.0" prefWidth="1000.0">
             <content>
-                <TableView fx:id="inventoryTableView" prefHeight="644.0" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;">
+                <TableView fx:id="inventoryTableView" prefHeight="610.0" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;">
                     <columns>
                         <TableColumn fx:id="productNameColumn" prefWidth="419.7333682179451" text="Product Name" />
                         <TableColumn fx:id="typeColumn" prefWidth="180.2666015625" text="Type" />
@@ -27,5 +23,6 @@
                 </TableView>
             </content>
         </ScrollPane>
+      <Button fx:id="saveChangesButton" layoutX="449.0" layoutY="679.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Save Changes" />
     </children>
 </AnchorPane>
