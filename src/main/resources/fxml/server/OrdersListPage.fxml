@@ -1,41 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="717.6" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.temporarycontroller.OrdersListPageController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="717.6" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.temporarycontroller.OrdersListPageController">
     <top>
         <Pane prefHeight="61.0" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="14.0" layoutY="15.0" text="LIST OF ORDERS" textFill="#634921">
-                    <font>
-                        <Font name="Arial Black" size="22.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="searchOrderTextField" layoutX="792.0" layoutY="19.0" prefHeight="25.0" prefWidth="194.0" promptText="Search by Order Number" />
+                <TextField fx:id="searchOrderTextField" layoutX="736.0" layoutY="18.0" prefHeight="25.0" prefWidth="250.0" promptText="Search by Order Number" />
+            <Text fill="#634921" layoutX="14.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LIST OF ORDERS">
+               <font>
+                  <Font name="Arial Black" size="22.0" />
+               </font>
+            </Text>
             </children>
         </Pane>
     </top>
     <center>
-        <ScrollPane prefHeight="344.0" prefWidth="594.0" style="-fx-background-color: #ECE9E3;" BorderPane.alignment="CENTER">
-            <content>
-                <TableView fx:id="orderTableView" prefHeight="677.0" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;">
-                    <columns>
-                        <TableColumn fx:id="orderIDColumn" prefWidth="122.0" text="Order ID" />
-                        <TableColumn fx:id="dateAndTimeColumn" prefWidth="172.0" text="Date and Time" />
-                        <TableColumn fx:id="customerColumn" prefWidth="199.0" text="Customer " />
-                        <TableColumn fx:id="addressColumn" prefWidth="245.0" text="Address" />
-                        <TableColumn fx:id="totalColumn" prefWidth="121.0" text="Total" />
-                        <TableColumn fx:id="statusColumn" prefWidth="138.0" text="Status" />
-                    </columns>
-                </TableView>
-            </content>
-        </ScrollPane>
+          <TableView fx:id="orderTableView" prefHeight="677.0" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;">
+              <columns>
+                  <TableColumn fx:id="orderIDColumn" prefWidth="122.0" text="Order ID" />
+                  <TableColumn fx:id="dateAndTimeColumn" prefWidth="172.0" text="Date and Time" />
+                  <TableColumn fx:id="customerColumn" prefWidth="199.0" text="Customer " />
+                  <TableColumn fx:id="addressColumn" prefWidth="235.0" text="Address" />
+                  <TableColumn fx:id="totalColumn" prefWidth="131.0" text="Total" />
+                  <TableColumn fx:id="statusColumn" prefWidth="120.0" text="Status" />
+              </columns>
+         <BorderPane.margin>
+            <Insets bottom="8.0" left="10.0" right="10.0" />
+         </BorderPane.margin>
+          </TableView>
     </center>
 </BorderPane>

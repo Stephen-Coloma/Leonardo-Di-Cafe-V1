@@ -1,17 +1,25 @@
 package server.controller.temporarycontroller;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import shared.Customer;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -27,6 +35,11 @@ public class AccountsListPageController implements Initializable {
     private TableColumn<Customer, String> addressColumn;
     @FXML
     private TableColumn<Customer, String> emailColumn;
+    @FXML
+    private TableColumn<Object, Void> viewInformationColumn;
+    @FXML
+    private TextField searchAccountTextField;
+    private FilteredList<Customer> filteredList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -35,32 +48,57 @@ public class AccountsListPageController implements Initializable {
         addressColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress()));
         emailColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
 
-        addViewButtonToTable();
-    }
+        addViewInformationButton();
+        searchAccountTextField.textProperty().addListener((observable, oldValue, newValue) -> filterTable(newValue));
+    } // end of initialize
 
-    public void populateTableFromList(List<Customer> list) {
-        ObservableList<Customer> accountList = FXCollections.observableArrayList();
+    private Button createButton(EventHandler<ActionEvent> eventHandler) {
+        Button button = new Button("View");
+        button.setOnAction(eventHandler);
+        return button;
+    } // end of createButton
 
-        for (Customer entry : list) {
-            accountList.add(entry);
-        }
+    private void addViewInformationButton() {
+        viewInformationColumn.setCellValueFactory(new PropertyValueFactory<>(""));
 
-        accountsTableView.setItems(accountList);
-    } // end of populateTableFromList
-
-    private void addViewButtonToTable() {
-        TableColumn<Customer, Void> viewColumn = new TableColumn<>("");
-        viewColumn.setCellFactory(new Callback<>() {
+        Callback<TableColumn<Object, Void>, TableCell<Object, Void>> cellFactory = new Callback<>() {
             @Override
-            public TableCell<Customer, Void> call(final TableColumn<Customer, Void> param) {
+            public TableCell<Object, Void> call(final TableColumn<Object, Void> param) {
                 return new TableCell<>() {
-                    private final Button viewButton = new Button("View Account");
+                    private final Button viewButton = createButton(event -> {
+                        Customer customer = (Customer) getTableRow().getItem();
+                        Platform.runLater(() -> {
+                            try {
+                                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/account_information_popup.fxml"));
+                                Stage popupStage = new Stage();
+                                popupStage.initModality(Modality.APPLICATION_MODAL);
+                                popupStage.setScene(new Scene(loader.load()));
+                                AccountInformationPopupController controller = loader.getController();
+
+                                controller.populateTableFromList(customer.getOrderHistory());
+                                controller.setName(customer.getName());
+                                controller.setUsername(customer.getUsername());
+                                controller.setAddress(customer.getAddress());
+                                controller.setEmail(customer.getEmail());
+                                controller.setTotal(String.valueOf(customer.getOrderHistory().size()));
+
+                                controller.getCloseTabButton().setOnAction(actionEvent -> {
+                                    popupStage.close();
+                                });
+
+                                popupStage.show();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                    });
 
                     {
-                        viewButton.setOnAction(event -> {
-                            Customer rowData = getTableView().getItems().get(getIndex());
-                            //showCustomerDetailsPopup(rowData);
-                        });
+                        viewButton.setStyle("-fx-background-color: #634921; -fx-text-fill: white;");
+
+                        viewButton.setOnMouseEntered(e -> viewButton.setStyle("-fx-background-color: #9a7133; -fx-text-fill: white;"));
+
+                        viewButton.setOnMouseExited(e -> viewButton.setStyle("-fx-background-color: #634921; -fx-text-fill: white;"));
                     }
 
                     @Override
@@ -70,12 +108,32 @@ public class AccountsListPageController implements Initializable {
                             setGraphic(null);
                         } else {
                             setGraphic(viewButton);
+                            setAlignment(Pos.CENTER);
                         }
                     }
                 };
             }
-        });
+        };
+        viewInformationColumn.setCellFactory(cellFactory);
+    } // end of addViewInformationButton
 
-        accountsTableView.getColumns().add(viewColumn);
-    }
-}
+    public void populateTableFromList(List<Customer> list) {
+        ObservableList<Customer> accountList = FXCollections.observableArrayList();
+
+        accountList.addAll(list);
+
+        filteredList = new FilteredList<>(accountList, item -> true);
+        accountsTableView.setItems(filteredList);
+    } // end of populateTableFromList
+
+    private void filterTable(String searchText) {
+        filteredList.setPredicate(item -> {
+            if (searchText == null || searchText.isEmpty()) {
+                return true;
+            }
+
+            return item.getName().toLowerCase().contains(searchText.toLowerCase());
+        });
+        accountsTableView.setItems(filteredList);
+    } // end of filterTable
+} // end of AccountsListPageController class
