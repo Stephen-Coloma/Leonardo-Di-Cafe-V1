@@ -61,7 +61,7 @@ public class ServerController {
                 inventoryPageController.populateTableFromMap(foodMenu, beverageMenu);
 
                 inventoryPageController.getSaveChangesButton().setOnAction(actionEvent1 -> {
-                    ObservableList<Object> productList = inventoryPageController.getItems();
+                    ObservableList<Object> productList = inventoryPageController.getProductList();
                     model.updateMenuFromInventory(productList);
                 });
             });

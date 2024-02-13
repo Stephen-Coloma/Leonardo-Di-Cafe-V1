@@ -6,25 +6,26 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import shared.Beverage;
 import shared.Food;
-import shared.Order;
-import shared.Product;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class InventoryPageController implements Initializable {
     @FXML
@@ -34,11 +35,15 @@ public class InventoryPageController implements Initializable {
     @FXML
     private TableColumn<Object, Integer> quantityColumn;
     @FXML
+    private TableColumn<Object, Void> editQuantityColumn;
+    @FXML
     private TableView<Object> inventoryTableView;
     @FXML
     private TextField searchInventoryTextField;
     @FXML
     private Button saveChangesButton;
+    private FilteredList<Object> filteredList;
+    private ObservableList<Object> productList;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -79,24 +84,220 @@ public class InventoryPageController implements Initializable {
             return new SimpleIntegerProperty(quantity).asObject();
         });
 
-        /*
-        productNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getType())));
-        typeColumn.setCellValueFactory(cellData -> {
-            char type = cellData.getValue().getType();
-            return new SimpleStringProperty(type == 'f' ? "food" : "beverage");
-        });
+        addEditQuantityButton();
+        searchInventoryTextField.textProperty().addListener((observable, oldValue, newValue) -> filterTable(newValue));
+    } // end of initialize
 
-        quantityColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getQuantity()).asObject());
+    private Button createButton(EventHandler<ActionEvent> eventHandler) {
+        Button button = new Button("Edit");
+        button.setOnAction(eventHandler);
+        return button;
+    } // end of createButton
 
-         */
+    private void addEditQuantityButton() {
+        editQuantityColumn.setCellValueFactory(new PropertyValueFactory<>(""));
 
-        addPlusButtonToTable();
-        addMinusButtonToTable();
-        setInventoryTextFieldListener();
-    }
+        Callback<TableColumn<Object, Void>, TableCell<Object, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<Object, Void> call(final TableColumn<Object, Void> param) {
+                return new TableCell<>() {
+                    private final Button editButton = createButton(event -> {
+                        Object product = getTableRow().getItem();
+                        if (product instanceof Food food) {
+                            Platform.runLater(() -> {
+                                try {
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/food_inventory_size_popup.fxml"));
+                                    Stage popupStage = new Stage();
+                                    popupStage.initModality(Modality.APPLICATION_MODAL);
+                                    popupStage.setScene(new Scene(loader.load()));
+                                    FoodInventoryPopupController controller = loader.getController();
+
+                                    int filteredIndex = getTableRow().getIndex();
+                                    int originalIndex = filteredList.getSourceIndex(filteredIndex);
+
+                                    AtomicInteger total = new AtomicInteger(food.getQuantity());
+
+                                    controller.setTotalQuantity("total: " + total);
+
+                                    controller.getIncrementButton().setOnAction(actionEvent -> {
+                                        int value = Integer.parseInt(controller.getQuantity().getText()) + 1;
+                                        total.getAndIncrement();
+                                        controller.setQuantity(String.valueOf(value));
+                                        controller.setTotalQuantity("total: " + total);
+                                    });
+
+                                    controller.getDecrementButton().setOnAction(actionEvent -> {
+                                        int value = Integer.parseInt(controller.getQuantity().getText()) - 1;
+                                        total.getAndDecrement();
+                                        controller.setQuantity(String.valueOf(value));
+                                        controller.setTotalQuantity("total: " + total);
+                                    });
+
+                                    controller.getAcceptButton().setOnAction(actionEvent -> {
+
+                                        int counter = Integer.parseInt(controller.getQuantity().getText());
+
+                                        do {
+                                            if (counter > 0) {
+                                                food.incrementQuantity();
+                                                counter--;
+                                            } else {
+                                                food.decrementQuantity();
+                                                counter++;
+                                            }
+                                        } while (counter != 0);
+
+                                        if (originalIndex != -1) {
+                                            if (originalIndex >= 0 && originalIndex < productList.size()) {
+                                                productList.set(originalIndex, food);
+                                            }
+                                        }
+
+                                        popupStage.close();
+                                    });
+                                    popupStage.show();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                        } else if (product instanceof Beverage beverage) {
+                            Platform.runLater(() -> {
+                                try {
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/beverage_inventory_size_popup.fxml"));
+                                    Stage popupStage = new Stage();
+                                    popupStage.initModality(Modality.APPLICATION_MODAL);
+                                    popupStage.setScene(new Scene(loader.load()));
+                                    BeverageInventorySizesPopupController controller = loader.getController();
+
+                                    int filteredIndex = getTableRow().getIndex();
+                                    int originalIndex = filteredList.getSourceIndex(filteredIndex);
+
+                                    AtomicInteger smallTotal = new AtomicInteger(beverage.getSizeQuantity().get("small"));
+                                    AtomicInteger mediumTotal = new AtomicInteger(beverage.getSizeQuantity().get("medium"));
+                                    AtomicInteger largeTotal = new AtomicInteger(beverage.getSizeQuantity().get("large"));
+
+                                    controller.setTotalSmallQuantityLabel("total: " + smallTotal.get());
+                                    controller.setTotalMediumQuantityLabel("total: " + mediumTotal.get());
+                                    controller.setTotalLargeQuantityLabel("total: " + largeTotal.get());
+
+                                    controller.getSmallIncrementButton().setOnAction(actionEvent -> {
+                                        int value = Integer.parseInt(controller.getSmallQuantity().getText()) + 1;
+                                        smallTotal.getAndIncrement();
+                                        controller.setSmallQuantity(String.valueOf(value));
+                                        controller.setTotalSmallQuantityLabel("total: " + smallTotal.get());
+                                    });
+
+                                    controller.getMediumIncrementButton().setOnAction(actionEvent -> {
+                                        int value = Integer.parseInt(controller.getMediumQuantity().getText()) + 1;
+                                        mediumTotal.getAndIncrement();
+                                        controller.setMediumQuantity(String.valueOf(value));
+                                        controller.setTotalMediumQuantityLabel("total: " + mediumTotal.get());
+                                    });
+
+                                    controller.getLargeIncrementButton().setOnAction(actionEvent -> {
+                                        int value = Integer.parseInt(controller.getLargeQuantity().getText()) + 1;
+                                        largeTotal.getAndIncrement();
+                                        controller.setLargeQuantity(String.valueOf(value));
+                                        controller.setTotalLargeQuantityLabel("total: " + largeTotal.get());
+                                    });
+
+                                    controller.getSmallDecrementButton().setOnAction(actionEvent -> {
+                                        int value = Integer.parseInt(controller.getSmallQuantity().getText()) - 1;
+                                        smallTotal.getAndDecrement();
+                                        controller.setSmallQuantity(String.valueOf(value));
+                                        controller.setTotalSmallQuantityLabel("total: " + smallTotal.get());
+                                    });
+
+                                    controller.getMediumDecrementButton().setOnAction(actionEvent -> {
+                                        int value = Integer.parseInt(controller.getMediumQuantity().getText()) - 1;
+                                        mediumTotal.getAndDecrement();
+                                        controller.setMediumQuantity(String.valueOf(value));
+                                        controller.setTotalMediumQuantityLabel("total: " + mediumTotal.get());
+                                    });
+
+                                    controller.getLargeDecrementButton().setOnAction(actionEvent -> {
+                                        int value = Integer.parseInt(controller.getLargeQuantity().getText()) - 1;
+                                        largeTotal.getAndDecrement();
+                                        controller.setLargeQuantity(String.valueOf(value));
+                                        controller.setTotalLargeQuantityLabel("total: " + largeTotal.get());
+                                    });
+
+                                    controller.getAcceptButton().setOnAction(actionEvent -> {
+                                        int smallCounter = Integer.parseInt(controller.getSmallQuantity().getText());
+                                        int mediumCounter = Integer.parseInt(controller.getMediumQuantity().getText());
+                                        int largeCounter = Integer.parseInt(controller.getLargeQuantity().getText());
+
+                                        do {
+                                            if (smallCounter > 0) {
+                                                beverage.incrementQuantity("small");
+                                                smallCounter--;
+                                            } else {
+                                                beverage.decrementQuantity("small");
+                                                smallCounter++;
+                                            }
+                                        } while (smallCounter != 0);
+
+                                        do {
+                                            if (mediumCounter > 0) {
+                                                beverage.incrementQuantity("medium");
+                                                mediumCounter--;
+                                            } else {
+                                                beverage.decrementQuantity("medium");
+                                                mediumCounter++;
+                                            }
+                                        } while (mediumCounter != 0);
+
+                                        do {
+                                            if (largeCounter > 0) {
+                                                beverage.incrementQuantity("large");
+                                                largeCounter--;
+                                            } else {
+                                                beverage.decrementQuantity("large");
+                                                largeCounter++;
+                                            }
+                                        } while (largeCounter != 0);
+
+                                        if (originalIndex != -1) {
+                                            if (originalIndex >= 0 && originalIndex < productList.size()) {
+                                                productList.set(originalIndex, beverage);
+                                            }
+                                        }
+
+                                        popupStage.close();
+                                    });
+                                    popupStage.show();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                        }
+                    });
+
+                    {
+                        editButton.setStyle("-fx-background-color: #634921; -fx-text-fill: white;");
+
+                        editButton.setOnMouseEntered(e -> editButton.setStyle("-fx-background-color: #9a7133; -fx-text-fill: white;"));
+
+                        editButton.setOnMouseExited(e -> editButton.setStyle("-fx-background-color: #634921; -fx-text-fill: white;"));
+                    }
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(editButton);
+                            setAlignment(Pos.CENTER);
+                        }
+                    }
+                };
+            }
+        };
+        editQuantityColumn.setCellFactory(cellFactory);
+    } // end of addEditQuantityButton
 
     public void populateTableFromMap(HashMap<String, Food> foodMenu, HashMap<String, Beverage> beverageMenu) {
-        ObservableList<Object> productList = FXCollections.observableArrayList();
+        productList = FXCollections.observableArrayList();
 
         for (Map.Entry<String, Food> entry : foodMenu.entrySet()) {
             Food food = entry.getValue();
@@ -108,180 +309,31 @@ public class InventoryPageController implements Initializable {
             productList.add(beverage);
         }
 
-        inventoryTableView.setItems(productList);
-    }
+        filteredList = new FilteredList<>(productList, item -> true);
+        inventoryTableView.setItems(filteredList);
+    } // end of populateTableFromMap
 
-    private void setInventoryTextFieldListener() {
-        // Create a FilteredList to filter the items in the table
-        FilteredList<Object> filteredData = new FilteredList<>(inventoryTableView.getItems(), p -> true);
-
-        // Bind the FilteredList to the search bar text property
-        searchInventoryTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(product -> {
-                // If search bar is empty, display all items
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                // Convert search query to lowercase for case-insensitive search
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                // Filter by product name
-                if (product instanceof Food food) {
-                    return food.getName().toLowerCase().contains(lowerCaseFilter);
-                } else if (product instanceof Beverage beverage) {
-                    return beverage.getName().toLowerCase().contains(lowerCaseFilter);
-                }
-
-                return false; // No match found
-            });
-        });
-
-        // Wrap the filtered list in a SortedList
-        SortedList<Object> sortedData = new SortedList<>(filteredData);
-
-        // Bind the sorted list to the table
-        sortedData.comparatorProperty().bind(inventoryTableView.comparatorProperty());
-        inventoryTableView.setItems(sortedData);
-    }
-
-    private void addPlusButtonToTable() {
-        TableColumn<Object, Void> plusColumn = new TableColumn<>("");
-        plusColumn.setCellFactory(new Callback<>() {
-            @Override
-            public TableCell<Object, Void> call(final TableColumn<Object, Void> param) {
-                return new TableCell<>() {
-                    private final Button plusButton = new Button("+");
-
-                    {
-                        plusButton.setOnAction(event -> {
-                            Object product = getTableRow().getItem();
-                            //TODO: Implement incrementation of quantity
-                            if (product instanceof Food food) {
-                                try {
-                                    food.incrementQuantity();
-                                    int rowIndex = getTableRow().getIndex();
-                                    inventoryTableView.getItems().set(rowIndex, food);
-                                } catch (Exception e) {
-                                    throw new RuntimeException(e);
-                                }
-                            } else if (product instanceof Beverage beverage) {
-                                try {
-                                    Platform.runLater(() -> {
-                                        try {
-                                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/BeverageInventorySizePopup.fxml"));
-                                            Stage popupStage = new Stage();
-                                            popupStage.initModality(Modality.APPLICATION_MODAL);
-                                            popupStage.setScene(new Scene(loader.load()));
-                                            BeverageInventorySizesPopupController controller = loader.getController();
-
-                                            controller.setSmallQuantity(String.valueOf(beverage.getSizeQuantity().get("small")));
-                                            controller.setMediumQuantity(String.valueOf(beverage.getSizeQuantity().get("medium")));
-                                            controller.setLargeQuantity(String.valueOf(beverage.getSizeQuantity().get("large")));
-
-                                            int rowIndex = getTableRow().getIndex();
-
-                                            controller.getSmallIncrementButton().setOnAction(actionEvent -> {
-                                                beverage.incrementQuantity("small");
-                                                controller.setSmallQuantity(String.valueOf(beverage.getSizeQuantity().get("small")));
-                                                inventoryTableView.getItems().set(rowIndex, beverage);
-                                            });
-
-                                            controller.getMediumIncrementButton().setOnAction(actionEvent -> {
-                                                beverage.incrementQuantity("medium");
-                                                controller.setMediumQuantity(String.valueOf(beverage.getSizeQuantity().get("medium")));
-                                                inventoryTableView.getItems().set(rowIndex, beverage);
-                                            });
-
-                                            controller.getLargeIncrementButton().setOnAction(actionEvent -> {
-                                                beverage.incrementQuantity("large");
-                                                inventoryTableView.getItems().set(rowIndex, beverage);
-                                                controller.setLargeQuantity(String.valueOf(beverage.getSizeQuantity().get("large")));
-                                            });
-
-                                            controller.getAcceptButton().setOnAction(actionEvent -> {
-                                                popupStage.close();
-                                            });
-
-                                            popupStage.show();
-                                        } catch (IOException e) {
-                                            throw new RuntimeException(e);
-                                        }
-                                    });
-                                } catch (Exception e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        });
-                    }
-
-                    @Override
-                    protected void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(plusButton);
-                        }
-                    }
-                };
+    private void filterTable(String searchText) {
+        filteredList.setPredicate(item -> {
+            if (searchText == null || searchText.isEmpty()) {
+                return true;
             }
-        });
-        inventoryTableView.getColumns().add(plusColumn);
-    }
 
-    private void addMinusButtonToTable() {
-        TableColumn<Object, Void> minusColumn = new TableColumn<>("");
-        minusColumn.setCellFactory(new Callback<>() {
-            @Override
-            public TableCell<Object, Void> call(final TableColumn<Object, Void> param) {
-                return new TableCell<>() {
-                    private final Button minusButton = new Button("-");
-
-                    {
-                        minusButton.setOnAction(event -> {
-                            Object product = getTableRow().getItem();
-                            //TODO: Implement decrementation of quantity
-                            if (product instanceof Food food) {
-                                try {
-                                    food.updateQuantity(1);
-                                    int rowIndex = getTableRow().getIndex();
-                                    inventoryTableView.getItems().set(rowIndex, food);
-                                } catch (Exception e) {
-                                    throw new RuntimeException(e);
-                                }
-                            } else if (product instanceof Beverage beverage) {
-                                try {
-                                    beverage.updateQuantity("small", 1);
-                                    int rowIndex = getTableRow().getIndex();
-                                    inventoryTableView.getItems().set(rowIndex, beverage);
-                                } catch (Exception e) {
-                                    throw new RuntimeException(e);
-                                }
-                            }
-                        });
-                    }
-
-                    @Override
-                    protected void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(minusButton);
-                        }
-                    }
-                };
+            if (item instanceof Food food) {
+                return food.getName().toLowerCase().contains(searchText.toLowerCase());
+            } else if (item instanceof Beverage beverage) {
+                return beverage.getName().toLowerCase().contains(searchText.toLowerCase());
             }
+            return false;
         });
-        inventoryTableView.getColumns().add(minusColumn);
-    }
+        inventoryTableView.setItems(filteredList);
+    } // end of filterTable
 
     public Button getSaveChangesButton() {
         return saveChangesButton;
-    }
+    } // end of getSaveChangesButton
 
-    public ObservableList<Object> getItems() {
-        return inventoryTableView.getItems();
-    }
-}
+    public ObservableList<Object> getProductList() {
+        return productList;
+    } // end of getProductList
+} // end of InventoryPageController class

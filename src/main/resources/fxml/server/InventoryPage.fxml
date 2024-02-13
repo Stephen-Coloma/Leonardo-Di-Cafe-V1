@@ -16,9 +16,10 @@
             <content>
                 <TableView fx:id="inventoryTableView" prefHeight="610.0" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;">
                     <columns>
-                        <TableColumn fx:id="productNameColumn" prefWidth="419.7333682179451" text="Product Name" />
-                        <TableColumn fx:id="typeColumn" prefWidth="180.2666015625" text="Type" />
-                        <TableColumn fx:id="quantityColumn" prefWidth="147.733154296875" text="Quantity" />
+                        <TableColumn fx:id="productNameColumn" prefWidth="437.0" text="Product Name" />
+                        <TableColumn fx:id="typeColumn" prefWidth="196.0" text="Type" />
+                        <TableColumn fx:id="quantityColumn" prefWidth="188.0" text="Quantity" />
+                  <TableColumn fx:id="editQuantityColumn" prefWidth="163.0" text="Edit Quantity" />
                     </columns>
                 </TableView>
             </content>
