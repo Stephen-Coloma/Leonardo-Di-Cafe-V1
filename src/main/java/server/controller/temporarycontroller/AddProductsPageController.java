@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
@@ -12,7 +11,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
-
+import shared.SerializableImage;
 import java.io.File;
 import java.net.URL;
 import java.text.NumberFormat;
@@ -202,7 +201,7 @@ public class AddProductsPageController implements Initializable {
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             imageTextField.setText(selectedFile.getAbsolutePath());
             // Set the chosen image to the sampleImageView for preview
-            Image image = new Image(selectedFile.toURI().toString());
+            SerializableImage image = new SerializableImage(selectedFile.toURI().toString());
             sampleImageView.setImage(image);
         }
 

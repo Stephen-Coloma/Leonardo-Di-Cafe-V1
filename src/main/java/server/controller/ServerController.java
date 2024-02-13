@@ -2,7 +2,6 @@ package server.controller;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
 import server.controller.temporarycontroller.*;
 import server.model.ServerModel;
 import server.view.ServerView;
@@ -96,28 +95,38 @@ public class ServerController {
     } // end of setComponentActions
 
     public void addProduct() {
-        if (addProductsPageController.getTypeOfProductMenuButton().getText().equals("food")) {
-
-        } else {
+        if (addProductsPageController.getTypeOfProductMenuButton().getText().equalsIgnoreCase("food")) {
             String name = addProductsPageController.getProductNameTextField().getText().trim();
-            char type = 'b';
-            double review = 0.0;
-            int reviewCount = 0;
-            String description = addProductsPageController.getProductDescriptionTextField().getText();
-            int sQuantity = Integer.parseInt(addProductsPageController.getMainQuantityTextField().getText());
-            int mQuantity = Integer.parseInt(addProductsPageController.getMediumQuantityTextField().getText());
-            int lQuantity = Integer.parseInt(addProductsPageController.getLargeQuantityTextField().getText());
-            double sPrice = Double.parseDouble(addProductsPageController.getMainPriceTextField().getText());
-            double mPrice = Double.parseDouble(addProductsPageController.getMediumPriceTextField().getText());
-            double lPrice = Double.parseDouble(addProductsPageController.getLargePriceTextField().getText());
+            String description = addProductsPageController.getProductDescriptionTextField().getText().trim();
+            int quantity = Integer.parseInt(addProductsPageController.getMainQuantityTextField().getText().trim());
+            double price = Double.parseDouble(addProductsPageController.getMainPriceTextField().getText().trim());
 
             String absolutePath = new File(addProductsPageController.getImageTextField().getText()).getAbsolutePath();
             String extension = absolutePath.substring(absolutePath.lastIndexOf('.'));
             String copiedImagePath = model.copyImage(absolutePath, name + extension);
 
-            Image image = new Image("file:" + copiedImagePath);
+            SerializableImage image = new SerializableImage("file:" + copiedImagePath);
 
-            Beverage beverage = new Beverage(name, type, review, reviewCount, image, description, sQuantity, mQuantity, lQuantity, sPrice, mPrice, lPrice);
+            Food food = new Food(name, 'f', 0.0, 0, image, description, quantity, price);
+            System.out.println(food);
+            //model.getFoodMenu().put(name, food);
+        } else {
+            String name = addProductsPageController.getProductNameTextField().getText().trim();
+            String description = addProductsPageController.getProductDescriptionTextField().getText().trim();
+            int sQuantity = Integer.parseInt(addProductsPageController.getMainQuantityTextField().getText().trim());
+            int mQuantity = Integer.parseInt(addProductsPageController.getMediumQuantityTextField().getText().trim());
+            int lQuantity = Integer.parseInt(addProductsPageController.getLargeQuantityTextField().getText().trim());
+            double sPrice = Double.parseDouble(addProductsPageController.getMainPriceTextField().getText().trim());
+            double mPrice = Double.parseDouble(addProductsPageController.getMediumPriceTextField().getText().trim());
+            double lPrice = Double.parseDouble(addProductsPageController.getLargePriceTextField().getText().trim());
+
+            String absolutePath = new File(addProductsPageController.getImageTextField().getText()).getAbsolutePath();
+            String extension = absolutePath.substring(absolutePath.lastIndexOf('.'));
+            String copiedImagePath = model.copyImage(absolutePath, name + extension);
+
+            SerializableImage image = new SerializableImage("file:" + copiedImagePath);
+
+            Beverage beverage = new Beverage(name, 'b', 0.0, 0, image, description, sQuantity, mQuantity, lQuantity, sPrice, mPrice, lPrice);
             System.out.println(beverage);
             //model.getBeverageMenu().put(name, beverage);
         }

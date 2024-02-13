@@ -1,6 +1,5 @@
 package shared;
 
-import javafx.scene.image.Image;
 import util.exception.OutOfStockException;
 
 /**This class represents a food object where there is no variation for it.
@@ -10,7 +9,7 @@ public class Food extends Product {
     private double price;
 
     //constructors
-    public Food(String name, char type, double review, int reviewCount, Image image, String description, int quantity, double price) {
+    public Food(String name, char type, double review, int reviewCount, SerializableImage image, String description, int quantity, double price) {
         super(name, type, review, reviewCount, image, description);
         this.quantity = quantity;
         this.price = price;

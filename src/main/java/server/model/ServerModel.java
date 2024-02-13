@@ -6,18 +6,15 @@ import util.XMLUtility;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 import util.exception.OutOfStockException;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.AclFileAttributeView;
 import java.util.HashMap;
 import java.util.List;
 
-/**Server Model class holds the data that will eventually accessed by all the clients.
+/**Server Model class holds the data that will eventually be accessed by all the clients.
  * The idea is, when a client places an order,it will update the menu of this server model (e.g. by decrementing it)
  * and that the updated menu will be visible to other clients.
  *

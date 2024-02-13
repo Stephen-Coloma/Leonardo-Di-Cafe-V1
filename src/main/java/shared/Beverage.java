@@ -1,6 +1,5 @@
 package shared;
 
-import javafx.scene.image.Image;
 import util.exception.OutOfStockException;
 
 import java.util.HashMap;
@@ -13,7 +12,7 @@ public class Beverage extends Product{
     private HashMap<String, Double> sizePrice;
 
     //constructor
-    public Beverage(String name, char type, double review, int reviewCount, Image image, String description, int sQuantity, int mQuantity, int lQuantity, double sPrice, double mPrice, double lPrice) {
+    public Beverage(String name, char type, double review, int reviewCount, SerializableImage image, String description, int sQuantity, int mQuantity, int lQuantity, double sPrice, double mPrice, double lPrice) {
         super(name, type, review, reviewCount, image, description);
 
         HashMap<String, Integer> sizeQuantity = new HashMap<>(3);

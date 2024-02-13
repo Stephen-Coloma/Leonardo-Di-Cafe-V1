@@ -2,7 +2,6 @@ package server.controller.temporarycontroller;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,7 +15,6 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 import javafx.util.Duration;
 import shared.Order;
-
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;

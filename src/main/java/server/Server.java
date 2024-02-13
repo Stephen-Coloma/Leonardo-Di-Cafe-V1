@@ -1,12 +1,10 @@
 package server;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 import server.controller.ServerController;
 import server.model.ServerModel;
 import server.view.ServerView;
-
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;

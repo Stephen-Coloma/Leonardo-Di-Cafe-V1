@@ -18,7 +18,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import shared.Customer;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -72,6 +71,7 @@ public class AccountsListPageController implements Initializable {
                                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/account_information_popup.fxml"));
                                 Stage popupStage = new Stage();
                                 popupStage.initModality(Modality.APPLICATION_MODAL);
+                                popupStage.setTitle("Customer Information");
                                 popupStage.setScene(new Scene(loader.load()));
                                 AccountInformationPopupController controller = loader.getController();
 

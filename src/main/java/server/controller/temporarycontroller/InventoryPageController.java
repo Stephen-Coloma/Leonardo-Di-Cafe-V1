@@ -109,6 +109,7 @@ public class InventoryPageController implements Initializable {
                                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/food_inventory_size_popup.fxml"));
                                     Stage popupStage = new Stage();
                                     popupStage.initModality(Modality.APPLICATION_MODAL);
+                                    popupStage.setTitle("Edit Food Quantity");
                                     popupStage.setScene(new Scene(loader.load()));
                                     FoodInventoryPopupController controller = loader.getController();
 
@@ -166,6 +167,7 @@ public class InventoryPageController implements Initializable {
                                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/beverage_inventory_size_popup.fxml"));
                                     Stage popupStage = new Stage();
                                     popupStage.initModality(Modality.APPLICATION_MODAL);
+                                    popupStage.setTitle("Edit Beverage Quantity");
                                     popupStage.setScene(new Scene(loader.load()));
                                     BeverageInventorySizesPopupController controller = loader.getController();
 

@@ -1,6 +1,5 @@
 package util;
 
-import javafx.scene.image.Image;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -70,7 +69,7 @@ public class XMLUtility {
                 char type = ' ';
                 double review = 0;
                 int reviewCount = 0;
-                Image image = null;
+                SerializableImage image = null;
                 String description = "";
                 int quantity = 0;
                 double price = 0;
@@ -149,7 +148,7 @@ public class XMLUtility {
                             char type = getElementValue(beverage, "type").charAt(0);
                             double review = Double.parseDouble(getElementValue(beverage, "review"));
                             int reviewCount = (int) Double.parseDouble(getElementValue(beverage, "reviewCount"));
-                            Image image = getImage(getElementValue(beverage, "image"));
+                            SerializableImage image = getImage(getElementValue(beverage, "image"));
                             String description = getElementValue(beverage, "description");
                             int amountSold = (int) Double.parseDouble(getElementValue(beverage, "amountSold"));
 
@@ -228,7 +227,7 @@ public class XMLUtility {
                             double prodReview = Double.parseDouble(productElement.getElementsByTagName("review").item(0).getTextContent());
                             // Parse image
                             String imageName = productElement.getElementsByTagName("image").item(0).getTextContent();
-                            Image prodImage = getImage(imageName);
+                            SerializableImage prodImage = getImage(imageName);
                             String prodSize = productElement.getElementsByTagName("size").item(0).getTextContent();
                             int prodQuantity = (int) Double.parseDouble(productElement.getElementsByTagName("quantity").item(0).getTextContent());
 
@@ -866,7 +865,7 @@ public class XMLUtility {
         int prodReview = 0;
         String prodSize = "";
         int prodQuantity = 0;
-        Image prodImage = null;
+        SerializableImage prodImage = null;
 
         NodeList productDetails = productElement.getChildNodes();
         for (int i = 0; i < productDetails.getLength(); i++) {
@@ -932,11 +931,11 @@ public class XMLUtility {
     /**
      * Creates a new JavaFX Image object from the given filename.
      * @param filename the path to the image file
-     * @return the Image object created from the specified file
+     * @return the SerializableImage object created from the specified file
      */
-    private static Image getImage(String filename) {
+    private static SerializableImage getImage(String filename) {
         try {
-            return new Image("file:src/main/resources/productimages/" + filename);
+            return new SerializableImage("file:src/main/resources/productimages/" + filename);
         } catch (Exception e) {
             e.printStackTrace();
         }
