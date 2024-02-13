@@ -26,8 +26,6 @@ public class LandingPageController {
     private FXMLLoader loader;
     private Parent root;
     private void loadPage(String page, ActionEvent event) throws IOException {
-        //loader = new FXMLLoader((getClass().getResource("/fxml/client/"+page+".fxml")));
-        System.out.println("Loading FXML: " + "/fxml/client/" + page + ".fxml");
         loader = new FXMLLoader(getClass().getResource("/fxml/client/" + page + ".fxml"));
 
         root = loader.load();

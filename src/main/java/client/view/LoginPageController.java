@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -22,13 +23,20 @@ public class LoginPageController {
     private TextField usernameTextField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private Label noticeLabel;
     private FXMLLoader loader;
     private Parent root;
 
-    public String[] getCredentials (ActionEvent event   ) throws IOException {
+    public String[] getCredentials () throws IOException {
         String username = usernameTextField.getText();
         String password = passwordField.getText();
-        return new String[]{username, password};
+
+        if (username.equals("") || password.equals("")){
+            return null;
+        }else {
+            return new String[]{username, password};
+        }
     }
 
     //TODO
@@ -40,6 +48,20 @@ public class LoginPageController {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void incorrectDetails(){
+        usernameTextField.setPromptText("incorrect username");
+        passwordField.setPromptText("incorrect password");
+        if (noticeLabel.isVisible()){
+            noticeLabel.setVisible(false);
+        }
+    }
+
+    public void emptyField(){
+        noticeLabel.setVisible(true);
+    }
+
+
 
     public void loginPageButtonEntered(MouseEvent event){
         loginButton.setStyle("-fx-background-color: lightgray;");
@@ -72,6 +94,14 @@ public class LoginPageController {
 
     public void setPasswordField(PasswordField passwordField) {
         this.passwordField = passwordField;
+    }
+
+    public Label getNoticeLabel() {
+        return noticeLabel;
+    }
+
+    public void setNoticeLabel(Label noticeLabel) {
+        this.noticeLabel = noticeLabel;
     }
 
     public FXMLLoader getLoader() {

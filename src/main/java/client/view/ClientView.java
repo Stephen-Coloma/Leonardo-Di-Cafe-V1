@@ -18,7 +18,7 @@ public class ClientView {
         Platform.runLater(() -> {
             try {
                 System.out.println("Loading Client Interface");
-                loader = new FXMLLoader(getClass().getResource("/fxml/client/first_landing_page.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/fxml/client/landing_page.fxml"));
                 AnchorPane root = loader.load();
                 Scene scene = new Scene(root);
                 stage.setTitle("LEONARDO D' Cafe [CLIENT]");
