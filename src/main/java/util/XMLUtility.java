@@ -91,7 +91,7 @@ public class XMLUtility {
                             review =  Double.parseDouble(foodDetail.getTextContent());
                             break;
                         case "reviewCount":
-                            reviewCount =  Integer.parseInt(foodDetail.getTextContent());
+                            reviewCount =  (int) Double.parseDouble(foodDetail.getTextContent());
                             break;
                         case "image":
                             String fileName = foodDetail.getTextContent();
@@ -101,10 +101,10 @@ public class XMLUtility {
                             description =  foodDetail.getTextContent();
                             break;
                         case "amountSold":
-                            amountSold = Integer.parseInt(foodDetail.getTextContent());
+                            amountSold = (int) Double.parseDouble(foodDetail.getTextContent());
                             break;
                         case "quantity":
-                            quantity = Integer.parseInt(foodDetail.getTextContent()) ;
+                            quantity = (int) Double.parseDouble(foodDetail.getTextContent()) ;
                             break;
                         case "price":
                             price =  Double.parseDouble(foodDetail.getTextContent());
@@ -122,6 +122,7 @@ public class XMLUtility {
         }
         return null;
     }
+
 
     /**
      * Loads the beverage menu available in the server from a xml file.
@@ -147,16 +148,16 @@ public class XMLUtility {
                             String name = getElementValue(beverage, "name");
                             char type = getElementValue(beverage, "type").charAt(0);
                             double review = Double.parseDouble(getElementValue(beverage, "review"));
-                            int reviewCount = Integer.parseInt(getElementValue(beverage, "reviewCount"));
+                            int reviewCount = (int) Double.parseDouble(getElementValue(beverage, "reviewCount"));
                             Image image = getImage(getElementValue(beverage, "image"));
                             String description = getElementValue(beverage, "description");
-                            int amountSold = Integer.parseInt(getElementValue(beverage, "amountSold"));
+                            int amountSold = (int) Double.parseDouble(getElementValue(beverage, "amountSold"));
 
                             Map<String, Integer> quantityList = IntStream.range(0, beverage.getElementsByTagName("quantity").getLength())
                                     .mapToObj(i -> (Element) beverage.getElementsByTagName("quantity").item(i))
                                     .collect(toMap(
                                             e -> e.getAttribute("size"),
-                                            e -> Integer.parseInt(e.getTextContent())
+                                            e -> (int) Double.parseDouble(e.getTextContent())
                                     ));
 
                             Map<String, Double> priceList = IntStream.range(0, beverage.getElementsByTagName("price").getLength())
@@ -229,7 +230,7 @@ public class XMLUtility {
                             String imageName = productElement.getElementsByTagName("image").item(0).getTextContent();
                             Image prodImage = getImage(imageName);
                             String prodSize = productElement.getElementsByTagName("size").item(0).getTextContent();
-                            int prodQuantity = Integer.parseInt(productElement.getElementsByTagName("quantity").item(0).getTextContent());
+                            int prodQuantity = (int) Double.parseDouble(productElement.getElementsByTagName("quantity").item(0).getTextContent());
 
                             Product product = null;
                             if (prodType == 'f') {
@@ -254,7 +255,7 @@ public class XMLUtility {
                     }
 
                     // Parse order details
-                    int id = Integer.parseInt(orderElement.getElementsByTagName("orderID").item(0).getTextContent());
+                    int id = (int) Double.parseDouble(orderElement.getElementsByTagName("orderID").item(0).getTextContent());
                     String timeStamp = orderElement.getElementsByTagName("timeStamp").item(0).getTextContent();
                     double totalPrice = Double.parseDouble(orderElement.getElementsByTagName("totalPrice").item(0).getTextContent());
                     boolean status = Boolean.parseBoolean(orderElement.getElementsByTagName("status").item(0).getTextContent());
@@ -269,6 +270,156 @@ public class XMLUtility {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Saves a list of orders to an XML file.
+     *
+     * @param orderList A map containing orders with customer names as keys and corresponding Order objects as values.
+     */
+    public static void saveOrders(List<Order> orderList) {
+        File file = new File("src/main/java/server/model/order_list.xml");
+
+        try {
+            dbf = DocumentBuilderFactory.newInstance();
+            dbf.setIgnoringElementContentWhitespace(true);
+            db = dbf.newDocumentBuilder();
+            document = db.parse(file);
+            //document = db.newDocument();
+
+            // Clean the document
+            cleanDocument(document);
+
+            Element root = document.getDocumentElement();
+
+
+            for (Order order : orderList) {
+
+                String orderName = order.getCustomer().getName();
+
+                NodeList existingOrders = document.getElementsByTagName("order");
+                boolean orderExists = false;
+
+                for(int i = 0; i < existingOrders.getLength(); i++){
+                    Node node = existingOrders.item(i);
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        Element existingOrder = (Element) node;
+                        String existingName = getElementValue(existingOrder, "name");
+                        if (existingName.equals(orderName)) {
+                            orderExists = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!orderExists) {
+                    Element orderElement = document.createElement("order");
+                    root.appendChild(orderElement);
+
+                    Element customerElement = document.createElement("customer");
+                    orderElement.appendChild(customerElement);
+
+                    createElement(document, customerElement, "name", order.getCustomer().getName());
+                    createElement(document, customerElement, "username", order.getCustomer().getUsername());
+                    createElement(document, customerElement, "address", order.getCustomer().getAddress());
+
+                    for (Product product : order.getOrders()) {
+                        Element productElement = document.createElement("product");
+                        orderElement.appendChild(productElement);
+
+                        createElement(document, productElement, "name", product.getName());
+                        createElement(document, productElement, "type", String.valueOf(product.getType()));
+                        createElement(document, productElement, "review", String.valueOf(product.getReview()));
+
+                        if (product.getImage() != null) {
+                            createElement(document, productElement, "image", product.getImage().getUrl());
+                        }
+
+                        if (product instanceof Beverage) {
+                            Beverage beverage = (Beverage) product;
+
+                            for (Map.Entry<String, Integer> sizeEntry : beverage.getSizeQuantity().entrySet()) {
+                                String size = sizeEntry.getKey();
+                                Integer quantity = sizeEntry.getValue();
+                                Double price = beverage.getSizePrice().get(size);
+
+                                Element variationElement = document.createElement("variation");
+                                productElement.appendChild(variationElement);
+
+                                createElement(document, variationElement, "size", size);
+                                createElement(document, variationElement, "quantity", String.valueOf(quantity));
+                                createElement(document, variationElement, "price", String.valueOf(price));
+
+                                if (beverage.getImage() != null) {
+                                    createElement(document, variationElement, "image", beverage.getImage().getUrl());
+                                }
+                            }
+                        } else if (product instanceof Food) {
+                            Food food = (Food) product;
+                            createElement(document, productElement, "quantity", String.valueOf(food.getQuantity()));
+                        }
+                    }
+
+                    createElement(document, orderElement, "orderID", String.valueOf(order.getID()));
+                    createElement(document, orderElement, "timeStamp", order.getTimeStamp());
+                    createElement(document, orderElement, "totalPrice", String.valueOf(order.getTotalPrice()));
+                    createElement(document, orderElement, "status", String.valueOf(order.isStatus()));
+                }
+            }
+
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(file);
+            transformer.transform(source, result);
+
+            System.out.println("Orders have been updated and written to file: " + file.getAbsolutePath());
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Helper Method
+     * Create an element with text content to a parent element in an XML document.
+     * This is method used to simplify the addition of elements to the document.
+     *
+     * @param doc the XML document
+     * @param parent the parent element
+     * @param name the tag name of the new element
+     * @param value the text content of the new element
+     */
+    private static void createElement(Document doc, Element parent, String name, String value) {
+        // Create a new element with the given tag name
+        Element element = doc.createElement(name);
+        // Set the text content of this element
+        element.appendChild(doc.createTextNode(value));
+        // Append this element as a child of the parent element
+        parent.appendChild(element);
+    }
+
+    /**
+     * Helper metjod
+     * Retrieves the image path for a given product name.
+     * This method converts the product name to match the naming convention of the image files.
+     *
+     * @param productName The name of the product.
+     * @return The image file path, assuming the file exists.
+     */
+    private static String getProductImagePath(String productName) {
+        // The base directory where product images are stored
+        String baseDir = "src/main/resources/productimages/";
+
+        // Convert the product name to the expected image file name format
+        String sanitizedProductName = productName.trim().replace(" ", "_") + ".png";
+
+        // Construct the full image path
+        return baseDir + sanitizedProductName;
     }
 
     /**This method loads the customer accounts from a xml file where it was saved.
@@ -293,6 +444,102 @@ public class XMLUtility {
             e.printStackTrace();
         }
         return customerAccountList;
+    }
+
+    /**
+     * Saves the food menu to an XML file.
+     *
+     * @param foodMenu A Map containing food items with their names as keys and Food objects as values.
+     */
+    public static void saveFoodMenu(Map<String, Food> foodMenu) {
+        File file = new File("src/main/java/server/model/food_menu.xml");
+
+        try {
+            dbf = DocumentBuilderFactory.newInstance();
+            dbf.setIgnoringElementContentWhitespace(true);
+            db = dbf.newDocumentBuilder();
+            document = db.parse(file);
+
+            Element root = document.getDocumentElement();
+
+            for (Food food : foodMenu.values()) {
+                String foodName = food.getName();
+
+                NodeList existingFoods = document.getElementsByTagName("food");
+                boolean foodExists = false;
+
+                for (int i = 0; i < existingFoods.getLength(); i++) {
+                    Node node = existingFoods.item(i);
+                    if (node.getNodeType() == Node.ELEMENT_NODE) {
+                        Element existingFood = (Element) node;
+                        String existingName = getElementValue(existingFood, "name");
+                        if (existingName.equals(foodName)) {
+                            foodExists = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!foodExists) {
+                    Element foodElement = document.createElement("food");
+                    foodElement.setAttribute("name", food.getName());
+                    root.appendChild(foodElement);
+
+                    Element nameElement = document.createElement("name");
+                    nameElement.appendChild(document.createTextNode(food.getName()));
+                    foodElement.appendChild(nameElement);
+
+                    Element typeElement = document.createElement("type");
+                    typeElement.appendChild(document.createTextNode(String.valueOf(food.getType())));
+                    foodElement.appendChild(typeElement);
+
+                    Element reviewElement = document.createElement("review");
+                    reviewElement.appendChild(document.createTextNode(String.valueOf(food.getReview())));
+                    foodElement.appendChild(reviewElement);
+
+                    Element reviewCountElement = document.createElement("reviewCount");
+                    reviewCountElement.appendChild(document.createTextNode(String.valueOf(food.getReviewCount())));
+                    foodElement.appendChild(reviewCountElement);
+
+                    Element imageElement = document.createElement("image");
+                    //String filename = String.valueOf(food.getImage().getUrl()); // Assuming getImage returns the file name
+                    String filename = String.valueOf(food.getImage());
+                    imageElement.appendChild(document.createTextNode(filename));
+                    foodElement.appendChild(imageElement);
+
+                    Element descriptionElement = document.createElement("description");
+                    descriptionElement.appendChild(document.createTextNode(food.getDescription()));
+                    foodElement.appendChild(descriptionElement);
+
+                    Element amountSoldElement = document.createElement("amountSold");
+                    amountSoldElement.appendChild(document.createTextNode(String.valueOf(food.getAmountSold())));
+                    foodElement.appendChild(amountSoldElement);
+
+                    Element quantityElement = document.createElement("quantity");
+                    quantityElement.appendChild(document.createTextNode(String.valueOf(food.getQuantity())));
+                    foodElement.appendChild(quantityElement);
+
+                    Element priceElement = document.createElement("price");
+                    priceElement.appendChild(document.createTextNode(String.valueOf(food.getPrice())));
+                    foodElement.appendChild(priceElement);
+                }
+            }
+
+            cleanDocument(document);
+
+            tf = TransformerFactory.newInstance();
+            transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(file);
+            transformer.transform(source, result);
+
+            System.out.println("Food menu has been updated and written to file: " + file.getAbsolutePath());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -382,6 +629,154 @@ public class XMLUtility {
         }
     } // end of saveBeverageMenu
 
+    /**This method saves the customer list to an xml file*/
+    public static void saveCustomerAccounts(List<Customer> customerList) {
+        File file =  new File("src/main/java/server/model/customer_account_list.xml");
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.newDocument();
+
+            // Create the root element <accounts>
+            Element rootElement = doc.createElement("accounts");
+            doc.appendChild(rootElement);
+
+            // Iterate over customer accounts
+            for (Customer customer : customerList) {
+                // Create customer element <customer>
+                Element customerElement = doc.createElement("customer");
+                customerElement.setAttribute("name", customer.getName());
+                rootElement.appendChild(customerElement);
+
+                // Create customer details elements
+                Element nameElement = doc.createElement("name");
+                nameElement.appendChild(doc.createTextNode(customer.getName()));
+                customerElement.appendChild(nameElement);
+
+                Element usernameElement = doc.createElement("username");
+                usernameElement.appendChild(doc.createTextNode(customer.getUsername()));
+                customerElement.appendChild(usernameElement);
+
+                Element addressElement = doc.createElement("address");
+                addressElement.appendChild(doc.createTextNode(customer.getAddress()));
+                customerElement.appendChild(addressElement);
+
+                Element emailElement = doc.createElement("email");
+                emailElement.appendChild(doc.createTextNode(customer.getEmail()));
+                customerElement.appendChild(emailElement);
+
+                Element passwordElement = doc.createElement("password");
+                passwordElement.appendChild(doc.createTextNode(customer.getPassword()));
+                customerElement.appendChild(passwordElement);
+
+                // Create order history element <orderHistory>
+                Element orderHistoryElement = doc.createElement("orderHistory");
+                orderHistoryElement.setAttribute("list", "order history");
+                customerElement.appendChild(orderHistoryElement);
+
+                // Iterate over orders in order history
+                for (Order order : customer.getOrderHistory()) {
+                    // Create order element <order>
+                    Element orderElement = doc.createElement("order");
+                    orderHistoryElement.appendChild(orderElement);
+
+                    // Iterate over products in the order
+                    for (Product product : order.getOrders()) {
+                        // Create product element <product>
+                        Element productElement = doc.createElement("product");
+                        orderElement.appendChild(productElement);
+
+                        // Add product details
+                        Element productNameElement = doc.createElement("name");
+                        productNameElement.appendChild(doc.createTextNode(product.getName()));
+                        productElement.appendChild(productNameElement);
+
+                        Element productTypeElement = doc.createElement("type");
+                        productTypeElement.appendChild(doc.createTextNode(String.valueOf(product.getType())));
+                        productElement.appendChild(productTypeElement);
+
+                        Element productReviewElement = doc.createElement("review");
+                        productReviewElement.appendChild(doc.createTextNode(String.valueOf(product.getReview())));
+                        productElement.appendChild(productReviewElement);
+
+
+                        Element imageElement = doc.createElement("image");
+                        String imageURL= product.getImage().getUrl();
+                        File imageFile = new File(imageURL);
+                        imageElement.appendChild(doc.createTextNode(imageFile.getName()));
+                        productElement.appendChild(imageElement);
+
+                        if (product instanceof Food) {
+                            // For Food products
+                            // Add quantity element
+                            Element productQuantityElement = doc.createElement("quantity");
+                            productQuantityElement.appendChild(doc.createTextNode(String.valueOf(((Food) product).getQuantity())));
+                            productElement.appendChild(productQuantityElement);
+                        } else if (product instanceof Beverage) {
+                            // For Beverage products
+                            Beverage beverage = (Beverage) product;
+
+                            // Iterate over sizeQuantity map entries
+                            for (Map.Entry<String, Integer> entry : beverage.getSizeQuantity().entrySet()) {
+                                String size = entry.getKey();
+                                Integer quantity = entry.getValue();
+
+                                // Check if quantity is greater than 0
+                                if (quantity > 0) {
+                                    // Create size element
+                                    Element sizeElement = doc.createElement("size");
+                                    sizeElement.appendChild(doc.createTextNode(size));
+                                    productElement.appendChild(sizeElement);
+
+                                    // Create quantity element
+                                    Element quantityElement = doc.createElement("quantity");
+                                    quantityElement.appendChild(doc.createTextNode(String.valueOf(quantity)));
+                                    productElement.appendChild(quantityElement);
+
+                                }
+                            }
+                        }
+
+                    }
+
+
+                    // Add order details
+                    Element timeStampElement = doc.createElement("timeStamp");
+                    timeStampElement.appendChild(doc.createTextNode(order.getTimeStamp()));
+                    orderElement.appendChild(timeStampElement);
+
+                    Element totalPriceElement = doc.createElement("totalPrice");
+                    totalPriceElement.appendChild(doc.createTextNode(String.valueOf(order.getTotalPrice())));
+                    orderElement.appendChild(totalPriceElement);
+
+                    Element statusElement = doc.createElement("status");
+                    statusElement.appendChild(doc.createTextNode(String.valueOf(order.isStatus())));
+                    orderElement.appendChild(statusElement);
+
+                    Element idElement = doc.createElement("id");
+                    idElement.appendChild(doc.createTextNode(String.valueOf(order.getID())));
+                    orderElement.appendChild(idElement);
+                }//end of for each Order in the list
+
+
+            }//end of for each Customer in the List
+
+            // Write the content into XML file
+            tf = TransformerFactory.newInstance();
+            transformer = tf.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,"yes");
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(file);
+            transformer.transform(source, result);
+
+            System.out.println("XML file saved successfully!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**Helper method*/
     private static Customer processCustomerElement(Node customer) {
         String name = ((Element) customer).getAttribute("name");
@@ -456,7 +851,7 @@ public class XMLUtility {
                     status = Boolean.parseBoolean(orderDetailElement.getTextContent());
                     break;
                 case "id":
-                    id = Integer.parseInt(orderDetailElement.getTextContent());
+                    id = (int) Double.parseDouble(orderDetailElement.getTextContent());
                     break;
             }
         }
@@ -485,7 +880,7 @@ public class XMLUtility {
                     prodType = productDetail.getTextContent().charAt(0);
                     break;
                 case "review":
-                    prodReview = Integer.parseInt(productDetail.getTextContent());
+                    prodReview = (int) Double.parseDouble(productDetail.getTextContent());
                     break;
                 case "image":
                     String fileName = productDetail.getTextContent();
@@ -495,7 +890,7 @@ public class XMLUtility {
                     prodSize = productDetail.getTextContent();
                     break;
                 case "quantity":
-                    prodQuantity = Integer.parseInt(productDetail.getTextContent());
+                    prodQuantity = (int) Double.parseDouble(productDetail.getTextContent());
                     break;
             }
         }
@@ -519,7 +914,6 @@ public class XMLUtility {
         }
         return null;
     }
-
     // HELPER METHOD
     /**
      * Retrieves the text content of the first occurrence of the specified tag name within the parent element.
@@ -534,7 +928,6 @@ public class XMLUtility {
         }
         return "";
     } // end of getElementValue
-
     // HELPER METHOD
     /**
      * Creates a new JavaFX Image object from the given filename.
