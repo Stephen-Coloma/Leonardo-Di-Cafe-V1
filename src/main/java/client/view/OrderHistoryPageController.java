@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
-public class OrderHistoryController {
+public class OrderHistoryPageController {
 
     @FXML
     private Button orderHistoryExit;

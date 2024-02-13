@@ -15,7 +15,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
-public class MainController {
+public class MainMenuClientPageController {
 
     private Stage stage;
     private Scene scene;
@@ -40,7 +40,7 @@ public class MainController {
 
     public void showMenuUI (ActionEvent event) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/clientMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/main_menu_client_page.fxml"));
         root = loader.load();
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -51,7 +51,7 @@ public class MainController {
 
     public void showOrderHistoryUI (ActionEvent event) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/orderHistory.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/order_history_page.fxml"));
         root = loader.load();
 
         Stage selectVariationStage = new Stage();
@@ -69,7 +69,7 @@ public class MainController {
 
 
     public void showSelectVariationUI(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/selectVariation.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/select_variation.fxml"));
         root = loader.load();
 
         Stage selectVariationStage = new Stage();
@@ -94,7 +94,7 @@ public class MainController {
 
     public void showCheckoutUI (ActionEvent event) throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/checkout.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/checkout_page.fxml"));
         root = loader.load();
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();

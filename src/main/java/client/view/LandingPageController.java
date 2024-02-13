@@ -13,20 +13,22 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class FrontPageController {
+public class LandingPageController {
     @FXML
     private Button loginButtonFrontPage;
     @FXML
-    private Button registerButtonFrontPage;
+    private Button signupButtonFrontPage;
     @FXML
     private LoginPageController loginPageController;
     @FXML
-    private SignUpController signUpController;
+    private SignUpPageController signUpPageController;
 
     private FXMLLoader loader;
     private Parent root;
     private void loadPage(String page, ActionEvent event) throws IOException {
-        loader = new FXMLLoader((getClass().getResource("/fxml/client/"+page+".fxml")));
+        //loader = new FXMLLoader((getClass().getResource("/fxml/client/"+page+".fxml")));
+        System.out.println("Loading FXML: " + "/fxml/client/" + page + ".fxml");
+        loader = new FXMLLoader(getClass().getResource("/fxml/client/" + page + ".fxml"));
 
         root = loader.load();
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -36,10 +38,10 @@ public class FrontPageController {
     }
 
     public void showLoginUI (ActionEvent event) throws IOException {
-        loadPage("loginPage", event);
+        loadPage("login_page", event);
     }
     public void showRegistrationUI (ActionEvent event) throws IOException {
-        loadPage("signup", event);
+        loadPage("signup_page", event);
     }
 
     public void loginFrontPageButtonEntered(MouseEvent event){
@@ -50,13 +52,13 @@ public class FrontPageController {
         loginButtonFrontPage.setStyle("-fx-background-color:  #A38157;");
         loginButtonFrontPage.setTextFill(Paint.valueOf("White"));
     }
-    public void registerFrontPageButtonEntered(MouseEvent event){
-        registerButtonFrontPage.setStyle("-fx-background-color: lightgray;");
-        registerButtonFrontPage.setTextFill(Paint.valueOf("Black"));
+    public void signupFrontPageButtonEntered(MouseEvent event){
+        signupButtonFrontPage.setStyle("-fx-background-color: lightgray;");
+        signupButtonFrontPage.setTextFill(Paint.valueOf("Black"));
     }
-    public void registerFrontPageButtonExited(MouseEvent event){
-        registerButtonFrontPage.setStyle("-fx-background-color:  #A38157;");
-        registerButtonFrontPage.setTextFill(Paint.valueOf("White"));
+    public void signupFrontPageButtonExited(MouseEvent event){
+        signupButtonFrontPage.setStyle("-fx-background-color:  #A38157;");
+        signupButtonFrontPage.setTextFill(Paint.valueOf("White"));
     }
 
     public Button getLoginButtonFrontPage() {
@@ -67,12 +69,12 @@ public class FrontPageController {
         this.loginButtonFrontPage = loginButtonFrontPage;
     }
 
-    public Button getRegisterButtonFrontPage() {
-        return registerButtonFrontPage;
+    public Button getSignupButtonFrontPage() {
+        return signupButtonFrontPage;
     }
 
-    public void setRegisterButtonFrontPage(Button registerButtonFrontPage) {
-        this.registerButtonFrontPage = registerButtonFrontPage;
+    public void setSignupButtonFrontPage(Button signupButtonFrontPage) {
+        this.signupButtonFrontPage = signupButtonFrontPage;
     }
 
     public LoginPageController getLoginPageController() {
@@ -83,12 +85,12 @@ public class FrontPageController {
         this.loginPageController = loginPageController;
     }
 
-    public SignUpController getSignUpController() {
-        return signUpController;
+    public SignUpPageController getSignUpController() {
+        return signUpPageController;
     }
 
-    public void setSignUpController(SignUpController signUpController) {
-        this.signUpController = signUpController;
+    public void setSignUpController(SignUpPageController signUpPageController) {
+        this.signUpPageController = signUpPageController;
     }
 
     public FXMLLoader getLoader() {

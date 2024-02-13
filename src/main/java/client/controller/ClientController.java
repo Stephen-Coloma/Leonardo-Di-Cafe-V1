@@ -9,17 +9,17 @@ import java.io.IOException;
 public class ClientController {
     private ClientView view;
     private ClientModel model;
-    private FrontPageController frontPageController;
+    private LandingPageController landingPageController;
     private LoginPageController loginPageController;
-    private SignUpController signUpController;
-    private MainController mainController;
+    private SignUpPageController signUpPageController;
+    private MainMenuClientPageController mainMenuClientPageController;
     public ClientController(ClientModel model, ClientView view){
         this.model = model;
         this.view = view;
 
         Platform.runLater(() -> {
             System.out.println("Obtained Main Menu Controller");
-            frontPageController = view.getLoader().getController();
+            landingPageController = view.getLoader().getController();
 
             setFrontPageComponentActions();
             System.out.println("Successfully added actions");
@@ -28,10 +28,10 @@ public class ClientController {
 
     private void setFrontPageComponentActions() {
         //action event for login button in frontpageUI
-        frontPageController.getLoginButtonFrontPage().setOnAction(actionEvent -> {
+        landingPageController.getLoginButtonFrontPage().setOnAction(actionEvent -> {
             try {
-                frontPageController.showLoginUI(actionEvent);
-                loginPageController = frontPageController.getLoader().getController();
+                landingPageController.showLoginUI(actionEvent);
+                loginPageController = landingPageController.getLoader().getController();
                 setUpLoginActions();
                 //set up also the loginPage controller
             } catch (IOException e) {
@@ -40,10 +40,10 @@ public class ClientController {
         });
 
         //action event for signup button in frontpageUI
-        frontPageController.getRegisterButtonFrontPage().setOnAction(actionEvent -> {
+        landingPageController.getSignupButtonFrontPage().setOnAction(actionEvent -> {
             try {
-                frontPageController.showRegistrationUI(actionEvent);
-                signUpController = frontPageController.getLoader().getController();
+                landingPageController.showRegistrationUI(actionEvent);
+                signUpPageController = landingPageController.getLoader().getController();
                 setUpSignUpActions();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -55,7 +55,7 @@ public class ClientController {
         loginPageController.getLoginButton().setOnAction(actionEvent -> {
             try {
                 loginPageController.showMainMenu(actionEvent);
-                mainController = loginPageController.getLoader().getController();
+                mainMenuClientPageController = loginPageController.getLoader().getController();
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -64,10 +64,10 @@ public class ClientController {
     }
 
     private void setUpSignUpActions() {
-        signUpController.getCreateAccountButton().setOnAction(actionEvent -> {
+        signUpPageController.getCreateAccountButton().setOnAction(actionEvent -> {
             try {
-                signUpController.showLoginPage(actionEvent);
-                loginPageController = signUpController.getLoader().getController(); //this connects to login set ups
+                signUpPageController.showLoginPage(actionEvent);
+                loginPageController = signUpPageController.getLoader().getController(); //this connects to login set ups
                 setUpLoginActions(); //this connects back to login setups
             } catch (IOException e) {
                 throw new RuntimeException(e);

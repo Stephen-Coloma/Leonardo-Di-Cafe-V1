@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="872.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.MainController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="872.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.MainMenuClientPageController">
    <children>
       <AnchorPane layoutX="703.0" layoutY="43.0" prefHeight="447.0" prefWidth="169.0" style="-fx-background-color: #ffffff;" />
       <AnchorPane layoutY="-1.0" prefHeight="45.0" prefWidth="872.0" style="-fx-background-color: #634921;">

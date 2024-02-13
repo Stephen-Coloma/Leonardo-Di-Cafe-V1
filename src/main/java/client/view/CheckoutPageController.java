@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class CheckoutController {
+public class CheckoutPageController {
 
     @FXML
     private Button placeOrderButton;

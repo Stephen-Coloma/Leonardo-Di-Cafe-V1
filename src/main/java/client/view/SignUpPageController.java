@@ -13,9 +13,8 @@ import javafx.stage.Stage;
 import shared.Customer;
 
 import java.io.IOException;
-import java.io.PushbackReader;
 
-public class SignUpController {
+public class SignUpPageController {
     @FXML
     private Button createAccountButton;
     @FXML
@@ -51,7 +50,7 @@ public class SignUpController {
     public void showLoginPage(ActionEvent event) throws IOException {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 
-        loader = new FXMLLoader((getClass().getResource("/fxml/client/loginPage.fxml")));
+        loader = new FXMLLoader((getClass().getResource("/fxml/client/login_page.fxml")));
 
         root = loader.load();
         Scene scene = new Scene(root);
