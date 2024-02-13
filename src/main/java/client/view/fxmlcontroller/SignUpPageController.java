@@ -1,4 +1,4 @@
-package client.view;
+package client.view.fxmlcontroller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +16,8 @@ import java.io.IOException;
 
 public class SignUpPageController {
     @FXML
+    private Button backButton;
+    @FXML
     private Button createAccountButton;
     @FXML
     private TextField fullNameTextField;
@@ -29,24 +31,14 @@ public class SignUpPageController {
     private PasswordField passwordField;
     @FXML
     private CheckBox termsAndServicesCheckBox;
+    @FXML
+    private Label noticeLabel;
     private FXMLLoader loader;
     private Parent root;
     private Stage stage;
 
-    public Customer getCredentials(ActionEvent event) throws IOException {
-
-        String fullname = fullNameTextField.getText();
-        String username = userNameTextField.getText();
-        String address = addressTextField.getText();
-        String email = emailTextField.getText();
-        String password = passwordField.getText();
-
-        //TODO if checkbox is not yet marked throw exception
-        Customer customer = new Customer(fullname, username, address, email, password);
-        return customer;
-    }
-
     //TODO
+
     public void showLoginPage(ActionEvent event) throws IOException {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 
@@ -57,6 +49,64 @@ public class SignUpPageController {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void showLandingPage(ActionEvent event) throws IOException{
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        loader = new FXMLLoader(getClass().getResource("/fxml/client/landing_page.fxml"));
+        root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public Customer getCredentials() throws IOException {
+        String fullName = fullNameTextField.getText();
+        String username = userNameTextField.getText();
+        String address = addressTextField.getText();
+        String email = emailTextField.getText();
+        String password = passwordField.getText();
+
+        if (fullName.isEmpty() || username.isEmpty() || address.isEmpty() || email.isEmpty() || password.isEmpty() || !termsAndServicesCheckBox.isSelected()){
+            return null;
+        }else {
+            return new Customer(fullName, username, address, email, password);
+        }
+    }
+
+    public void accountExist(){
+        userNameTextField.clear();
+        userNameTextField.setPromptText("account exist");
+        noticeLabel.setText("account exists");
+        noticeLabel.setVisible(true);
+    }
+
+    public void emptyField(){
+        noticeLabel.setVisible(false);
+        if (!fullNameTextField.getText().isEmpty() && !userNameTextField.getText().isEmpty() && !addressTextField.getText().isEmpty() && !emailTextField.getText().isEmpty() && !passwordField.getText().isEmpty() && !termsAndServicesCheckBox.isSelected()){
+            noticeLabel.setText("accept terms and services policy");
+        }else {
+            noticeLabel.setText("fill out all details");
+        }
+        noticeLabel.setVisible(true);
+    }
+
+    public void serverError() throws IOException {
+        noticeLabel.setVisible(false);
+        fullNameTextField.clear();
+        userNameTextField.clear();
+        addressTextField.clear();
+        emailTextField.clear();
+        passwordField.clear();
+        termsAndServicesCheckBox.setSelected(false);
+
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/client/server_error.fxml"));
+        Scene scene = new Scene(root);
+
+        Stage stage1 = new Stage();
+        stage1.setScene(scene);
+        stage1.show();
+    }
+
     public void createAccountButtonEntered(MouseEvent event){
         createAccountButton.setStyle("-fx-background-color: lightgray;");
         createAccountButton.setTextFill(Paint.valueOf("Black"));
@@ -120,6 +170,13 @@ public class SignUpPageController {
 
     public void setTermsAndServicesCheckBox(CheckBox termsAndServicesCheckBox) {
         this.termsAndServicesCheckBox = termsAndServicesCheckBox;
+    }
+    public Button getBackButton() {
+        return backButton;
+    }
+
+    public void setBackButton(Button backButton) {
+        this.backButton = backButton;
     }
 
     public FXMLLoader getLoader() {

@@ -17,4 +17,6 @@ module LeonardoDiCafe {
     exports server;
     exports client.controller;
     exports client.view;
+    exports client.view.fxmlcontroller;
+    opens client.view.fxmlcontroller to javafx.fxml;
 }

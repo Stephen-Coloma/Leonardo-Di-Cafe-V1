@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane prefHeight="357.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.OrderHistoryPageController">
+<ScrollPane prefHeight="357.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlcontroller.OrderHistoryPageController">
 
    <content>
       <Pane prefHeight="566.0" prefWidth="418.0" style="-fx-background-color: #ECE9E3;">
@@ -41,7 +41,7 @@
                   </Label>
                   <ImageView fitHeight="51.0" fitWidth="88.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/client/orderHistory/orderhistory_productimage.png" />
+                        <Image url="@../../images/client/orderhistory/orderhistory_productimage.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="110.0" layoutY="26.0" prefHeight="26.0" prefWidth="114.0" text="Quantity: 2">
@@ -88,7 +88,7 @@
                   </Label>
                   <ImageView fitHeight="51.0" fitWidth="88.0" layoutX="14.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/client/orderHistory/orderhistory_productimage.png" />
+                        <Image url="@../../images/client/orderhistory/orderhistory_productimage.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="110.0" layoutY="26.0" prefHeight="26.0" prefWidth="114.0" text="Quantity: 2">
@@ -131,7 +131,7 @@
                   </Label>
                   <ImageView fitHeight="51.0" fitWidth="88.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/client/orderHistory/orderhistory_productimage.png" />
+                        <Image url="@../../images/client/orderhistory/orderhistory_productimage.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="110.0" layoutY="26.0" prefHeight="26.0" prefWidth="114.0" text="Quantity: 2">
@@ -174,7 +174,7 @@
                   </Label>
                   <ImageView fitHeight="51.0" fitWidth="88.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/client/orderHistory/orderhistory_productimage.png" />
+                        <Image url="@../../images/client/orderhistory/orderhistory_productimage.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="110.0" layoutY="26.0" prefHeight="26.0" prefWidth="114.0" text="Quantity: 2">
@@ -217,7 +217,7 @@
                   </Label>
                   <ImageView fitHeight="51.0" fitWidth="88.0" layoutX="14.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/client/orderHistory/orderhistory_productimage.png" />
+                        <Image url="@../../images/client/orderhistory/orderhistory_productimage.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="110.0" layoutY="26.0" prefHeight="26.0" prefWidth="114.0" text="Quantity: 2">
@@ -251,7 +251,7 @@
                   </Label>
                   <ImageView fitHeight="51.0" fitWidth="88.0" layoutX="14.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/client/orderHistory/orderhistory_productimage.png" />
+                        <Image url="@../../images/client/orderhistory/orderhistory_productimage.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="110.0" layoutY="26.0" prefHeight="26.0" prefWidth="114.0" text="Quantity: 2">

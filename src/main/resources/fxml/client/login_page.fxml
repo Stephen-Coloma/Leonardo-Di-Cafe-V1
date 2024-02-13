@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="455.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.LoginPageController">
+<AnchorPane prefHeight="455.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlcontroller.LoginPageController">
     <children>
         <Pane id="welcomePanel" prefHeight="455.0" prefWidth="407.0" style="-fx-background-color: #634921;">
             <children>
@@ -40,7 +40,7 @@
                 </Text>
                 <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="138.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../images/client/accountLogin/coffeeCup.png" />
+                        <Image url="@../../images/client/accountlogin/coffeeCup.png" />
                     </image></ImageView>
             </children>
         </Pane>
@@ -54,11 +54,15 @@
                 <Line endX="149.0" endY="-27.5999755859375" layoutX="195.0" layoutY="430.0" startX="-120.5999755859375" startY="-27.5999755859375" stroke="#c8bca9" />
                 <Text layoutX="71.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
                 <Text layoutX="71.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-                <PasswordField fx:id="passwordField" layoutX="65.0" layoutY="219.0" prefHeight="26.0" prefWidth="272.0" promptText="Enter Password" text="" />
-                <Button fx:id="loginButton" layoutX="73.0" layoutY="352.0" mnemonicParsing="false" onMouseEntered="#loginPageButtonEntered" onMouseExited="#loginPageButtonExited" prefHeight="26.0" prefWidth="272.0" style="-fx-background-color: #A38157;" text="LOG IN" textFill="WHITE" />
+                <PasswordField fx:id="passwordField" focusTraversable="false" layoutX="65.0" layoutY="219.0" prefHeight="26.0" prefWidth="272.0" promptText="Enter Password" text="" />
+                <Button fx:id="loginButton" layoutX="73.0" layoutY="352.0" mnemonicParsing="false" onMouseEntered="#loginPageButtonEntered" onMouseExited="#loginPageButtonExited" prefHeight="26.0" prefWidth="272.0" style="-fx-background-color: #A38157;" text="LOG IN" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
                 <Label fx:id="forgotPasswordTextLabel" layoutX="74.0" layoutY="411.0" text="Forgot Password" underline="true" />
-                <TextField fx:id="usernameTextField" layoutX="65.0" layoutY="152.0" prefHeight="26.0" prefWidth="272.0" promptText="Enter Username" />
+                <TextField fx:id="usernameTextField" focusTraversable="false" layoutX="65.0" layoutY="152.0" prefHeight="26.0" prefWidth="272.0" promptText="Enter Username" />
             <Label fx:id="noticeLabel" layoutX="75.0" layoutY="385.0" text="fill out all details" textFill="RED" visible="false" />
+            <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #A38157;" text="&lt;  Home" textFill="WHITE" />
             </children>
         </Pane>
     </children>

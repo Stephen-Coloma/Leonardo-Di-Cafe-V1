@@ -2,19 +2,19 @@ package client.controller;
 
 import client.model.ClientModel;
 import client.view.*;
+import client.view.fxmlcontroller.*;
 import javafx.application.Platform;
 import shared.Beverage;
 import shared.Customer;
 import shared.Food;
 
 import java.io.IOException;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.*;
 
 public class ClientController {
     private static final int PORT = 2000;
@@ -29,7 +29,9 @@ public class ClientController {
     private LoginPageController loginPageController;
     private SignUpPageController signUpPageController;
     private MainMenuClientPageController mainMenuClientPageController;
+    private ServerErrorController serverErrorController;
     private static boolean isLoginSuccessful = false;
+    private static boolean isSignUpSuccessful = false;
     public ClientController(ClientModel model, ClientView view){
         this.model = model;
         this.view = view;
@@ -70,20 +72,24 @@ public class ClientController {
 
     /**TThis method sets up the components actions for login_page.fxml*/
     private void setUpLoginPageComponentActions() {
+        //action for login button
         loginPageController.getLoginButton().setOnAction(actionEvent -> {
             try {
                 //get the credentials
                 String[] credentials = loginPageController.getCredentials();
                 if (credentials != null){
                     Object[] request = new Object[]{"LOGIN", credentials};
-                    processServerResponse(authenticate(request)); //process the authentication to server
+                    Object[] serverResponse = authenticate(request);
+                    if (serverResponse != null){ //it returns null if server is down
+                        processServerResponse(serverResponse); //process the authentication to server
 
-                    //loading the main menu if login is successful
-                    if (isLoginSuccessful){
-                        loginPageController.showMainMenu(actionEvent);
-                        mainMenuClientPageController = loginPageController.getLoader().getController();
-                    }else {
-                        loginPageController.incorrectDetails();
+                        //loading the main menu if login is successful
+                        if (isLoginSuccessful){
+                            loginPageController.showMainMenu(actionEvent);
+                            mainMenuClientPageController = loginPageController.getLoader().getController();
+                        }else {
+                            loginPageController.incorrectDetails();
+                        }
                     }
                 }else {
                     loginPageController.emptyField();
@@ -94,16 +100,58 @@ public class ClientController {
                 throw new RuntimeException(e);
             }
         });
+
+        //action for home button
+        loginPageController.getBackButton().setOnAction(actionEvent ->{
+            try {
+                loginPageController.showLandingPage(actionEvent);
+                landingPageController = loginPageController.getLoader().getController();
+                setUpLandingPageComponentActions();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
 
     /**TThis method sets up the components actions for signup_page.fxml*/
     private void setUpSignUpPageComponentActions() {
+        //action for sign up button
         signUpPageController.getCreateAccountButton().setOnAction(actionEvent -> {
             try {
-                signUpPageController.showLoginPage(actionEvent);
-                loginPageController = signUpPageController.getLoader().getController(); //this connects to login set ups
-                setUpLoginPageComponentActions(); //this connects back to login setups
+                //get the credentials
+                Customer customer = signUpPageController.getCredentials();
+                if (customer != null){
+                    Object[] request = new Object[]{"SIGN_UP", customer};
+                    Object[] serverResponse = authenticate(request); //process the authentication to server
+                    if (serverResponse != null){ //it returns null if server is down
+                        processServerResponse(serverResponse);
+                        //loading the main menu if login is successful
+                        if (isSignUpSuccessful){
+                            signUpPageController.showLoginPage(actionEvent);
+                            loginPageController = signUpPageController.getLoader().getController(); //this connects to login set ups
+                            setUpLoginPageComponentActions(); //this connects back to login setups
+                        }else {
+                            signUpPageController.accountExist();
+                        }
+                    }
+                }else {
+                    signUpPageController.emptyField();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        //action for home button
+        //action for home button
+        signUpPageController.getBackButton().setOnAction(actionEvent ->{
+            try {
+                signUpPageController.showLandingPage(actionEvent);
+                landingPageController = signUpPageController.getLoader().getController();
+                setUpLandingPageComponentActions();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -138,14 +186,17 @@ public class ClientController {
             }
             return response;
         } catch (UnknownHostException e) {
-            // TODO: Pop up that host is unknown
             return null;
         } catch (IOException e) {
-            // TODO: Pop up that host is down
+            //either of the two will call the server error
+            if (loginPageController != null){
+                loginPageController.serverError();
+            }else if (signUpPageController != null){
+                signUpPageController.serverError();
+            }
             return null;
         }
     }
-
     /**This method will be used for processing all server responses.*/
     private void processServerResponse(Object[] response) {
         //Guide response[0] = code, response[1] = data
@@ -162,13 +213,24 @@ public class ClientController {
                 model.setCustomer(customer);
                 model.setFoodMenu(foodMenu);
                 model.setBeverageMenu(beverageMenu);
+                model.setCart(new ArrayList<>());
+                model.setOrder(null);
 
                 //login successful
                 isLoginSuccessful = true;
                 break;
             case "LOGIN_FAILED":
+                isLoginSuccessful = false;
                 //handled by if-else statement using the isLoginSuccessful
                 break;
+            case "SIGN_UP_SUCCESSFUL":
+                isSignUpSuccessful = true;
+                break;
+            case "SIGN_UP_FAILED":
+                isSignUpSuccessful = false;
+                //handled by if-else statement using the isLoginSuccessful
+                break;
+
         }
     }
 
@@ -181,5 +243,4 @@ public class ClientController {
             throw new RuntimeException(e);
         }
     }
-
 }
