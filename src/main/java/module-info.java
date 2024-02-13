@@ -10,9 +10,11 @@ module LeonardoDiCafe {
     opens server to javafx.fxml;
     opens client.controller to javafx.fxml;
     opens server.controller.temporarycontroller to javafx.fxml;
+    opens client.view to javafx.fxml;
 
     exports server.controller.temporarycontroller to javafx.fxml;
     exports client;
     exports server;
     exports client.controller;
+    exports client.view;
 }

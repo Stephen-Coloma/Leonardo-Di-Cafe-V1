@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane prefHeight="357.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.OrderHistoryController">
+<ScrollPane prefHeight="357.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.OrderHistoryController">
 
    <content>
       <Pane prefHeight="566.0" prefWidth="418.0" style="-fx-background-color: #ECE9E3;">
@@ -56,7 +56,7 @@
                   </Label>
                   <HBox layoutX="224.0" layoutY="32.0" prefWidth="133.0" spacing="5">
                      <children>
-                        <ToggleButton fx:id="star1" minHeight="18.0" prefHeight="18.0" prefWidth="5.0" style="-fx-background-image: img/starSVG.svg;" styleClass="star-button" stylesheets="@../../values/styles.css" />
+                        <ToggleButton fx:id="star1" minHeight="18.0" prefHeight="18.0" prefWidth="5.0" styleClass="star-button" stylesheets="@../../values/styles.css" />
                         <ToggleButton fx:id="star2" styleClass="star-button">
                            <stylesheets>
                               <URL value="@../../values/styles.css" />

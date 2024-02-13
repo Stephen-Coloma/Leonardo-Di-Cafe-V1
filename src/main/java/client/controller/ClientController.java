@@ -1,8 +1,7 @@
 package client.controller;
 
-import client.Client;
 import client.model.ClientModel;
-import client.view.ClientView;
+import client.view.*;
 import javafx.application.Platform;
 
 import java.io.IOException;
@@ -22,12 +21,12 @@ public class ClientController {
             System.out.println("Obtained Main Menu Controller");
             frontPageController = view.getLoader().getController();
 
-            setComponentActions();
+            setFrontPageComponentActions();
             System.out.println("Successfully added actions");
         });
     }
 
-    private void setComponentActions() {
+    private void setFrontPageComponentActions() {
         //action event for login button in frontpageUI
         frontPageController.getLoginButtonFrontPage().setOnAction(actionEvent -> {
             try {
