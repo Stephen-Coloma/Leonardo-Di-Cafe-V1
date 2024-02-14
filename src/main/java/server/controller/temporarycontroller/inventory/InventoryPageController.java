@@ -1,4 +1,4 @@
-package server.controller.temporarycontroller;
+package server.controller.temporarycontroller.inventory;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -18,8 +18,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import server.controller.temporarycontroller.YesNoPopupController;
 import shared.Beverage;
 import shared.Food;
+import shared.SerializableImage;
+import util.ImageCopier;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -36,6 +41,10 @@ public class InventoryPageController implements Initializable {
     private TableColumn<Object, Integer> quantityColumn;
     @FXML
     private TableColumn<Object, Void> editQuantityColumn;
+    @FXML
+    private TableColumn<Object, Void> editDetailsColumn;
+    @FXML
+    private TableColumn<Object, Void> deleteProductColumn;
     @FXML
     private TableView<Object> inventoryTableView;
     @FXML
@@ -85,11 +94,13 @@ public class InventoryPageController implements Initializable {
         });
 
         addEditQuantityButton();
+        addEditDetailsButton();
+        addDeleteProductButton();
         searchInventoryTextField.textProperty().addListener((observable, oldValue, newValue) -> filterTable(newValue));
     } // end of initialize
 
-    private Button createButton(EventHandler<ActionEvent> eventHandler) {
-        Button button = new Button("Edit");
+    private Button createButton(String buttonName, EventHandler<ActionEvent> eventHandler) {
+        Button button = new Button(buttonName);
         button.setOnAction(eventHandler);
         return button;
     } // end of createButton
@@ -101,12 +112,12 @@ public class InventoryPageController implements Initializable {
             @Override
             public TableCell<Object, Void> call(final TableColumn<Object, Void> param) {
                 return new TableCell<>() {
-                    private final Button editButton = createButton(event -> {
+                    private final Button editButton = createButton("quantity", event -> {
                         Object product = getTableRow().getItem();
                         if (product instanceof Food food) {
                             Platform.runLater(() -> {
                                 try {
-                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/food_inventory_size_popup.fxml"));
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/inventory/food_inventory_size_popup.fxml"));
                                     Stage popupStage = new Stage();
                                     popupStage.initModality(Modality.APPLICATION_MODAL);
                                     popupStage.setTitle("Edit Food Quantity");
@@ -164,7 +175,7 @@ public class InventoryPageController implements Initializable {
                         } else if (product instanceof Beverage beverage) {
                             Platform.runLater(() -> {
                                 try {
-                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/beverage_inventory_size_popup.fxml"));
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/inventory/beverage_inventory_size_popup.fxml"));
                                     Stage popupStage = new Stage();
                                     popupStage.initModality(Modality.APPLICATION_MODAL);
                                     popupStage.setTitle("Edit Beverage Quantity");
@@ -297,6 +308,213 @@ public class InventoryPageController implements Initializable {
         };
         editQuantityColumn.setCellFactory(cellFactory);
     } // end of addEditQuantityButton
+
+    private void addEditDetailsButton() {
+        editDetailsColumn.setCellValueFactory(new PropertyValueFactory<>(""));
+
+        Callback<TableColumn<Object, Void>, TableCell<Object, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<Object, Void> call(final TableColumn<Object, Void> param) {
+                return new TableCell<>() {
+                    private final Button editButton = createButton("details", event -> {
+                        Object product = getTableRow().getItem();
+                        if (product instanceof Food food) {
+                            Platform.runLater(() -> {
+                                try {
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/inventory/food_edit_details_popup.fxml"));
+                                    Stage popupStage = new Stage();
+                                    popupStage.initModality(Modality.APPLICATION_MODAL);
+                                    popupStage.setTitle("Edit Food Details");
+                                    popupStage.setScene(new Scene(loader.load()));
+                                    FoodEditDetailsPopupController controller = loader.getController();
+
+                                    int filteredIndex = getTableRow().getIndex();
+                                    int originalIndex = filteredList.getSourceIndex(filteredIndex);
+
+                                    controller.setProductNameTextField(food.getName());
+                                    controller.setPriceTextField(String.valueOf(food.getPrice()));
+                                    controller.setProductDescriptionTextArea(food.getDescription());
+
+                                    controller.getAcceptButton().setOnAction(actionEvent -> {
+                                        String productName = controller.getProductNameTextField().getText().trim();
+                                        String description = controller.getProductDescriptionTextArea().getText().trim();
+                                        double price = Double.parseDouble(controller.getPriceTextField().getText().trim());
+
+                                        if (!controller.getImageTextField().getText().isEmpty()) {
+                                            String absolutePath = new File(controller.getImageTextField().getText()).getAbsolutePath();
+                                            String extension = absolutePath.substring(absolutePath.lastIndexOf('.'));
+                                            String copiedImagePath = ImageCopier.copyImage(absolutePath, productName + extension);
+
+                                            String url = food.getImage().getUrl();
+                                            ImageCopier.deleteImage(url.substring(url.lastIndexOf('/') + 1));
+
+                                            SerializableImage image = new SerializableImage("file:" + copiedImagePath);
+                                            food.setImage(image);
+                                        }
+
+                                        food.setName(productName);
+                                        food.setDescription(description);
+                                        food.setPrice(price);
+
+                                        if (originalIndex != -1) {
+                                            if (originalIndex >= 0 && originalIndex < productList.size()) {
+                                                productList.set(originalIndex, food);
+                                            }
+                                        }
+
+                                        popupStage.close();
+                                    });
+                                    popupStage.show();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                        } else if (product instanceof Beverage beverage) {
+                            Platform.runLater(() -> {
+                                try {
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/inventory/beverage_edit_details_popup.fxml"));
+                                    Stage popupStage = new Stage();
+                                    popupStage.initModality(Modality.APPLICATION_MODAL);
+                                    popupStage.setTitle("Edit Beverage Details");
+                                    popupStage.setScene(new Scene(loader.load()));
+                                    BeverageEditDetailsPopupController controller = loader.getController();
+
+                                    int filteredIndex = getTableRow().getIndex();
+                                    int originalIndex = filteredList.getSourceIndex(filteredIndex);
+
+                                    controller.setProductNameTextField(beverage.getName());
+                                    controller.setSmallPriceTextField(String.valueOf(beverage.getSizePrice().get("small")));
+                                    controller.setMediumPriceTextField(String.valueOf(beverage.getSizePrice().get("medium")));
+                                    controller.setLargePriceTextField(String.valueOf(beverage.getSizePrice().get("large")));
+                                    controller.setProductDescriptionTextArea(beverage.getDescription());
+
+                                    controller.getAcceptButton().setOnAction(actionEvent -> {
+                                        String productName = controller.getProductNameTextField().getText().trim();
+                                        String description = controller.getProductDescriptionTextArea().getText().trim();
+                                        double smallPrice = Double.parseDouble(controller.getSmallPriceTextField().getText().trim());
+                                        double mediumPrice = Double.parseDouble(controller.getMediumPriceTextField().getText().trim());
+                                        double largePrice = Double.parseDouble(controller.getLargePriceTextField().getText().trim());
+
+                                        if (!controller.getImageTextField().getText().isEmpty()) {
+                                            String absolutePath = new File(controller.getImageTextField().getText()).getAbsolutePath();
+                                            String extension = absolutePath.substring(absolutePath.lastIndexOf('.'));
+                                            String copiedImagePath = ImageCopier.copyImage(absolutePath, productName + extension);
+
+                                            String url = beverage.getImage().getUrl();
+                                            ImageCopier.deleteImage(url.substring(url.lastIndexOf('/') + 1));
+
+                                            SerializableImage image = new SerializableImage("file:" + copiedImagePath);
+                                            beverage.setImage(image);
+                                        }
+
+                                        HashMap<String, Double> priceSize = new HashMap<>();
+                                        priceSize.put("small", smallPrice);
+                                        priceSize.put("medium", mediumPrice);
+                                        priceSize.put("large", largePrice);
+
+                                        beverage.setName(productName);
+                                        beverage.setDescription(description);
+                                        beverage.setSizePrice(priceSize);
+
+                                        if (originalIndex != -1) {
+                                            if (originalIndex >= 0 && originalIndex < productList.size()) {
+                                                productList.set(originalIndex, beverage);
+                                            }
+                                        }
+
+                                        popupStage.close();
+                                    });
+                                    popupStage.show();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                        }
+                    });
+
+                    {
+                        editButton.setStyle("-fx-background-color: #634921; -fx-text-fill: white;");
+
+                        editButton.setOnMouseEntered(e -> editButton.setStyle("-fx-background-color: #9a7133; -fx-text-fill: white;"));
+
+                        editButton.setOnMouseExited(e -> editButton.setStyle("-fx-background-color: #634921; -fx-text-fill: white;"));
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(editButton);
+                            setAlignment(Pos.CENTER);
+                        }
+                    }
+                };
+            }
+        };
+        editDetailsColumn.setCellFactory(cellFactory);
+    } // end of addEditDetailsButton
+
+    private void addDeleteProductButton() {
+        deleteProductColumn.setCellValueFactory(new PropertyValueFactory<>(""));
+
+        Callback<TableColumn<Object, Void>, TableCell<Object, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<Object, Void> call(final TableColumn<Object, Void> param) {
+                return new TableCell<>() {
+                    private final Button deleteButton = createButton("delete", event -> Platform.runLater(() -> {
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/server/yes_no_popup.fxml"));
+                            Stage popupStage = new Stage();
+                            popupStage.initModality(Modality.APPLICATION_MODAL);
+                            popupStage.setTitle("Delete Product");
+                            popupStage.setScene(new Scene(loader.load()));
+                            YesNoPopupController controller = loader.getController();
+
+                            int filteredIndex = getTableRow().getIndex();
+                            int originalIndex = filteredList.getSourceIndex(filteredIndex);
+
+                            controller.setQuestionPromptLabel("Are you sure you want to delete this product?");
+
+                            controller.getYesButton().setOnAction(actionEvent -> {
+                                if (originalIndex >= 0 && originalIndex < productList.size()) {
+                                    productList.remove(originalIndex);
+                                }
+                                popupStage.close();
+                            });
+
+                            controller.getNoButton().setOnAction(actionEvent -> popupStage.close());
+
+                            popupStage.show();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }));
+
+                    {
+                        deleteButton.setStyle("-fx-background-color: #634921; -fx-text-fill: white;");
+
+                        deleteButton.setOnMouseEntered(e -> deleteButton.setStyle("-fx-background-color: #9a7133; -fx-text-fill: white;"));
+
+                        deleteButton.setOnMouseExited(e -> deleteButton.setStyle("-fx-background-color: #634921; -fx-text-fill: white;"));
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(deleteButton);
+                            setAlignment(Pos.CENTER);
+                        }
+                    }
+                };
+            }
+        };
+        deleteProductColumn.setCellFactory(cellFactory);
+    }
 
     public void populateTableFromMap(HashMap<String, Food> foodMenu, HashMap<String, Beverage> beverageMenu) {
         productList = FXCollections.observableArrayList();

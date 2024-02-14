@@ -1,4 +1,4 @@
-package server.controller.temporarycontroller;
+package server.controller.temporarycontroller.inventory;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

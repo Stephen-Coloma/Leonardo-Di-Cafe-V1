@@ -61,9 +61,7 @@ public class OrdersListPageController implements Initializable {
     public void populateTableFromList(List<Order> list) {
         ObservableList<Order> orderList = FXCollections.observableArrayList();
 
-        for (Order entry : list) {
-            orderList.add(entry);
-        }
+        orderList.addAll(list);
 
         orderTableView.setItems(orderList);
     } // end of populateTableFromList
@@ -73,25 +71,19 @@ public class OrdersListPageController implements Initializable {
         FilteredList<Order> filteredData = new FilteredList<>(orderTableView.getItems(), p -> true);
 
         // Bind the FilteredList to the search bar text property
-        searchOrderTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(order -> {
-                // If search bar is empty, display all items
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
+        searchOrderTextField.textProperty().addListener((observable, oldValue, newValue) -> filteredData.setPredicate(order -> {
+            // If search bar is empty, display all items
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
 
-                // Convert search query to lowercase for case-insensitive search
-                String lowerCaseFilterString = newValue.toLowerCase();
+            // Convert search query to lowercase for case-insensitive search
+            String lowerCaseFilterString = newValue.toLowerCase();
 
-                // Filter by order ID and customer name
-                if (order.getCustomer().getName().toLowerCase().contains(lowerCaseFilterString) ||
-                        String.valueOf(order.getID()).contains(lowerCaseFilterString)) {
-                    return true; // Match found
-                }
-
-                return false; // No match found
-            });
-        });
+            // Filter by order ID and customer name
+            return order.getCustomer().getName().toLowerCase().contains(lowerCaseFilterString) ||
+                    String.valueOf(order.getID()).contains(lowerCaseFilterString); // Match found
+        }));
 
         // Wrap the filtered list in a SortedList
         SortedList<Order> sortedData = new SortedList<>(filteredData);
@@ -154,11 +146,7 @@ public class OrdersListPageController implements Initializable {
                             setGraphic(null);
                         } else {
                             Order rowData = getTableView().getItems().get(getIndex());
-                            if (rowData.isStatus()) {
-                                confirmButton.setDisable(true);
-                            } else {
-                                confirmButton.setDisable(false);
-                            }
+                            confirmButton.setDisable(rowData.isStatus());
                             setGraphic(confirmButton);
                         }
                     }

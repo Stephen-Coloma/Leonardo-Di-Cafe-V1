@@ -11,64 +11,64 @@
          <children>
             <VBox prefHeight="336.0" prefWidth="200.0" spacing="3.0">
                <children>
-                  <Label text="Name:">
+                  <Label text="Name:" textFill="#634921">
                      <font>
-                        <Font name="Arial" size="14.0" />
+                        <Font name="Arial Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="name" text="Insert Name" wrapText="true">
-                     <font>
-                        <Font name="Arial" size="13.0" />
-                     </font>
-                  </Label>
-                  <Label text="Username:">
-                     <VBox.margin>
-                        <Insets top="15.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="Arial" size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="username" text="Insert Username" wrapText="true">
+                  <Label fx:id="name" text="Insert Name" textFill="#634921" wrapText="true">
                      <font>
                         <Font name="Arial" size="13.0" />
                      </font>
                   </Label>
-                  <Label text="Address:">
+                  <Label text="Username:" textFill="#634921">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
                      <font>
-                        <Font name="Arial" size="14.0" />
+                        <Font name="Arial Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="address" text="Insert Address" wrapText="true">
+                  <Label fx:id="username" text="Insert Username" textFill="#634921" wrapText="true">
                      <font>
                         <Font name="Arial" size="13.0" />
                      </font>
                   </Label>
-                  <Label text="Email:">
+                  <Label text="Address:" textFill="#634921">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
                      <font>
-                        <Font name="Arial" size="14.0" />
+                        <Font name="Arial Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="email" text="Insert Email" wrapText="true">
+                  <Label fx:id="address" text="Insert Address" textFill="#634921" wrapText="true">
                      <font>
                         <Font name="Arial" size="13.0" />
                      </font>
                   </Label>
-                  <Label text="Total Orders:">
+                  <Label text="Email:" textFill="#634921">
                      <VBox.margin>
                         <Insets top="15.0" />
                      </VBox.margin>
                      <font>
-                        <Font name="Arial" size="14.0" />
+                        <Font name="Arial Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="total" text="Insert Total" wrapText="true">
+                  <Label fx:id="email" text="Insert Email" textFill="#634921" wrapText="true">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label text="Total Orders:" textFill="#634921">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="Arial Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="total" text="Insert Total" textFill="#634921" wrapText="true">
                      <font>
                         <Font name="Arial" size="13.0" />
                      </font>
@@ -98,8 +98,8 @@
                <center>
                   <TableView fx:id="orderTableView" prefHeight="332.0" prefWidth="291.0" style="-fx-background-color: #ECE9E3;" BorderPane.alignment="CENTER">
                     <columns>
-                      <TableColumn fx:id="ordersColumn" prefWidth="190.0" text="Order" />
-                      <TableColumn fx:id="timestampColumn" prefWidth="94.0" text="Timestamp" />
+                      <TableColumn fx:id="ordersColumn" prefWidth="190.0" resizable="false" text="Order" />
+                      <TableColumn fx:id="timestampColumn" resizable="false" text="Timestamp" />
                     </columns>
                      <BorderPane.margin>
                         <Insets left="5.0" right="5.0" />
@@ -107,7 +107,7 @@
                   </TableView>
                </center>
                <bottom>
-                  <Button fx:id="closeTabButton" mnemonicParsing="false" style="-fx-background-color: #634921;" text="Close Tab" textFill="WHITE" BorderPane.alignment="CENTER">
+                  <Button fx:id="closeTabButton" mnemonicParsing="false" onMouseEntered="#setCloseTabButtonMouseEntered" onMouseExited="#setCloseTabButtonMouseExited" style="-fx-background-color: #634921;" text="Close Tab" textFill="WHITE" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets bottom="10.0" top="8.0" />
                      </BorderPane.margin>
@@ -128,9 +128,9 @@
          <top>
             <Pane prefHeight="59.0" prefWidth="500.0" style="-fx-background-color: #634921;" BorderPane.alignment="CENTER">
                <children>
-                  <Label layoutX="128.0" layoutY="12.0" text="Customer Information" textFill="WHITE">
+                  <Label layoutX="119.0" layoutY="15.0" text="Customer Information" textFill="WHITE">
                      <font>
-                        <Font size="25.0" />
+                        <Font name="Arial Bold" size="25.0" />
                      </font>
                   </Label>
                </children>

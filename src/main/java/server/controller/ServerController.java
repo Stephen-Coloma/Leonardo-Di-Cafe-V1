@@ -3,9 +3,11 @@ package server.controller;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import server.controller.temporarycontroller.*;
+import server.controller.temporarycontroller.inventory.InventoryPageController;
 import server.model.ServerModel;
 import server.view.ServerView;
 import shared.*;
+import util.ImageCopier;
 import util.XMLUtility;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
@@ -84,14 +86,10 @@ public class ServerController {
             });
         });
 
-        mainMenuAdminController.getAddProductsPageButton().setOnAction(actionEvent -> {
-            Platform.runLater(() -> {
-                addProductsPageController = mainMenuAdminController.getAddProductsPageController();
-                addProductsPageController.getAddProductButton().setOnAction(actionEvent1 -> {
-                    addProduct();
-                });
-            });
-        });
+        mainMenuAdminController.getAddProductsPageButton().setOnAction(actionEvent -> Platform.runLater(() -> {
+            addProductsPageController = mainMenuAdminController.getAddProductsPageController();
+            addProductsPageController.getAddProductButton().setOnAction(actionEvent1 -> addProduct());
+        }));
     } // end of setComponentActions
 
     public void addProduct() {
@@ -103,7 +101,7 @@ public class ServerController {
 
             String absolutePath = new File(addProductsPageController.getImageTextField().getText()).getAbsolutePath();
             String extension = absolutePath.substring(absolutePath.lastIndexOf('.'));
-            String copiedImagePath = model.copyImage(absolutePath, name + extension);
+            String copiedImagePath = ImageCopier.copyImage(absolutePath, name + extension);
 
             SerializableImage image = new SerializableImage("file:" + copiedImagePath);
 
@@ -122,7 +120,7 @@ public class ServerController {
 
             String absolutePath = new File(addProductsPageController.getImageTextField().getText()).getAbsolutePath();
             String extension = absolutePath.substring(absolutePath.lastIndexOf('.'));
-            String copiedImagePath = model.copyImage(absolutePath, name + extension);
+            String copiedImagePath = ImageCopier.copyImage(absolutePath, name + extension);
 
             SerializableImage image = new SerializableImage("file:" + copiedImagePath);
 

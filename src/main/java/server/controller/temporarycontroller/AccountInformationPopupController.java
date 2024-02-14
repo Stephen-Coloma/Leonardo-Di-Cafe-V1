@@ -79,4 +79,12 @@ public class AccountInformationPopupController implements Initializable {
         }
         return new SimpleStringProperty(stringBuilder.toString());
     }
+
+    public void setCloseTabButtonMouseEntered() {
+        closeTabButton.setStyle("-fx-background-color: #9a7133");
+    }
+
+    public void setCloseTabButtonMouseExited() {
+        closeTabButton.setStyle("-fx-background-color: #634921");
+    }
 } // end of ViewAccountInformationPopupController

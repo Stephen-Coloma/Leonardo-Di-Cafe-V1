@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import server.controller.temporarycontroller.inventory.InventoryPageController;
 
 import java.util.logging.Level;
 
@@ -67,31 +68,31 @@ public class MainMenuAdminController implements Initializable{
         return loader;
     }
 
-    public void viewHomePage(MouseEvent mouseEvent) throws IOException{
+    public void viewHomePage() {
         borderPane.setCenter(anchorPane);
     }
-    public void viewOrderPage(MouseEvent actionEvent) throws IOException{
+    public void viewOrderPage() {
         loader = loadPage("OrdersListPage");
         ordersListPageController = loader.getController();
     }
 
-    public void viewAccountsPage(MouseEvent actionEvent) throws IOException{
+    public void viewAccountsPage() {
         loader = loadPage("AccountsListPage");
         accountsListPageController = loader.getController();
     }
-    public void viewAddProductsPage(MouseEvent mouseEvent) throws IOException{
+    public void viewAddProductsPage() {
        loader = loadPage("AddProductsPage");
        addProductsPageController = loader.getController();
     }
-    public void viewInventoryPage(MouseEvent mouseEvent) throws IOException{
-        loader = loadPage("InventoryPage");
+    public void viewInventoryPage() {
+        loader = loadPage("inventory/InventoryPage");
         inventoryPageController = loader.getController();
     }
-    public void viewAnalyticsPage(MouseEvent mouseEvent) throws IOException{
+    public void viewAnalyticsPage() {
         loader = loadPage("AnalyticsPage");
         analyticsPageController = loader.getController();
     }
-    public void logout(MouseEvent actionEvent) {
+    public void logout() {
         System.exit(0);
     }
 
@@ -143,49 +144,49 @@ public class MainMenuAdminController implements Initializable{
         return addProductsPageButton;
     }
 
-    public void viewOrdersButtonEntered(MouseEvent mouseEvent) {
+    public void viewOrdersButtonEntered() {
         viewOrderButton.setStyle("-fx-background-color: lightgray;");
     }
 
-    public void viewOrdersButtonExited(MouseEvent mouseEvent) {
+    public void viewOrdersButtonExited() {
         viewOrderButton.setStyle("-fx-background-color: transparent;");
     }
-    public void viewAccountsButtonEntered(MouseEvent mouseEvent) {
+    public void viewAccountsButtonEntered() {
         viewAccountsButton.setStyle("-fx-background-color: lightgray;");
     }
-    public void viewAccountsButtonExited(MouseEvent mouseEvent) {
+    public void viewAccountsButtonExited() {
         viewAccountsButton.setStyle("-fx-background-color: transparent;");
     }
-    public void viewInventoryButtonEntered(MouseEvent mouseEvent) {
+    public void viewInventoryButtonEntered() {
         viewInventoryButton.setStyle("-fx-background-color: lightgray;");
     }
-    public void viewInventoryButtonExited(MouseEvent mouseEvent) {
+    public void viewInventoryButtonExited() {
         viewInventoryButton.setStyle("-fx-background-color: transparent;");
     }
-    public void addProductsPageButtonEntered(MouseEvent mouseEvent) {
+    public void addProductsPageButtonEntered() {
         addProductsPageButton.setStyle("-fx-background-color: lightgray;");
     }
-    public void addProductsPageButtonExited(MouseEvent mouseEvent) {
+    public void addProductsPageButtonExited() {
         addProductsPageButton.setStyle("-fx-background-color: transparent;");
     }
-    public void viewAnalyticsButtonEntered(MouseEvent mouseEvent) {
+    public void viewAnalyticsButtonEntered() {
         viewAnalyticsButton.setStyle("-fx-background-color: lightgray;");
     }
-    public void viewAnalyticsButtonExited(MouseEvent mouseEvent) {
+    public void viewAnalyticsButtonExited() {
         viewAnalyticsButton.setStyle("-fx-background-color: transparent;");
     }
 
-    public void logoutButtonEntered(MouseEvent mouseEvent) {
+    public void logoutButtonEntered() {
         logoutButton.setStyle("-fx-background-color: #B83B26;");
     }
-    public void logoutButtonExited(MouseEvent mouseEvent) {
+    public void logoutButtonExited() {
         logoutButton.setStyle("-fx-background-color:  #dc472d;");
     }
-    public void homeButtonEntered(MouseEvent mouseEvent) {
+    public void homeButtonEntered() {
         homeButton.setStyle("-fx-background-color: lightgray;");
     }
 
-    public void homeButtonExited(MouseEvent mouseEvent) {
+    public void homeButtonExited() {
         homeButton.setStyle("-fx-background-color: transparent;");
     }
 }

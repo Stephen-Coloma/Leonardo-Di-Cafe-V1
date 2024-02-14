@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="285.0" prefWidth="300.0" style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.temporarycontroller.FoodInventoryPopupController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="285.0" prefWidth="300.0" style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.temporarycontroller.inventory.FoodInventoryPopupController">
     <children>
         <Button fx:id="acceptButton" layoutX="93.0" layoutY="244.0" mnemonicParsing="false" onMouseEntered="#setAcceptButtonMouseEntered" onMouseExited="#setAcceptButtonMouseExited" prefHeight="27.0" prefWidth="114.0" style="-fx-background-color: #5dae65;" text="Accept" textFill="WHITE">
             <font>
