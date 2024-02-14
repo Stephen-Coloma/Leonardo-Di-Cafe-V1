@@ -1,17 +1,16 @@
 package server.model;
 
+import javafx.collections.ObservableList;
 import shared.*;
 import util.XMLUtility;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 import util.exception.OutOfStockException;
-
 import java.io.File;
-import java.nio.file.attribute.AclFileAttributeView;
 import java.util.HashMap;
 import java.util.List;
 
-/**Server Model class holds the data that will eventually accessed by all the clients.
+/**Server Model class holds the data that will eventually be accessed by all the clients.
  * The idea is, when a client places an order,it will update the menu of this server model (e.g. by decrementing it)
  * and that the updated menu will be visible to other clients.
  *
@@ -32,6 +31,24 @@ public class ServerModel {
 
         /*Todo
            1. When the server is closed by the admin, it must write all these data in the necessary xmk files to be used for another run*/
+    }
+
+    public void updateMenuFromInventory(ObservableList<Object> list) {
+        HashMap<String, Food> newFoodMenu = new HashMap<>();
+        HashMap<String, Beverage> newBeverageMenu = new HashMap<>();
+
+        for (Object entry : list) {
+            if (entry instanceof Food food) {
+                newFoodMenu.put(food.getName(), food);
+            } else if (entry instanceof Beverage beverage) {
+                newBeverageMenu.put(beverage.getName(), beverage);
+            }
+        }
+
+        System.out.println(foodMenu);
+        System.out.println(newFoodMenu);
+        System.out.println(beverageMenu);
+        System.out.println(newBeverageMenu);
     }
 
 
@@ -166,5 +183,21 @@ public class ServerModel {
             }
         }
         throw new InvalidCredentialsException("Invalid credentials");
+    }
+
+    public HashMap<String, Food> getFoodMenu() {
+        return foodMenu;
+    }
+
+    public HashMap<String, Beverage> getBeverageMenu() {
+        return beverageMenu;
+    }
+
+    public List<Customer> getCustomerAccountList() {
+        return customerAccountList;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
     }
 }

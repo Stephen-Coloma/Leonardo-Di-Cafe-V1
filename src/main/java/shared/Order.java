@@ -1,9 +1,10 @@
 package shared;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**This method represents an order where it contains the customer, his orders and the time he pushed the order*/
-public class Order {
+public class Order implements Serializable {
     private Customer customer;
     private List<Product> orders;
     private String timeStamp;

@@ -1,4 +1,4 @@
-package server.controller.temporarycontroller;
+package server.view.fxmlcontroller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

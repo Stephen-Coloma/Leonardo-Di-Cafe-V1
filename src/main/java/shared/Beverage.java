@@ -1,6 +1,5 @@
 package shared;
 
-import javafx.scene.image.Image;
 import util.exception.OutOfStockException;
 
 import java.util.HashMap;
@@ -13,7 +12,7 @@ public class Beverage extends Product{
     private HashMap<String, Double> sizePrice;
 
     //constructor
-    public Beverage(String name, char type, double review, int reviewCount, Image image, String description, int sQuantity, int mQuantity, int lQuantity, double sPrice, double mPrice, double lPrice) {
+    public Beverage(String name, char type, double review, int reviewCount, SerializableImage image, String description, int sQuantity, int mQuantity, int lQuantity, double sPrice, double mPrice, double lPrice) {
         super(name, type, review, reviewCount, image, description);
 
         HashMap<String, Integer> sizeQuantity = new HashMap<>(3);
@@ -55,6 +54,19 @@ public class Beverage extends Product{
     public double getVariationPrice(String size){
         return sizePrice.get(size);
     }
+
+
+    public synchronized void incrementQuantity(String size) {
+        int quantity = sizeQuantity.get(size);
+        quantity++;
+        sizeQuantity.put(size, quantity);
+    } // end of incrementQuantity method
+
+    public synchronized void decrementQuantity(String size) {
+        int quantity = sizeQuantity.get(size);
+        quantity--;
+        sizeQuantity.put(size, quantity);
+    } // end of decrementQuantity
 
     /**This method is used to update quantity of the variation of the beverage.
      It accommodates multiple threads but will only allow one thread to make an update to a specific size
@@ -162,6 +174,10 @@ public class Beverage extends Product{
                 super.setAmountSold(sold);
             }
         }
+    }
+
+    public int getQuantity() {
+        return sizeQuantity.values().stream().mapToInt(Integer::intValue).sum();
     }
 
     @Override

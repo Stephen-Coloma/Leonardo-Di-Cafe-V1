@@ -1,93 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.temporarycontroller.MainMenuAdminController">
-    <left>
-        <VBox prefHeight="400.0" prefWidth="133.0" BorderPane.alignment="CENTER">
-            <children>
-                <Label alignment="CENTER" prefHeight="26.0" prefWidth="134.0" text="ADMIN " textFill="#634921">
-                    <font>
-                        <Font name="Arial Black" size="12.0" />
-                    </font>
-                </Label>
-                <Button fx:id="homeButton" alignment="CENTER" layoutX="10.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#viewHomePage" onMouseEntered="#homeButtonEntered" onMouseExited="#homeButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="Home" textAlignment="CENTER">
-                    <font>
-                        <Font name="Arial Narrow" size="12.0" />
-                    </font>
-                </Button>
-                <Button fx:id="viewOrderButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#viewOrderPage" onMouseEntered="#viewOrdersButtonEntered" onMouseExited="#viewOrdersButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="View Orders" textAlignment="CENTER">
-                    <font>
-                        <Font name="Arial Narrow" size="12.0" />
-                    </font>
-                </Button>
-                <Button fx:id="viewAccountsButton" alignment="CENTER" layoutX="10.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#viewAccountsPage" onMouseEntered="#viewAccountsButtonEntered" onMouseExited="#viewAccountsButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="View Accounts" textAlignment="CENTER">
-                    <font>
-                        <Font name="Arial Narrow" size="12.0" />
-                    </font>
-                </Button>
-                <Button fx:id="viewInventoryButton" alignment="CENTER" layoutX="10.0" layoutY="107.0" mnemonicParsing="false" onMouseClicked="#viewInventoryPage" onMouseEntered="#viewInventoryButtonEntered" onMouseExited="#viewInventoryButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="View Inventory" textAlignment="CENTER">
-                    <font>
-                        <Font name="Arial Narrow" size="12.0" />
-                    </font>
-                </Button>
-                <Button fx:id="addProductsPageButton" alignment="CENTER" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onMouseClicked="#viewAddProductsPage" onMouseEntered="#addProductsPageButtonEntered" onMouseExited="#addProductsPageButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="Add Products" textAlignment="CENTER">
-                    <font>
-                        <Font name="Arial Narrow" size="12.0" />
-                    </font>
-                </Button>
-                <Button fx:id="viewAnalyticsButton" alignment="CENTER" layoutX="10.0" layoutY="177.0" mnemonicParsing="false" onMouseClicked="#viewAnalyticsPage" onMouseEntered="#viewAnalyticsButtonEntered" onMouseExited="#viewAnalyticsButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: transparent;" text="Analytics" textAlignment="CENTER">
-                    <font>
-                        <Font name="Arial Narrow" size="12.0" />
-                    </font>
-                </Button>
-                <Button fx:id="logoutButton" alignment="CENTER" layoutX="10.0" layoutY="212.0" mnemonicParsing="false" onMouseClicked="#logout" onMouseEntered="#logoutButtonEntered" onMouseExited="#logoutButtonExited" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: #dc472d;" text="Logout" textAlignment="CENTER" textFill="WHITE">
-                    <font>
-                        <Font name="Arial Rounded MT Bold" size="12.0" />
-                    </font>
-                </Button>
-            </children></VBox>
-    </left>
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.view.fxmlcontroller.MainMenuAdminController">
     <top>
-        <HBox fx:id="vBoxPane" prefHeight="53.0" prefWidth="600.0" style="-fx-background-color: #634921;" BorderPane.alignment="CENTER">
+        <HBox fx:id="vBoxPane" prefHeight="62.0" prefWidth="600.0" style="-fx-background-color: #634921;" BorderPane.alignment="CENTER">
             <children>
-                <Pane prefHeight="54.0" prefWidth="168.0">
+                <Pane prefHeight="54.0" prefWidth="168.0" HBox.hgrow="ALWAYS">
                     <children>
-                        <Label layoutX="51.0" layoutY="18.0" text="Leonardo D' Cafe" textFill="WHITE">
+                        <Label layoutX="54.0" layoutY="19.0" text="Leonardo D' Cafe" textFill="WHITE">
                             <font>
-                                <Font name="Arial Black" size="12.0" />
+                                <Font name="Arial Black" size="16.0" />
                             </font></Label>
-                        <ImageView fx:id="cupImageView" fitHeight="32.0" fitWidth="37.0" layoutX="14.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="cupImageView" fitHeight="32.0" fitWidth="37.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../images/server/cupLogo.png" />
                             </image></ImageView>
                     </children>
+                    <rotationAxis>
+                        <Point3D />
+                    </rotationAxis>
                 </Pane>
             </children>
         </HBox>
     </top>
     <center>
-        <AnchorPane fx:id="anchorPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #e9e8e7;" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="anchorPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ECE9E3;" BorderPane.alignment="CENTER">
             <children>
-                <ImageView fx:id="iconImageView" blendMode="SRC_ATOP" fitHeight="150.0" fitWidth="200.0" layoutX="166.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="iconImageView" blendMode="SRC_ATOP" fitHeight="210.0" fitWidth="264.0" layoutX="371.0" layoutY="233.0" pickOnBounds="true" preserveRatio="true">
                     <image>
                         <Image url="@../../images/server/adminIcon.png" />
                     </image>
                 </ImageView>
-                <Label layoutX="235.0" layoutY="215.0" text="ADMIN" textFill="#634921">
+                <Label layoutX="455.0" layoutY="438.0" text="ADMIN" textFill="#634921">
                     <font>
-                        <Font name="Arial Black" size="12.0" />
+                        <Font name="Arial Black" size="24.0" />
                     </font>
                 </Label>
-                <Label layoutX="225.0" layoutY="233.0" prefHeight="30.0" prefWidth="64.0" text="Choose an action" textFill="#545454">
+                <Label alignment="CENTER" layoutX="419.0" layoutY="475.0" prefHeight="30.0" prefWidth="162.0" text="Choose an action" textFill="#545454">
                     <font>
-                        <Font name="Arial" size="8.0" />
+                        <Font name="Arial" size="17.0" />
                     </font>
                 </Label>
             </children>
         </AnchorPane>
     </center>
+   <left>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <center>
+              <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <children>
+                      <Label alignment="CENTER" prefHeight="42.0" prefWidth="200.0" text="ADMIN " textFill="#634921">
+                          <font>
+                              <Font name="Arial Black" size="28.0" />
+                          </font>
+                          <VBox.margin>
+                              <Insets top="15.0" />
+                          </VBox.margin>
+                      </Label>
+                      <Button fx:id="homeButton" alignment="CENTER" layoutX="10.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#viewHomePage" onMouseEntered="#homeButtonEntered" onMouseExited="#homeButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Home" textAlignment="CENTER">
+                          <font>
+                              <Font name="Arial Narrow" size="25.0" />
+                          </font>
+                          <VBox.margin>
+                              <Insets bottom="15.0" top="30.0" />
+                          </VBox.margin>
+                      </Button>
+                      <Button fx:id="viewOrderButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#viewOrderPage" onMouseEntered="#viewOrdersButtonEntered" onMouseExited="#viewOrdersButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="View Orders" textAlignment="CENTER">
+                          <font>
+                              <Font name="Arial Narrow" size="25.0" />
+                          </font>
+                          <VBox.margin>
+                              <Insets bottom="15.0" top="15.0" />
+                          </VBox.margin>
+                      </Button>
+                      <Button fx:id="viewAccountsButton" alignment="CENTER" layoutX="10.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#viewAccountsPage" onMouseEntered="#viewAccountsButtonEntered" onMouseExited="#viewAccountsButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="View Accounts" textAlignment="CENTER">
+                          <font>
+                              <Font name="Arial Narrow" size="25.0" />
+                          </font>
+                          <VBox.margin>
+                              <Insets bottom="15.0" top="15.0" />
+                          </VBox.margin>
+                      </Button>
+                      <Button fx:id="viewInventoryButton" alignment="CENTER" layoutX="10.0" layoutY="107.0" mnemonicParsing="false" onMouseClicked="#viewInventoryPage" onMouseEntered="#viewInventoryButtonEntered" onMouseExited="#viewInventoryButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="View Inventory" textAlignment="CENTER">
+                          <font>
+                              <Font name="Arial Narrow" size="25.0" />
+                          </font>
+                          <VBox.margin>
+                              <Insets bottom="15.0" top="15.0" />
+                          </VBox.margin>
+                      </Button>
+                      <Button fx:id="addProductsPageButton" alignment="CENTER" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onMouseClicked="#viewAddProductsPage" onMouseEntered="#addProductsPageButtonEntered" onMouseExited="#addProductsPageButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Add Products" textAlignment="CENTER">
+                          <font>
+                              <Font name="Arial Narrow" size="25.0" />
+                          </font>
+                          <VBox.margin>
+                              <Insets bottom="15.0" top="15.0" />
+                          </VBox.margin>
+                      </Button>
+                      <Button fx:id="viewAnalyticsButton" alignment="CENTER" layoutX="10.0" layoutY="177.0" mnemonicParsing="false" onMouseClicked="#viewAnalyticsPage" onMouseEntered="#viewAnalyticsButtonEntered" onMouseExited="#viewAnalyticsButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Analytics" textAlignment="CENTER">
+                          <font>
+                              <Font name="Arial Narrow" size="25.0" />
+                          </font>
+                          <VBox.margin>
+                              <Insets bottom="15.0" top="15.0" />
+                          </VBox.margin>
+                      </Button>
+                      <Button fx:id="logoutButton" alignment="CENTER" layoutX="10.0" layoutY="212.0" mnemonicParsing="false" onMouseClicked="#logout" onMouseEntered="#logoutButtonEntered" onMouseExited="#logoutButtonExited" prefHeight="47.0" prefWidth="169.0" style="-fx-background-color: #dc472d;" text="Logout" textAlignment="CENTER" textFill="WHITE">
+                          <font>
+                              <Font name="Arial Rounded MT Bold" size="25.0" />
+                          </font>
+                          <VBox.margin>
+                              <Insets top="100.0" />
+                          </VBox.margin>
+                      </Button>
+                  </children>
+            </VBox>
+         </center>
+         <right>
+            <Pane prefHeight="718.0" prefWidth="5.0" style="-fx-background-color: #634921;" BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+   </left>
 </BorderPane>
