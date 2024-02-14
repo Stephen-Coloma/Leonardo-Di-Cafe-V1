@@ -1,22 +1,22 @@
 package shared;
 
-import javafx.scene.image.Image;
+import java.io.Serializable;
 
 /**This abstract class represent a product. A product is classified into f - food, and b - beverage.
  * Food does not have any variations, meaning same price and quantity.
  * Whereas for beverage, it may be small, medium, large and has different price and quantity for each
  * @author  Stephen Coloma*/
-public abstract class Product {
+public abstract class Product implements Serializable {
     private String name;
     private char type;
     private double review; //average of 1-5
     private int reviewCount;
-    private Image image;
+    private SerializableImage image;
     private String description;
     private int amountSold;
 
     /**A constructor initializes the details of the classes whose direct descendant of this class.*/
-    public Product(String name, char type, double review, int reviewCount, Image image, String description) {
+    public Product(String name, char type, double review, int reviewCount, SerializableImage image, String description) {
         this.name = name;
         this.type = type;
         this.review = review;
@@ -71,11 +71,11 @@ public abstract class Product {
         this.amountSold = amountSold;
     }
 
-    public Image getImage() {
+    public SerializableImage getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(SerializableImage image) {
         this.image = image;
     }
 
@@ -85,6 +85,10 @@ public abstract class Product {
         double updatedReview = (this.review + review)/this.reviewCount;
 
         this.review = updatedReview;
+    }
+
+    public int getQuantity() {
+        return 0;
     }
 
     @Override

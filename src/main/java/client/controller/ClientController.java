@@ -175,68 +175,62 @@ public class ClientController {
         });
     }
 
-    /**------------------------------------------------------------------------------------------------------------------*/
-    /**------------------------------------------------------------------------------------------------------------------*/
-    /**------------------------------------------------------------------------------------------------------------------*/
-    /**------------------------------------------------------------------------------------------------------------------*/
-    /**------------------------------------------------------------------------------------------------------------------*/
-
-
     /**This method will only be utilized by Login and SignUp actions. This method is separated since the idea is
      * to close the socket connections every time logging in or signing up fails.*/
     public Object[] authenticate(Object[] request) throws IOException, ClassNotFoundException {
-        HashMap<String, Food> foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/java/server/model/food_menu.xml"));
-        HashMap<String, Beverage> beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/java/server/model/beverage_menu.xml"));
-        List<Customer> customerList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/java/server/model/customer_account_list.xml"));
+        try {
+            socket = new Socket(IP_ADDRESS, PORT);
+            out = new ObjectOutputStream(socket.getOutputStream());
+            in = new ObjectInputStream(socket.getInputStream());
 
-        Customer customer = customerList.get(0);
-        Object[] sendToClient = new Object[]{customer, foodMenu, beverageMenu};
+            String code = (String) request[0];
+            Object data = request[1];
 
-        Object[] response = {"LOGIN_SUCCESSFUL", sendToClient};
+            // Sending to server
+            sendToServer(code, data);
 
-        return response;
+            // Receiving from server
+            Object[] response = (Object[]) in.readObject();
 
 
-//UNCOMMENT WHEN SERVER IS READY
-//        try {
-//            socket = new Socket(IP_ADDRESS, PORT);
-//            out = new ObjectOutputStream(socket.getOutputStream());
-//            in = new ObjectInputStream(socket.getInputStream());
+            //close the socket if login failed or after sign up
+            String serverCode = (String) response[0];
+            if (!serverCode.equals("LOGIN_SUCCESSFUL")){
+                in.close();
+                out.close();
+                socket.close();
+                System.out.println("here");
+            }
+            return response;
+        } catch (UnknownHostException e) {
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            //either of the two will call the server error
+            if (loginPageController != null){
+                loginPageController.serverError();
+            }else if (signUpPageController != null){
+                signUpPageController.serverError();
+            }
+            return null;
+        }
+
+//        HashMap<String, Food> foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/java/server/model/food_menu.xml"));
+//        HashMap<String, Beverage> beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/java/server/model/beverage_menu.xml"));
+//        List<Customer> customerList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/java/server/model/customer_account_list.xml"));
 //
-//            String code = (String) request[0];
-//            Object data = request[1];
+//        Customer customer = customerList.get(0);
+//        Object[] sendToClient = new Object[]{customer, foodMenu, beverageMenu};
 //
-//            // Sending to server
-//            sendToServer(code, data);
+//        Object[] response = {"LOGIN_SUCCESSFUL", sendToClient};
 //
-//            // Receiving from server
-//            Object[] response = (Object[]) in.readObject();
-//
-//
-//            //close the socket if login failed or after sign up
-//            String serverCode = (String) response[0];
-//            if (!serverCode.equals("LOGIN_SUCCESSFUL")){
-//                in.close();
-//                out.close();
-//                socket.close();
-//            }
-//            return response;
-//        } catch (UnknownHostException e) {
-//            return null;
-//        } catch (IOException e) {
-//            //either of the two will call the server error
-//            if (loginPageController != null){
-//                loginPageController.serverError();
-//            }else if (signUpPageController != null){
-//                signUpPageController.serverError();
-//            }
-//            return null;
-//        }
+//        return response;
     }
     /**This method will be used for processing all server responses.*/
     private void processServerResponse(Object[] response) {
         //Guide response[0] = code, response[1] = data
         String serverCode = (String) response[0];
+        System.out.println(socket.isClosed());
 
         switch (serverCode){
             case "LOGIN_SUCCESSFUL":
