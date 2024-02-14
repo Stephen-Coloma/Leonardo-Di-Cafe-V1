@@ -7,7 +7,9 @@ import javafx.application.Platform;
 import shared.Beverage;
 import shared.Customer;
 import shared.Food;
+import util.XMLUtility;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -15,6 +17,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.SplittableRandom;
 
 public class ClientController {
     private static final int PORT = 2000;
@@ -87,6 +91,8 @@ public class ClientController {
                         if (isLoginSuccessful){
                             loginPageController.showMainMenu(actionEvent);
                             mainMenuClientPageController = loginPageController.getLoader().getController();
+                            mainMenuClientPageController.initializeFoodMenu(model.getFoodMenu(), model.getBeverageMenu()); //--------------> IMPORTANT! setting up the menu in the scrollpane
+                            setUpMainMenuClientPageComponentActions();
                         }else {
                             loginPageController.incorrectDetails();
                         }
@@ -112,7 +118,6 @@ public class ClientController {
             }
         });
     }
-
 
     /**TThis method sets up the components actions for signup_page.fxml*/
     private void setUpSignUpPageComponentActions() {
@@ -146,7 +151,6 @@ public class ClientController {
         });
 
         //action for home button
-        //action for home button
         signUpPageController.getBackButton().setOnAction(actionEvent ->{
             try {
                 signUpPageController.showLandingPage(actionEvent);
@@ -158,44 +162,76 @@ public class ClientController {
         });
     }
 
+    /**TThis method sets up the components actions for main_menu_client_page.fxml*/
+    private void setUpMainMenuClientPageComponentActions() {
+        //actions for food button
+        mainMenuClientPageController.getMainMenuFoodButton().setOnAction(actionEvent->{
+            mainMenuClientPageController.loadFoodMenu();
+        });
+
+        //action for beverage button
+        mainMenuClientPageController.getMainMenuBeveragesButton().setOnAction(actionEvent->{
+            mainMenuClientPageController.loadBeverageMenu();
+        });
+    }
+
+    /**------------------------------------------------------------------------------------------------------------------*/
+    /**------------------------------------------------------------------------------------------------------------------*/
+    /**------------------------------------------------------------------------------------------------------------------*/
+    /**------------------------------------------------------------------------------------------------------------------*/
+    /**------------------------------------------------------------------------------------------------------------------*/
+
 
     /**This method will only be utilized by Login and SignUp actions. This method is separated since the idea is
      * to close the socket connections every time logging in or signing up fails.*/
     public Object[] authenticate(Object[] request) throws IOException, ClassNotFoundException {
-        try {
-            socket = new Socket(IP_ADDRESS, PORT);
-            out = new ObjectOutputStream(socket.getOutputStream());
-            in = new ObjectInputStream(socket.getInputStream());
+        HashMap<String, Food> foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/java/server/model/food_menu.xml"));
+        HashMap<String, Beverage> beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/java/server/model/beverage_menu.xml"));
+        List<Customer> customerList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/java/server/model/customer_account_list.xml"));
 
-            String code = (String) request[0];
-            Object data = request[1];
+        Customer customer = customerList.get(0);
+        Object[] sendToClient = new Object[]{customer, foodMenu, beverageMenu};
 
-            // Sending to server
-            sendToServer(code, data);
+        Object[] response = {"LOGIN_SUCCESSFUL", sendToClient};
 
-            // Receiving from server
-            Object[] response = (Object[]) in.readObject();
+        return response;
 
 
-            //close the socket if login failed or after sign up
-            String serverCode = (String) response[0];
-            if (!serverCode.equals("LOGIN_SUCCESSFUL")){
-                in.close();
-                out.close();
-                socket.close();
-            }
-            return response;
-        } catch (UnknownHostException e) {
-            return null;
-        } catch (IOException e) {
-            //either of the two will call the server error
-            if (loginPageController != null){
-                loginPageController.serverError();
-            }else if (signUpPageController != null){
-                signUpPageController.serverError();
-            }
-            return null;
-        }
+//UNCOMMENT WHEN SERVER IS READY
+//        try {
+//            socket = new Socket(IP_ADDRESS, PORT);
+//            out = new ObjectOutputStream(socket.getOutputStream());
+//            in = new ObjectInputStream(socket.getInputStream());
+//
+//            String code = (String) request[0];
+//            Object data = request[1];
+//
+//            // Sending to server
+//            sendToServer(code, data);
+//
+//            // Receiving from server
+//            Object[] response = (Object[]) in.readObject();
+//
+//
+//            //close the socket if login failed or after sign up
+//            String serverCode = (String) response[0];
+//            if (!serverCode.equals("LOGIN_SUCCESSFUL")){
+//                in.close();
+//                out.close();
+//                socket.close();
+//            }
+//            return response;
+//        } catch (UnknownHostException e) {
+//            return null;
+//        } catch (IOException e) {
+//            //either of the two will call the server error
+//            if (loginPageController != null){
+//                loginPageController.serverError();
+//            }else if (signUpPageController != null){
+//                signUpPageController.serverError();
+//            }
+//            return null;
+//        }
     }
     /**This method will be used for processing all server responses.*/
     private void processServerResponse(Object[] response) {
@@ -216,6 +252,7 @@ public class ClientController {
                 model.setCart(new ArrayList<>());
                 model.setOrder(null);
 
+                System.out.println("model is ready");
                 //login successful
                 isLoginSuccessful = true;
                 break;
