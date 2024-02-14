@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="checkoutItemCard" prefHeight="59.0" prefWidth="304.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox layoutX="9.0" prefHeight="58.0" prefWidth="294.0">
+         <children>
+            <VBox prefHeight="58.0" prefWidth="48.0">
+               <children>
+                  <Pane prefHeight="6.0" prefWidth="48.0" />
+                  <ImageView fx:id="itemImage" fitHeight="46.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../productimages/Pistachio%20Cupcake.png" />
+                     </image>
+                  </ImageView>
+                  <Pane prefHeight="6.0" prefWidth="48.0" />
+               </children>
+            </VBox>
+            <Pane prefHeight="58.0" prefWidth="54.0" />
+            <VBox prefHeight="58.0" prefWidth="165.0">
+               <children>
+                  <Pane prefHeight="8.0" prefWidth="120.0" />
+                  <Label fx:id="itemName" prefHeight="18.0" prefWidth="120.0" text="Item 1" />
+                  <Label fx:id="itemSizeLabel" prefHeight="16.0" prefWidth="34.0" text="Size: Small ">
+                     <font>
+                        <Font size="7.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Pane prefHeight="58.0" prefWidth="113.0" />
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Pane prefHeight="21.0" prefWidth="56.0" />
+                  <Label fx:id="itemPriceLabel" text="P 180.00">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</Pane>

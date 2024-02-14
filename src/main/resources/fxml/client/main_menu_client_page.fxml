@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="872.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlcontroller.MainMenuClientPageController">
+   <children>
+      <AnchorPane layoutX="703.0" layoutY="43.0" prefHeight="338.0" prefWidth="170.0" style="-fx-background-color: #ffffff;">
+         <children>
+            <ScrollPane fx:id="scrollPaneCart" hbarPolicy="NEVER" prefHeight="342.0" prefWidth="170.0">
+               <content>
+                  <GridPane fx:id="gridPaneCart">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+         </children></AnchorPane>
+      <AnchorPane layoutY="-1.0" prefHeight="45.0" prefWidth="872.0" style="-fx-background-color: #634921;">
+         <children>
+            <Label layoutX="31.0" layoutY="14.0" text="LEONARDO DI'CAFE" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <VBox layoutY="44.0" prefHeight="447.0" prefWidth="134.0" style="-fx-background-color: #fffFFF;">
+         <children>
+            <Button fx:id="mainMenuFoodButton" mnemonicParsing="false" onMouseEntered="#foodButtonEntered" onMouseExited="#foodButtonExited" prefHeight="41.0" prefWidth="162.0" style="-fx-background-color: #FFFFFF;" text="Foods" />
+            <Separator prefWidth="200.0" style="-fx-background-color: #ECE9E3;" />
+            <Button fx:id="mainMenuBeveragesButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseEntered="#beverageButtonEntered" onMouseExited="#beverageButtonExited" prefHeight="41.0" prefWidth="162.0" style="-fx-background-color: #FFFFFF;" text="Beverages" />
+            <Separator layoutX="10.0" layoutY="141.0" prefWidth="200.0" style="-fx-background-color: #ECE9E3;" />
+            <Separator orientation="VERTICAL" prefHeight="447.0" prefWidth="0.0" style="-fx-background-color: #ECE9E3;" />
+         </children>
+      </VBox>
+      <Label fx:id="productTypeLabel" layoutX="144.0" layoutY="54.0" prefHeight="18.0" prefWidth="169.0" text="Food Category">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <ScrollPane fx:id="scrollPaneMenu" hbarPolicy="NEVER" layoutX="137.0" layoutY="83.0" prefHeight="401.0" prefWidth="567.0">
+         <content>
+            <GridPane fx:id="gridPaneMenu" layoutY="-10.0" prefHeight="107.0">
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
+               </rowConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
+      <Button fx:id="checkoutButton" layoutX="710.0" layoutY="414.0" mnemonicParsing="false" onAction="#showCheckoutUI" onMouseEntered="#checkoutButtonEntered" onMouseExited="#checkoutButtonExited" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: #A38157;" text="CHECKOUT P0" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label layoutX="710.0" layoutY="392.0" prefHeight="3.0" prefWidth="67.0" text="Total:">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="priceLabel" layoutX="844.0" layoutY="392.0" prefHeight="15.0" prefWidth="23.0" text="P 0">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="cartLabel1" layoutX="721.0" layoutY="102.0" prefHeight="32.0" prefWidth="128.0" text="YOUR CART IS EMPTY!">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Label>
+      <Label fx:id="cartLabel2" layoutX="706.0" layoutY="125.0" prefHeight="18.0" prefWidth="162.0" text="Start ordering, we have what you need!">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="cartImage" fitHeight="85.0" fitWidth="144.0" layoutX="714.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../images/client/menu/menu_emptybasket.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="orderHistoryMenuButton" layoutX="710.0" layoutY="450.0" mnemonicParsing="false" onAction="#showOrderHistoryUI" onMouseEntered="#orderHistoryMenuButtonEntered" onMouseExited="#orderHistoryMenuButtonExited" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3;" text="ORDER HISTORY" textFill="#a38157">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>

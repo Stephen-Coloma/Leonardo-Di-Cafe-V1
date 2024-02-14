@@ -1,5 +1,8 @@
 package shared;
 
+import javafx.scene.image.Image;
+import util.exception.OutOfStockException;
+
 /**This class represents a food object where there is no variation for it.
  * @author  Stephen Coloma*/
 public class Food extends Product {
@@ -7,16 +10,14 @@ public class Food extends Product {
     private double price;
 
     //constructors
-    public Food(String productName, char productType, double productReview, int productReviewCount, int quantity, double price) {
-        super(productName, productType, productReview, productReviewCount);
+    public Food(String name, char type, double review, int reviewCount, Image image, String description, int quantity, double price) {
+        super(name, type, review, reviewCount, image, description);
         this.quantity = quantity;
         this.price = price;
     }
 
     //getters setters
-
-
-    public double getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
@@ -42,8 +43,12 @@ public class Food extends Product {
 
         if (quantity<0){
             quantity = temp;
-            throw new Exception("Out of stocks");
+            throw new OutOfStockException("Out of stock");
         }
+
+        //reaches here means no error updating the value
+        int sold = super.getAmountSold() + count;
+        super.setAmountSold(sold);
     }
 
     /**This method updates the quantity of the product by the quantity ordered by a single client
@@ -53,7 +58,20 @@ public class Food extends Product {
 
         if (quantity < 0){
             quantity++; //reverting back the changes
-            throw new Exception("Out of stocks");
+            throw new OutOfStockException("Out of stock");
         }
+
+        //reaches here means no error updating the value
+        int sold =  super.getAmountSold() + 1;
+        super.setAmountSold(sold);
+    }
+
+    @Override
+    public String toString() {
+        String concat = super.toString();
+        return "Food{" + concat +
+                "quantity=" + quantity +
+                ", price=" + price +
+                '}';
     }
 }
