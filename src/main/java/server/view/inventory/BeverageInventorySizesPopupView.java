@@ -1,10 +1,10 @@
-package server.controller.temporarycontroller.inventory;
+package server.view.inventory;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class BeverageInventorySizesPopupController {
+public class BeverageInventorySizesPopupView {
     @FXML
     private Button acceptButton;
     @FXML

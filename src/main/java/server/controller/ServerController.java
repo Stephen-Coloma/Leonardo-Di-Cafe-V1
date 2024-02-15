@@ -3,7 +3,7 @@ package server.controller;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import server.controller.temporarycontroller.*;
-import server.controller.temporarycontroller.inventory.InventoryPageController;
+import server.view.inventory.InventoryPageView;
 import server.model.ServerModel;
 import server.view.ServerView;
 import shared.*;
@@ -30,7 +30,7 @@ public class ServerController {
     private AccountsListPageController accountsListPageController;
     private AddProductsPageController addProductsPageController;
     private AnalyticsPageController analyticsPageController;
-    private InventoryPageController inventoryPageController;
+    private InventoryPageView inventoryPageView;
     private MainMenuAdminController mainMenuAdminController;
     private OrdersListPageController ordersListPageController;
 
@@ -58,11 +58,11 @@ public class ServerController {
             HashMap<String, Food> foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/java/server/model/food_menu.xml"));
 
             Platform.runLater(() -> {
-                inventoryPageController = mainMenuAdminController.getInventoryPageController();
-                inventoryPageController.populateTableFromMap(foodMenu, beverageMenu);
+                inventoryPageView = mainMenuAdminController.getInventoryPageController();
+                inventoryPageView.populateTableFromMap(foodMenu, beverageMenu);
 
-                inventoryPageController.getSaveChangesButton().setOnAction(actionEvent1 -> {
-                    ObservableList<Object> productList = inventoryPageController.getProductList();
+                inventoryPageView.getSaveChangesButton().setOnAction(actionEvent1 -> {
+                    ObservableList<Object> productList = inventoryPageView.getProductList();
                     model.updateMenuFromInventory(productList);
                 });
             });

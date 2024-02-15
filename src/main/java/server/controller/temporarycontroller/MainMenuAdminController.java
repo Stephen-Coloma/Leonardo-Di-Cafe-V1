@@ -5,10 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import server.controller.temporarycontroller.inventory.InventoryPageController;
+import server.view.inventory.InventoryPageView;
 
 import java.util.logging.Level;
 
@@ -44,7 +43,7 @@ public class MainMenuAdminController implements Initializable{
     @FXML
     private AnalyticsPageController analyticsPageController;
     @FXML
-    private InventoryPageController inventoryPageController;
+    private InventoryPageView inventoryPageView;
     @FXML
     private OrdersListPageController ordersListPageController;
     private FXMLLoader loader;
@@ -86,7 +85,7 @@ public class MainMenuAdminController implements Initializable{
     }
     public void viewInventoryPage() {
         loader = loadPage("inventory/InventoryPage");
-        inventoryPageController = loader.getController();
+        inventoryPageView = loader.getController();
     }
     public void viewAnalyticsPage() {
         loader = loadPage("AnalyticsPage");
@@ -112,8 +111,8 @@ public class MainMenuAdminController implements Initializable{
         return analyticsPageController;
     }
 
-    public InventoryPageController getInventoryPageController() {
-        return inventoryPageController;
+    public InventoryPageView getInventoryPageController() {
+        return inventoryPageView;
     }
 
     public OrdersListPageController getOrdersListPageController() {

@@ -1,10 +1,10 @@
-package server.controller.temporarycontroller.inventory;
+package server.view.inventory;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class FoodInventoryPopupController {
+public class FoodInventoryPopupVIew {
 
     @FXML
     private Label quantity;

@@ -1,4 +1,4 @@
-package server.controller.temporarycontroller.inventory;
+package server.view.inventory;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -27,12 +27,13 @@ import util.ImageCopier;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class InventoryPageController implements Initializable {
+public class InventoryPageView implements Initializable {
     @FXML
     private TableColumn<Object, String> productNameColumn;
     @FXML
@@ -53,6 +54,7 @@ public class InventoryPageController implements Initializable {
     private Button saveChangesButton;
     private FilteredList<Object> filteredList;
     private ObservableList<Object> productList;
+    private ArrayList<Button> editQuantityButtons; // still thinking about it
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -122,7 +124,7 @@ public class InventoryPageController implements Initializable {
                                     popupStage.initModality(Modality.APPLICATION_MODAL);
                                     popupStage.setTitle("Edit Food Quantity");
                                     popupStage.setScene(new Scene(loader.load()));
-                                    FoodInventoryPopupController controller = loader.getController();
+                                    FoodInventoryPopupVIew controller = loader.getController();
 
                                     int filteredIndex = getTableRow().getIndex();
                                     int originalIndex = filteredList.getSourceIndex(filteredIndex);
@@ -180,7 +182,7 @@ public class InventoryPageController implements Initializable {
                                     popupStage.initModality(Modality.APPLICATION_MODAL);
                                     popupStage.setTitle("Edit Beverage Quantity");
                                     popupStage.setScene(new Scene(loader.load()));
-                                    BeverageInventorySizesPopupController controller = loader.getController();
+                                    BeverageInventorySizesPopupView controller = loader.getController();
 
                                     int filteredIndex = getTableRow().getIndex();
                                     int originalIndex = filteredList.getSourceIndex(filteredIndex);
@@ -326,7 +328,7 @@ public class InventoryPageController implements Initializable {
                                     popupStage.initModality(Modality.APPLICATION_MODAL);
                                     popupStage.setTitle("Edit Food Details");
                                     popupStage.setScene(new Scene(loader.load()));
-                                    FoodEditDetailsPopupController controller = loader.getController();
+                                    FoodEditDetailsPopupView controller = loader.getController();
 
                                     int filteredIndex = getTableRow().getIndex();
                                     int originalIndex = filteredList.getSourceIndex(filteredIndex);
@@ -377,7 +379,7 @@ public class InventoryPageController implements Initializable {
                                     popupStage.initModality(Modality.APPLICATION_MODAL);
                                     popupStage.setTitle("Edit Beverage Details");
                                     popupStage.setScene(new Scene(loader.load()));
-                                    BeverageEditDetailsPopupController controller = loader.getController();
+                                    BeverageEditDetailsPopupView controller = loader.getController();
 
                                     int filteredIndex = getTableRow().getIndex();
                                     int originalIndex = filteredList.getSourceIndex(filteredIndex);
@@ -549,6 +551,10 @@ public class InventoryPageController implements Initializable {
         inventoryTableView.setItems(filteredList);
     } // end of filterTable
 
+    public TableView<Object> getInventoryTableView() {
+        return inventoryTableView;
+    }
+
     public Button getSaveChangesButton() {
         return saveChangesButton;
     } // end of getSaveChangesButton
@@ -556,4 +562,12 @@ public class InventoryPageController implements Initializable {
     public ObservableList<Object> getProductList() {
         return productList;
     } // end of getProductList
+
+    public FilteredList<Object> getFilteredList() {
+        return filteredList;
+    }
+
+    public ArrayList<Button> getEditQuantityButtons() {
+        return editQuantityButtons;
+    }
 } // end of InventoryPageController class

@@ -1,4 +1,4 @@
-package server.controller.temporarycontroller.inventory;
+package server.view.inventory;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,11 +14,13 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
 
-public class FoodEditDetailsPopupController implements Initializable {
+public class FoodEditDetailsPopupView implements Initializable {
     @FXML
     private Label imageLabel;
     @FXML
     private Button acceptButton;
+    @FXML
+    private Button chooseImageButton;
     @FXML
     private TextField productNameTextField;
     @FXML
@@ -42,6 +44,10 @@ public class FoodEditDetailsPopupController implements Initializable {
                 c.getControlNewText().matches("-?\\d*\\.?\\d*") ? c : null);
     } // end of createNumberTextFormatter
 
+    public void setImageLabel(String value) {
+        imageLabel.setText(value);
+    }
+
     public void setProductNameTextField(String value) {
         productNameTextField.setText(value);
     }
@@ -54,8 +60,16 @@ public class FoodEditDetailsPopupController implements Initializable {
         productDescriptionTextArea.setText(value);
     }
 
+    public Label getImageLabel() {
+        return imageLabel;
+    }
+
     public Button getAcceptButton() {
         return acceptButton;
+    }
+
+    public Button getChooseImageButton() {
+        return chooseImageButton;
     }
 
     public TextField getProductNameTextField() {
