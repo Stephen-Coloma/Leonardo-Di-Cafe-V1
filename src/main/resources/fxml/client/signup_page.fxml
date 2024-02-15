@@ -121,7 +121,7 @@
                <top>
                   <Pane prefHeight="22.0" prefWidth="810.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="backButton" layoutX="263.0" layoutY="-1.0" mnemonicParsing="false" style="-fx-background-color: #A38157;" text="&lt;  Home" textFill="WHITE" />
+                        <Button fx:id="homeButton" layoutX="263.0" layoutY="-1.0" mnemonicParsing="false" style="-fx-background-color: #A38157;" text="&lt;  Home" textFill="WHITE" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" />

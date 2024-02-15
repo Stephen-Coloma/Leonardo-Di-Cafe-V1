@@ -1,6 +1,7 @@
 package client.view.fxmlview;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -25,22 +26,31 @@ public class LandingPageView {
 
     private FXMLLoader loader;
     private Parent root;
-    private void loadPage(String page, ActionEvent event) throws IOException {
-        loader = new FXMLLoader(getClass().getResource("/fxml/client/" + page + ".fxml"));
 
-        root = loader.load();
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void setActionLoginButton(EventHandler<ActionEvent> event){
+        loginButtonFrontPage.setOnAction(event);
     }
 
-    public void showLoginUI (ActionEvent event) throws IOException {
-        loadPage("login_page", event);
+    public void setActionSignUpButton(EventHandler<ActionEvent> event){
+        signupButtonFrontPage.setOnAction(event);
     }
-    public void showRegistrationUI (ActionEvent event) throws IOException {
-        loadPage("signup_page", event);
-    }
+
+//    private void loadPage(String page, ActionEvent event) throws IOException {
+//        loader = new FXMLLoader(getClass().getResource("/fxml/client/" + page + ".fxml"));
+//
+//        root = loader.load();
+//        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+//    }
+//
+//    public void showLoginUI (ActionEvent event) throws IOException {
+//        loadPage("login_page", event);
+//    }
+//    public void showRegistrationUI (ActionEvent event) throws IOException {
+//        loadPage("signup_page", event);
+//    }
 
     public void loginFrontPageButtonEntered(MouseEvent event){
         loginButtonFrontPage.setStyle("-fx-background-color: lightgray;");
@@ -75,19 +85,19 @@ public class LandingPageView {
         this.signupButtonFrontPage = signupButtonFrontPage;
     }
 
-    public LoginPageView getLoginPageController() {
+    public LoginPageView getLoginPageView() {
         return loginPageView;
     }
 
-    public void setLoginPageController(LoginPageView loginPageView) {
+    public void setLoginPageView(LoginPageView loginPageView) {
         this.loginPageView = loginPageView;
     }
 
-    public SignUpPageView getSignUpController() {
+    public SignUpPageView getSignUpPageView() {
         return signUpPageView;
     }
 
-    public void setSignUpController(SignUpPageView signUpPageView) {
+    public void setSignUpPageView(SignUpPageView signUpPageView) {
         this.signUpPageView = signUpPageView;
     }
 

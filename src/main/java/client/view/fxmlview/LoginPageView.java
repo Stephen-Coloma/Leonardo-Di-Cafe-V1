@@ -1,6 +1,7 @@
 package client.view.fxmlview;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,7 +19,7 @@ import java.io.IOException;
 
 public class LoginPageView {
     @FXML
-    private Button backButton;
+    private Button homeButton;
 
     @FXML
     private Button loginButton;
@@ -31,62 +32,14 @@ public class LoginPageView {
     private FXMLLoader loader;
     private Parent root;
 
-    //TODO
-    public void showMainMenu(ActionEvent event) throws IOException {
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("/fxml/client/main_menu_client_page.fxml"));
-        root = loader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    /**This method receives action implementation from the login controller*/
+    public void setActionHomeButton(EventHandler<ActionEvent> event){
+        homeButton.setOnAction(event);
     }
 
-    public void showLandingPage(ActionEvent event) throws IOException{
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("/fxml/client/landing_page.fxml"));
-        root = loader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public String[] getCredentials () throws IOException {
-        String username = usernameTextField.getText();
-        String password = passwordField.getText();
-
-        if (username.equals("") || password.equals("")){
-            return null;
-        }else {
-            return new String[]{username, password};
-        }
-    }
-
-    public void incorrectDetails(){
-        usernameTextField.clear();
-        passwordField.clear();
-        noticeLabel.setText("incorrect login credentials");
-        if (!noticeLabel.isVisible()){
-            noticeLabel.setVisible(true);
-        }
-    }
-
-    public void emptyField(){
-        noticeLabel.setText("fill out all details");
-        if (!noticeLabel.isVisible()){
-            noticeLabel.setVisible(true);
-        }
-    }
-
-    public void serverError() throws IOException {
-        noticeLabel.setVisible(false);
-        usernameTextField.clear();
-        passwordField.clear();
-
-        Parent root  = FXMLLoader.load(getClass().getResource("/fxml/client/server_error.fxml"));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
+    /**This method receives action implementation from the login controller*/
+    public void setActionLoginButton(EventHandler<ActionEvent> event){
+        loginButton.setOnAction(event);
     }
 
 
@@ -131,11 +84,11 @@ public class LoginPageView {
         this.noticeLabel = noticeLabel;
     }
     public Button getBackButton() {
-        return backButton;
+        return homeButton;
     }
 
-    public void setBackButton(Button backButton) {
-        this.backButton = backButton;
+    public void setBackButton(Button homeButton) {
+        this.homeButton = homeButton;
     }
 
     public FXMLLoader getLoader() {

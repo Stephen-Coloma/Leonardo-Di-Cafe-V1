@@ -1,6 +1,7 @@
 package client.view.fxmlview;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,7 +17,7 @@ import java.io.IOException;
 
 public class SignUpPageView {
     @FXML
-    private Button backButton;
+    private Button homeButton;
     @FXML
     private Button createAccountButton;
     @FXML
@@ -37,75 +38,14 @@ public class SignUpPageView {
     private Parent root;
     private Stage stage;
 
-    //TODO
-
-    public void showLoginPage(ActionEvent event) throws IOException {
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-        loader = new FXMLLoader((getClass().getResource("/fxml/client/login_page.fxml")));
-
-        root = loader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void setActionSignUpButton(EventHandler<ActionEvent> event){
+        createAccountButton.setOnAction(event);
     }
 
-    public void showLandingPage(ActionEvent event) throws IOException{
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        loader = new FXMLLoader(getClass().getResource("/fxml/client/landing_page.fxml"));
-        root = loader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void setActionHomeButton(EventHandler<ActionEvent> event){
+        homeButton.setOnAction(event);
     }
 
-    public Customer getCredentials() throws IOException {
-        String fullName = fullNameTextField.getText();
-        String username = userNameTextField.getText();
-        String address = addressTextField.getText();
-        String email = emailTextField.getText();
-        String password = passwordField.getText();
-
-        if (fullName.isEmpty() || username.isEmpty() || address.isEmpty() || email.isEmpty() || password.isEmpty() || !termsAndServicesCheckBox.isSelected()){
-            return null;
-        }else {
-            return new Customer(fullName, username, address, email, password);
-        }
-    }
-
-    public void accountExist(){
-        userNameTextField.clear();
-        userNameTextField.setPromptText("account exist");
-        noticeLabel.setText("account exists");
-        noticeLabel.setVisible(true);
-    }
-
-    public void emptyField(){
-        noticeLabel.setVisible(false);
-        if (!fullNameTextField.getText().isEmpty() && !userNameTextField.getText().isEmpty() && !addressTextField.getText().isEmpty() && !emailTextField.getText().isEmpty() && !passwordField.getText().isEmpty() && !termsAndServicesCheckBox.isSelected()){
-            noticeLabel.setText("accept terms and services policy");
-        }else {
-            noticeLabel.setText("fill out all details");
-        }
-        noticeLabel.setVisible(true);
-    }
-
-    public void serverError() throws IOException {
-        noticeLabel.setVisible(false);
-        fullNameTextField.clear();
-        userNameTextField.clear();
-        addressTextField.clear();
-        emailTextField.clear();
-        passwordField.clear();
-        termsAndServicesCheckBox.setSelected(false);
-
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/client/server_error.fxml"));
-        Scene scene = new Scene(root);
-
-        Stage stage1 = new Stage();
-        stage1.setScene(scene);
-        stage1.show();
-    }
 
     public void createAccountButtonEntered(MouseEvent event){
         createAccountButton.setStyle("-fx-background-color: lightgray;");
@@ -172,11 +112,18 @@ public class SignUpPageView {
         this.termsAndServicesCheckBox = termsAndServicesCheckBox;
     }
     public Button getBackButton() {
-        return backButton;
+        return homeButton;
     }
 
-    public void setBackButton(Button backButton) {
-        this.backButton = backButton;
+    public void setBackButton(Button homeButton) {
+        this.homeButton = SignUpPageView.this.homeButton;
+    }
+    public Label getNoticeLabel() {
+        return noticeLabel;
+    }
+
+    public void setNoticeLabel(Label noticeLabel) {
+        this.noticeLabel = noticeLabel;
     }
 
     public FXMLLoader getLoader() {
