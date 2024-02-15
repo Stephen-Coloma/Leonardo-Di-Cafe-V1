@@ -1,10 +1,17 @@
 package server.view.inventory;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-public class FoodInventoryPopupVIew {
+import java.io.IOException;
+
+public class FoodInventoryPopupView {
 
     @FXML
     private Label quantity;
@@ -16,6 +23,25 @@ public class FoodInventoryPopupVIew {
     private Button decrementButton;
     @FXML
     private Button acceptButton;
+    private static Stage popupStage;
+
+    public static <T> T loadFoodInventoryPopup() {
+        try {
+            FXMLLoader loader = new FXMLLoader(FoodInventoryPopupView.class.getResource("/fxml/server/inventory/food_inventory_popup.fxml"));
+            popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setTitle("Edit Food Quantity");
+            popupStage.setScene(new Scene(loader.load()));
+            popupStage.show();
+            return loader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    } // end of loadFoodInventoryPopup
+
+    public void closePopupStage() {
+        popupStage.close();
+    } // end of closePopupStage
 
     public Label getQuantity() {
         return quantity;

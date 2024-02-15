@@ -1,24 +1,31 @@
 package server.controller.inventory;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import server.model.inventory.FoodEditDetailsPopupModel;
 import server.view.inventory.FoodEditDetailsPopupView;
 
 import java.io.File;
 
 public class FoodEditDetailsPopupController {
-    FoodEditDetailsPopupView controller;
+    FoodEditDetailsPopupModel model;
+    FoodEditDetailsPopupView view;
 
-    public FoodEditDetailsPopupController(FXMLLoader loader) {
-        controller = loader.getController();
-        setComponentActions();
+    public FoodEditDetailsPopupController(FoodEditDetailsPopupModel model, FoodEditDetailsPopupView view) {
+        this.model = model;
+        this.view = view;
     }
 
+    public void displayContents() {
+        view.setProductNameTextField(model.getFood().getName());
+        view.setPriceTextField(String.valueOf(model.getFood().getPrice()));
+        view.setProductDescriptionTextArea(model.getFood().getDescription());
+    } // end of displayContents
+
     public void setComponentActions() {
-        controller.getChooseImageButton().setOnAction(actionEvent -> {
+        view.getChooseImageButton().setOnAction(actionEvent -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Choose Image File");
             fileChooser.getExtensionFilters().addAll(
@@ -29,15 +36,15 @@ public class FoodEditDetailsPopupController {
             File selectedFile = fileChooser.showOpenDialog(stage);
 
             if (selectedFile != null) {
-                controller.getImageTextField().setText(selectedFile.getAbsolutePath());
+                view.getImageTextField().setText(selectedFile.getAbsolutePath());
             }
 
-            if (controller.getImageTextField().getText() == null || controller.getImageTextField().getText().isEmpty()) {
-                controller.setImageLabel("No image chosen");
-                controller.getImageLabel().setTextFill(Paint.valueOf("RED"));
+            if (view.getImageTextField().getText() == null || view.getImageTextField().getText().isEmpty()) {
+                view.setImageLabel("No image chosen");
+                view.getImageLabel().setTextFill(Paint.valueOf("RED"));
             } else {
-                controller.setImageLabel("Image chosen");
-                controller.getImageLabel().setTextFill(Paint.valueOf("GREEN"));
+                view.setImageLabel("Image chosen");
+                view.getImageLabel().setTextFill(Paint.valueOf("GREEN"));
             }
         });
     } // end of setComponentActions

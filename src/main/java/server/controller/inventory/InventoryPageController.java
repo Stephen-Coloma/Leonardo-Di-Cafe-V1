@@ -1,33 +1,236 @@
 package server.controller.inventory;
 
-import javafx.fxml.FXMLLoader;
+import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import server.view.inventory.InventoryPageView;
+import javafx.util.Callback;
+import server.controller.YesNoPopupController;
+import server.model.MainMenuAdminModel;
+import server.model.inventory.*;
+import server.view.MainMenuAdminView;
+import server.view.YesNoPopupView;
+import server.view.inventory.*;
+import shared.Beverage;
+import shared.Food;
 
-import java.io.IOException;
+import java.util.HashMap;
 
 public class InventoryPageController {
-    InventoryPageView controller;
+    MainMenuAdminModel mainMenuAdminModel;
+    InventoryPageModel model;
+    InventoryPageView view;
 
-    public InventoryPageController(FXMLLoader loader) {
-        controller = loader.getController();
+    public InventoryPageController(MainMenuAdminModel mainMenuAdminModel, InventoryPageModel model, InventoryPageView view) {
+        this.mainMenuAdminModel = mainMenuAdminModel;
+        this.model = model;
+        this.view = view;
+    }
+
+    public void start() {
+        view.populateTableFromMap(mainMenuAdminModel.getFoodMenu(), mainMenuAdminModel.getBeverageMenu());
         setComponentActions();
     }
 
     private void setComponentActions() {
+        setColumns("quantity", view.getEditQuantityColumn(), 1);
+        setColumns("details", view.getEditDetailsColumn(), 2);
+        setColumns("delete", view.getDeleteProductColumn(), 3);
 
-    }
+        /* TODO: Update the beverage and food menu when the save button is clicked on the InventoryPageModel
+                 and set the atomic boolean of the MainMenuModel to overwrite the xml file. (STILL NOT SURE)
+         */
+        view.getSaveChangesButton().setOnAction(actionEvent -> {
 
-    private void setEditDetailsButton() {
-        controller.getEditQuantityButtons().forEach(button -> {
-            TableColumn<Object, Void> object = (TableColumn<Object, Void>) controller.getInventoryTableView().getColumns().get(3);
-            button.setOnAction(actionEvent -> {
-                try {
-                    //
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            });
         });
     }
+
+    private Button createButton(String label, int buttonColumn) {
+        Button button = new Button(label);
+        if (buttonColumn == 1) {
+            button.setOnAction(this::handleEditQuantityButtonClick);
+        } else if (buttonColumn == 2) {
+            button.setOnAction(this::handleEditDetailsButtonClick);
+        } else if (buttonColumn == 3) {
+            button.setOnAction(this::handleDeleteProductButtonClick);
+        }
+        return button;
+    } // end of createButton
+
+    private void setColumns(String label, TableColumn<Object, Void> columnName, int buttonColumn) {
+        Callback<TableColumn<Object, Void>, TableCell<Object, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<Object, Void> call(final TableColumn<Object, Void> param) {
+                return new TableCell<>() {
+                    private final Button button = createButton(label, buttonColumn);
+
+                    {
+                        button.setStyle("-fx-background-color: #634921; -fx-text-fill: white;");
+                        button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: #9a7133; -fx-text-fill: white;"));
+                        button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #634921; -fx-text-fill: white;"));
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(button);
+                            setAlignment(Pos.CENTER);
+                        }
+                    }
+                };
+            }
+        };
+        columnName.setCellFactory(cellFactory);
+    } // end of setEditQuantityColumn()
+
+    private void handleEditQuantityButtonClick(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        TableCell<Object, Void> cell = (TableCell<Object, Void>) button.getParent();
+
+        Object product = cell.getTableRow().getItem();
+
+        int filteredIndex = cell.getTableRow().getIndex();
+        int originalIndex = view.getFilteredList().getSourceIndex(filteredIndex);
+
+        if (product instanceof Food food) {
+            FoodInventoryPopupModel popupModel = new FoodInventoryPopupModel();
+            popupModel.setFood(food);
+
+            FoodInventoryPopupView popupView = FoodInventoryPopupView.loadFoodInventoryPopup();
+
+            FoodInventoryPopupController popupController = new FoodInventoryPopupController(popupModel, popupView);
+            popupController.displayContents();
+            popupController.setComponentAction();
+
+            popupView.getAcceptButton().setOnAction(actionEvent -> {
+                int counter = Integer.parseInt(popupView.getQuantity().getText());
+                popupModel.updateQuantity(counter);
+
+                if (originalIndex != -1) {
+                    if (originalIndex >= 0 && originalIndex < view.getProductList().size()) {
+                        view.getProductList().set(originalIndex, food);
+                    }
+                }
+                popupView.closePopupStage();
+            });
+        } else if (product instanceof Beverage beverage) {
+            BeverageInventoryPopupModel popupModel = new BeverageInventoryPopupModel();
+            popupModel.setBeverage(beverage);
+
+            BeverageInventoryPopupView popupView = BeverageInventoryPopupView.loadBeverageInventoryPopup();
+
+            BeverageInventoryPopupController popupController = new BeverageInventoryPopupController(popupModel,popupView);
+            popupController.displayContents();
+            popupController.setComponentAction();
+
+            popupView.getAcceptButton().setOnAction(actionEvent -> {
+                int smallCounter = Integer.parseInt(popupView.getSmallQuantity().getText());
+                int mediumCounter = Integer.parseInt(popupView.getMediumQuantity().getText());
+                int largeCounter = Integer.parseInt(popupView.getLargeQuantity().getText());
+
+                popupModel.updateQuantity(smallCounter, mediumCounter, largeCounter);
+
+                if (originalIndex != -1) {
+                    if (originalIndex >= 0 && originalIndex < view.getProductList().size()) {
+                        view.getProductList().set(originalIndex, beverage);
+                    }
+                }
+                popupView.closePopupStage();
+            });
+        }
+    } // end of handleEditQuantityButtonClick
+
+    private void handleEditDetailsButtonClick(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        TableCell<Object, Void> cell = (TableCell<Object, Void>) button.getParent();
+
+        Object product = cell.getTableRow().getItem();
+
+        int filteredIndex = cell.getTableRow().getIndex();
+        int originalIndex = view.getFilteredList().getSourceIndex(filteredIndex);
+
+        if (product instanceof Food food) {
+            FoodEditDetailsPopupModel popupModel = new FoodEditDetailsPopupModel();
+            popupModel.setFood(food);
+
+            FoodEditDetailsPopupView popupView = FoodEditDetailsPopupView.loadFoodDetailsPopup();
+
+            FoodEditDetailsPopupController popupController = new FoodEditDetailsPopupController(popupModel, popupView);
+            popupController.displayContents();
+            popupController.setComponentActions();
+
+            popupView.getAcceptButton().setOnAction(actionEvent -> {
+                popupModel.getFood().setName(popupView.getProductNameTextField().getText().trim());
+                popupModel.getFood().setDescription(popupView.getProductDescriptionTextArea().getText().trim());
+                popupModel.getFood().setPrice(Double.parseDouble(popupView.getPriceTextField().getText().trim()));
+
+                if (!popupView.getImageTextField().getText().isEmpty()) {
+                    popupModel.getFood().setImage(popupModel.processSerializableImage(popupView.getImageTextField().getText().trim()));
+                }
+
+                if (originalIndex != -1) {
+                    if (originalIndex >= 0 && originalIndex < view.getProductList().size()) {
+                        view.getProductList().set(originalIndex, food);
+                    }
+                }
+                popupView.closePopupStage();
+            });
+        } else if (product instanceof Beverage beverage) {
+            BeverageEditDetailsPopupModel popupModel = new BeverageEditDetailsPopupModel();
+            popupModel.setBeverage(beverage);
+
+            BeverageEditDetailsPopupView popupView = BeverageEditDetailsPopupView.loadBeverageDetailsPopup();
+
+            BeverageEditDetailsPopupController popupController = new BeverageEditDetailsPopupController(popupModel, popupView);
+            popupController.displayContents();
+            popupController.setComponentActions();
+
+            popupView.getAcceptButton().setOnAction(actionEvent -> {
+                popupModel.getBeverage().setName(popupView.getProductNameTextField().getText().trim());
+                popupModel.getBeverage().setDescription(popupView.getProductDescriptionTextArea().getText().trim());
+
+                HashMap<String, Double> sizePrice = new HashMap<>();
+                sizePrice.put("small", Double.parseDouble(popupView.getSmallPriceTextField().getText().trim()));
+                sizePrice.put("medium", Double.parseDouble(popupView.getMediumPriceTextField().getText().trim()));
+                sizePrice.put("large", Double.parseDouble(popupView.getLargePriceTextField().getText().trim()));
+
+                popupModel.getBeverage().setSizePrice(sizePrice);
+
+                if (!popupView.getImageTextField().getText().isEmpty()) {
+                    popupModel.getBeverage().setImage(popupModel.processSerializableImage(popupView.getImageTextField().getText().trim()));
+                }
+
+                if (originalIndex != -1) {
+                    if (originalIndex >= 0 && originalIndex < view.getProductList().size()) {
+                        view.getProductList().set(originalIndex, beverage);
+                    }
+                }
+                popupView.closePopupStage();
+            });
+        }
+    } // end of handleEditDetailsButtonClick
+
+    private void handleDeleteProductButtonClick(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        TableCell<Object, Void> cell = (TableCell<Object, Void>) button.getParent();
+
+        int filteredIndex = cell.getTableRow().getIndex();
+        int originalIndex = view.getFilteredList().getSourceIndex(filteredIndex);
+
+        YesNoPopupView popupView = YesNoPopupView.loadYesNoPopupView();
+        YesNoPopupController popupController = new YesNoPopupController(popupView);
+        popupController.setQuestionPromptMessage("Are you sure you want to delete this product?");
+        popupController.setComponentActions();
+
+        popupView.getYesButton().setOnAction(actionEvent -> {
+            if (originalIndex >= 0 && originalIndex < view.getProductList().size()) {
+                view.getProductList().remove(originalIndex);
+            }
+            popupView.closePopupStage();
+        });
+    } // end of handleDeleteProductButtonClick
 } // end of InventoryPageController class

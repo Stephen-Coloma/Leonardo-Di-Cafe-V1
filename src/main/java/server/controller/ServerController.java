@@ -1,14 +1,12 @@
 package server.controller;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import server.controller.temporarycontroller.*;
-import server.view.inventory.InventoryPageView;
+import server.model.MainMenuAdminModel;
+import server.view.MainMenuAdminView;
 import server.model.ServerModel;
 import server.view.ServerView;
 import shared.*;
 import util.ImageCopier;
-import util.XMLUtility;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 
@@ -17,9 +15,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class ServerController {
     private final ServerModel model;
@@ -27,12 +22,6 @@ public class ServerController {
     private Socket clientSocket;
     private ObjectInputStream streamReader;
     private ObjectOutputStream streamWriter;
-    private AccountsListPageController accountsListPageController;
-    private AddProductsPageController addProductsPageController;
-    private AnalyticsPageController analyticsPageController;
-    private InventoryPageView inventoryPageView;
-    private MainMenuAdminController mainMenuAdminController;
-    private OrdersListPageController ordersListPageController;
 
     public ServerController(ServerModel model, ServerView view) {
         this.model = model;
@@ -40,7 +29,7 @@ public class ServerController {
 
         Platform.runLater(() -> {
             System.out.println("Obtained Main Menu Controller");
-            mainMenuAdminController = view.getLoader().getController();
+            //mainMenuAdminView = view.getLoader().getController();
 
             setComponentActions();
             System.out.println("Successfully added actions");
@@ -53,13 +42,29 @@ public class ServerController {
 
     // TODO
     private void setComponentActions() {
-        mainMenuAdminController.getViewInventoryButton().setOnAction(actionEvent -> {
+        Platform.runLater(() -> {
+            MainMenuAdminModel mainMenuAdminModel = new MainMenuAdminModel();
+            MainMenuAdminView mainMenuAdminView = view.getLoader().getController();
+
+            MainMenuAdminController mainMenuAdminController = new MainMenuAdminController(model, mainMenuAdminModel, mainMenuAdminView);
+            mainMenuAdminController.start();
+        });
+        /*
+        mainMenuAdminView.getViewInventoryButton().setOnAction(actionEvent -> {
+            InventoryPageModel inventoryPageModel = new InventoryPageModel();
+            InventoryPageView inventoryPageView;
+            InventoryPageController inventoryPageController = new InventoryPageController(inventoryPageModel, inventoryPageView = mainMenuAdminView.getInventoryPageController());
+
+
             HashMap<String, Beverage> beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/java/server/model/beverage_menu.xml"));
             HashMap<String, Food> foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/java/server/model/food_menu.xml"));
 
             Platform.runLater(() -> {
-                inventoryPageView = mainMenuAdminController.getInventoryPageController();
+                InventoryPageModel inventoryPageModel = new InventoryPageModel();
+
+                inventoryPageView = mainMenuAdminView.getInventoryPageController();
                 inventoryPageView.populateTableFromMap(foodMenu, beverageMenu);
+                InventoryPageController inventoryPageController = new InventoryPageController(inventoryPageModel, inventoryPageView);
 
                 inventoryPageView.getSaveChangesButton().setOnAction(actionEvent1 -> {
                     ObservableList<Object> productList = inventoryPageView.getProductList();
@@ -68,30 +73,33 @@ public class ServerController {
             });
         });
 
-        mainMenuAdminController.getViewOrderButton().setOnAction(actionEvent -> {
+        mainMenuAdminView.getViewOrderButton().setOnAction(actionEvent -> {
             List<Order> orderList = (ArrayList<Order>) XMLUtility.loadXMLData(new File("src/main/java/server/model/order_list.xml"));
 
             Platform.runLater(() -> {
-                ordersListPageController = mainMenuAdminController.getOrdersListPageController();
+                ordersListPageController = mainMenuAdminView.getOrdersListPageController();
                 ordersListPageController.populateTableFromList(orderList);
             });
         });
 
-        mainMenuAdminController.getViewAccountsButton().setOnAction(actionEvent -> {
+        mainMenuAdminView.getViewAccountsButton().setOnAction(actionEvent -> {
             List<Customer> accountList = (ArrayList<Customer>) XMLUtility.loadXMLData(new File("src/main/java/server/model/customer_account_list.xml"));
 
             Platform.runLater(() -> {
-                accountsListPageController = mainMenuAdminController.getAccountsListPageController();
+                accountsListPageController = mainMenuAdminView.getAccountsListPageController();
                 accountsListPageController.populateTableFromList(accountList);
             });
         });
 
-        mainMenuAdminController.getAddProductsPageButton().setOnAction(actionEvent -> Platform.runLater(() -> {
-            addProductsPageController = mainMenuAdminController.getAddProductsPageController();
+        mainMenuAdminView.getAddProductsPageButton().setOnAction(actionEvent -> Platform.runLater(() -> {
+            addProductsPageController = mainMenuAdminView.getAddProductsPageController();
             addProductsPageController.getAddProductButton().setOnAction(actionEvent1 -> addProduct());
         }));
+
+         */
     } // end of setComponentActions
 
+    /*
     public void addProduct() {
         if (addProductsPageController.getTypeOfProductMenuButton().getText().equalsIgnoreCase("food")) {
             String name = addProductsPageController.getProductNameTextField().getText().trim();
@@ -129,6 +137,8 @@ public class ServerController {
             //model.getBeverageMenu().put(name, beverage);
         }
     } // end of addProduct
+
+     */
 
     // TODO
     public void run() {

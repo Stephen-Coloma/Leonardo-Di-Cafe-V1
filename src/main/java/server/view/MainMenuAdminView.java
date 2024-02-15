@@ -1,4 +1,4 @@
-package server.controller.temporarycontroller;
+package server.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +7,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import server.controller.temporarycontroller.AccountsListPageController;
+import server.controller.temporarycontroller.AddProductsPageController;
+import server.controller.temporarycontroller.AnalyticsPageController;
+import server.controller.temporarycontroller.OrdersListPageController;
 import server.view.inventory.InventoryPageView;
 
 import java.util.logging.Level;
@@ -16,7 +20,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
-public class MainMenuAdminController implements Initializable{
+public class MainMenuAdminView implements Initializable{
 
     @FXML
     private BorderPane borderPane;
@@ -51,72 +55,15 @@ public class MainMenuAdminController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
-    private FXMLLoader loadPage(String page){
-        FXMLLoader loader = null;
-        try {
-            loader = new FXMLLoader(getClass().getResource("/fxml/server/"+page+".fxml"));
-            root = loader.load();
-            //Parent root = FXMLLoader.load(getClass().getResource("/fxml/server/"+page+".fxml"));
-        } catch (IOException e) {
-            Logger.getLogger(MainMenuAdminController.class.getName()).log(Level.SEVERE,null, e);
-        }
-        borderPane.setCenter(root);
-        return loader;
-    }
 
-    public void viewHomePage() {
-        borderPane.setCenter(anchorPane);
-    }
-    public void viewOrderPage() {
-        loader = loadPage("OrdersListPage");
-        ordersListPageController = loader.getController();
-    }
-
-    public void viewAccountsPage() {
-        loader = loadPage("AccountsListPage");
-        accountsListPageController = loader.getController();
-    }
-    public void viewAddProductsPage() {
-       loader = loadPage("AddProductsPage");
-       addProductsPageController = loader.getController();
-    }
-    public void viewInventoryPage() {
-        loader = loadPage("inventory/InventoryPage");
-        inventoryPageView = loader.getController();
-    }
-    public void viewAnalyticsPage() {
-        loader = loadPage("AnalyticsPage");
-        analyticsPageController = loader.getController();
-    }
     public void logout() {
         System.exit(0);
     }
 
     public FXMLLoader getLoader() {
         return loader;
-    }
-
-    public AccountsListPageController getAccountsListPageController() {
-        return accountsListPageController;
-    }
-
-    public AddProductsPageController getAddProductsPageController() {
-        return addProductsPageController;
-    }
-
-    public AnalyticsPageController getAnalyticsPageController() {
-        return analyticsPageController;
-    }
-
-    public InventoryPageView getInventoryPageController() {
-        return inventoryPageView;
-    }
-
-    public OrdersListPageController getOrdersListPageController() {
-        return ordersListPageController;
     }
 
     public Button getHomeButton() {
@@ -188,4 +135,12 @@ public class MainMenuAdminController implements Initializable{
     public void homeButtonExited() {
         homeButton.setStyle("-fx-background-color: transparent;");
     }
-}
+
+    public BorderPane getBorderPane() {
+        return borderPane;
+    }
+
+    public void returnToHomePage() {
+        borderPane.setCenter(anchorPane);
+    }
+} // end of MainMenuAdminView class

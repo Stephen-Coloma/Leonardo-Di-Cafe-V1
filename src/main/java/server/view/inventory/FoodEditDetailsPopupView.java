@@ -1,15 +1,19 @@
 package server.view.inventory;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.util.ResourceBundle;
@@ -29,12 +33,31 @@ public class FoodEditDetailsPopupView implements Initializable {
     private TextField imageTextField;
     @FXML
     private TextArea productDescriptionTextArea;
+    private static Stage popupStage;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         priceTextField.setTextFormatter(createNumberTextFormatter());
         imageTextField.setEditable(false);
-    }
+    } // end if initialize
+
+    public static <T> T loadFoodDetailsPopup() {
+        try {
+            FXMLLoader loader = new FXMLLoader(FoodEditDetailsPopupView.class.getResource("/fxml/server/inventory/food_edit_details_popup.fxml"));
+            popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setTitle("Edit Food Details");
+            popupStage.setScene(new Scene(loader.load()));
+            popupStage.show();
+            return loader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    } // end of loadFoodDetailsPopup
+
+    public void closePopupStage() {
+        popupStage.close();
+    } // end of closePopupStage
 
     private TextFormatter<Double> createNumberTextFormatter() {
         NumberFormat format = NumberFormat.getInstance();

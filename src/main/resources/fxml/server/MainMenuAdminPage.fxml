@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.temporarycontroller.MainMenuAdminController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.view.MainMenuAdminView">
     <top>
         <HBox fx:id="vBoxPane" prefHeight="62.0" prefWidth="600.0" style="-fx-background-color: #634921;" BorderPane.alignment="CENTER">
             <children>
@@ -62,7 +62,7 @@
                               <Insets top="15.0" />
                           </VBox.margin>
                       </Label>
-                      <Button fx:id="homeButton" alignment="CENTER" layoutX="10.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#viewHomePage" onMouseEntered="#homeButtonEntered" onMouseExited="#homeButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Home" textAlignment="CENTER">
+                      <Button fx:id="homeButton" alignment="CENTER" layoutX="10.0" layoutY="36.0" mnemonicParsing="false" onMouseEntered="#homeButtonEntered" onMouseExited="#homeButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Home" textAlignment="CENTER">
                           <font>
                               <Font name="Arial Narrow" size="25.0" />
                           </font>
@@ -70,7 +70,7 @@
                               <Insets bottom="15.0" top="30.0" />
                           </VBox.margin>
                       </Button>
-                      <Button fx:id="viewOrderButton" alignment="CENTER" mnemonicParsing="false" onMouseClicked="#viewOrderPage" onMouseEntered="#viewOrdersButtonEntered" onMouseExited="#viewOrdersButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="View Orders" textAlignment="CENTER">
+                      <Button fx:id="viewOrderButton" alignment="CENTER" mnemonicParsing="false" onMouseEntered="#viewOrdersButtonEntered" onMouseExited="#viewOrdersButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="View Orders" textAlignment="CENTER">
                           <font>
                               <Font name="Arial Narrow" size="25.0" />
                           </font>
@@ -78,7 +78,7 @@
                               <Insets bottom="15.0" top="15.0" />
                           </VBox.margin>
                       </Button>
-                      <Button fx:id="viewAccountsButton" alignment="CENTER" layoutX="10.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#viewAccountsPage" onMouseEntered="#viewAccountsButtonEntered" onMouseExited="#viewAccountsButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="View Accounts" textAlignment="CENTER">
+                      <Button fx:id="viewAccountsButton" alignment="CENTER" layoutX="10.0" layoutY="36.0" mnemonicParsing="false" onMouseEntered="#viewAccountsButtonEntered" onMouseExited="#viewAccountsButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="View Accounts" textAlignment="CENTER">
                           <font>
                               <Font name="Arial Narrow" size="25.0" />
                           </font>
@@ -86,7 +86,7 @@
                               <Insets bottom="15.0" top="15.0" />
                           </VBox.margin>
                       </Button>
-                      <Button fx:id="viewInventoryButton" alignment="CENTER" layoutX="10.0" layoutY="107.0" mnemonicParsing="false" onMouseClicked="#viewInventoryPage" onMouseEntered="#viewInventoryButtonEntered" onMouseExited="#viewInventoryButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="View Inventory" textAlignment="CENTER">
+                      <Button fx:id="viewInventoryButton" alignment="CENTER" layoutX="10.0" layoutY="107.0" mnemonicParsing="false" onMouseEntered="#viewInventoryButtonEntered" onMouseExited="#viewInventoryButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="View Inventory" textAlignment="CENTER">
                           <font>
                               <Font name="Arial Narrow" size="25.0" />
                           </font>
@@ -94,7 +94,7 @@
                               <Insets bottom="15.0" top="15.0" />
                           </VBox.margin>
                       </Button>
-                      <Button fx:id="addProductsPageButton" alignment="CENTER" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onMouseClicked="#viewAddProductsPage" onMouseEntered="#addProductsPageButtonEntered" onMouseExited="#addProductsPageButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Add Products" textAlignment="CENTER">
+                      <Button fx:id="addProductsPageButton" alignment="CENTER" layoutX="10.0" layoutY="142.0" mnemonicParsing="false" onMouseEntered="#addProductsPageButtonEntered" onMouseExited="#addProductsPageButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Add Products" textAlignment="CENTER">
                           <font>
                               <Font name="Arial Narrow" size="25.0" />
                           </font>
@@ -102,7 +102,7 @@
                               <Insets bottom="15.0" top="15.0" />
                           </VBox.margin>
                       </Button>
-                      <Button fx:id="viewAnalyticsButton" alignment="CENTER" layoutX="10.0" layoutY="177.0" mnemonicParsing="false" onMouseClicked="#viewAnalyticsPage" onMouseEntered="#viewAnalyticsButtonEntered" onMouseExited="#viewAnalyticsButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Analytics" textAlignment="CENTER">
+                      <Button fx:id="viewAnalyticsButton" alignment="CENTER" layoutX="10.0" layoutY="177.0" mnemonicParsing="false" onMouseEntered="#viewAnalyticsButtonEntered" onMouseExited="#viewAnalyticsButtonExited" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: transparent;" text="Analytics" textAlignment="CENTER">
                           <font>
                               <Font name="Arial Narrow" size="25.0" />
                           </font>

@@ -1,16 +1,41 @@
-package server.controller.temporarycontroller;
+package server.view;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-public class YesNoPopupController {
+import java.io.IOException;
+
+public class YesNoPopupView {
     @FXML
     private TextArea questionPromptLabel;
     @FXML
     private Button yesButton;
     @FXML
     private Button noButton;
+    private static Stage popupStage;
+
+    public static <T> T loadYesNoPopupView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(YesNoPopupView.class.getResource("/fxml/server/yes_no_popup.fxml"));
+            popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setTitle("Delete Product");
+            popupStage.setScene(new Scene(loader.load()));
+            popupStage.show();
+            return loader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    } // end of loadYesNoPopupView
+
+    public void closePopupStage() {
+        popupStage.close();
+    } // end of closePopupStage
 
     public void setQuestionPromptLabel(String value) {
         questionPromptLabel.setText(value);

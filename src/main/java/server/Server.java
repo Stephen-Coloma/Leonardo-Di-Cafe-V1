@@ -32,7 +32,6 @@ public class Server extends Application {
             view.runInterface();
             ServerController controller = new ServerController(model, view);
 
-
             while (view.UIExit()) {
                 Socket client = server.accept();
                 controller.setClientSocket(client);

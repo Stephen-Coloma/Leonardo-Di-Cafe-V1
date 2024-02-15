@@ -1,10 +1,16 @@
 package server.view.inventory;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-public class BeverageInventorySizesPopupView {
+import java.io.IOException;
+
+public class BeverageInventoryPopupView {
     @FXML
     private Button acceptButton;
     @FXML
@@ -31,6 +37,25 @@ public class BeverageInventorySizesPopupView {
     private Label totalMediumQuantityLabel;
     @FXML
     private Label totalLargeQuantityLabel;
+    private static Stage popupStage;
+
+    public static <T> T loadBeverageInventoryPopup() {
+        try {
+            FXMLLoader loader = new FXMLLoader(BeverageEditDetailsPopupView.class.getResource("/fxml/server/inventory/beverage_inventory_popup.fxml"));
+            popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setTitle("Edit Beverage Quantity");
+            popupStage.setScene(new Scene(loader.load()));
+            popupStage.show();
+            return loader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    } // end of loadBeverageInventoryPopup
+
+    public void closePopupStage() {
+        popupStage.close();
+    } // end of closePopupStage
 
     public Label getSmallQuantity() {
         return smallQuantity;
