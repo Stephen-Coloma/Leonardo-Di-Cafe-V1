@@ -1,4 +1,4 @@
-package client.view.fxmlcontroller;
+package client.view.fxmlview;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,7 +10,7 @@ import shared.Product;
 
 import java.util.HashMap;
 
-public class MenuCardController {
+public class MenuCardView {
     @FXML
     private Button addProductButton;
 

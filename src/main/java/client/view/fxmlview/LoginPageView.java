@@ -1,4 +1,4 @@
-package client.view.fxmlcontroller;
+package client.view.fxmlview;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginPageController {
+public class LoginPageView {
     @FXML
     private Button backButton;
 

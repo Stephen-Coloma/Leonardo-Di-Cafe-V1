@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane prefHeight="357.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlcontroller.OrderHistoryPageController">
+<ScrollPane prefHeight="357.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.OrderHistoryPageView">
 
    <content>
       <Pane prefHeight="566.0" prefWidth="418.0" style="-fx-background-color: #ECE9E3;">

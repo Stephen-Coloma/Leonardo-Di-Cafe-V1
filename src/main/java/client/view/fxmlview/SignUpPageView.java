@@ -1,4 +1,4 @@
-package client.view.fxmlcontroller;
+package client.view.fxmlview;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +14,7 @@ import shared.Customer;
 
 import java.io.IOException;
 
-public class SignUpPageController {
+public class SignUpPageView {
     @FXML
     private Button backButton;
     @FXML

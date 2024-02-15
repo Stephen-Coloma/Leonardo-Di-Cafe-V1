@@ -1,4 +1,4 @@
-package client.view.fxmlcontroller;
+package client.view.fxmlview;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,15 +13,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LandingPageController {
+public class LandingPageView {
     @FXML
     private Button loginButtonFrontPage;
     @FXML
     private Button signupButtonFrontPage;
     @FXML
-    private LoginPageController loginPageController;
+    private LoginPageView loginPageView;
     @FXML
-    private SignUpPageController signUpPageController;
+    private SignUpPageView signUpPageView;
 
     private FXMLLoader loader;
     private Parent root;
@@ -75,20 +75,20 @@ public class LandingPageController {
         this.signupButtonFrontPage = signupButtonFrontPage;
     }
 
-    public LoginPageController getLoginPageController() {
-        return loginPageController;
+    public LoginPageView getLoginPageController() {
+        return loginPageView;
     }
 
-    public void setLoginPageController(LoginPageController loginPageController) {
-        this.loginPageController = loginPageController;
+    public void setLoginPageController(LoginPageView loginPageView) {
+        this.loginPageView = loginPageView;
     }
 
-    public SignUpPageController getSignUpController() {
-        return signUpPageController;
+    public SignUpPageView getSignUpController() {
+        return signUpPageView;
     }
 
-    public void setSignUpController(SignUpPageController signUpPageController) {
-        this.signUpPageController = signUpPageController;
+    public void setSignUpController(SignUpPageView signUpPageView) {
+        this.signUpPageView = signUpPageView;
     }
 
     public FXMLLoader getLoader() {

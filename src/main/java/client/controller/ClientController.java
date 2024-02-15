@@ -2,14 +2,12 @@ package client.controller;
 
 import client.model.ClientModel;
 import client.view.*;
-import client.view.fxmlcontroller.*;
+import client.view.fxmlview.*;
 import javafx.application.Platform;
 import shared.Beverage;
 import shared.Customer;
 import shared.Food;
-import util.XMLUtility;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -17,8 +15,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.SplittableRandom;
 
 public class ClientController {
     private static final int PORT = 2000;
@@ -29,11 +25,11 @@ public class ClientController {
     private ObjectInputStream in;
     private ObjectOutputStream out;
 
-    private LandingPageController landingPageController;
-    private LoginPageController loginPageController;
-    private SignUpPageController signUpPageController;
-    private MainMenuClientPageController mainMenuClientPageController;
-    private ServerErrorController serverErrorController;
+    private LandingPageView landingPageView;
+    private LoginPageView loginPageView;
+    private SignUpPageView signUpPageView;
+    private MainMenuClientPageView mainMenuClientPageView;
+    private ServerErrorView serverErrorView;
     private static boolean isLoginSuccessful = false;
     private static boolean isSignUpSuccessful = false;
     public ClientController(ClientModel model, ClientView view){
@@ -42,7 +38,7 @@ public class ClientController {
 
         Platform.runLater(() -> {
             System.out.println("Obtained Main Menu Controller");
-            landingPageController = view.getLoader().getController();
+            landingPageView = view.getLoader().getController();
 
             setUpLandingPageComponentActions();
             System.out.println("Successfully added actions");
@@ -52,10 +48,10 @@ public class ClientController {
     /**This method sets the action listeners for the components under landing_page.fxml*/
     private void setUpLandingPageComponentActions() {
         //action listener for login button
-        landingPageController.getLoginButtonFrontPage().setOnAction(actionEvent -> {
+        landingPageView.getLoginButtonFrontPage().setOnAction(actionEvent -> {
             try {
-                landingPageController.showLoginUI(actionEvent);
-                loginPageController = landingPageController.getLoader().getController();
+                landingPageView.showLoginUI(actionEvent);
+                loginPageView = landingPageView.getLoader().getController();
                 setUpLoginPageComponentActions(); //if login page is loaded, load also it's component actions
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -63,10 +59,10 @@ public class ClientController {
         });
 
         //action listener for sign up button
-        landingPageController.getSignupButtonFrontPage().setOnAction(actionEvent -> {
+        landingPageView.getSignupButtonFrontPage().setOnAction(actionEvent -> {
             try {
-                landingPageController.showRegistrationUI(actionEvent);
-                signUpPageController = landingPageController.getLoader().getController();
+                landingPageView.showRegistrationUI(actionEvent);
+                signUpPageView = landingPageView.getLoader().getController();
                 setUpSignUpPageComponentActions(); //if sign up is loaded, load also it's component actions
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -77,10 +73,10 @@ public class ClientController {
     /**TThis method sets up the components actions for login_page.fxml*/
     private void setUpLoginPageComponentActions() {
         //action for login button
-        loginPageController.getLoginButton().setOnAction(actionEvent -> {
+        loginPageView.getLoginButton().setOnAction(actionEvent -> {
             try {
                 //get the credentials
-                String[] credentials = loginPageController.getCredentials();
+                String[] credentials = loginPageView.getCredentials();
                 if (credentials != null){
                     Object[] request = new Object[]{"LOGIN", credentials};
                     Object[] serverResponse = authenticate(request);
@@ -89,16 +85,16 @@ public class ClientController {
 
                         //loading the main menu if login is successful
                         if (isLoginSuccessful){
-                            loginPageController.showMainMenu(actionEvent);
-                            mainMenuClientPageController = loginPageController.getLoader().getController();
-                            mainMenuClientPageController.initializeFoodMenu(model.getFoodMenu(), model.getBeverageMenu()); //--------------> IMPORTANT! setting up the menu in the scrollpane
+                            loginPageView.showMainMenu(actionEvent);
+                            mainMenuClientPageView = loginPageView.getLoader().getController();
+                            mainMenuClientPageView.initializeFoodMenu(model.getFoodMenu(), model.getBeverageMenu()); //--------------> IMPORTANT! setting up the menu in the scrollpane
                             setUpMainMenuClientPageComponentActions();
                         }else {
-                            loginPageController.incorrectDetails();
+                            loginPageView.incorrectDetails();
                         }
                     }
                 }else {
-                    loginPageController.emptyField();
+                    loginPageView.emptyField();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -108,10 +104,10 @@ public class ClientController {
         });
 
         //action for home button
-        loginPageController.getBackButton().setOnAction(actionEvent ->{
+        loginPageView.getBackButton().setOnAction(actionEvent ->{
             try {
-                loginPageController.showLandingPage(actionEvent);
-                landingPageController = loginPageController.getLoader().getController();
+                loginPageView.showLandingPage(actionEvent);
+                landingPageView = loginPageView.getLoader().getController();
                 setUpLandingPageComponentActions();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -122,10 +118,10 @@ public class ClientController {
     /**TThis method sets up the components actions for signup_page.fxml*/
     private void setUpSignUpPageComponentActions() {
         //action for sign up button
-        signUpPageController.getCreateAccountButton().setOnAction(actionEvent -> {
+        signUpPageView.getCreateAccountButton().setOnAction(actionEvent -> {
             try {
                 //get the credentials
-                Customer customer = signUpPageController.getCredentials();
+                Customer customer = signUpPageView.getCredentials();
                 if (customer != null){
                     Object[] request = new Object[]{"SIGN_UP", customer};
                     Object[] serverResponse = authenticate(request); //process the authentication to server
@@ -133,15 +129,15 @@ public class ClientController {
                         processServerResponse(serverResponse);
                         //loading the main menu if login is successful
                         if (isSignUpSuccessful){
-                            signUpPageController.showLoginPage(actionEvent);
-                            loginPageController = signUpPageController.getLoader().getController(); //this connects to login set ups
+                            signUpPageView.showLoginPage(actionEvent);
+                            loginPageView = signUpPageView.getLoader().getController(); //this connects to login set ups
                             setUpLoginPageComponentActions(); //this connects back to login setups
                         }else {
-                            signUpPageController.accountExist();
+                            signUpPageView.accountExist();
                         }
                     }
                 }else {
-                    signUpPageController.emptyField();
+                    signUpPageView.emptyField();
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -151,10 +147,10 @@ public class ClientController {
         });
 
         //action for home button
-        signUpPageController.getBackButton().setOnAction(actionEvent ->{
+        signUpPageView.getBackButton().setOnAction(actionEvent ->{
             try {
-                signUpPageController.showLandingPage(actionEvent);
-                landingPageController = signUpPageController.getLoader().getController();
+                signUpPageView.showLandingPage(actionEvent);
+                landingPageView = signUpPageView.getLoader().getController();
                 setUpLandingPageComponentActions();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -165,13 +161,13 @@ public class ClientController {
     /**TThis method sets up the components actions for main_menu_client_page.fxml*/
     private void setUpMainMenuClientPageComponentActions() {
         //actions for food button
-        mainMenuClientPageController.getMainMenuFoodButton().setOnAction(actionEvent->{
-            mainMenuClientPageController.loadFoodMenu();
+        mainMenuClientPageView.getMainMenuFoodButton().setOnAction(actionEvent->{
+            mainMenuClientPageView.loadFoodMenu();
         });
 
         //action for beverage button
-        mainMenuClientPageController.getMainMenuBeveragesButton().setOnAction(actionEvent->{
-            mainMenuClientPageController.loadBeverageMenu();
+        mainMenuClientPageView.getMainMenuBeveragesButton().setOnAction(actionEvent->{
+            mainMenuClientPageView.loadBeverageMenu();
         });
     }
 
@@ -207,10 +203,10 @@ public class ClientController {
         } catch (IOException e) {
             e.printStackTrace();
             //either of the two will call the server error
-            if (loginPageController != null){
-                loginPageController.serverError();
-            }else if (signUpPageController != null){
-                signUpPageController.serverError();
+            if (loginPageView != null){
+                loginPageView.serverError();
+            }else if (signUpPageView != null){
+                signUpPageView.serverError();
             }
             return null;
         }

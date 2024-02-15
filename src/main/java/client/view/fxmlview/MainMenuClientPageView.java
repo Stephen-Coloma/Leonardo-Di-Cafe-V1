@@ -1,12 +1,10 @@
-package client.view.fxmlcontroller;
+package client.view.fxmlview;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -26,13 +23,9 @@ import shared.Beverage;
 import shared.Food;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.Formattable;
 import java.util.HashMap;
-import java.util.ResourceBundle;
-import java.util.SplittableRandom;
 
-public class MainMenuClientPageController {
+public class MainMenuClientPageView {
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -108,8 +101,8 @@ public class MainMenuClientPageController {
                 //putting the card on the anchorPane
                 AnchorPane card = loader.load();
 
-                MenuCardController menuCardController = loader.getController();
-                menuCardController.setData(product);
+                MenuCardView menuCardView = loader.getController();
+                menuCardView.setData(product);
 
                 if (column == 2){
                     column = 0;
@@ -138,8 +131,8 @@ public class MainMenuClientPageController {
                 //putting the card on the anchorPane
                 AnchorPane card = loader.load();
 
-                MenuCardController menuCardController = loader.getController();
-                menuCardController.setData(product);
+                MenuCardView menuCardView = loader.getController();
+                menuCardView.setData(product);
 
                 if (column == 2){
                     column = 0;
@@ -168,8 +161,8 @@ public class MainMenuClientPageController {
                 //putting the card on the anchorPane
                 AnchorPane card = loader.load();
 
-                MenuCardController menuCardController = loader.getController();
-                menuCardController.setData(product);
+                MenuCardView menuCardView = loader.getController();
+                menuCardView.setData(product);
 
 
                 if (column == 2){
