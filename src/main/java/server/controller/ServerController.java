@@ -7,6 +7,7 @@ import server.model.listeners.MainMenuAdminObserver;
 import server.view.MainMenuAdminView;
 import server.view.ServerView;
 import shared.Customer;
+import util.XMLUtility;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 
@@ -44,6 +45,7 @@ public class ServerController implements MainMenuAdminObserver {
         Platform.runLater(() -> {
             mainMenuAdminModel = new MainMenuAdminModel();
             mainMenuAdminModel.setCustomerAccountList(model.getCustomerAccountList());
+            mainMenuAdminModel.setOrderList(model.getOrderList());
             mainMenuAdminModel.setFoodMenu(model.getFoodMenu());
             mainMenuAdminModel.setBeverageMenu(model.getBeverageMenu());
             mainMenuAdminModel.registerObserver(this);
@@ -52,54 +54,6 @@ public class ServerController implements MainMenuAdminObserver {
             MainMenuAdminController mainMenuAdminController = new MainMenuAdminController(mainMenuAdminModel, mainMenuAdminView);
             mainMenuAdminController.start();
         });
-        /*
-        mainMenuAdminView.getViewInventoryButton().setOnAction(actionEvent -> {
-            InventoryPageModel inventoryPageModel = new InventoryPageModel();
-            InventoryPageView inventoryPageView;
-            InventoryPageController inventoryPageController = new InventoryPageController(inventoryPageModel, inventoryPageView = mainMenuAdminView.getInventoryPageController());
-
-
-            HashMap<String, Beverage> beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/java/server/model/beverage_menu.xml"));
-            HashMap<String, Food> foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/java/server/model/food_menu.xml"));
-
-            Platform.runLater(() -> {
-                InventoryPageModel inventoryPageModel = new InventoryPageModel();
-
-                inventoryPageView = mainMenuAdminView.getInventoryPageController();
-                inventoryPageView.populateTableFromMap(foodMenu, beverageMenu);
-                InventoryPageController inventoryPageController = new InventoryPageController(inventoryPageModel, inventoryPageView);
-
-                inventoryPageView.getSaveChangesButton().setOnAction(actionEvent1 -> {
-                    ObservableList<Object> productList = inventoryPageView.getProductList();
-                    model.updateMenuFromInventory(productList);
-                });
-            });
-        });
-
-        mainMenuAdminView.getViewOrderButton().setOnAction(actionEvent -> {
-            List<Order> orderList = (ArrayList<Order>) XMLUtility.loadXMLData(new File("src/main/java/server/model/order_list.xml"));
-
-            Platform.runLater(() -> {
-                ordersListPageController = mainMenuAdminView.getOrdersListPageController();
-                ordersListPageController.populateTableFromList(orderList);
-            });
-        });
-
-        mainMenuAdminView.getViewAccountsButton().setOnAction(actionEvent -> {
-            List<Customer> accountList = (ArrayList<Customer>) XMLUtility.loadXMLData(new File("src/main/java/server/model/customer_account_list.xml"));
-
-            Platform.runLater(() -> {
-                accountsListPageController = mainMenuAdminView.getAccountsListPageController();
-                accountsListPageController.populateTableFromList(accountList);
-            });
-        });
-
-        mainMenuAdminView.getAddProductsPageButton().setOnAction(actionEvent -> Platform.runLater(() -> {
-            addProductsPageController = mainMenuAdminView.getAddProductsPageController();
-            addProductsPageController.getAddProductButton().setOnAction(actionEvent1 -> addProduct());
-        }));
-
-         */
     } // end of setComponentActions
 
     /*
@@ -199,19 +153,28 @@ public class ServerController implements MainMenuAdminObserver {
     } // end of handleClientRequest
 
     @Override
-    public void notifyMenuChanges(boolean menuChanges) {
+    public void notifyMenuChanges(String code, boolean menuChanges) {
         if (menuChanges) {
-            model.setFoodMenu(mainMenuAdminModel.getFoodMenu());
-            model.setBeverageMenu(mainMenuAdminModel.getBeverageMenu());
+            if ("INVENTORY_CHANGE".equals(code)) {
+                model.setFoodMenu(mainMenuAdminModel.getFoodMenu());
+                model.setBeverageMenu(mainMenuAdminModel.getBeverageMenu());
+                System.out.println(model.getFoodMenu());
+                System.out.println(model.getBeverageMenu());
+            } else if ("STATUS_CHANGE".equals(code)) {
+                model.setOrderList(mainMenuAdminModel.getOrderList());
+                System.out.println(model.getOrderList());
+            }
+
             /*
             TODO: Move this part into a method that executs once the server closes so that the writing of data will
                   only be done once the server closes
 
                XMLUtility.saveFoodMenu(model.getFoodMenu());
                XMLUtility.saveBeverageMenu(model.getBeverageMenu());
+                XMLUtility.saveOrders(model.getOrderList());
              */
         }
-    }
+    } // end of notifyMenuChanges
 
     private void sendData(String code, Object data) {
         Object[] response = {code, data};

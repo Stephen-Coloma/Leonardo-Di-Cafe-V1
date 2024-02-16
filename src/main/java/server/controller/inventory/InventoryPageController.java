@@ -15,8 +15,8 @@ import shared.Food;
 import java.util.HashMap;
 
 public class InventoryPageController {
-    InventoryPageModel model;
-    InventoryPageView view;
+    private InventoryPageModel model;
+    private InventoryPageView view;
 
     public InventoryPageController(InventoryPageModel model, InventoryPageView view) {
         this.model = model;
@@ -80,7 +80,7 @@ public class InventoryPageController {
             }
         };
         columnName.setCellFactory(cellFactory);
-    } // end of setEditQuantityColumn()
+    } // end of setColumns
 
     private void handleEditQuantityButtonClick(ActionEvent event) {
         Button button = (Button) event.getSource();

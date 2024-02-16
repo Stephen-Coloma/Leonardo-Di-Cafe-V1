@@ -174,6 +174,10 @@ public class ServerModel {
         this.beverageMenu = beverageMenu;
     }
 
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
+    }
+
     public HashMap<String, Food> getFoodMenu() {
         return foodMenu;
     }

@@ -4,9 +4,7 @@ import server.model.listeners.MainMenuAdminObserver;
 import shared.Beverage;
 import shared.Customer;
 import shared.Food;
-import util.XMLUtility;
-
-import java.io.File;
+import shared.Order;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,11 +14,16 @@ public class MainMenuAdminModel {
     private final AtomicBoolean menuChanges = new AtomicBoolean(false);
     private final List<MainMenuAdminObserver> observers = new ArrayList<>();
     private List<Customer> customerAccountList;
+    private List<Order> orderList;
     private HashMap<String, Food> foodMenu;
     private HashMap<String, Beverage> beverageMenu;
 
     public void setCustomerAccountList(List<Customer> customerAccountList) {
         this.customerAccountList = customerAccountList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 
     public void setFoodMenu(HashMap<String, Food> foodMenu) {
@@ -39,14 +42,18 @@ public class MainMenuAdminModel {
         observers.add(observer);
     }
 
-    public void notifyObservers() {
+    public void notifyObservers(String code) {
         for (MainMenuAdminObserver observer : observers) {
-            observer.notifyMenuChanges(menuChanges.get());
+            observer.notifyMenuChanges(code, menuChanges.get());
         }
     }
 
     public List<Customer> getCustomerAccountList() {
         return customerAccountList;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
     }
 
     public HashMap<String, Food> getFoodMenu() {

@@ -30,7 +30,7 @@ public class InventoryPageModel {
 
     public void registerObserver(InventoryPageObserver observer) {
         observers.add(observer);
-    }
+    } // end of registerObserver
 
     public void notifyObservers() {
         for (InventoryPageObserver observer : observers) {

@@ -284,87 +284,68 @@ public class XMLUtility {
             dbf.setIgnoringElementContentWhitespace(true);
             db = dbf.newDocumentBuilder();
             document = db.parse(file);
-            //document = db.newDocument();
+            document = db.newDocument();
 
             // Clean the document
             cleanDocument(document);
 
-            Element root = document.getDocumentElement();
-
+            Element root = document.createElement("orders");
+            document.appendChild(root);
 
             for (Order order : orderList) {
+                Element orderElement = document.createElement("order");
+                root.appendChild(orderElement);
 
-                String orderName = order.getCustomer().getName();
+                Element customerElement = document.createElement("customer");
+                orderElement.appendChild(customerElement);
 
-                NodeList existingOrders = document.getElementsByTagName("order");
-                boolean orderExists = false;
+                createElement(document, customerElement, "name", order.getCustomer().getName());
+                createElement(document, customerElement, "username", order.getCustomer().getUsername());
+                createElement(document, customerElement, "address", order.getCustomer().getAddress());
 
-                for(int i = 0; i < existingOrders.getLength(); i++){
-                    Node node = existingOrders.item(i);
-                    if (node.getNodeType() == Node.ELEMENT_NODE) {
-                        Element existingOrder = (Element) node;
-                        String existingName = getElementValue(existingOrder, "name");
-                        if (existingName.equals(orderName)) {
-                            orderExists = true;
-                            break;
-                        }
+                for (Product product : order.getOrders()) {
+                    Element productElement = document.createElement("product");
+                    orderElement.appendChild(productElement);
+
+                    createElement(document, productElement, "name", product.getName());
+                    createElement(document, productElement, "type", String.valueOf(product.getType()));
+                    createElement(document, productElement, "review", String.valueOf(product.getReview()));
+
+                    if (product.getImage() != null) {
+                        createElement(document, productElement, "image", product.getImage().getUrl());
                     }
-                }
 
-                if (!orderExists) {
-                    Element orderElement = document.createElement("order");
-                    root.appendChild(orderElement);
+                    if (product instanceof Beverage) {
+                        Beverage beverage = (Beverage) product;
 
-                    Element customerElement = document.createElement("customer");
-                    orderElement.appendChild(customerElement);
+                        for (Map.Entry<String, Integer> sizeEntry : beverage.getSizeQuantity().entrySet()) {
+                            String size = sizeEntry.getKey();
+                            Integer quantity = sizeEntry.getValue();
+                            Double price = beverage.getSizePrice().get(size);
 
-                    createElement(document, customerElement, "name", order.getCustomer().getName());
-                    createElement(document, customerElement, "username", order.getCustomer().getUsername());
-                    createElement(document, customerElement, "address", order.getCustomer().getAddress());
+                            Element variationElement = document.createElement("variation");
+                            productElement.appendChild(variationElement);
 
-                    for (Product product : order.getOrders()) {
-                        Element productElement = document.createElement("product");
-                        orderElement.appendChild(productElement);
+                            createElement(document, variationElement, "size", size);
+                            createElement(document, variationElement, "quantity", String.valueOf(quantity));
+                            createElement(document, variationElement, "price", String.valueOf(price));
 
-                        createElement(document, productElement, "name", product.getName());
-                        createElement(document, productElement, "type", String.valueOf(product.getType()));
-                        createElement(document, productElement, "review", String.valueOf(product.getReview()));
-
-                        if (product.getImage() != null) {
-                            createElement(document, productElement, "image", product.getImage().getUrl());
-                        }
-
-                        if (product instanceof Beverage) {
-                            Beverage beverage = (Beverage) product;
-
-                            for (Map.Entry<String, Integer> sizeEntry : beverage.getSizeQuantity().entrySet()) {
-                                String size = sizeEntry.getKey();
-                                Integer quantity = sizeEntry.getValue();
-                                Double price = beverage.getSizePrice().get(size);
-
-                                Element variationElement = document.createElement("variation");
-                                productElement.appendChild(variationElement);
-
-                                createElement(document, variationElement, "size", size);
-                                createElement(document, variationElement, "quantity", String.valueOf(quantity));
-                                createElement(document, variationElement, "price", String.valueOf(price));
-
-                                if (beverage.getImage() != null) {
-                                    createElement(document, variationElement, "image", beverage.getImage().getUrl());
-                                }
+                            if (beverage.getImage() != null) {
+                                createElement(document, variationElement, "image", beverage.getImage().getUrl());
                             }
-                        } else if (product instanceof Food) {
-                            Food food = (Food) product;
-                            createElement(document, productElement, "quantity", String.valueOf(food.getQuantity()));
                         }
+                    } else if (product instanceof Food) {
+                        Food food = (Food) product;
+                        createElement(document, productElement, "quantity", String.valueOf(food.getQuantity()));
                     }
-
-                    createElement(document, orderElement, "orderID", String.valueOf(order.getID()));
-                    createElement(document, orderElement, "timeStamp", order.getTimeStamp());
-                    createElement(document, orderElement, "totalPrice", String.valueOf(order.getTotalPrice()));
-                    createElement(document, orderElement, "status", String.valueOf(order.isStatus()));
                 }
+
+                createElement(document, orderElement, "orderID", String.valueOf(order.getID()));
+                createElement(document, orderElement, "timeStamp", order.getTimeStamp());
+                createElement(document, orderElement, "totalPrice", String.valueOf(order.getTotalPrice()));
+                createElement(document, orderElement, "status", String.valueOf(order.isStatus()));
             }
+
 
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer transformer = tf.newTransformer();

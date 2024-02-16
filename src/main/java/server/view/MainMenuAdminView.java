@@ -1,20 +1,9 @@
 package server.view;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import server.view.accounts.AccountListPageView;
-import server.controller.temporarycontroller.AddProductsPageController;
-import server.controller.temporarycontroller.AnalyticsPageController;
-import server.controller.temporarycontroller.OrdersListPageController;
-import server.view.inventory.InventoryPageView;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class MainMenuAdminView {
 
