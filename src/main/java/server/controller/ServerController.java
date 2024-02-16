@@ -43,6 +43,7 @@ public class ServerController implements MainMenuAdminObserver {
     private void setComponentActions() {
         Platform.runLater(() -> {
             mainMenuAdminModel = new MainMenuAdminModel();
+            mainMenuAdminModel.setCustomerAccountList(model.getCustomerAccountList());
             mainMenuAdminModel.setFoodMenu(model.getFoodMenu());
             mainMenuAdminModel.setBeverageMenu(model.getBeverageMenu());
             mainMenuAdminModel.registerObserver(this);

@@ -1,20 +1,25 @@
-package server.controller.temporarycontroller;
+package server.view.accounts;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import shared.Order;
 import shared.Product;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AccountInformationPopupController implements Initializable {
+public class AccountInformationPopupView implements Initializable {
     @FXML
     private TableView<Order> orderTableView;
     @FXML
@@ -33,12 +38,31 @@ public class AccountInformationPopupController implements Initializable {
     private Label email;
     @FXML
     private Label total;
+    private static Stage popupStage;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ordersColumn.setCellValueFactory(cellData -> toStringOrder(cellData.getValue()));
         timestampColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTimeStamp()));
-    }
+    } // end of initialize
+
+    public static <T> T loadAccountInformationPopup() {
+        try {
+            FXMLLoader loader = new FXMLLoader(AccountInformationPopupView.class.getResource("/fxml/server/account/account_information_popup.fxml"));
+            popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setTitle("Customer Information");
+            popupStage.setScene(new Scene(loader.load()));
+            popupStage.show();
+            return loader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    } // end of loadAccountInformationPopup
+
+    public void closePopupStage() {
+        popupStage.close();
+    } // end of closePopupStage
 
     public void setName(String value) {
         name.setText(value);
@@ -75,7 +99,7 @@ public class AccountInformationPopupController implements Initializable {
     public StringProperty toStringOrder(Order order) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Product product : order.getOrders()) {
-            stringBuilder.append(product.getName() + " (" + product.getQuantity() + ")").append("\n");
+            stringBuilder.append(product.getName()).append(" (").append(product.getQuantity()).append(")").append("\n");
         }
         return new SimpleStringProperty(stringBuilder.toString());
     }

@@ -26,7 +26,7 @@ public class InventoryPageController {
     public void start() {
         view.populateTableFromMap(model.getFoodList(), model.getBeverageList());
         setComponentActions();
-    }
+    } // end of start
 
     private void setComponentActions() {
         setColumns("quantity", view.getEditQuantityColumn(), 1);
@@ -61,9 +61,9 @@ public class InventoryPageController {
                     private final Button button = createButton(label, buttonColumn);
 
                     {
-                        button.setStyle("-fx-background-color: #634921; -fx-text-fill: white;");
-                        button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: #9a7133; -fx-text-fill: white;"));
-                        button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #634921; -fx-text-fill: white;"));
+                        button.setStyle("-fx-background-color:#b59c7a; -fx-text-fill: white;");
+                        button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: #a18a6d; -fx-text-fill: white;"));
+                        button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #b59c7a; -fx-text-fill: white;"));
                     }
 
                     @Override

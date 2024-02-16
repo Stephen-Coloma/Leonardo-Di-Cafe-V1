@@ -87,7 +87,7 @@ public class InventoryPageView implements Initializable {
 
     public static <T> T loadInventoryPage(BorderPane borderPane) {
         try {
-            FXMLLoader loader = new FXMLLoader(InventoryPageView.class.getResource("/fxml/server/inventory/InventoryPage.fxml"));
+            FXMLLoader loader = new FXMLLoader(InventoryPageView.class.getResource("/fxml/server/inventory/inventory_page.fxml"));
             borderPane.setCenter(loader.load());
             return loader.getController();
         } catch (IOException e) {

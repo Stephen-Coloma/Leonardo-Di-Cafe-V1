@@ -2,6 +2,7 @@ package server.model;
 
 import server.model.listeners.MainMenuAdminObserver;
 import shared.Beverage;
+import shared.Customer;
 import shared.Food;
 import util.XMLUtility;
 
@@ -14,8 +15,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MainMenuAdminModel {
     private final AtomicBoolean menuChanges = new AtomicBoolean(false);
     private final List<MainMenuAdminObserver> observers = new ArrayList<>();
-    private HashMap<String, Food> foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/java/server/model/food_menu.xml"));
-    private HashMap<String, Beverage> beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/java/server/model/beverage_menu.xml"));
+    private List<Customer> customerAccountList;
+    private HashMap<String, Food> foodMenu;
+    private HashMap<String, Beverage> beverageMenu;
+
+    public void setCustomerAccountList(List<Customer> customerAccountList) {
+        this.customerAccountList = customerAccountList;
+    }
 
     public void setFoodMenu(HashMap<String, Food> foodMenu) {
         this.foodMenu = foodMenu;
@@ -37,6 +43,10 @@ public class MainMenuAdminModel {
         for (MainMenuAdminObserver observer : observers) {
             observer.notifyMenuChanges(menuChanges.get());
         }
+    }
+
+    public List<Customer> getCustomerAccountList() {
+        return customerAccountList;
     }
 
     public HashMap<String, Food> getFoodMenu() {

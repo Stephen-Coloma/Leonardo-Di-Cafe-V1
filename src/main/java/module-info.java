@@ -17,4 +17,6 @@ module LeonardoDiCafe {
     exports server.controller.temporarycontroller;
     opens server.view.inventory to javafx.fxml;
     opens server.controller.temporarycontroller to javafx.fxml;
+    exports server.view.accounts;
+    opens server.view.accounts to javafx.fxml;
 }

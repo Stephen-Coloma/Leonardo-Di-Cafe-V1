@@ -7,20 +7,16 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import server.controller.temporarycontroller.AccountsListPageController;
+import server.view.accounts.AccountListPageView;
 import server.controller.temporarycontroller.AddProductsPageController;
 import server.controller.temporarycontroller.AnalyticsPageController;
 import server.controller.temporarycontroller.OrdersListPageController;
 import server.view.inventory.InventoryPageView;
 
-import java.util.logging.Level;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 
-public class MainMenuAdminView implements Initializable{
+public class MainMenuAdminView {
 
     @FXML
     private BorderPane borderPane;
@@ -40,30 +36,9 @@ public class MainMenuAdminView implements Initializable{
     private Button addProductsPageButton;
     @FXML
     private Button logoutButton;
-    @FXML
-    private AccountsListPageController accountsListPageController;
-    @FXML
-    private AddProductsPageController addProductsPageController;
-    @FXML
-    private AnalyticsPageController analyticsPageController;
-    @FXML
-    private InventoryPageView inventoryPageView;
-    @FXML
-    private OrdersListPageController ordersListPageController;
-    private FXMLLoader loader;
-    private Parent root;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-    }
-
 
     public void logout() {
         System.exit(0);
-    }
-
-    public FXMLLoader getLoader() {
-        return loader;
     }
 
     public Button getHomeButton() {
