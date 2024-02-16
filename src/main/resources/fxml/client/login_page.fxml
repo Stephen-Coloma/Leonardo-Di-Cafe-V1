@@ -62,7 +62,7 @@
                 <Label fx:id="forgotPasswordTextLabel" layoutX="74.0" layoutY="411.0" text="Forgot Password" underline="true" />
                 <TextField fx:id="usernameTextField" focusTraversable="false" layoutX="65.0" layoutY="152.0" prefHeight="26.0" prefWidth="272.0" promptText="Enter Username" />
             <Label fx:id="noticeLabel" layoutX="75.0" layoutY="385.0" text="fill out all details" textFill="RED" visible="false" />
-            <Button fx:id="homeButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #A38157;" text="&lt;  Home" textFill="WHITE" />
+            <Button fx:id="homeButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseEntered="#homePageButtonEntered" onMouseExited="#homePageButtonExited" style="-fx-background-color: #A38157;" text="&lt;  Home" textFill="WHITE" />
             </children>
         </Pane>
     </children>

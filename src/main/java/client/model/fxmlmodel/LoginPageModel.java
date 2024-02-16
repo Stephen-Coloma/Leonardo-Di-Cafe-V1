@@ -32,6 +32,7 @@ public class LoginPageModel {
      *
      * Exceptions will be handled by the LoginPage Controller*/
     public void authenticate(String username, String password) throws RuntimeException, IOException, ClassNotFoundException {
+        //todo: uncomment for testing purposes
         //for testing purposes only
         HashMap<String, Food> foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/java/server/model/food_menu.xml"));
         HashMap<String, Beverage> beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/java/server/model/beverage_menu.xml"));
@@ -53,8 +54,9 @@ public class LoginPageModel {
 //        sendData(clientID, requestType, credentials);
 //        Object[] response = (Object[]) in.readObject();
 //
+//
 //        //Close the connection when it is not login successful
-//        if (!response[1].equals("LOGIN_SUCCESSFUL")){
+//        if (!response[1].equals("LOGIN_SUCCESSFUL")){ //todo: if login is successful, set the socket for the main menu client page
 //            out.close();
 //            in.close();
 //            socket.close();

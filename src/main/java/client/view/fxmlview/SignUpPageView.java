@@ -56,6 +56,16 @@ public class SignUpPageView {
         createAccountButton.setTextFill(Paint.valueOf("White"));
     }
 
+    public void homePageButtonEntered(MouseEvent event){
+        homeButton.setStyle("-fx-background-color: lightgray;");
+        homeButton.setTextFill(Paint.valueOf("Black"));
+    }
+
+    public void homePageButtonExited(MouseEvent event){
+        homeButton.setStyle("-fx-background-color:  #A38157;");
+        homeButton.setTextFill(Paint.valueOf("White"));
+    }
+
     public Button getCreateAccountButton() {
         return createAccountButton;
     }

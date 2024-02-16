@@ -35,23 +35,23 @@ public class MenuCardController {
     private void setBeverageDataOnCard(Beverage beverage) {
         HashMap<String, Double> sizePrice = beverage.getSizePrice();
 
-        menuCardView.getProductNameLabel().setText(beverage.getName());
-        menuCardView.getProductDetailsLabel().setText(beverage.getDescription());
-        menuCardView.getProductRatingLabel().setText("Rating: " + beverage.getReview());
+        menuCardView.getProductNameLabel().setText(menuCardModel.getProduct().getName());
+        menuCardView.getProductDetailsLabel().setText(menuCardModel.getProduct().getDescription());
+        menuCardView.getProductRatingLabel().setText("Rating: " + menuCardModel.getProduct().getReview());
         menuCardView.getSizeLabel().setVisible(true);
-        menuCardView.getProductPriceLabel().setText("P " + sizePrice.get("small") + " - " + "P " + sizePrice.get("large"));
-        menuCardView.getProductImage().setImage(beverage.getImage());
+        menuCardView.getProductPriceLabel().setText("P " + sizePrice.get("small") + "0 - " + "P " + sizePrice.get("large") + "0");
+        menuCardView.getProductImage().setImage(menuCardModel.getProduct().getImage());
     }
 
     /**This sets up Food data of in the card*/
     private void setFoodDataOnCard(Food food) {
         menuCardView.getSizeLabel().setVisible(false); //no sizes for food
 
-        menuCardView.getProductNameLabel().setText(food.getName());
-        menuCardView.getProductDetailsLabel().setText(food.getDescription());
-        menuCardView.getProductRatingLabel().setText("Rating: " + food.getReview());
-        menuCardView.getProductPriceLabel().setText("P " + food.getPrice());
-        menuCardView.getProductImage().setImage(food.getImage());
+        menuCardView.getProductNameLabel().setText(menuCardModel.getProduct().getName());
+        menuCardView.getProductDetailsLabel().setText(menuCardModel.getProduct().getDescription());
+        menuCardView.getProductRatingLabel().setText("Rating: " + menuCardModel.getProduct().getReview());
+        menuCardView.getProductPriceLabel().setText("P " + food.getPrice() + "0");
+        menuCardView.getProductImage().setImage(menuCardModel.getProduct().getImage());
     }
 
     /*This method accepts method implementation from the main_menu_client page and passes the action to the button in the view*/

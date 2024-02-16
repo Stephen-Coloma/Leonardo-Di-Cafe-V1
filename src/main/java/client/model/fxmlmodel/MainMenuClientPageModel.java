@@ -22,11 +22,16 @@ public class MainMenuClientPageModel {
 
     public MainMenuClientPageModel(Object[] clientModelData) {
         //the serverResponse[2] responds Object[] {customer, foodMenu, beverageMenu}
-        clientModel = new ClientModel();
-        clientModel.setCustomer((Customer) clientModelData[0]);
-        clientModel.setFoodMenu((HashMap<String, Food>) clientModelData[1]);
-        clientModel.setBeverageMenu((HashMap<String, Beverage>) clientModelData[2]);
+
+        //todo: handle images being sent by the server
+
+        Customer customer = ((Customer) clientModelData[0]);
+        HashMap<String, Food> foodMenu = (HashMap<String, Food>) clientModelData[1];
+        HashMap<String, Beverage> beverageMenu = ((HashMap<String, Beverage>) clientModelData[2]);
+
+        clientModel = new ClientModel(customer, foodMenu, beverageMenu);
     }
+
 
     public ClientModel getClientModel() {
         return clientModel;

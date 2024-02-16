@@ -1,7 +1,5 @@
 package client.view.fxmlview;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,17 +12,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import shared.Beverage;
-import shared.Food;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class MainMenuClientPageView {
     private Stage stage;
@@ -32,6 +26,8 @@ public class MainMenuClientPageView {
     private Parent root;
     @FXML
     private ImageView cartImage;
+    @FXML
+    private Button clearCartButton;
 
     @FXML
     private Label cartLabel1;
@@ -46,7 +42,11 @@ public class MainMenuClientPageView {
     private GridPane gridPaneCart;
 
     @FXML
+    private ScrollPane scrollPaneCart;
+    @FXML
     private GridPane gridPaneMenu;
+    @FXML
+    private ScrollPane scrollPaneMenu;
 
     @FXML
     private Button mainMenuBeveragesButton;
@@ -63,11 +63,7 @@ public class MainMenuClientPageView {
     @FXML
     private Label productTypeLabel;
 
-    @FXML
-    private ScrollPane scrollPaneCart;
 
-    @FXML
-    private ScrollPane scrollPaneMenu;
 
     /**This method accepts the action listener implementation for foodButton from the main_menu_client_page controller*/
     public void setActionMainMenuFoodButton(EventHandler<ActionEvent> event){
@@ -77,6 +73,10 @@ public class MainMenuClientPageView {
     public void setActionMainMenuBeverageButton(EventHandler<ActionEvent> event){
         mainMenuBeveragesButton.setOnAction(event);
     }
+    public void setActionClearCartButton(EventHandler<ActionEvent> event){
+        clearCartButton.setOnAction(event);
+    }
+
 
     public void showMenuUI (ActionEvent event) throws IOException {
 
@@ -109,7 +109,7 @@ public class MainMenuClientPageView {
 
 
     public void showSelectVariationUI(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/select_variation.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/select_food.fxml"));
         root = loader.load();
 
         Stage selectVariationStage = new Stage();
@@ -158,14 +158,6 @@ public class MainMenuClientPageView {
         orderHistoryMenuButton.setStyle("-fx-background-color:  #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3");
         orderHistoryMenuButton.setTextFill(Paint.valueOf("#A38157"));
     }
-//    public void addToCartButtonEntered(MouseEvent event){
-//        addToCartButton.setStyle("-fx-background-color: lightgray;");
-//        addToCartButton.setTextFill(Paint.valueOf("Black"));
-//    }
-//    public void addToCartButtonExited(MouseEvent event){
-//        addToCartButton.setStyle("-fx-background-color:  #A38157;");
-//        addToCartButton.setTextFill(Paint.valueOf("White"));
-//    }
 
     public void foodButtonEntered(MouseEvent event){
         mainMenuFoodButton.setStyle("-fx-background-color: lightgray;");
@@ -307,5 +299,13 @@ public class MainMenuClientPageView {
 
     public void setScrollPaneMenu(ScrollPane scrollPaneMenu) {
         this.scrollPaneMenu = scrollPaneMenu;
+    }
+
+    public Button getClearCartButton() {
+        return clearCartButton;
+    }
+
+    public void setClearCartButton(Button clearCartButton) {
+        this.clearCartButton = clearCartButton;
     }
 }

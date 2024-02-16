@@ -7,7 +7,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -16,14 +15,14 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="872.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.MainMenuClientPageView">
    <children>
-      <AnchorPane layoutX="703.0" layoutY="43.0" prefHeight="338.0" prefWidth="170.0" style="-fx-background-color: #ffffff;">
+      <AnchorPane layoutX="703.0" layoutY="83.0" prefHeight="300.0" prefWidth="170.0" style="-fx-background-color: #ffffff;">
          <children>
-            <ScrollPane fx:id="scrollPaneCart" hbarPolicy="NEVER" prefHeight="342.0" prefWidth="170.0">
+            <ScrollPane fx:id="scrollPaneCart" hbarPolicy="NEVER" prefHeight="300.0" prefWidth="170.0">
                <content>
-                  <GridPane fx:id="gridPaneCart">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
+                  <GridPane fx:id="gridPaneCart" prefHeight="60.0">
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                     </rowConstraints>
                   </GridPane>
                </content>
             </ScrollPane>
@@ -51,9 +50,9 @@
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </Label>
-      <ScrollPane fx:id="scrollPaneMenu" hbarPolicy="NEVER" layoutX="137.0" layoutY="83.0" prefHeight="401.0" prefWidth="567.0">
+      <ScrollPane fx:id="scrollPaneMenu" hbarPolicy="NEVER" layoutX="137.0" layoutY="83.0" prefHeight="401.0" prefWidth="567.0" style="-fx-background-color: #A38157;">
          <content>
-            <GridPane fx:id="gridPaneMenu" layoutY="-10.0" prefHeight="107.0">
+            <GridPane fx:id="gridPaneMenu" alignment="TOP_CENTER" layoutY="-10.0" prefHeight="107.0" style="-fx-background-color: #A38157;">
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="NEVER" />
                </rowConstraints>
@@ -70,7 +69,7 @@
             <Font name="System Bold" size="10.0" />
          </font>
       </Label>
-      <Label fx:id="priceLabel" layoutX="844.0" layoutY="392.0" prefHeight="15.0" prefWidth="23.0" text="P 0">
+      <Label fx:id="priceLabel" alignment="CENTER_RIGHT" layoutX="753.0" layoutY="392.0" prefHeight="15.0" prefWidth="114.0" text="P 0.00" textAlignment="RIGHT">
          <font>
             <Font name="System Bold" size="10.0" />
          </font>
@@ -91,6 +90,16 @@
          </image>
       </ImageView>
       <Button fx:id="orderHistoryMenuButton" layoutX="710.0" layoutY="450.0" mnemonicParsing="false" onAction="#showOrderHistoryUI" onMouseEntered="#orderHistoryMenuButtonEntered" onMouseExited="#orderHistoryMenuButtonExited" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3;" text="ORDER HISTORY" textFill="#a38157">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label fx:id="productTypeLabel1" layoutX="710.0" layoutY="54.0" prefHeight="18.0" prefWidth="86.0" text="Cart">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="clearCartButton" layoutX="810.0" layoutY="51.0" mnemonicParsing="false" style="-fx-background-color: #a3815750;" text="Clear" textFill="#795c39">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

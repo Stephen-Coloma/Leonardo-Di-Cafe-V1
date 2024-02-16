@@ -1,6 +1,8 @@
 package client.model;
 
 import shared.*;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,15 +22,14 @@ public class ClientModel {
         order = null;
     }
 
-//    Uncomment if needed!
-//    /**This constructor will be used solely for logging in.*/
-//    public ClientModel(HashMap<String, Food> foodMenu, HashMap<String, Beverage> beverageMenu, Customer customer) {
-//        this.foodMenu = foodMenu;
-//        this.beverageMenu = beverageMenu;
-//        this.customer = customer;
-//
-//        this.cart = new ArrayList<>();
-//    }
+    /**This constructor will be used solely for logging in.*/
+    public ClientModel( Customer customer, HashMap<String, Food> foodMenu, HashMap<String, Beverage> beverageMenu) {
+        this.customer = customer;
+        this.foodMenu = foodMenu;
+        this.beverageMenu = beverageMenu;
+
+        this.cart = new ArrayList<>();
+    }
 
     /**This method updates the foodMenu and beverageMenu from server*/
     public void updateMenu(HashMap<String, Food> foodMenu, HashMap<String, Beverage> beverageMenu){

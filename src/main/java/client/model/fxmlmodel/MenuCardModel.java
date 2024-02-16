@@ -13,17 +13,12 @@ import java.util.HashMap;
 public class MenuCardModel {
     private Product product;
 
-    public MenuCardModel(Product product){
-        this.product = product;
-    }
-
     public MenuCardModel(Food food){
         this.product = food;
     }
     public MenuCardModel(Beverage beverage){
         this.product = beverage;
     }
-
 
     public Product getProduct() {
         return product;
