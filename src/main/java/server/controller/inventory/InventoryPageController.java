@@ -7,29 +7,24 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 import server.controller.YesNoPopupController;
-import server.model.MainMenuAdminModel;
 import server.model.inventory.*;
-import server.view.MainMenuAdminView;
 import server.view.YesNoPopupView;
 import server.view.inventory.*;
 import shared.Beverage;
 import shared.Food;
-
 import java.util.HashMap;
 
 public class InventoryPageController {
-    MainMenuAdminModel mainMenuAdminModel;
     InventoryPageModel model;
     InventoryPageView view;
 
-    public InventoryPageController(MainMenuAdminModel mainMenuAdminModel, InventoryPageModel model, InventoryPageView view) {
-        this.mainMenuAdminModel = mainMenuAdminModel;
+    public InventoryPageController(InventoryPageModel model, InventoryPageView view) {
         this.model = model;
         this.view = view;
     }
 
     public void start() {
-        view.populateTableFromMap(mainMenuAdminModel.getFoodMenu(), mainMenuAdminModel.getBeverageMenu());
+        view.populateTableFromMap(model.getFoodList(), model.getBeverageList());
         setComponentActions();
     }
 
@@ -38,11 +33,11 @@ public class InventoryPageController {
         setColumns("details", view.getEditDetailsColumn(), 2);
         setColumns("delete", view.getDeleteProductColumn(), 3);
 
-        /* TODO: Update the beverage and food menu when the save button is clicked on the InventoryPageModel
-                 and set the atomic boolean of the MainMenuModel to overwrite the xml file. (STILL NOT SURE)
-         */
         view.getSaveChangesButton().setOnAction(actionEvent -> {
-
+            model.updateInventory(view.getProductList());
+            model.setInventoryChanges(true);
+            model.notifyObservers();
+            model.setInventoryChanges(false);
         });
     }
 

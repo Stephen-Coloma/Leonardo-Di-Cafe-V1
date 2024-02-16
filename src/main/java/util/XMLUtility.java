@@ -458,72 +458,54 @@ public class XMLUtility {
             dbf.setIgnoringElementContentWhitespace(true);
             db = dbf.newDocumentBuilder();
             document = db.parse(file);
+            document = db.newDocument();
 
-            Element root = document.getDocumentElement();
+            Element root = document.createElement("foodmenu");
+            document.appendChild(root);
 
             for (Food food : foodMenu.values()) {
-                String foodName = food.getName();
+                Element foodElement = document.createElement("food");
+                foodElement.setAttribute("name", food.getName());
+                root.appendChild(foodElement);
 
-                NodeList existingFoods = document.getElementsByTagName("food");
-                boolean foodExists = false;
+                Element nameElement = document.createElement("name");
+                nameElement.appendChild(document.createTextNode(food.getName()));
+                foodElement.appendChild(nameElement);
 
-                for (int i = 0; i < existingFoods.getLength(); i++) {
-                    Node node = existingFoods.item(i);
-                    if (node.getNodeType() == Node.ELEMENT_NODE) {
-                        Element existingFood = (Element) node;
-                        String existingName = getElementValue(existingFood, "name");
-                        if (existingName.equals(foodName)) {
-                            foodExists = true;
-                            break;
-                        }
-                    }
-                }
+                Element typeElement = document.createElement("type");
+                typeElement.appendChild(document.createTextNode(String.valueOf(food.getType())));
+                foodElement.appendChild(typeElement);
 
-                if (!foodExists) {
-                    Element foodElement = document.createElement("food");
-                    foodElement.setAttribute("name", food.getName());
-                    root.appendChild(foodElement);
+                Element reviewElement = document.createElement("review");
+                reviewElement.appendChild(document.createTextNode(String.valueOf(food.getReview())));
+                foodElement.appendChild(reviewElement);
 
-                    Element nameElement = document.createElement("name");
-                    nameElement.appendChild(document.createTextNode(food.getName()));
-                    foodElement.appendChild(nameElement);
+                Element reviewCountElement = document.createElement("reviewCount");
+                reviewCountElement.appendChild(document.createTextNode(String.valueOf(food.getReviewCount())));
+                foodElement.appendChild(reviewCountElement);
 
-                    Element typeElement = document.createElement("type");
-                    typeElement.appendChild(document.createTextNode(String.valueOf(food.getType())));
-                    foodElement.appendChild(typeElement);
+                Element imageElement = document.createElement("image");
+                //String filename = String.valueOf(food.getImage().getUrl()); // Assuming getImage returns the file name
+                String filename = String.valueOf(food.getImage());
+                imageElement.appendChild(document.createTextNode(filename));
+                foodElement.appendChild(imageElement);
 
-                    Element reviewElement = document.createElement("review");
-                    reviewElement.appendChild(document.createTextNode(String.valueOf(food.getReview())));
-                    foodElement.appendChild(reviewElement);
+                Element descriptionElement = document.createElement("description");
+                descriptionElement.appendChild(document.createTextNode(food.getDescription()));
+                foodElement.appendChild(descriptionElement);
 
-                    Element reviewCountElement = document.createElement("reviewCount");
-                    reviewCountElement.appendChild(document.createTextNode(String.valueOf(food.getReviewCount())));
-                    foodElement.appendChild(reviewCountElement);
+                Element amountSoldElement = document.createElement("amountSold");
+                amountSoldElement.appendChild(document.createTextNode(String.valueOf(food.getAmountSold())));
+                foodElement.appendChild(amountSoldElement);
 
-                    Element imageElement = document.createElement("image");
-                    //String filename = String.valueOf(food.getImage().getUrl()); // Assuming getImage returns the file name
-                    String filename = String.valueOf(food.getImage());
-                    imageElement.appendChild(document.createTextNode(filename));
-                    foodElement.appendChild(imageElement);
+                Element quantityElement = document.createElement("quantity");
+                quantityElement.appendChild(document.createTextNode(String.valueOf(food.getQuantity())));
+                foodElement.appendChild(quantityElement);
 
-                    Element descriptionElement = document.createElement("description");
-                    descriptionElement.appendChild(document.createTextNode(food.getDescription()));
-                    foodElement.appendChild(descriptionElement);
-
-                    Element amountSoldElement = document.createElement("amountSold");
-                    amountSoldElement.appendChild(document.createTextNode(String.valueOf(food.getAmountSold())));
-                    foodElement.appendChild(amountSoldElement);
-
-                    Element quantityElement = document.createElement("quantity");
-                    quantityElement.appendChild(document.createTextNode(String.valueOf(food.getQuantity())));
-                    foodElement.appendChild(quantityElement);
-
-                    Element priceElement = document.createElement("price");
-                    priceElement.appendChild(document.createTextNode(String.valueOf(food.getPrice())));
-                    foodElement.appendChild(priceElement);
-                }
+                Element priceElement = document.createElement("price");
+                priceElement.appendChild(document.createTextNode(String.valueOf(food.getPrice())));
+                foodElement.appendChild(priceElement);
             }
-
             cleanDocument(document);
 
             tf = TransformerFactory.newInstance();

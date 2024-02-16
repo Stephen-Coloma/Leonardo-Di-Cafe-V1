@@ -2,26 +2,27 @@ package server.controller;
 
 import javafx.application.Platform;
 import server.model.MainMenuAdminModel;
-import server.view.MainMenuAdminView;
 import server.model.ServerModel;
+import server.model.listeners.MainMenuAdminObserver;
+import server.view.MainMenuAdminView;
 import server.view.ServerView;
-import shared.*;
-import util.ImageCopier;
+import shared.Customer;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class ServerController {
+public class ServerController implements MainMenuAdminObserver {
     private final ServerModel model;
     private final ServerView view;
     private Socket clientSocket;
     private ObjectInputStream streamReader;
     private ObjectOutputStream streamWriter;
+
+    private MainMenuAdminModel mainMenuAdminModel;
 
     public ServerController(ServerModel model, ServerView view) {
         this.model = model;
@@ -29,8 +30,6 @@ public class ServerController {
 
         Platform.runLater(() -> {
             System.out.println("Obtained Main Menu Controller");
-            //mainMenuAdminView = view.getLoader().getController();
-
             setComponentActions();
             System.out.println("Successfully added actions");
         });
@@ -43,10 +42,13 @@ public class ServerController {
     // TODO
     private void setComponentActions() {
         Platform.runLater(() -> {
-            MainMenuAdminModel mainMenuAdminModel = new MainMenuAdminModel();
+            mainMenuAdminModel = new MainMenuAdminModel();
+            mainMenuAdminModel.setFoodMenu(model.getFoodMenu());
+            mainMenuAdminModel.setBeverageMenu(model.getBeverageMenu());
+            mainMenuAdminModel.registerObserver(this);
             MainMenuAdminView mainMenuAdminView = view.getLoader().getController();
 
-            MainMenuAdminController mainMenuAdminController = new MainMenuAdminController(model, mainMenuAdminModel, mainMenuAdminView);
+            MainMenuAdminController mainMenuAdminController = new MainMenuAdminController(mainMenuAdminModel, mainMenuAdminView);
             mainMenuAdminController.start();
         });
         /*
@@ -194,6 +196,21 @@ public class ServerController {
             }
         }
     } // end of handleClientRequest
+
+    @Override
+    public void notifyMenuChanges(boolean menuChanges) {
+        if (menuChanges) {
+            model.setFoodMenu(mainMenuAdminModel.getFoodMenu());
+            model.setBeverageMenu(mainMenuAdminModel.getBeverageMenu());
+            /*
+            TODO: Move this part into a method that executs once the server closes so that the writing of data will
+                  only be done once the server closes
+
+               XMLUtility.saveFoodMenu(model.getFoodMenu());
+               XMLUtility.saveBeverageMenu(model.getBeverageMenu());
+             */
+        }
+    }
 
     private void sendData(String code, Object data) {
         Object[] response = {code, data};
