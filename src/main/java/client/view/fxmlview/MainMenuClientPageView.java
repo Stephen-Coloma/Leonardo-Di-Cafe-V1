@@ -3,6 +3,7 @@ package client.view.fxmlview;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -29,18 +30,6 @@ public class MainMenuClientPageView {
     private Stage stage;
     private Scene scene;
     private Parent root;
-
-
-
-    //this holds the data to be displayed
-    private HashMap<String, Food> foodMenu;
-    private HashMap<String, Beverage> beverageMenu;
-
-    private ObservableList<Food> foodObservableList;
-    private ObservableList<Beverage> beverageObservableList;
-
-
-
     @FXML
     private ImageView cartImage;
 
@@ -80,102 +69,14 @@ public class MainMenuClientPageView {
     @FXML
     private ScrollPane scrollPaneMenu;
 
-
-    /**This method initializes the model to be used in displaying the content of each card in the menu pane*/
-    public void initializeFoodMenu(HashMap<String, Food> foodMenu, HashMap<String, Beverage> beverageMenu) {
-        this.foodMenu = foodMenu;
-        this.beverageMenu = beverageMenu;
-
-        foodObservableList = FXCollections.observableList(foodMenu.values().stream().toList()) ;
-        beverageObservableList = FXCollections.observableList(beverageMenu.values().stream().toList()) ;
-
-        int column = 0;
-        int row = 1;
-
-        //initializing the food menu cards from the hashmap
-        try {
-            for (Food product : foodObservableList) {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/fxml/client/menu_card.fxml"));
-
-                //putting the card on the anchorPane
-                AnchorPane card = loader.load();
-
-                MenuCardView menuCardView = loader.getController();
-                menuCardView.setData(product);
-
-                if (column == 2){
-                    column = 0;
-                    row++;
-                }
-                gridPaneMenu.add(card, column++, row);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    /**This method accepts the action listener implementation for foodButton from the main_menu_client_page controller*/
+    public void setActionMainMenuFoodButton(EventHandler<ActionEvent> event){
+        mainMenuFoodButton.setOnAction(event);
     }
-
-    /**THis loads the beverage menu when the button is clicked*/
-    public void loadFoodMenu() {
-        int column = 0;
-        int row = 1;
-
-        gridPaneMenu.getChildren().clear();
-
-        //initializing the food menu cards from the hashmap
-        try {
-            for (Food product : foodObservableList) {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/fxml/client/menu_card.fxml"));
-
-                //putting the card on the anchorPane
-                AnchorPane card = loader.load();
-
-                MenuCardView menuCardView = loader.getController();
-                menuCardView.setData(product);
-
-                if (column == 2){
-                    column = 0;
-                    row++;
-                }
-                gridPaneMenu.add(card, column++, row);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    /**This method accepts the action listener implementation for beverageButton from the main_menu_client_page controller*/
+    public void setActionMainMenuBeverageButton(EventHandler<ActionEvent> event){
+        mainMenuBeveragesButton.setOnAction(event);
     }
-
-
-    /**THis loads the beverage menu when the button is clicked*/
-    public void loadBeverageMenu() {
-
-        gridPaneMenu.getChildren().clear();
-        int column = 0;
-        int row = 1;
-        try {
-            //initializing the beverage menu cards from the hashmap
-            for (Beverage product : beverageObservableList) {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/fxml/client/menu_card.fxml"));
-
-                //putting the card on the anchorPane
-                AnchorPane card = loader.load();
-
-                MenuCardView menuCardView = loader.getController();
-                menuCardView.setData(product);
-
-
-                if (column == 2){
-                    column = 0;
-                    row++;
-                }
-                gridPaneMenu.add(card, column++, row);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
 
     public void showMenuUI (ActionEvent event) throws IOException {
 
@@ -302,22 +203,6 @@ public class MainMenuClientPageView {
 
     public void setRoot(Parent root) {
         this.root = root;
-    }
-
-    public HashMap<String, Food> getFoodMenu() {
-        return foodMenu;
-    }
-
-    public void setFoodMenu(HashMap<String, Food> foodMenu) {
-        this.foodMenu = foodMenu;
-    }
-
-    public HashMap<String, Beverage> getBeverageMenu() {
-        return beverageMenu;
-    }
-
-    public void setBeverageMenu(HashMap<String, Beverage> beverageMenu) {
-        this.beverageMenu = beverageMenu;
     }
 
     public ImageView getCartImage() {

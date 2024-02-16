@@ -1,6 +1,7 @@
 package client.controller.fxmlcontroller;
 
 import client.model.fxmlmodel.LoginPageModel;
+import client.model.fxmlmodel.MainMenuClientPageModel;
 import client.view.fxmlview.LoginPageView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,7 @@ public class LoginPageController {
     private LoginPageView loginView;
     private LoginPageModel loginModel;
     private LandingPageController landingPageController;
+    private MainMenuClientPageController mainMenu;
     private FXMLLoader loader;
     private Parent root;
     private Object[] serverResponse;
@@ -69,13 +71,15 @@ public class LoginPageController {
 
     /**This method parses the response from the server. If Login in successful, laod the main menu client page*/
     private void parseServerResponse(Object[] serverResponse, ActionEvent event) {
+        //server response Guide Object[]{clientID, message, Object[] clientModelData}
         //load login UI if successful
         try {
             if (serverResponse[1].equals("LOGIN_SUCCESSFUL")){
                 loader = new FXMLLoader(getClass().getResource("/fxml/client/main_menu_client_page.fxml"));
                 root = loader.load();
 
-                //TODO: IMPLEMENT THE MENU MAIN CONTROLLER
+                //when loading the main menu, pass the clientModel received from the server
+                mainMenu =new MainMenuClientPageController(new MainMenuClientPageModel((Object[]) serverResponse[2]), loader.getController());
 
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);

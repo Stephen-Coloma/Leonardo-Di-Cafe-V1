@@ -1,5 +1,7 @@
 package client.view.fxmlview;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -30,41 +32,66 @@ public class MenuCardView {
     private Label productRatingLabel;
     @FXML
     private Label sizeLabel;
-
     //the data to be passed
-    private Product product;
-    private Food food;
-    private Beverage beverage;
-    public void setData(Product product){
-        if (product.getType() == 'f'){
-            food = (Food) product;
-            setFoodDataOnCard(food);
-        }else if (product.getType() == 'b'){
-            beverage = (Beverage) product;
-            setBeverageDataOnCard(beverage);
-        }
+
+    /*This method implements the action listener for the button*/
+    public void setActionAddProductButton(EventHandler<ActionEvent> event){
+        addProductButton.setOnAction(event);
     }
 
-    /**This sets up Beverage data of in the card*/
-    private void setBeverageDataOnCard(Beverage beverage) {
-        HashMap<String, Double> sizePrice = beverage.getSizePrice();
-
-        productNameLabel.setText(beverage.getName());
-        productDetailsLabel.setText(beverage.getDescription());
-        productRatingLabel.setText("Rating: " + beverage.getReview());
-        sizeLabel.setVisible(true);
-        productPriceLabel.setText("P " + sizePrice.get("small") + " - " + "P " + sizePrice.get("large"));
-        productImage.setImage(beverage.getImage());
+    public Button getAddProductButton() {
+        return addProductButton;
     }
 
-    /**This sets up Food data of in the card*/
-    private void setFoodDataOnCard(Food food) {
-        sizeLabel.setVisible(false); //no sizes for food
+    public void setAddProductButton(Button addProductButton) {
+        this.addProductButton = addProductButton;
+    }
 
-        productNameLabel.setText(food.getName());
-        productDetailsLabel.setText(food.getDescription());
-        productRatingLabel.setText("Rating: " + food.getReview());
-        productPriceLabel.setText("P " + food.getPrice());
-        productImage.setImage(food.getImage());
+    public Label getProductDetailsLabel() {
+        return productDetailsLabel;
+    }
+
+    public void setProductDetailsLabel(Label productDetailsLabel) {
+        this.productDetailsLabel = productDetailsLabel;
+    }
+
+    public ImageView getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(ImageView productImage) {
+        this.productImage = productImage;
+    }
+
+    public Label getProductNameLabel() {
+        return productNameLabel;
+    }
+
+    public void setProductNameLabel(Label productNameLabel) {
+        this.productNameLabel = productNameLabel;
+    }
+
+    public Label getProductPriceLabel() {
+        return productPriceLabel;
+    }
+
+    public void setProductPriceLabel(Label productPriceLabel) {
+        this.productPriceLabel = productPriceLabel;
+    }
+
+    public Label getProductRatingLabel() {
+        return productRatingLabel;
+    }
+
+    public void setProductRatingLabel(Label productRatingLabel) {
+        this.productRatingLabel = productRatingLabel;
+    }
+
+    public Label getSizeLabel() {
+        return sizeLabel;
+    }
+
+    public void setSizeLabel(Label sizeLabel) {
+        this.sizeLabel = sizeLabel;
     }
 }
