@@ -49,5 +49,4 @@ public class BeverageEditDetailsPopupController {
             }
         });
     } // end of setComponentActions
-
 } // end of BeverageEditDetailsPopupController class

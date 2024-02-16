@@ -9,15 +9,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.util.Callback;
 import shared.Customer;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -59,12 +57,6 @@ public class AccountListPageView implements Initializable {
             throw new RuntimeException(e);
         }
     } // end of loadAccountListPage
-
-    private Button createButton(EventHandler<ActionEvent> eventHandler) {
-        Button button = new Button("View");
-        button.setOnAction(eventHandler);
-        return button;
-    } // end of createButton
 
     public void populateTableFromList(List<Customer> list) {
         ObservableList<Customer> accountList = FXCollections.observableArrayList();

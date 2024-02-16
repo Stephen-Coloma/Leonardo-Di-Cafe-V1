@@ -6,17 +6,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
-import server.controller.YesNoPopupController;
+import server.controller.misc.YesNoPopupController;
 import server.model.inventory.*;
-import server.view.YesNoPopupView;
+import server.view.misc.YesNoPopupView;
 import server.view.inventory.*;
 import shared.Beverage;
 import shared.Food;
 import java.util.HashMap;
 
 public class InventoryPageController {
-    private InventoryPageModel model;
-    private InventoryPageView view;
+    private final InventoryPageModel model;
+    private final InventoryPageView view;
 
     public InventoryPageController(InventoryPageModel model, InventoryPageView view) {
         this.model = model;
@@ -39,7 +39,7 @@ public class InventoryPageController {
             model.notifyObservers();
             model.setInventoryChanges(false);
         });
-    }
+    } // end of setComponentActions
 
     private Button createButton(String label, int buttonColumn) {
         Button button = new Button(label);
@@ -217,6 +217,8 @@ public class InventoryPageController {
         int originalIndex = view.getFilteredList().getSourceIndex(filteredIndex);
 
         YesNoPopupView popupView = YesNoPopupView.loadYesNoPopupView();
+        popupView.setTitle("Delete Product");
+
         YesNoPopupController popupController = new YesNoPopupController(popupView);
         popupController.setQuestionPromptMessage("Are you sure you want to delete this product?");
         popupController.setComponentActions();

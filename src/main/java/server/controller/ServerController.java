@@ -7,7 +7,6 @@ import server.model.listeners.MainMenuAdminObserver;
 import server.view.MainMenuAdminView;
 import server.view.ServerView;
 import shared.Customer;
-import util.XMLUtility;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 
@@ -56,48 +55,6 @@ public class ServerController implements MainMenuAdminObserver {
         });
     } // end of setComponentActions
 
-    /*
-    public void addProduct() {
-        if (addProductsPageController.getTypeOfProductMenuButton().getText().equalsIgnoreCase("food")) {
-            String name = addProductsPageController.getProductNameTextField().getText().trim();
-            String description = addProductsPageController.getProductDescriptionTextField().getText().trim();
-            int quantity = Integer.parseInt(addProductsPageController.getMainQuantityTextField().getText().trim());
-            double price = Double.parseDouble(addProductsPageController.getMainPriceTextField().getText().trim());
-
-            String absolutePath = new File(addProductsPageController.getImageTextField().getText()).getAbsolutePath();
-            String extension = absolutePath.substring(absolutePath.lastIndexOf('.'));
-            String copiedImagePath = ImageCopier.copyImage(absolutePath, name + extension);
-
-            SerializableImage image = new SerializableImage("file:" + copiedImagePath);
-
-            Food food = new Food(name, 'f', 0.0, 0, image, description, quantity, price);
-            System.out.println(food);
-            //model.getFoodMenu().put(name, food);
-        } else {
-            String name = addProductsPageController.getProductNameTextField().getText().trim();
-            String description = addProductsPageController.getProductDescriptionTextField().getText().trim();
-            int sQuantity = Integer.parseInt(addProductsPageController.getMainQuantityTextField().getText().trim());
-            int mQuantity = Integer.parseInt(addProductsPageController.getMediumQuantityTextField().getText().trim());
-            int lQuantity = Integer.parseInt(addProductsPageController.getLargeQuantityTextField().getText().trim());
-            double sPrice = Double.parseDouble(addProductsPageController.getMainPriceTextField().getText().trim());
-            double mPrice = Double.parseDouble(addProductsPageController.getMediumPriceTextField().getText().trim());
-            double lPrice = Double.parseDouble(addProductsPageController.getLargePriceTextField().getText().trim());
-
-            String absolutePath = new File(addProductsPageController.getImageTextField().getText()).getAbsolutePath();
-            String extension = absolutePath.substring(absolutePath.lastIndexOf('.'));
-            String copiedImagePath = ImageCopier.copyImage(absolutePath, name + extension);
-
-            SerializableImage image = new SerializableImage("file:" + copiedImagePath);
-
-            Beverage beverage = new Beverage(name, 'b', 0.0, 0, image, description, sQuantity, mQuantity, lQuantity, sPrice, mPrice, lPrice);
-            System.out.println(beverage);
-            //model.getBeverageMenu().put(name, beverage);
-        }
-    } // end of addProduct
-
-     */
-
-    // TODO
     public void run() {
         try {
             streamReader = new ObjectInputStream(clientSocket.getInputStream());
@@ -155,14 +112,20 @@ public class ServerController implements MainMenuAdminObserver {
     @Override
     public void notifyMenuChanges(String code, boolean menuChanges) {
         if (menuChanges) {
-            if ("INVENTORY_CHANGE".equals(code)) {
+            if ("STATUS_CHANGE".equals(code)) {
+                model.setOrderList(mainMenuAdminModel.getOrderList());
+                System.out.println(model.getOrderList());
+            } else if ("INVENTORY_CHANGE".equals(code)) {
                 model.setFoodMenu(mainMenuAdminModel.getFoodMenu());
                 model.setBeverageMenu(mainMenuAdminModel.getBeverageMenu());
                 System.out.println(model.getFoodMenu());
                 System.out.println(model.getBeverageMenu());
-            } else if ("STATUS_CHANGE".equals(code)) {
-                model.setOrderList(mainMenuAdminModel.getOrderList());
-                System.out.println(model.getOrderList());
+            } else if ("NEW_FOOD_PRODUCT".equals(code)) {
+                model.setFoodMenu(mainMenuAdminModel.getFoodMenu());
+                System.out.println(model.getFoodMenu());
+            } else if ("NEW_BEVERAGE_PRODUCT".equals(code)) {
+                model.setBeverageMenu(mainMenuAdminModel.getBeverageMenu());
+                System.out.println(model.getBeverageMenu());
             }
 
             /*

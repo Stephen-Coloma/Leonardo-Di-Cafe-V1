@@ -24,5 +24,4 @@ public class FoodEditDetailsPopupModel {
 
         return new SerializableImage("file:" + copiedImagePath);
     } // end of processSerializableImage
-
 } // end of FoodEditDetailsPopupModel

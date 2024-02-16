@@ -1,13 +1,12 @@
 package server.controller.orders;
 
-import javafx.event.ActionEvent;
 import server.model.orders.OrderDetailsPopupModel;
 import server.view.orders.OrderDetailsPopupView;
 import shared.Product;
 
 public class OrderDetailsPopupController {
-    private OrderDetailsPopupModel model;
-    private OrderDetailsPopupView view;
+    private final OrderDetailsPopupModel model;
+    private final OrderDetailsPopupView view;
 
     public OrderDetailsPopupController(OrderDetailsPopupModel model, OrderDetailsPopupView view) {
         this.model = model;

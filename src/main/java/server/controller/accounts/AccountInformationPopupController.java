@@ -4,8 +4,8 @@ import server.model.accounts.AccountInformationPopupModel;
 import server.view.accounts.AccountInformationPopupView;
 
 public class AccountInformationPopupController {
-    private AccountInformationPopupModel model;
-    private AccountInformationPopupView view;
+    private final AccountInformationPopupModel model;
+    private final AccountInformationPopupView view;
 
     public AccountInformationPopupController(AccountInformationPopupModel model, AccountInformationPopupView view) {
         this.model = model;
@@ -27,8 +27,6 @@ public class AccountInformationPopupController {
     } // end of loadAccountInformation
 
     public void setComponentActions() {
-        view.getCloseTabButton().setOnAction(actionEvent -> {
-            view.closePopupStage();
-        });
-    }
+        view.getCloseTabButton().setOnAction(actionEvent -> view.closePopupStage());
+    } // end of setComponentActions
 } // end of AccountInformationPopupController

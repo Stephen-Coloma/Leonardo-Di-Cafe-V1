@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="717.6" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.controller.temporarycontroller.AddProductsPageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="717.6" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.view.addproducts.AddProductPageView">
     <children>
         <Label layoutX="52.0" layoutY="15.0" text="ADD A PRODUCT" textFill="#634921">
             <font>
@@ -22,31 +15,29 @@
             <children>
                 <VBox layoutX="-4.0" layoutY="-2.0" prefHeight="614.0" prefWidth="943.0">
                     <children>
-                        <HBox prefHeight="420.0" prefWidth="939.0">
+                        <HBox alignment="CENTER" prefHeight="420.0" prefWidth="939.0">
                             <children>
-                                <Pane prefHeight="227.0" prefWidth="36.0" />
-                                <VBox prefHeight="420.0" prefWidth="324.0">
+                                <VBox prefHeight="420.0" prefWidth="314.0" spacing="15.0">
                                     <children>
-                                        <Pane prefHeight="38.0" prefWidth="312.0" />
                                         <Label prefHeight="23.0" prefWidth="195.0" text="PRODUCT NAME:" textFill="#634921">
                                             <font>
                                                 <Font name="Arial Rounded MT Bold" size="20.0" />
                                             </font>
                                         </Label>
-                                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="12.0" prefWidth="274.0" />
-                                        <TextField fx:id="productNameTextField" prefHeight="43.0" prefWidth="274.0" promptText="Enter Product Name">
+                                        <TextField fx:id="productNameTextField" minHeight="-Infinity" prefHeight="43.0" prefWidth="274.0" promptText="Enter Product Name">
                                             <font>
-                                                <Font size="18.0" />
+                                                <Font name="Arial" size="18.0" />
                                             </font>
                                         </TextField>
-                                        <Pane layoutX="10.0" layoutY="48.0" prefHeight="38.0" prefWidth="312.0" />
                                         <Label text="PRODUCT TYPE" textFill="#634921">
                                             <font>
                                                 <Font name="Arial Rounded MT Bold" size="20.0" />
                                             </font>
+                                 <VBox.margin>
+                                    <Insets top="30.0" />
+                                 </VBox.margin>
                                         </Label>
-                                        <Pane layoutX="10.0" layoutY="100.0" prefHeight="18.0" prefWidth="312.0" />
-                                        <MenuButton fx:id="typeOfProductMenuButton" alignment="CENTER" mnemonicParsing="false" prefHeight="43.0" prefWidth="318.0" style="-fx-background-color: #634921;" text="Choose Product Type" textFill="WHITE">
+                                        <MenuButton fx:id="typeOfProductMenuButton" alignment="CENTER" minHeight="-Infinity" mnemonicParsing="false" prefHeight="43.0" prefWidth="318.0" style="-fx-background-color: #634921;" text="Choose Product Type" textFill="WHITE">
                                             <items>
                                                 <MenuItem fx:id="foodMenuItem" mnemonicParsing="false" onAction="#chooseFoodMenuItem" text="Food " />
                                                 <MenuItem fx:id="beverageMenuItem" mnemonicParsing="false" onAction="#chooseBeverageMenuItem" text="Beverage" />
@@ -55,132 +46,146 @@
                                                 <Font name="Arial Rounded MT Bold" size="17.0" />
                                             </font>
                                         </MenuButton>
-                                        <Pane layoutX="10.0" layoutY="140.0" prefHeight="38.0" prefWidth="312.0" />
                                         <Label text="PRODUCT DESCRIPTION" textFill="#634921">
                                             <font>
                                                 <Font name="Arial Rounded MT Bold" size="20.0" />
                                             </font>
+                                 <VBox.margin>
+                                    <Insets top="30.0" />
+                                 </VBox.margin>
                                         </Label>
-                                        <Pane layoutX="10.0" layoutY="182.0" prefHeight="18.0" prefWidth="234.0" />
-                                        <TextField fx:id="productDescriptionTextField" prefHeight="43.0" prefWidth="170.0" promptText="Enter short description only">
-                                            <font>
-                                                <Font size="18.0" />
-                                            </font>
-                                        </TextField>
+                              <TextArea fx:id="productDescriptionTextArea" prefHeight="200.0" prefWidth="200.0" promptText="Enter short description only" wrapText="true">
+                                 <font>
+                                    <Font name="Arial" size="18.0" />
+                                 </font>
+                              </TextArea>
                                     </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
                                 </VBox>
-                                <Pane layoutX="10.0" layoutY="10.0" prefHeight="420.0" prefWidth="57.0" />
-                                <VBox prefHeight="420.0" prefWidth="259.0">
+                                <VBox prefHeight="420.0" prefWidth="314.0" spacing="15.0">
                                     <children>
-                                        <Pane prefHeight="38.0" prefWidth="244.0" />
                                         <Label fx:id="mainPriceLabel" text="Price for" textFill="#634921">
                                             <font>
                                                 <Font name="Arial Rounded MT Bold" size="20.0" />
                                             </font>
                                         </Label>
-                                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="244.0" />
                                         <TextField fx:id="mainPriceTextField" editable="false" prefHeight="43.0" prefWidth="95.0" promptText="eg. 1500">
                                             <font>
-                                                <Font size="18.0" />
+                                                <Font name="Arial" size="18.0" />
                                             </font>
                                         </TextField>
-                                        <Pane layoutX="10.0" layoutY="43.0" prefHeight="38.0" prefWidth="244.0" />
                                         <Label fx:id="mediumPriceLabel" text="Price for" textFill="#634921">
                                             <font>
                                                 <Font name="Arial Rounded MT Bold" size="20.0" />
                                             </font>
+                                 <VBox.margin>
+                                    <Insets top="30.0" />
+                                 </VBox.margin>
                                         </Label>
-                                        <Pane layoutX="10.0" layoutY="128.0" prefHeight="17.0" prefWidth="244.0" />
                                         <TextField fx:id="mediumPriceTextField" editable="false" prefHeight="43.0" prefWidth="95.0" promptText="eg. 1500">
                                             <font>
-                                                <Font size="18.0" />
+                                                <Font name="Arial" size="18.0" />
                                             </font>
                                         </TextField>
-                                        <Pane layoutX="10.0" layoutY="120.0" prefHeight="38.0" prefWidth="244.0" />
                                         <Label fx:id="largePriceLabel" text="Price for" textFill="#634921">
                                             <font>
                                                 <Font name="Arial Rounded MT Bold" size="20.0" />
                                             </font>
+                                 <VBox.margin>
+                                    <Insets top="30.0" />
+                                 </VBox.margin>
                                         </Label>
-                                        <Pane layoutX="10.0" layoutY="205.0" prefHeight="17.0" prefWidth="244.0" />
                                         <TextField fx:id="largePriceTextField" editable="false" prefHeight="43.0" prefWidth="95.0" promptText="eg. 1500">
                                             <font>
-                                                <Font size="18.0" />
+                                                <Font name="Arial" size="18.0" />
                                             </font>
                                         </TextField>
                                     </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
                                 </VBox>
-                                <Pane layoutX="320.0" layoutY="10.0" prefHeight="227.0" prefWidth="36.0" />
-                                <VBox prefHeight="236.0" prefWidth="275.0">
+                                <VBox prefHeight="236.0" prefWidth="314.0" spacing="15.0">
                                     <children>
-                                        <Pane prefHeight="38.0" prefWidth="275.0" />
                                         <Label fx:id="mainQuantityLabel" text="Quantity for " textFill="#634921">
                                             <font>
                                                 <Font name="Arial Rounded MT Bold" size="20.0" />
                                             </font>
                                         </Label>
-                                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="16.0" prefWidth="275.0" />
                                         <TextField fx:id="mainQuantityTextField" editable="false" prefHeight="43.0" prefWidth="95.0" promptText="eg. 10">
                                             <font>
-                                                <Font size="18.0" />
+                                                <Font name="Arial" size="18.0" />
                                             </font>
                                         </TextField>
-                                        <Pane layoutX="10.0" layoutY="41.0" prefHeight="38.0" prefWidth="275.0" />
                                         <Label fx:id="mediumQuantityLabel" text="Quantity for " textFill="#634921">
                                             <font>
                                                 <Font name="Arial Rounded MT Bold" size="20.0" />
                                             </font>
+                                 <VBox.margin>
+                                    <Insets top="30.0" />
+                                 </VBox.margin>
                                         </Label>
-                                        <Pane layoutX="10.0" layoutY="84.0" prefHeight="19.0" prefWidth="275.0" />
                                         <TextField fx:id="mediumQuantityTextField" editable="false" prefHeight="43.0" prefWidth="95.0" promptText="eg. 10">
                                             <font>
-                                                <Font size="18.0" />
+                                                <Font name="Arial" size="18.0" />
                                             </font>
                                         </TextField>
-                                        <Pane layoutX="10.0" layoutY="115.0" prefHeight="38.0" prefWidth="275.0" />
                                         <Label fx:id="largeQuantityLabel" text="Quantity for " textFill="#634921">
                                             <font>
                                                 <Font name="Arial Rounded MT Bold" size="20.0" />
                                             </font>
+                                 <VBox.margin>
+                                    <Insets top="30.0" />
+                                 </VBox.margin>
                                         </Label>
-                                        <Pane layoutX="10.0" layoutY="157.0" prefHeight="16.0" prefWidth="275.0" />
                                         <TextField fx:id="largeQuantityTextField" editable="false" prefHeight="43.0" prefWidth="95.0" promptText="eg. 10">
                                             <font>
-                                                <Font size="18.0" />
+                                                <Font name="Arial" size="18.0" />
                                             </font>
                                         </TextField>
                                     </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
                                 </VBox>
-                                <Pane layoutX="10.0" layoutY="10.0" prefHeight="227.0" prefWidth="36.0" />
                             </children>
                         </HBox>
                         <Pane prefHeight="38.0" prefWidth="939.0" />
-                        <HBox prefHeight="22.0" prefWidth="939.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="939.0">
                             <children>
-                                <Pane prefHeight="100.0" prefWidth="35.0" />
-                                <Button fx:id="chooseImageButton" mnemonicParsing="false" onMouseClicked="#chooseImage" prefHeight="43.0" prefWidth="242.0" text="Choose image file">
+                                <Button fx:id="chooseImageButton" minHeight="-Infinity" mnemonicParsing="false" prefHeight="43.0" prefWidth="242.0" text="Choose image file">
                                     <font>
                                         <Font size="20.0" />
                                     </font>
                                 </Button>
-                                <TextField fx:id="imageTextField" editable="false" prefHeight="43.0" prefWidth="213.0" />
-                                <ImageView fx:id="sampleImageView" fitHeight="46.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-                                <Pane layoutX="10.0" layoutY="10.0" prefHeight="46.0" prefWidth="215.0" />
-                                <Button fx:id="addProductButton" mnemonicParsing="false" onMouseClicked="#addProductClicked" onMouseEntered="#addProductButtonEntered" onMouseExited="#addProductButtonExited" prefHeight="40.0" prefWidth="163.0" style="-fx-background-color: #634921;" text="Add Product" textFill="WHITE">
+                                <TextField fx:id="imageTextField" editable="false" prefHeight="43.0" prefWidth="424.0">
+                           <HBox.margin>
+                              <Insets left="2.0" />
+                           </HBox.margin></TextField>
+                                <Button fx:id="addProductButton" mnemonicParsing="false" onMouseEntered="#addProductButtonEntered" onMouseExited="#addProductButtonExited" prefHeight="43.0" prefWidth="163.0" style="-fx-background-color: #634921;" text="Add Product" textFill="WHITE">
                                     <font>
                                         <Font name="Arial Black" size="18.0" />
                                     </font>
+                           <HBox.margin>
+                              <Insets left="50.0" />
+                           </HBox.margin>
                                 </Button>
-                                <Pane layoutX="10.0" layoutY="10.0" prefHeight="46.0" prefWidth="73.0" />
                             </children>
+                     <VBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </VBox.margin>
                         </HBox>
                         <HBox prefHeight="25.0" prefWidth="939.0">
                             <children>
-                                <Pane prefHeight="26.0" prefWidth="259.0" />
                                 <Label fx:id="imageLabel" text="..." textFill="RED">
                                     <font>
                                         <Font name="Arial" size="18.0" />
                                     </font>
+                           <padding>
+                              <Insets left="265.0" />
+                           </padding>
                                 </Label>
                             </children>
                         </HBox>

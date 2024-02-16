@@ -21,4 +21,8 @@ module LeonardoDiCafe {
     opens server.view.accounts to javafx.fxml;
     exports server.view.orders;
     opens server.view.orders to javafx.fxml;
+    exports server.view.addproducts;
+    opens server.view.addproducts to javafx.fxml;
+    exports server.view.misc;
+    opens server.view.misc to javafx.fxml;
 }

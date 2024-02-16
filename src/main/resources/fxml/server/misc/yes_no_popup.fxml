@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #634921;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.view.YesNoPopupView">
+<BorderPane prefHeight="200.0" prefWidth="300.0" style="-fx-background-color: #634921;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.view.misc.YesNoPopupView">
    <center>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ECE9E3;" BorderPane.alignment="CENTER">
          <BorderPane.margin>

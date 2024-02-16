@@ -3,7 +3,6 @@ package server.controller.orders;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
@@ -93,11 +92,7 @@ public class OrderListPageController {
         int filteredIndex = cell.getTableRow().getIndex();
         int originalIndex = view.getFilteredList().getSourceIndex(filteredIndex);
 
-        if (model.getOrderList().get(originalIndex).isStatus()) {
-            model.updateStatus(false, originalIndex);
-        } else {
-            model.updateStatus(true, originalIndex);
-        }
+        model.updateStatus(!model.getOrderList().get(originalIndex).isStatus(), originalIndex);
         view.getOrderList().set(originalIndex, model.getOrderList().get(originalIndex));
 
         model.setStatusChange(true);

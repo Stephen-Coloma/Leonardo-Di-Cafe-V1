@@ -1,6 +1,6 @@
-package server.controller;
+package server.controller.misc;
 
-import server.view.YesNoPopupView;
+import server.view.misc.YesNoPopupView;
 
 public class YesNoPopupController {
     YesNoPopupView view;
