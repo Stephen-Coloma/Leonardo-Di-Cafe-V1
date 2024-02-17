@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import shared.Beverage;
@@ -34,6 +35,10 @@ public class MainMenuClientPageController {
     public MainMenuClientPageController(MainMenuClientPageModel mainMenuModel, MainMenuClientPageView mainMenuView){
         this.mainMenuView = mainMenuView;
         this.mainMenuModel = mainMenuModel;
+
+        //initialize the account name
+        String accountName = this.mainMenuModel.getClientModel().getCustomer().getName();
+        this.mainMenuView.getAccountNameLabel().setText(accountName);
 
         initializeFoodMenu();
 
@@ -337,7 +342,7 @@ public class MainMenuClientPageController {
                 lPrice = totalPrice;
             }
 
-            Beverage beverage = new Beverage(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), product.getImage(), product.getDescription(), sQuantity,mQuantity,lQuantity,sPrice,mPrice,lPrice);
+            Beverage beverage = new Beverage(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), new Image[]{product.getImage()}, product.getDescription(), sQuantity,mQuantity,lQuantity,sPrice,mPrice,lPrice);
             //update first the cart of the client model which resides in MainMenuModel.getClientModel()
             mainMenuModel.getClientModel().getCart().add(beverage);
 
@@ -360,7 +365,7 @@ public class MainMenuClientPageController {
             mainMenuModel.getClientModel().getFoodMenu().get(product.getName()).updateQuantity(selectFoodController.getFinalOrderedQuantity());
 
             //cast to create a new Food object to be passed on the cart
-            Food food = new Food(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), product.getImage(), product.getDescription(), selectFoodController.getFinalOrderedQuantity(), selectFoodController.getFinalOrderedPrice());
+            Food food = new Food(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), new Image[]{product.getImage()}, product.getDescription(), selectFoodController.getFinalOrderedQuantity(), selectFoodController.getFinalOrderedPrice());
             //update first the cart of the client model which resides in MainMenuModel.getClientModel()
             mainMenuModel.getClientModel().getCart().add(food);
 

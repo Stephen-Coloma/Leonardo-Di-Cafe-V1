@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.view.fxmlcontroller.inventory.BeverageEditDetailsPopupController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.view.inventory.BeverageEditDetailsPopupView">
    <top>
       <Pane prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #634921;" BorderPane.alignment="CENTER">
          <children>
@@ -128,7 +128,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="580.0" spacing="2.0">
                      <children>
-                        <Button fx:id="chooseImageButton" mnemonicParsing="false" onMouseClicked="#chooseImage" prefHeight="28.0" text="Choose image file">
+                        <Button fx:id="chooseImageButton" mnemonicParsing="false" prefHeight="28.0" text="Choose image file">
                            <font>
                               <Font name="Arial" size="13.0" />
                            </font>

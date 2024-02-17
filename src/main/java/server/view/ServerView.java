@@ -1,6 +1,5 @@
 package server.view;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,7 +10,7 @@ import java.io.IOException;
 
 public class ServerView {
     private FXMLLoader loader;
-    private Stage stage;
+    private final Stage stage;
 
     public ServerView(Stage stage) {
         this.stage = stage;

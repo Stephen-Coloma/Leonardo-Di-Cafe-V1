@@ -23,8 +23,6 @@ public class MainMenuClientPageModel {
     public MainMenuClientPageModel(Object[] clientModelData) {
         //the serverResponse[2] responds Object[] {customer, foodMenu, beverageMenu}
 
-        //todo: handle images being sent by the server
-
         Customer customer = ((Customer) clientModelData[0]);
         HashMap<String, Food> foodMenu = (HashMap<String, Food>) clientModelData[1];
         HashMap<String, Beverage> beverageMenu = ((HashMap<String, Beverage>) clientModelData[2]);

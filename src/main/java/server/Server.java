@@ -33,6 +33,7 @@ public class Server extends Application {
             ServerController controller = new ServerController(model, view);
 
 
+            //todo, there is a problem here, the view.getUIExit() method returns false that is why it dont open its socket for incoming client connection
             while (true) {
                 Socket client = server.accept();
                 controller.setClientSocket(client);

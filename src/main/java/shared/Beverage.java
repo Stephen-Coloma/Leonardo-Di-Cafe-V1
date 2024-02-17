@@ -12,7 +12,7 @@ public class Beverage extends Product{
     private HashMap<String, Double> sizePrice;
 
     //constructor
-    public Beverage(String name, char type, double review, int reviewCount, SerializableImage image, String description, int sQuantity, int mQuantity, int lQuantity, double sPrice, double mPrice, double lPrice) {
+    public Beverage(String name, char type, double review, int reviewCount, Object[] image, String description, int sQuantity, int mQuantity, int lQuantity, double sPrice, double mPrice, double lPrice) {
         super(name, type, review, reviewCount, image, description);
 
         HashMap<String, Integer> sizeQuantity = new HashMap<>(3);
@@ -73,53 +73,23 @@ public class Beverage extends Product{
      @throws Exception when out of stocks*/
     public void updateQuantity(String size) throws Exception {
         //separated per size to accommodate multiple threads
-        if (size.equals("small")){
-            synchronized (this){
-                int quantity = sizeQuantity.get(size);
-                quantity--;
-                sizeQuantity.put(size, quantity); //updates
+        switch (size) {
+            case "small", "medium", "large" -> {
+                synchronized (this) {
+                    int quantity = sizeQuantity.get(size);
+                    quantity--;
+                    sizeQuantity.put(size, quantity); //updates
 
-                if (quantity < 0){
-                    quantity++;
-                    sizeQuantity.put(size, quantity);
-                    throw new OutOfStockException("Out of Stock");
+                    if (quantity < 0) {
+                        quantity++;
+                        sizeQuantity.put(size, quantity);
+                        throw new OutOfStockException("Out of Stock");
+                    }
+
+                    //reaches here means no error updating the value
+                    int sold = super.getAmountSold() + 1;
+                    super.setAmountSold(sold);
                 }
-
-                //reaches here means no error updating the value
-                int sold =  super.getAmountSold() + 1;
-                super.setAmountSold(sold);
-            }
-        }else if (size.equals("medium")){
-            synchronized (this){
-                int quantity = sizeQuantity.get(size);
-                quantity--;
-                sizeQuantity.put(size, quantity); //updates
-
-                if (quantity < 0){
-                    quantity++;
-                    sizeQuantity.put(size, quantity);
-                    throw new OutOfStockException("Out of Stock");
-                }
-
-                //reaches here means no error updating the value
-                int sold =  super.getAmountSold() + 1;
-                super.setAmountSold(sold);
-            }
-        }else if (size.equals("large")){
-            synchronized (this){
-                int quantity = sizeQuantity.get(size);
-                quantity--;
-                sizeQuantity.put(size, quantity); //updates
-
-                if (quantity < 0){
-                    quantity++;
-                    sizeQuantity.put(size, quantity);
-                    throw new OutOfStockException("Out of Stock");
-                }
-
-                //reaches here means no error updating the value
-                int sold =  super.getAmountSold() + 1;
-                super.setAmountSold(sold);
             }
         }
     }

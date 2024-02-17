@@ -25,6 +25,8 @@ public class MainMenuClientPageView {
     private Scene scene;
     private Parent root;
     @FXML
+    private Label accountNameLabel;
+    @FXML
     private ImageView cartImage;
     @FXML
     private Button clearCartButton;
@@ -307,5 +309,13 @@ public class MainMenuClientPageView {
 
     public void setClearCartButton(Button clearCartButton) {
         this.clearCartButton = clearCartButton;
+    }
+
+    public Label getAccountNameLabel() {
+        return accountNameLabel;
+    }
+
+    public void setAccountNameLabel(Label accountNameLabel) {
+        this.accountNameLabel = accountNameLabel;
     }
 }
