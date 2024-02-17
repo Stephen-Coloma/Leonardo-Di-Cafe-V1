@@ -56,7 +56,7 @@ public class AddProductPageController {
                 model.setDescription(view.getProductDescriptionTextArea().getText().trim());
                 model.setSQuantity(Integer.parseInt(view.getMainQuantityTextField().getText().trim()));
                 model.setSPrice(Double.parseDouble(view.getMainPriceTextField().getText().trim()));
-                model.createCopy(view.getImageTextField().getText());
+                model.createCopy(view.getImageTextField().getText().trim());
 
                 if (view.getTypeOfProductMenuButton().getText().equalsIgnoreCase("beverage")) {
                     type = false;

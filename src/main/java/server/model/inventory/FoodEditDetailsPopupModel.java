@@ -1,8 +1,9 @@
 package server.model.inventory;
 
 import shared.Food;
-import shared.SerializableImage;
-import util.ImageCopier;
+import util.ImageUtility;
+
+import java.io.IOException;
 
 public class FoodEditDetailsPopupModel {
     private Food food;
@@ -15,13 +16,21 @@ public class FoodEditDetailsPopupModel {
         return food;
     }
 
-    public SerializableImage processSerializableImage(String absolutePath) {
+    public Object[] processImageChosen(String absolutePath) {
         String extension = absolutePath.substring(absolutePath.lastIndexOf('.'));
-        String copiedImagePath = ImageCopier.copyImage(absolutePath, food.getName() + extension);
+        String copiedImagePath = ImageUtility.copyImage(absolutePath, food.getName() + extension);
 
-        String url = food.getImage().getUrl();
-        ImageCopier.deleteImage(url.substring(url.lastIndexOf('/') + 1));
+        String imageFileName = food.getImageName();
+        ImageUtility.deleteImage(imageFileName);
 
-        return new SerializableImage("file:" + copiedImagePath);
+        Object[] image;
+        try {
+            assert copiedImagePath != null;
+            image = new Object[]{food.getName() + extension, ImageUtility.getImageBytes(copiedImagePath.substring(copiedImagePath.lastIndexOf('\\') + 1))};
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return image;
     } // end of processSerializableImage
 } // end of FoodEditDetailsPopupModel

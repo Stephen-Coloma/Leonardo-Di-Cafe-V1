@@ -8,6 +8,7 @@ import server.view.MainMenuAdminView;
 import server.view.ServerView;
 import shared.Customer;
 import util.PushNotification;
+import util.XMLUtility;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 
@@ -87,11 +88,11 @@ public class ServerController implements MainMenuAdminObserver {
                     String[] information = (String[]) message[1];
                     String username = information[0];
                     String password = information[1];
-
                     Object[] client = model.processLogin(username, password);
-                    sendData("LOGIN_SUCCESSFUL", client);
+
+                    sendData(String.valueOf(((Customer) client[0]).getUsername().hashCode()), "SIGN_UP_SUCCESSFUL", client);
                 } catch (InvalidCredentialsException exception) {
-                    sendData("LOGIN_FAILED", null);
+                    sendData("", "LOGIN_FAILED", null);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -100,9 +101,9 @@ public class ServerController implements MainMenuAdminObserver {
                 try {
                     Customer client = (Customer) message[1];
                     model.processSignUp(client);
-                    sendData("SIGN_UP_SUCCESSFUL", true);
+                    sendData(String.valueOf(client.getUsername().hashCode()), "SIGN_UP_SUCCESSFUL", true);
                 } catch (AccountExistsException accountExistsException) {
-                    sendData("SIGN_UP_FAILED", false);
+                    sendData("", "SIGN_UP_FAILED", false);
                 } catch (Exception exception) {
                     throw new RuntimeException(exception);
                 }
@@ -133,7 +134,7 @@ public class ServerController implements MainMenuAdminObserver {
             }
 
             /*
-            TODO: Move this part into a method that executs once the server closes so that the writing of data will
+            TODO: Move this part into a method that executes once the server closes so that the writing of data will
                   only be done once the server closes
 
                XMLUtility.saveFoodMenu(model.getFoodMenu());
@@ -143,8 +144,8 @@ public class ServerController implements MainMenuAdminObserver {
         }
     } // end of notifyMenuChanges
 
-    private void sendData(String code, Object data) {
-        Object[] response = {code, data};
+    private void sendData(String clientID, String code, Object data) {
+        Object[] response = {clientID, code, data};
         try {
             streamWriter.writeObject(response);
         } catch (IOException e) {

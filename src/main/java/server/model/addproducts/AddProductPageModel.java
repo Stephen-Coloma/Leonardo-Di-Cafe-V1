@@ -3,9 +3,9 @@ package server.model.addproducts;
 import server.model.listeners.AddProductPageObserver;
 import shared.Beverage;
 import shared.Food;
-import shared.SerializableImage;
-import util.ImageCopier;
+import util.ImageUtility;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +28,7 @@ public class AddProductPageModel {
     private double sPrice;
     private double mPrice;
     private double lPrice;
-    private SerializableImage image;
+    private Object[] image;
 
     public void setFoodMenu(HashMap<String, Food> foodMenu) {
         this.foodMenu = foodMenu;
@@ -100,8 +100,14 @@ public class AddProductPageModel {
 
     public void createCopy(String absolutePath) {
         String extension = absolutePath.substring(absolutePath.lastIndexOf('.'));
-        String copiedImagePath = ImageCopier.copyImage(absolutePath, name + extension);
-        image = new SerializableImage("file:" + copiedImagePath);
+        String copiedImagePath = ImageUtility.copyImage(absolutePath, name + extension);
+
+        String imageFilename = copiedImagePath.substring(copiedImagePath.lastIndexOf('\\') + 1);
+        try {
+            image = new Object[]{imageFilename, ImageUtility.getImageBytes(imageFilename)};
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     } // end of createCopy
 
     public Food getFood() {

@@ -9,7 +9,7 @@ public class Food extends Product {
     private double price;
 
     //constructors
-    public Food(String name, char type, double review, int reviewCount, SerializableImage image, String description, int quantity, double price) {
+    public Food(String name, char type, double review, int reviewCount, Object[] image, String description, int quantity, double price) {
         super(name, type, review, reviewCount, image, description);
         this.quantity = quantity;
         this.price = price;

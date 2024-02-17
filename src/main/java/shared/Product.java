@@ -1,5 +1,9 @@
 package shared;
 
+import javafx.scene.image.Image;
+
+import java.io.ByteArrayInputStream;
+
 /**This abstract class represent a product. A product is classified into f - food, and b - beverage.
  * Food does not have any variations, meaning same price and quantity.
  * Whereas for beverage, it may be small, medium, large and has different price and quantity for each
@@ -9,12 +13,12 @@ public abstract class Product {
     private char type;
     private double review; //average of 1-5
     private int reviewCount;
-    private SerializableImage image;
+    private Object[] image;
     private String description;
     private int amountSold;
 
     /**A constructor initializes the details of the classes whose direct descendant of this class.*/
-    public Product(String name, char type, double review, int reviewCount, SerializableImage image, String description) {
+    public Product(String name, char type, double review, int reviewCount, Object[] image, String description) {
         this.name = name;
         this.type = type;
         this.review = review;
@@ -26,14 +30,15 @@ public abstract class Product {
     //getters setters
     public String getName(){
         return name;
-    };
+    }
+
     public char getType(){
         return type;
-    };
+    }
 
     public double getReview(){
         return review;
-    };
+    }
 
     public int getReviewCount() {
         return reviewCount;
@@ -69,11 +74,19 @@ public abstract class Product {
         this.amountSold = amountSold;
     }
 
-    public SerializableImage getImage() {
-        return image;
+    public boolean hasImage() {
+        return image == null;
     }
 
-    public void setImage(SerializableImage image) {
+    public String getImageName() {
+        return (String) image[0];
+    }
+
+    public Image getImage() {
+        return new Image(new ByteArrayInputStream((byte[]) image[1]));
+    }
+
+    public void setImage(Object[] image) {
         this.image = image;
     }
 
@@ -95,7 +108,7 @@ public abstract class Product {
                 ", type=" + type +
                 ", review=" + review +
                 ", reviewCount=" + reviewCount +
-                ", image=" + image +
+                ", image=" + image[0] +
                 ", description='" + description + '\'' +
                 ", amountSold=" + amountSold ;
     }

@@ -2,12 +2,18 @@ package util;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
-public class ImageCopier {
+public class ImageUtility {
+
+    private ImageUtility() {}
+
+    public static byte[] getImageBytes(String filename) throws IOException {
+        File imageFile = new File("src/main/resources/productimages/" + filename);
+        return Files.readAllBytes(imageFile.toPath());
+    } // end of getImageBytes
 
     /**
      * Copies an image file from the specified absolute path to a destination directory.
@@ -41,21 +47,14 @@ public class ImageCopier {
      * @param fileName the name of the image file to be deleted
      */
     public static void deleteImage(String fileName) {
-        String imagePath = "src/main/resources/productimages/" + fileName;
+        File imageFile = new File("src/main/resources/productimages/" + fileName);
 
-        URL imageUrl = ImageCopier.class.getResource(imagePath);
-
-        if (imageUrl != null) {
-            String filePath = imageUrl.getFile();
-
-            File imageFile = new File(filePath);
-            if (imageFile.exists()) {
-                if (imageFile.delete()) {
-                    System.out.println("Image deleted successfully");
-                } else {
-                    System.out.println("Failed to delete the image");
-                }
+        if (imageFile.exists()) {
+            if (imageFile.delete()) {
+                System.out.println("Image deleted successfully");
+            } else {
+                System.out.println("Failed to delete the image");
             }
         }
     }
-} // end of ImageCopier class
+} // end of FileCreator class

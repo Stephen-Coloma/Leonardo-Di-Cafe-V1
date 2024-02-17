@@ -164,7 +164,7 @@ public class InventoryPageController {
                 popupModel.getFood().setPrice(Double.parseDouble(popupView.getPriceTextField().getText().trim()));
 
                 if (!popupView.getImageTextField().getText().isEmpty()) {
-                    popupModel.getFood().setImage(popupModel.processSerializableImage(popupView.getImageTextField().getText().trim()));
+                    popupModel.getFood().setImage(popupModel.processImageChosen(popupView.getImageTextField().getText().trim()));
                 }
 
                 if (originalIndex != -1) {
@@ -196,7 +196,7 @@ public class InventoryPageController {
                 popupModel.getBeverage().setSizePrice(sizePrice);
 
                 if (!popupView.getImageTextField().getText().isEmpty()) {
-                    popupModel.getBeverage().setImage(popupModel.processSerializableImage(popupView.getImageTextField().getText().trim()));
+                    popupModel.getBeverage().setImage(popupModel.processImageChosen(popupView.getImageTextField().getText().trim()));
                 }
 
                 if (originalIndex != -1) {
