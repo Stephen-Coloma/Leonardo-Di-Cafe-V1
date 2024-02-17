@@ -1,6 +1,7 @@
 package server.controller;
 
 import javafx.application.Platform;
+import org.controlsfx.control.Notifications;
 import server.controller.accounts.AccountListPageController;
 import server.controller.addproducts.AddProductPageController;
 import server.controller.inventory.InventoryPageController;

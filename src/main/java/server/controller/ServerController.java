@@ -7,6 +7,7 @@ import server.model.listeners.MainMenuAdminObserver;
 import server.view.MainMenuAdminView;
 import server.view.ServerView;
 import shared.Customer;
+import util.PushNotification;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 
@@ -118,13 +119,16 @@ public class ServerController implements MainMenuAdminObserver {
             } else if ("INVENTORY_CHANGE".equals(code)) {
                 model.setFoodMenu(mainMenuAdminModel.getFoodMenu());
                 model.setBeverageMenu(mainMenuAdminModel.getBeverageMenu());
+                PushNotification.toastSuccess("Inventory Status", "Updated inventory stocks and details");
                 System.out.println(model.getFoodMenu());
                 System.out.println(model.getBeverageMenu());
             } else if ("NEW_FOOD_PRODUCT".equals(code)) {
                 model.setFoodMenu(mainMenuAdminModel.getFoodMenu());
+                PushNotification.toastSuccess("New Product", "Food added to the list");
                 System.out.println(model.getFoodMenu());
             } else if ("NEW_BEVERAGE_PRODUCT".equals(code)) {
                 model.setBeverageMenu(mainMenuAdminModel.getBeverageMenu());
+                PushNotification.toastSuccess("New Product", "Beverage added to the list");
                 System.out.println(model.getBeverageMenu());
             }
 

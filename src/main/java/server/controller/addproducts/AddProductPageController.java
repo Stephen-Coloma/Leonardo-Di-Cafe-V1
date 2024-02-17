@@ -4,10 +4,9 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import server.controller.misc.MessageDialogController;
 import server.model.addproducts.AddProductPageModel;
 import server.view.addproducts.AddProductPageView;
-import server.view.misc.MessageDialogView;
+import util.PushNotification;
 
 import java.io.File;
 
@@ -75,12 +74,17 @@ public class AddProductPageController {
                 model.notifyObservers();
                 model.setNewProduct(false);
             } else {
+                /*
                 MessageDialogView popupView = MessageDialogView.loadMessageDialogView();
                 popupView.setTitle("Missing Fields");
 
                 MessageDialogController popupController = new MessageDialogController(popupView);
                 popupController.setMessagePromptMessage("Please supply the needed information before adding the product");
                 popupController.setComponentActions();
+
+                 */
+
+                PushNotification.toastWarn("Missing Product Fields", "Please supply all the needed information" + "\n" + "before adding the product");
             }
         });
     } // end of setComponentActions
