@@ -4,12 +4,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -18,6 +15,7 @@ import shared.Customer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -59,9 +57,9 @@ public class AccountListPageView implements Initializable {
     } // end of loadAccountListPage
 
     public void populateTableFromList(List<Customer> list) {
-        ObservableList<Customer> accountList = FXCollections.observableArrayList();
+        ObservableList<Customer> accountList = FXCollections.observableArrayList(list);
 
-        accountList.addAll(list);
+        accountList.sort(Comparator.comparing(Customer::getName));
 
         filteredList = new FilteredList<>(accountList, item -> true);
         accountsTableView.setItems(filteredList);

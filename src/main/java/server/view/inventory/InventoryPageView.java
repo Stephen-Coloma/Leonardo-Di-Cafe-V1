@@ -15,10 +15,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import shared.Beverage;
 import shared.Food;
+
 import java.io.IOException;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class InventoryPageView implements Initializable {
@@ -97,18 +98,21 @@ public class InventoryPageView implements Initializable {
 
     public void populateTableFromMap(HashMap<String, Food> foodMenu, HashMap<String, Beverage> beverageMenu) {
         productList = FXCollections.observableArrayList();
+        productList.addAll(foodMenu.values());
+        productList.addAll(beverageMenu.values());
 
-        for (Map.Entry<String, Food> entry : foodMenu.entrySet()) {
-            Food food = entry.getValue();
-            productList.add(food);
-        }
-
-        for (Map.Entry<String, Beverage> entry : beverageMenu.entrySet()) {
-            Beverage beverage = entry.getValue();
-            productList.add(beverage);
-        }
+        productList.sort(Comparator.comparing(o -> {
+            if (o instanceof Food food) {
+                return food.getName();
+            } else if (o instanceof Beverage beverage) {
+                return beverage.getName();
+            } else {
+                return "";
+            }
+        }));
 
         filteredList = new FilteredList<>(productList, item -> true);
+
         inventoryTableView.setItems(filteredList);
     } // end of populateTableFromMap
 

@@ -105,10 +105,10 @@ public class AccountInformationPopupView implements Initializable {
     }
 
     public void setCloseTabButtonMouseEntered() {
-        closeTabButton.setStyle("-fx-background-color: #9a7133");
+        closeTabButton.setStyle("-fx-background-color: #a18a6d");
     }
 
     public void setCloseTabButtonMouseExited() {
-        closeTabButton.setStyle("-fx-background-color: #634921");
+        closeTabButton.setStyle("-fx-background-color: #b59c7a");
     }
 } // end of ViewAccountInformationPopupController

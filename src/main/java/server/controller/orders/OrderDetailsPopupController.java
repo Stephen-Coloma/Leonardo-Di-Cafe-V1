@@ -24,7 +24,7 @@ public class OrderDetailsPopupController {
         view.setCustomerNameLabel(model.getOrder().getCustomer().getName());
         view.setAddressLabel(model.getOrder().getCustomer().getAddress());
         view.setTotalPriceLabel("₱" + model.getOrder().getTotalPrice());
-        view.setStatusLabel(model.getOrder().isStatus() ? "Received" : "Not Received");
+        view.setStatusLabel(model.getOrder().isStatus() ? "Confirmed" : "Pending");
     } // end of loadOrderDetails
 
     public void readOrders() {

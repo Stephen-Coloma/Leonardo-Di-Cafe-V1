@@ -353,8 +353,6 @@ public class XMLUtility {
             transformer.transform(source, result);
 
             System.out.println("Orders have been updated and written to file: " + file.getAbsolutePath());
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }

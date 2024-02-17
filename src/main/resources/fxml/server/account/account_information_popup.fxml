@@ -110,7 +110,7 @@
                   </TableView>
                </center>
                <bottom>
-                  <Button fx:id="closeTabButton" mnemonicParsing="false" onMouseEntered="#setCloseTabButtonMouseEntered" onMouseExited="#setCloseTabButtonMouseExited" style="-fx-background-color: #634921;" text="Close Tab" textFill="WHITE" BorderPane.alignment="CENTER">
+                  <Button fx:id="closeTabButton" mnemonicParsing="false" onMouseEntered="#setCloseTabButtonMouseEntered" onMouseExited="#setCloseTabButtonMouseExited" style="-fx-background-color: #b59c7a;" text="Close Tab" textFill="WHITE" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets bottom="10.0" top="8.0" />
                      </BorderPane.margin>

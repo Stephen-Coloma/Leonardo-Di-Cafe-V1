@@ -17,6 +17,7 @@ import shared.Order;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -53,7 +54,7 @@ public class OrderListPageView implements Initializable {
         totalColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTotalPrice()).asObject());
         statusColumn.setCellValueFactory(cellData -> {
             boolean status = cellData.getValue().isStatus();
-            return new SimpleStringProperty(status ? "Received" : "Not Received");
+            return new SimpleStringProperty(status ? "Confirmed" : "Pending");
         });
 
         searchOrderTextField.textProperty().addListener((observable, oldValue, newValue) -> filterTable(newValue));
@@ -70,9 +71,9 @@ public class OrderListPageView implements Initializable {
     } // end of loadOrderListPage
 
     public void populateTableFromList(List<Order> list) {
-        orderList = FXCollections.observableArrayList();
+        orderList = FXCollections.observableArrayList(list);
 
-        orderList.addAll(list);
+        orderList.sort(Comparator.comparingInt(Order::getID));
 
         filteredList = new FilteredList<>(orderList, item -> true);
         orderTableView.setItems(filteredList);

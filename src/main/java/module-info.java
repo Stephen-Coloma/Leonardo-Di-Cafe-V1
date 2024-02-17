@@ -14,9 +14,7 @@ module LeonardoDiCafe {
     exports server;
     exports server.view;
     exports server.view.inventory to javafx.fxml;
-    exports server.controller.temporarycontroller;
     opens server.view.inventory to javafx.fxml;
-    opens server.controller.temporarycontroller to javafx.fxml;
     exports server.view.accounts;
     opens server.view.accounts to javafx.fxml;
     exports server.view.orders;
@@ -25,4 +23,6 @@ module LeonardoDiCafe {
     opens server.view.addproducts to javafx.fxml;
     exports server.view.misc;
     opens server.view.misc to javafx.fxml;
+    exports server.view.analytics;
+    opens server.view.analytics to javafx.fxml;
 }

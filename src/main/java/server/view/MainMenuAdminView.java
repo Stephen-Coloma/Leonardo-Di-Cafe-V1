@@ -2,11 +2,15 @@ package server.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 public class MainMenuAdminView {
-
+    @FXML
+    private Label timeLabel;
+    @FXML
+    private Label dateLabel;
     @FXML
     private BorderPane borderPane;
     @FXML
@@ -28,6 +32,14 @@ public class MainMenuAdminView {
 
     public void logout() {
         System.exit(0);
+    }
+
+    public void setTimeLabel(String value) {
+        timeLabel.setText(value);
+    }
+
+    public void setDateLabel(String value) {
+        dateLabel.setText(value);
     }
 
     public Button getHomeButton() {
@@ -87,10 +99,10 @@ public class MainMenuAdminView {
     }
 
     public void logoutButtonEntered() {
-        logoutButton.setStyle("-fx-background-color: #B83B26;");
+        logoutButton.setStyle("-fx-background-color: #B83B26; -fx-background-radius: 10;");
     }
     public void logoutButtonExited() {
-        logoutButton.setStyle("-fx-background-color:  #dc472d;");
+        logoutButton.setStyle("-fx-background-color:  #dc472d; -fx-background-radius: 10;");
     }
     public void homeButtonEntered() {
         homeButton.setStyle("-fx-background-color: lightgray;");
