@@ -25,6 +25,10 @@ public class MainMenuClientPageView {
     private Scene scene;
     private Parent root;
     @FXML
+    private Label dateLabel;
+    @FXML
+    private Label timeLabel;
+    @FXML
     private Label accountNameLabel;
     @FXML
     private ImageView cartImage;
@@ -79,9 +83,7 @@ public class MainMenuClientPageView {
         clearCartButton.setOnAction(event);
     }
 
-
     public void showMenuUI (ActionEvent event) throws IOException {
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/main_menu_client_page.fxml"));
         root = loader.load();
 
@@ -317,5 +319,13 @@ public class MainMenuClientPageView {
 
     public void setAccountNameLabel(Label accountNameLabel) {
         this.accountNameLabel = accountNameLabel;
+    }
+
+    public void setDateLabel(String value) {
+        dateLabel.setText(value);
+    }
+
+    public void setTimeLabel(String value) {
+        timeLabel.setText(value);
     }
 }

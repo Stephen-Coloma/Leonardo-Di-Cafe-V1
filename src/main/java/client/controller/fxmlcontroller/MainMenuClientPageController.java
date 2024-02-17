@@ -4,6 +4,9 @@ package client.controller.fxmlcontroller;
 import client.model.fxmlmodel.*;
 import client.view.fxmlview.CartItemCardView;
 import client.view.fxmlview.MainMenuClientPageView;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -14,12 +17,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import shared.Beverage;
 import shared.Food;
 import shared.Product;
 
 import javax.xml.transform.Source;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,6 +43,10 @@ public class MainMenuClientPageController {
         this.mainMenuView = mainMenuView;
         this.mainMenuModel = mainMenuModel;
 
+        // setting up the time and date labels
+        setupClock();
+        setupDate();
+
         //initialize the account name
         String accountName = this.mainMenuModel.getClientModel().getCustomer().getName();
         this.mainMenuView.getAccountNameLabel().setText(accountName);
@@ -49,6 +60,27 @@ public class MainMenuClientPageController {
         //setting up the action for clearCartButton
         clearCart();
     }
+
+    public void setupClock() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.seconds(1), event -> updateClock()));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    } // end of setDateAndTime
+
+    public void updateClock() {
+        LocalTime currentTime = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("h:mm a");
+        String formattedTime = currentTime.format(formatter);
+        mainMenuView.setTimeLabel(formattedTime);
+    } // end of updateClock
+
+    private void setupDate() {
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String formattedDate = currentDate.format(formatter);
+        mainMenuView.setDateLabel(formattedDate);
+    } // end of setupDate
 
     /**After login is successful, load the food menu*/
     private void initializeFoodMenu() {
