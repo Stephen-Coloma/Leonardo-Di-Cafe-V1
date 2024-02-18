@@ -6,72 +6,30 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="orderHistoryCard" prefHeight="66.0" prefWidth="370.0" style="-fx-background-color: #ffffff; -fx-border-color: #A38157;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="orderHistoryCard" prefHeight="100.0" prefWidth="385.0" style="-fx-background-color: #ffffff; -fx-border-color: #A38157;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.OrderHistoryCardView">
    <children>
-      <HBox prefHeight="67.0" prefWidth="368.0">
+      <Label fx:id="productNameLabel" alignment="TOP_LEFT" layoutX="102.0" layoutY="5.0" prefHeight="41.0" prefWidth="271.0" text="Product Name" wrapText="true">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="productImage" fitHeight="87.0" fitWidth="84.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../productimages/Pistachio Cupcake.png" />
+         </image>
+      </ImageView>
+      <HBox fx:id="starRating" layoutX="238.0" layoutY="66.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="141.0" spacing="5">
          <children>
-            <Pane prefHeight="67.0" prefWidth="20.0" />
-            <VBox prefHeight="78.0" prefWidth="52.0">
-               <children>
-                  <Pane prefHeight="6.0" prefWidth="52.0" />
-                  <ImageView fx:id="productImage" fitHeight="55.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../productimages/Pistachio Cupcake.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </VBox>
-            <Pane prefHeight="78.0" prefWidth="28.0" />
-            <VBox prefHeight="64.0" prefWidth="100.0">
-               <children>
-                  <Pane prefHeight="3.0" prefWidth="100.0" />
-                  <Label fx:id="productNameLabel" prefHeight="10.0" prefWidth="68.0" text="Product Name">
-                     <font>
-                        <Font name="System Bold" size="10.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="productSizeLabel" prefHeight="9.0" prefWidth="100.0" text="Size: Small">
-                     <font>
-                        <Font size="9.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="productQuantityLabel" prefHeight="11.0" prefWidth="100.0" text="Quantity: 2">
-                     <font>
-                        <Font size="9.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="productPriceLabel" prefHeight="19.0" prefWidth="42.0" text="P 180.00">
-                     <font>
-                        <Font name="System Bold" size="10.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <Pane prefHeight="78.0" prefWidth="16.0" />
-            <VBox prefHeight="72.0" prefWidth="142.0">
-               <children>
-                  <Pane prefHeight="8.0" prefWidth="142.0" />
-                  <Label fx:id="timeStamp" prefHeight="10.0" prefWidth="59.0" text="12/23/2023">
-                     <font>
-                        <Font size="9.0" />
-                     </font>
-                  </Label>
-                  <Pane layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="142.0" />
-                  <HBox fx:id="starRating" prefWidth="133.0" spacing="5">
-                     <children>
-                        <ToggleButton fx:id="star1" minHeight="18.0" prefHeight="18.0" prefWidth="5.0" style="-fx-background-image: img/starSVG.svg;" styleClass="star-button" stylesheets="@../../values/styles.css" />
-                        <ToggleButton fx:id="star2" styleClass="star-button" stylesheets="@../../values/styles.css" />
-                        <ToggleButton fx:id="star3" styleClass="star-button" stylesheets="@../../values/styles.css" />
-                        <ToggleButton fx:id="star4" styleClass="star-button" stylesheets="@../../values/styles.css" />
-                        <ToggleButton fx:id="star5" styleClass="star-button" stylesheets="@../../values/styles.css" />
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
+            <ToggleButton fx:id="star1" minHeight="18.0" prefHeight="22.0" prefWidth="43.0" style="-fx-background-image: img/starSVG.svg;" styleClass="star-button" stylesheets="@../../values/styles.css" />
+            <ToggleButton fx:id="star2" styleClass="star-button" stylesheets="@../../values/styles.css" />
+            <ToggleButton fx:id="star3" styleClass="star-button" stylesheets="@../../values/styles.css" />
+            <ToggleButton fx:id="star5" maxWidth="25.0" prefHeight="22.0" prefWidth="25.0" styleClass="star-button" stylesheets="@../../values/styles.css" />
+            <ToggleButton fx:id="star4" styleClass="star-button" stylesheets="@../../values/styles.css" />
          </children>
       </HBox>
+      <Label fx:id="productDescriptionLabel" alignment="TOP_LEFT" layoutX="102.0" layoutY="27.0" prefHeight="47.0" prefWidth="262.0" text="Description" wrapText="true" />
+      <Label fx:id="typeLabel" layoutX="102.0" layoutY="66.0" prefHeight="17.0" prefWidth="132.0" text="Type: " wrapText="true" />
    </children>
 </Pane>

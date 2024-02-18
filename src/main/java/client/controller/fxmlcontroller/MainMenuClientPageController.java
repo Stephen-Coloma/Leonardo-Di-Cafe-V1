@@ -365,40 +365,6 @@ public class MainMenuClientPageController {
                             PushNotification.toastSuccess("Order", "Order uploaded to the system");
                         }
                     });
-
-
-                    /*
-                    FXMLLoader checkoutLoader = new FXMLLoader(getClass().getResource("/fxml/client/checkout_page.fxml"));
-                    Parent root = checkoutLoader.load();
-
-                    //passing now the data needed for checkout
-                    Order orderFromClient = this.mainMenuModel.getClientModel().placeOrder();
-                    Customer customer = this.mainMenuModel.getClientModel().getCustomer();
-                    List<Product> clientCart = this.mainMenuModel.getClientModel().getCart();
-
-                    double subtotal = cartTotalPrice; //get what is on the cartTotalLabelPrice
-
-                    checkoutPageController.setSocket(this.getSocket());
-                    checkoutPageController.setIn(in); //in and out of the main menu client page
-                    checkoutPageController.setOut(out);
-
-                    Scene scene = new Scene(root);
-                    Stage popupStage = new Stage();
-                    popupStage.setScene(scene);
-                    popupStage.showAndWait(); //wait until the popup stops
-
-                     */
-
-                    //after the pop up closed, access now the orderProcessedByServer
-                    /*
-                    if (checkoutPageController.isOrderSuccessful()) {
-                        //clear the cart without updating the model
-                        clearCart(false);
-
-                        //update the client model
-                        this.mainMenuModel.getClientModel().orderProcessSuccessful(checkoutPageController.getOrderProcessedByServer());
-                    }
-                     */
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -527,7 +493,7 @@ public class MainMenuClientPageController {
             }
 
             Object[] imageData = {product.getImageName(), ImageUtility.getImageBytes(product.getImageName())};
-            Beverage beverage = new Beverage(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), imageData, product.getDescription(), sQuantity, mQuantity, lQuantity, sPrice, mPrice, lPrice);
+            Beverage beverage = new Beverage(product.getName(), product.getType(), 0, product.getReviewCount(), imageData, product.getDescription(), sQuantity, mQuantity, lQuantity, sPrice, mPrice, lPrice);
             //update first the cart of the client model which resides in MainMenuModel.getClientModel()
             mainMenuModel.getClientModel().getCart().add(beverage);
 
@@ -553,7 +519,7 @@ public class MainMenuClientPageController {
 
             //cast to create a new Food object to be passed on the cart
             Object[] imageData = {product.getImageName(), ImageUtility.getImageBytes(product.getImageName())};
-            Food food = new Food(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), imageData, product.getDescription(), selectFoodController.getFinalOrderedQuantity(), selectFoodController.getFinalOrderedPrice());
+            Food food = new Food(product.getName(), product.getType(), 0, product.getReviewCount(), imageData, product.getDescription(), selectFoodController.getFinalOrderedQuantity(), selectFoodController.getFinalOrderedPrice());
             //update first the cart of the client model which resides in MainMenuModel.getClientModel()
             mainMenuModel.getClientModel().getCart().add(food);
 

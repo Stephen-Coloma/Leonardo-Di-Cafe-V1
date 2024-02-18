@@ -227,9 +227,9 @@
       </VBox>
    </left>
    <center>
-      <ScrollPane fx:id="scrollPaneMenu" prefHeight="665.0" prefWidth="720.0" style="-fx-background-color: #A38157;" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="scrollPaneMenu" prefHeight="665.0" prefWidth="720.0" style="-fx-background-color: #A38157;" BorderPane.alignment="TOP_CENTER">
          <content>
-            <GridPane fx:id="gridPaneMenu" alignment="TOP_CENTER" prefHeight="90.0">
+            <GridPane fx:id="gridPaneMenu" alignment="TOP_CENTER" prefHeight="0.0" prefWidth="1.0">
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>

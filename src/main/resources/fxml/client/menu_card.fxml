@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxWidth="-Infinity" prefHeight="129.0" prefWidth="364.0" style="-fx-background-color: #a38157;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.MenuCardView">
+<AnchorPane maxWidth="-Infinity" prefHeight="129.0" prefWidth="380.0" style="-fx-background-color: #a38157;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.MenuCardView">
    <children>
-      <AnchorPane layoutX="3.2" prefHeight="124.0" prefWidth="369.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="2.0">
+      <AnchorPane layoutX="3.2" prefHeight="126.0" prefWidth="374.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="2.0">
          <children>
             <HBox prefHeight="125.0" prefWidth="316.0">
                <children>
