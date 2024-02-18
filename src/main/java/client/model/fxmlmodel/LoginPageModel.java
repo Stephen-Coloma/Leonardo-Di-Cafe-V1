@@ -33,7 +33,7 @@ public class LoginPageModel {
      * Exceptions will be handled by the LoginPage Controller*/
     public void authenticate(String username, String password) throws RuntimeException, IOException, ClassNotFoundException {
 //        //todo: uncomment for testing purposes
-//        //for testing purposes only
+        //for testing purposes only
 //        HashMap<String, Food> foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/java/server/model/food_menu.xml"));
 //        HashMap<String, Beverage> beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/java/server/model/beverage_menu.xml"));
 //        List<Customer> customers = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/java/server/model/customer_account_list.xml"));
@@ -41,28 +41,28 @@ public class LoginPageModel {
 //
 //        serverResponse = new Object[]{"1111", "LOGIN_SUCCESSFUL", new Object[]{customer, foodMenu, beverageMenu}};
 
-        //Guide Object[] {"client.id", "LOGIN", credentials}
-        String clientID = String.valueOf(username.hashCode());
-        String requestType = "LOGIN";
-        String[] credentials = {username, password};
+            //Guide Object[] {"client.id", "LOGIN", credentials}
+            String clientID = String.valueOf(username.hashCode());
+            String requestType = "LOGIN";
+            String[] credentials = {username, password};
 
 
-        socket = new Socket(Client.IP_ADDRESS, Client.PORT);
-        out = new ObjectOutputStream(socket.getOutputStream());
-        in  = new ObjectInputStream(socket.getInputStream());
+            socket = new Socket(Client.IP_ADDRESS, Client.PORT);
+            out = new ObjectOutputStream(socket.getOutputStream());
+            in  = new ObjectInputStream(socket.getInputStream());
 
-        sendData(clientID, requestType, credentials);
-        Object[] response = (Object[]) in.readObject();
+            sendData(clientID, requestType, credentials);
+            Object[] response = (Object[]) in.readObject();
 
 
-        //Close the connection when it is not login successful
-        if (!response[1].equals("LOGIN_SUCCESSFUL")){ //todo: if login is successful, set the socket for the main menu client page
-            out.close();
-            in.close();
-            socket.close();
-        }
+            //Close the connection when it is not login successful
+            if (!response[1].equals("LOGIN_SUCCESSFUL")){ //todo: if login is successful, set the socket for the main menu client page
+                out.close();
+                in.close();
+                socket.close();
+            }
 
-        serverResponse = response;
+            serverResponse = response;
     }
 
     /**Helper method that sends data to server*/

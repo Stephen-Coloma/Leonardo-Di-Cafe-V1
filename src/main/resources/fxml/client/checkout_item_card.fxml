@@ -3,50 +3,31 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="checkoutItemCard" prefHeight="59.0" prefWidth="304.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="checkoutItemCard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="345.0" style="-fx-background-color: #b59c7a; -fx-border-radius: 5; -fx-border-width: 0.5;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.CheckoutItemCardView">
    <children>
-      <HBox layoutX="9.0" prefHeight="58.0" prefWidth="294.0">
+      <Pane layoutX="3.0" layoutY="-4.0" prefHeight="80.0" prefWidth="339.0" style="-fx-background-color: ffffff;">
          <children>
-            <VBox prefHeight="58.0" prefWidth="48.0">
-               <children>
-                  <Pane prefHeight="6.0" prefWidth="48.0" />
-                  <ImageView fx:id="itemImage" fitHeight="46.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../productimages/Pistachio%20Cupcake.png" />
-                     </image>
-                  </ImageView>
-                  <Pane prefHeight="6.0" prefWidth="48.0" />
-               </children>
-            </VBox>
-            <Pane prefHeight="58.0" prefWidth="54.0" />
-            <VBox prefHeight="58.0" prefWidth="165.0">
-               <children>
-                  <Pane prefHeight="8.0" prefWidth="120.0" />
-                  <Label fx:id="itemName" prefHeight="18.0" prefWidth="120.0" text="Item 1" />
-                  <Label fx:id="itemSizeLabel" prefHeight="16.0" prefWidth="34.0" text="Size: Small ">
-                     <font>
-                        <Font size="7.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <Pane prefHeight="58.0" prefWidth="113.0" />
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Pane prefHeight="21.0" prefWidth="56.0" />
-                  <Label fx:id="itemPriceLabel" text="P 180.00">
-                     <font>
-                        <Font name="Arial" size="12.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
+            <ImageView fx:id="itemImage" fitHeight="72.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../productimages/Pistachio%20Cupcake.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="itemName" alignment="TOP_LEFT" layoutX="78.0" layoutY="14.0" prefHeight="40.0" prefWidth="192.0" text="Product Name" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="itemSizeLabel" layoutX="153.0" layoutY="50.0" prefHeight="24.0" prefWidth="96.0" text="size: " visible="false" />
+            <Label fx:id="itemPriceLabel" layoutX="270.0" layoutY="32.0" text="P 180.00">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="itemQuantity" layoutX="79.0" layoutY="52.0" prefHeight="17.0" prefWidth="96.0" text="qty:" />
          </children>
-      </HBox>
+      </Pane>
    </children>
 </Pane>
