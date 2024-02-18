@@ -20,7 +20,7 @@ public class ServerView {
         Platform.runLater(() -> {
             try {
                 System.out.println("Loading Admin Interface");
-                loader = new FXMLLoader(getClass().getResource("/fxml/server/MainMenuAdminPage.fxml"));
+                loader = new FXMLLoader(getClass().getResource("/fxml/server/main_menu_admin_page.fxml"));
                 BorderPane root = loader.load();
                 Scene scene = new Scene(root);
                 stage.setTitle("LEONARDO D' Cafe [ADMIN]");

@@ -67,7 +67,7 @@
                      <font>
                         <Font name="Arial Black" size="24.0" />
                      </font></Label>
-                  <TableView fx:id="foodAnalyticsTableView" focusTraversable="false" prefHeight="638.0" prefWidth="370.0" style="-fx-font-size: 13;" stylesheets="@../css/styles.css">
+                  <TableView fx:id="foodAnalyticsTableView" focusTraversable="false" prefHeight="638.0" prefWidth="370.0" style="-fx-font-size: 13;" stylesheets="@../../../values/table_style.css">
                     <columns>
                       <TableColumn fx:id="foodProductsColumn" editable="false" minWidth="171.0" prefWidth="230.0" resizable="false" text="Product" />
                       <TableColumn fx:id="foodProductsOrderCountColumn" editable="false" prefWidth="124.0" resizable="false" text="Order Count" />
@@ -87,7 +87,7 @@
                         <Font name="Arial Black" size="24.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="beverageAnalyticsTableView" focusTraversable="false" prefHeight="638.0" prefWidth="370.0" style="-fx-font-size: 13;" stylesheets="@../css/styles.css">
+                  <TableView fx:id="beverageAnalyticsTableView" focusTraversable="false" prefHeight="638.0" prefWidth="370.0" style="-fx-font-size: 13;" stylesheets="@../../../values/table_style.css">
                     <columns>
                       <TableColumn fx:id="beverageProductsColumn" editable="false" prefWidth="230.0" resizable="false" text="Product" />
                       <TableColumn fx:id="beverageProductsOrderCountColumn" editable="false" prefWidth="124.0" resizable="false" text="Order Count" />

@@ -12,7 +12,7 @@ public class ServerTest extends Application {
     }
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/server/MainMenuAdminPage.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/server/main_menu_admin_page.fxml"));
 
         stage.setTitle("Sample");
         stage.setScene(new Scene(root, 807, 455));
