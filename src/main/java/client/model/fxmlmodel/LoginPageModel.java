@@ -57,9 +57,9 @@ public class LoginPageModel {
 
             //Close the connection when it is not login successful
             if (!response[1].equals("LOGIN_SUCCESSFUL")){ //todo: if login is successful, set the socket for the main menu client page
-                out.close();
-                in.close();
                 socket.close();
+                in.close();
+                out.close();
             }
 
             serverResponse = response;

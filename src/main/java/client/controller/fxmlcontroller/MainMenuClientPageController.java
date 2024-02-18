@@ -26,6 +26,8 @@ import util.XMLUtility;
 
 import javax.xml.transform.Source;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -40,6 +42,8 @@ public class MainMenuClientPageController {
     private Parent root;
     private Object[] serverResponse;
     private Socket socket; // to be passed to client
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
     private int cartColumn = 0; //for cart scrollPane
     private int cartRow = 1; //for cart scrollPane
     private double cartTotalPrice = 0; //for cart purposes
@@ -273,7 +277,7 @@ public class MainMenuClientPageController {
     private void seUpActionCheckoutButton() {
         this.mainMenuView.setUpActionCheckoutButton((ActionEvent event) ->{
             if (this.mainMenuModel.getClientModel().getCart().isEmpty()){
-                PushNotification.toastSuccess("Cart Empty", "So items to be checked out. Add items to cart.");
+                PushNotification.toastSuccess("Cart Empty", "No items to be checked out. Add items to cart.");
                 return;
             }else {
                 try {
@@ -289,6 +293,8 @@ public class MainMenuClientPageController {
 
                     CheckoutPageController checkoutPageController = new CheckoutPageController(new CheckoutPageModel(customer, clientCart, subtotal, orderFromClient), checkoutLoader.getController());
                     checkoutPageController.setSocket(this.getSocket());
+                    checkoutPageController.setIn(in); //in and out of the main menu client page
+                    checkoutPageController.setOut(out);
 
                     Scene scene = new Scene(root);
                     Stage popupStage = new Stage();
@@ -559,4 +565,22 @@ public class MainMenuClientPageController {
     public void setCartTotalPrice(double cartTotalPrice) {
         this.cartTotalPrice = cartTotalPrice;
     }
+
+    public ObjectOutputStream getOut() {
+        return out;
+    }
+
+    public void setOut(ObjectOutputStream out) {
+        this.out = out;
+    }
+
+    public ObjectInputStream getIn() {
+        return in;
+    }
+
+    public void setIn(ObjectInputStream in) {
+        this.in = in;
+    }
+
+
 }

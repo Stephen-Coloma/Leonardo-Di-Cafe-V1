@@ -7,6 +7,7 @@ import server.model.listeners.MainMenuAdminObserver;
 import server.view.MainMenuAdminView;
 import server.view.ServerView;
 import shared.Customer;
+import shared.Order;
 import util.PushNotification;
 import util.XMLUtility;
 import util.exception.AccountExistsException;
@@ -82,6 +83,10 @@ public class ServerController implements MainMenuAdminObserver {
     // TODO: guide from a client request Object[]{string clientID, string requestType, Object[] data}
     private void handleClientRequest(Object[] message) {
         String requestCode = (String) message[1];
+        System.out.println("server received");
+        System.out.println(message[0]);
+        System.out.println(message[1]);
+        System.out.println(message[2]);
         switch (requestCode) {
             case "LOGIN" -> {
                 try {
@@ -106,6 +111,15 @@ public class ServerController implements MainMenuAdminObserver {
                     sendData("", "SIGN_UP_FAILED", false);
                 } catch (Exception exception) {
                     throw new RuntimeException(exception);
+                }
+            }
+            case "PROCESS_ORDER" -> {
+                try {
+                    Order order = model.processOrder((Order) message[2]);
+                    sendData(String.valueOf(message[0]), "PROCESS_ORDER_SUCCESSFUL", order);
+                } catch (Exception exception) {
+                    sendData(String.valueOf(message[0]), "PROCESS_ORDER_FAILED", null);
+                    System.err.println("Error during the order processing");
                 }
             }
         }
@@ -146,6 +160,10 @@ public class ServerController implements MainMenuAdminObserver {
 
     private void sendData(String clientID, String code, Object data) {
         Object[] response = {clientID, code, data};
+        System.out.println("before sending back to client");
+        System.out.println(response[0]);
+        System.out.println(response[1]);
+        System.out.println(response[2]);
         try {
             streamWriter.writeObject(response);
         } catch (IOException e) {

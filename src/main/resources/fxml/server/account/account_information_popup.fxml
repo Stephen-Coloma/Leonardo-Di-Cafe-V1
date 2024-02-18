@@ -75,7 +75,7 @@
                   </Label>
                </children>
                <padding>
-                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="10.0" />
                </padding>
             </VBox>
          </children></Pane>
@@ -96,7 +96,7 @@
                   </Pane>
                </top>
                <center>
-                  <TableView fx:id="orderTableView" focusTraversable="false" prefHeight="332.0" prefWidth="256.0" stylesheets="@../css/styles.css" BorderPane.alignment="CENTER">
+                  <TableView fx:id="orderTableView" focusTraversable="false" prefHeight="332.0" prefWidth="256.0" stylesheets="@../../../values/table_style.css" BorderPane.alignment="CENTER">
                     <columns>
                       <TableColumn fx:id="ordersColumn" editable="false" prefWidth="183.0" resizable="false" text="Order" />
                       <TableColumn fx:id="timestampColumn" editable="false" prefWidth="89.0" resizable="false" text="Timestamp" />
@@ -129,7 +129,7 @@
    <top>
       <BorderPane prefHeight="37.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <top>
-            <Pane prefHeight="59.0" prefWidth="500.0" style="-fx-background-color: #634921;" BorderPane.alignment="CENTER">
+            <Pane prefHeight="50.0" prefWidth="500.0" style="-fx-background-color: #634921;" BorderPane.alignment="CENTER">
                <children>
                   <Label layoutX="119.0" layoutY="15.0" text="Customer Information" textFill="WHITE">
                      <font>

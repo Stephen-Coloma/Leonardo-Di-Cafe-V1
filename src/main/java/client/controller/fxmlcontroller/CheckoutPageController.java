@@ -15,6 +15,7 @@ import shared.Beverage;
 import shared.Food;
 import shared.Order;
 import shared.Product;
+import util.PushNotification;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -50,7 +51,7 @@ public class CheckoutPageController {
                 this.view.getNoticeLabel().setVisible(true);
                 return;
             }else{
-                submitOrderToServer(this.model.getOrderFromClient());
+                orderProcessedByServer = submitOrderToServer(this.model.getOrderFromClient());
             }
 
             //after server transaction
@@ -67,18 +68,11 @@ public class CheckoutPageController {
     /**This method of the client sends an order request to the server*/
     private Order submitOrderToServer(Order orderFromClient) {
         try {
-            in = new ObjectInputStream(socket.getInputStream());
-            out = new ObjectOutputStream(socket.getOutputStream());
-
             String clientID = String.valueOf(this.model.getCustomer().getName().hashCode());
             sendData(clientID, "PROCESS_ORDER", orderFromClient);
 
-            LoadingScreen loadingScreen = new LoadingScreen();
-            Platform.runLater(loadingScreen);
-
             Object[] serverResponse;
             if ((serverResponse = (Object[]) in.readObject()) != null){
-                loadingScreen.stop();
                 return parseServerResponse(serverResponse);
             }
         } catch (IOException e) {
@@ -210,34 +204,6 @@ public class CheckoutPageController {
         this.deliveryPayment = deliveryPayment;
     }
 
-    /**A loading screen while waiting for server response*/
-    static class LoadingScreen implements Runnable{
-        private Stage popupStage;
-        @Override
-        public void run() {
-            try {
-                FXMLLoader checkoutLoader = new FXMLLoader(getClass().getResource("/fxml/client/loading_screen.fxml"));
-                Parent root = checkoutLoader.load();
-                Scene scene = new Scene(root);
-                popupStage = new Stage();
-                popupStage.setOnCloseRequest(event -> event.consume());
-                popupStage.setScene(scene);
-                popupStage.show(); // Wait until the popup stops
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        public void stop() {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            popupStage.close();
-        }
-    }
-
     /**Helper method that sends data to server*/
     private void sendData(String clientID, String requestType, Object data) throws IOException{
         Object[] request = new Object[]{clientID, requestType, data};
@@ -247,9 +213,11 @@ public class CheckoutPageController {
     /**Parses the server response*/
     private Order parseServerResponse(Object[] serverResponse) {
         //Guide Object[] {clientID, key, data}
-        if (serverResponse[1].equals("ORDER_SUCCESSFUL")){
+        if (serverResponse[1].equals("PROCESS_ORDER_SUCCESSFUL")){
+            PushNotification.toastSuccess("Order Successful", "Your order has been placed.");
             return (Order) serverResponse[2];
         }else {
+            PushNotification.toastError("Order Failed", "Your order is not successful");
             return null;
         }
     }

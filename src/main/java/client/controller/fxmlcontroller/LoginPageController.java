@@ -81,6 +81,8 @@ public class LoginPageController {
                 //when loading the main menu, pass the clientModel received from the server
                 mainMenu = new MainMenuClientPageController(new MainMenuClientPageModel((Object[]) serverResponse[2]), loader.getController());
                 mainMenu.setSocket(this.loginModel.getSocket()); //todo: getting the socket from the login controller
+                mainMenu.setIn(this.loginModel.getIn());
+                mainMenu.setOut(this.loginModel.getOut());
 
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);

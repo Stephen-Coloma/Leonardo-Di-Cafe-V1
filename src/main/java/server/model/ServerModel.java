@@ -39,9 +39,9 @@ public class ServerModel {
      * 2. If there are non, throw an exception
      * 3. If there are available products, then decrement it from the product quantity
      * 4. Save the order to orders list
-     * 5. Return true
+     * 5. Return the successfulOrder
      * 2. */
-    public boolean processOrder(Order order) throws Exception{
+    public Order processOrder(Order order) throws Exception {
         checkAvailability(order); //order that is not successful
         updateMenu(order);
 
@@ -57,7 +57,7 @@ public class ServerModel {
             }
         }
 
-        return true; //temporary. If it reaches here, order is successful
+        return successfulOrder;
     }
 
     /**This method update the product in the menu there are available products. Synchronization is handled here already.
