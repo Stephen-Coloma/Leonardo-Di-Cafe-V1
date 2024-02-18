@@ -44,6 +44,7 @@ public class CheckoutPageController {
         //setting up the view
         setUpView();
 
+        /*
         //setting up the action for placeOrderButton
         this.view.setUpActionPlaceOrderButton((ActionEvent event) ->{
             if (!this.view.getOnlinePayment().isSelected() && !this.view.getCashOnDelivery().isSelected()){
@@ -63,6 +64,8 @@ public class CheckoutPageController {
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.close();
         });
+
+         */
     }
 
     /**This method of the client sends an order request to the server*/

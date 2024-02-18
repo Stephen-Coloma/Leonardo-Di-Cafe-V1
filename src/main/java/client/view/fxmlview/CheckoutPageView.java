@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -53,6 +54,25 @@ public class CheckoutPageView {
 
     @FXML
     private Label totalAmountLabel;
+    private static Stage popupStage;
+
+    public static <T> T loadCheckoutPage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(CheckoutPageView.class.getResource("/fxml/client/checkout_page.fxml"));
+            popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setTitle("Checkout");
+            popupStage.setScene(new Scene(loader.load()));
+            popupStage.show();
+            return loader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    } // end of loadCheckoutPage
+
+    public void closeCheckoutView() {
+        popupStage.close();
+    }
 
     public void setUpActionPlaceOrderButton(EventHandler<ActionEvent> event){
         placeOrderButton.setOnAction(event);
@@ -151,7 +171,7 @@ public class CheckoutPageView {
         return noticeLabel;
     }
 
-    public void setNoticeLabel(Label noticeLabel) {
-        this.noticeLabel = noticeLabel;
+    public void setNoticeLabel(String value) {
+        noticeLabel.setText(value);
     }
 }

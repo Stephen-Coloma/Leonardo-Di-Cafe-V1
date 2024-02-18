@@ -12,7 +12,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 public class Client extends Application {
-    public static String IP_ADDRESS = "localhost";
+    public static String IP_ADDRESS;
     public static final int PORT = 2000;
     public static void main(String[] args) {
         launch(args);

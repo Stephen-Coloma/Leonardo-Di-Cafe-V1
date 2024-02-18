@@ -122,6 +122,8 @@ public class ServerController implements MainMenuAdminObserver {
                     System.err.println("Error during the order processing");
                 }
             }
+
+            // PRODUCT_CHANGES: This code is used for updating menu for clients
         }
     } // end of handleClientRequest
 

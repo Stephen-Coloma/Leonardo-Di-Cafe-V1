@@ -83,6 +83,7 @@ public class LoginPageController {
                 mainMenu.setSocket(this.loginModel.getSocket()); //todo: getting the socket from the login controller
                 mainMenu.setIn(this.loginModel.getIn());
                 mainMenu.setOut(this.loginModel.getOut());
+                new Thread(() -> mainMenu.run()).start();
 
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);

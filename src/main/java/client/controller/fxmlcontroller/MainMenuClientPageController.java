@@ -2,7 +2,7 @@ package client.controller.fxmlcontroller;
 
 
 import client.model.fxmlmodel.*;
-import client.view.fxmlview.CartItemCardView;
+import client.view.fxmlview.CheckoutPageView;
 import client.view.fxmlview.MainMenuClientPageView;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -14,17 +14,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.controlsfx.control.action.Action;
 import shared.*;
 import util.ImageUtility;
 import util.PushNotification;
-import util.XMLUtility;
 
-import javax.xml.transform.Source;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -32,7 +28,6 @@ import java.net.Socket;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
 
 public class MainMenuClientPageController {
@@ -47,7 +42,8 @@ public class MainMenuClientPageController {
     private int cartColumn = 0; //for cart scrollPane
     private int cartRow = 1; //for cart scrollPane
     private double cartTotalPrice = 0; //for cart purposes
-    public MainMenuClientPageController(MainMenuClientPageModel mainMenuModel, MainMenuClientPageView mainMenuView){
+
+    public MainMenuClientPageController(MainMenuClientPageModel mainMenuModel, MainMenuClientPageView mainMenuView) {
         this.mainMenuView = mainMenuView;
         this.mainMenuModel = mainMenuModel;
 
@@ -61,6 +57,10 @@ public class MainMenuClientPageController {
 
         initializeFoodMenu();
 
+        setComponentActions();
+    }
+
+    private void setComponentActions() {
         //setting up action listener for food button
         setActionMenuFoodButton();
         setActionMenuBeverageButton();
@@ -70,7 +70,56 @@ public class MainMenuClientPageController {
 
         //set up the action for checking out
         seUpActionCheckoutButton();
-    }
+    } // end of setComponentActions
+
+    public void run() {
+        try {
+            listenToHost();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    } // end of run
+
+    private void listenToHost() throws IOException, ClassNotFoundException {
+        while (true) {
+            Object[] data = (Object[]) in.readObject();
+            if (data != null) {
+                handleIncomingData(data);
+            }
+        }
+    } // end of listenToHost
+
+    // TODO: guide from incoming data from server <Object[]{String clientId, String dataCode, Object[] data}
+    private void handleIncomingData(Object[] data) {
+        String dataCode = (String) data[1];
+        System.out.println("received data from server");
+        System.out.println(data[0]);
+        System.out.println(data[1]);
+        System.out.println(data[2]);
+        switch (dataCode) {
+            case "PRODUCT_CHANGES" -> {
+            }
+            case "PROCESS_ORDER_SUCCESSFUL" -> {
+                mainMenuModel.getClientModel().orderProcessSuccessful((Order) data[2]);
+                PushNotification.toastSuccess("Checkout Status", "Your order has been placed");
+            }
+        }
+    } // end of handleIncomingData
+
+    private void sendData(String clientID, String code, Object data) {
+        Object[] response = {clientID, code, data};
+        System.out.println("before sending back to client");
+        System.out.println(response[0]);
+        System.out.println(response[1]);
+        System.out.println(response[2]);
+        try {
+            out.writeObject(response);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    } // end of sendData
 
     public void setupClock() {
         Timeline timeline = new Timeline(
@@ -93,7 +142,9 @@ public class MainMenuClientPageController {
         mainMenuView.setDateLabel(formattedDate);
     } // end of setupDate
 
-    /**After login is successful, load the food menu*/
+    /**
+     * After login is successful, load the food menu
+     */
     private void initializeFoodMenu() {
         mainMenuView.getProductTypeLabel().setText("Food Category");
 
@@ -110,28 +161,30 @@ public class MainMenuClientPageController {
                 //putting the card on the anchorPane
                 AnchorPane card = loader.load();
 
-                MenuCardController menuCard = new MenuCardController(new MenuCardModel(product) , loader.getController());
+                MenuCardController menuCard = new MenuCardController(new MenuCardModel(product), loader.getController());
                 menuCard.setData();
 
                 //this code setups up add to cart button of each card
-                menuCard.setActionAddProductButton((ActionEvent event1) ->{
-                    addToCart((Product) product);
+                menuCard.setActionAddProductButton((ActionEvent event1) -> {
+                    addToCart(product);
                 });
 
-                if (column == 2){
+                if (column == 2) {
                     column = 0;
                     row++;
                 }
                 mainMenuView.getGridPaneMenu().add(card, column++, row);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**This method sets up the action for menuBeverage button*/
+    /**
+     * This method sets up the action for menuBeverage button
+     */
     private void setActionMenuBeverageButton() {
-        mainMenuView.setActionMainMenuBeverageButton((ActionEvent event)->{
+        mainMenuView.setActionMainMenuBeverageButton((ActionEvent event) -> {
             mainMenuView.getProductTypeLabel().setText("Beverage Category");
 
             mainMenuView.getGridPaneMenu().getChildren().clear();//clears up the content
@@ -149,38 +202,42 @@ public class MainMenuClientPageController {
                     //putting the card on the anchorPane
                     AnchorPane card = loader.load();
 
-                    MenuCardController menuCard = new MenuCardController(new MenuCardModel(product) , loader.getController());
+                    MenuCardController menuCard = new MenuCardController(new MenuCardModel(product), loader.getController());
                     menuCard.setData();
 
                     //this code setups up add to cart button of each card
-                    menuCard.setActionAddProductButton((ActionEvent event1) ->{
+                    menuCard.setActionAddProductButton((ActionEvent event1) -> {
                         addToCart((Product) product);
                     });
 
-                    if (column == 2){
+                    if (column == 2) {
                         column = 0;
                         row++;
                     }
                     mainMenuView.getGridPaneMenu().add(card, column++, row);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
     }
 
-    /**This method sets up action listener for menuFoodButton*/
+    /**
+     * This method sets up action listener for menuFoodButton
+     */
     private void setActionMenuFoodButton() {
-        mainMenuView.setActionMainMenuFoodButton((ActionEvent event) ->{
+        mainMenuView.setActionMainMenuFoodButton((ActionEvent event) -> {
             mainMenuView.getGridPaneMenu().getChildren().clear();
             initializeFoodMenu();
         });
     }
 
-    /**This method clears up all the contents of the cart.
-     * It implements the setUpActionClearCartButtonButton from the mainMenuClientPageView */
-    private void setUpActionClearCartButton(){
-        this.mainMenuView.setActionClearCartButton((ActionEvent event) ->{
+    /**
+     * This method clears up all the contents of the cart.
+     * It implements the setUpActionClearCartButtonButton from the mainMenuClientPageView
+     */
+    private void setUpActionClearCartButton() {
+        this.mainMenuView.setActionClearCartButton((ActionEvent event) -> {
             clearCart(true);
         });
     }
@@ -188,12 +245,12 @@ public class MainMenuClientPageController {
     private void clearCart(boolean isUpdateModel) {
         ObservableList<Node> cartItems = this.mainMenuView.getGridPaneCart().getChildren();
 
-        if (cartItems.size() == 0){
+        if (cartItems.size() == 0) {
             return;
         }
 
         //for each card
-        for (Node cartItem:cartItems) {
+        for (Node cartItem : cartItems) {
             String productName = null;
             int productQuantity = 0;
             char productType = ' ';
@@ -203,7 +260,7 @@ public class MainMenuClientPageController {
             AnchorPane cartItemPane = (AnchorPane) cartItem;
             for (Node label : cartItemPane.getChildren()) {
                 if (label instanceof Label) {
-                    switch (label.getId()){
+                    switch (label.getId()) {
                         case "productNameLabel":
                             productName = ((Label) label).getText();
                             break;
@@ -217,7 +274,7 @@ public class MainMenuClientPageController {
                             String cleanedSize = sizeLabel.replaceAll("[size:\\s]", "");
                             productSize = cleanedSize;
 
-                            if (productSize.equals("S")){
+                            if (productSize.equals("S")) {
                                 productSize = "small";
                                 productType = 'b';
                             } else if (productSize.equals("M")) {
@@ -226,7 +283,7 @@ public class MainMenuClientPageController {
                             } else if (productSize.equals("L")) {
                                 productSize = "large";
                                 productType = 'b';
-                            }else {
+                            } else {
                                 productSize = "";
                                 productType = 'f';
                             }
@@ -240,11 +297,11 @@ public class MainMenuClientPageController {
             }
 
             try {
-                if (isUpdateModel){
+                if (isUpdateModel) {
                     //update the models
-                    if (productType == 'f'){
+                    if (productType == 'f') {
                         this.mainMenuModel.getClientModel().getFoodMenu().get(productName).updateQuantity(-productQuantity); //negative because we want to add/revert back the subtracted from the menu
-                    }else if (productType == 'b'){
+                    } else if (productType == 'b') {
                         this.mainMenuModel.getClientModel().getBeverageMenu().get(productName).updateQuantity(productSize, -productQuantity);
                     }
 
@@ -253,7 +310,7 @@ public class MainMenuClientPageController {
                 }
 
                 //update the price label
-                cartTotalPrice-= productPrice;
+                cartTotalPrice -= productPrice;
 
                 //update the UI
                 //set visible the labels
@@ -264,7 +321,7 @@ public class MainMenuClientPageController {
                 //add to grid pane
                 mainMenuView.getGridPaneCart().setVisible(false);
                 mainMenuView.getPriceLabel().setText("P " + cartTotalPrice + "0");
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -273,14 +330,44 @@ public class MainMenuClientPageController {
         this.mainMenuView.getGridPaneCart().getChildren().clear();
     }
 
-    /**this method sets up the action for checking out button*/
+    /**
+     * this method sets up the action for checking out button
+     */
     private void seUpActionCheckoutButton() {
-        this.mainMenuView.setUpActionCheckoutButton((ActionEvent event) ->{
-            if (this.mainMenuModel.getClientModel().getCart().isEmpty()){
+        this.mainMenuView.setUpActionCheckoutButton((ActionEvent event) -> {
+            if (this.mainMenuModel.getClientModel().getCart().isEmpty()) {
                 PushNotification.toastSuccess("Cart Empty", "No items to be checked out. Add items to cart.");
                 return;
-            }else {
+            } else {
                 try {
+                    CheckoutPageModel checkoutPageModel = new CheckoutPageModel(mainMenuModel.getClientModel().getCustomer(), mainMenuModel.getClientModel().getCart(), cartTotalPrice, mainMenuModel.getClientModel().placeOrder());
+                    CheckoutPageView checkoutPageView = CheckoutPageView.loadCheckoutPage();
+                    CheckoutPageController checkoutPageController = new CheckoutPageController(checkoutPageModel, checkoutPageView);
+
+                    checkoutPageView.getPlaceOrderButton().setOnAction(actionEvent -> {
+                        if (!checkoutPageView.getOnlinePayment().isSelected() && !checkoutPageView.getCashOnDelivery().isSelected()) {
+                            checkoutPageView.setNoticeLabel("choose payment option");
+                            checkoutPageView.getNoticeLabel().setVisible(true);
+                        } else if (checkoutPageView.getOnlinePayment().isSelected() || checkoutPageView.getCashOnDelivery().isSelected()) {
+                            String clientId = String.valueOf(checkoutPageModel.getCustomer().getName().hashCode());
+                            Order order = checkoutPageModel.getOrderFromClient();
+                            sendData(clientId, "PROCESS_ORDER",order);
+
+
+                            checkoutPageView.closeCheckoutView();
+
+                            clearCart(false);
+
+
+                            PushNotification.toastSuccess("Order", "Order uploaded to the system");
+                        } else {
+                            checkoutPageView.closeCheckoutView();
+                            PushNotification.toastSuccess("Order", "Order uploaded to the system");
+                        }
+                    });
+
+
+                    /*
                     FXMLLoader checkoutLoader = new FXMLLoader(getClass().getResource("/fxml/client/checkout_page.fxml"));
                     Parent root = checkoutLoader.load();
 
@@ -291,7 +378,6 @@ public class MainMenuClientPageController {
 
                     double subtotal = cartTotalPrice; //get what is on the cartTotalLabelPrice
 
-                    CheckoutPageController checkoutPageController = new CheckoutPageController(new CheckoutPageModel(customer, clientCart, subtotal, orderFromClient), checkoutLoader.getController());
                     checkoutPageController.setSocket(this.getSocket());
                     checkoutPageController.setIn(in); //in and out of the main menu client page
                     checkoutPageController.setOut(out);
@@ -301,22 +387,28 @@ public class MainMenuClientPageController {
                     popupStage.setScene(scene);
                     popupStage.showAndWait(); //wait until the popup stops
 
+                     */
+
                     //after the pop up closed, access now the orderProcessedByServer
-                    if (checkoutPageController.isOrderSuccessful()){
+                    /*
+                    if (checkoutPageController.isOrderSuccessful()) {
                         //clear the cart without updating the model
                         clearCart(false);
 
                         //update the client model
                         this.mainMenuModel.getClientModel().orderProcessSuccessful(checkoutPageController.getOrderProcessedByServer());
                     }
-                }catch (Exception e){
+                     */
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
     }
 
-    /**Adds a product into a cart. It also loads the selection panels*/
+    /**
+     * Adds a product into a cart. It also loads the selection panels
+     */
     private void addToCart(Product product) {
         int quantity = 0;
 
@@ -326,7 +418,7 @@ public class MainMenuClientPageController {
         //load the UIs for selection
         try {
             //set up first the select variation
-            if (product.getType() == 'f'){
+            if (product.getType() == 'f') {
                 FXMLLoader selectFoodLoader = new FXMLLoader(getClass().getResource("/fxml/client/select_food.fxml"));
                 Parent root = selectFoodLoader.load();
 
@@ -335,7 +427,7 @@ public class MainMenuClientPageController {
                 Stage popupStage = new Stage();
                 popupStage.setScene(scene);
                 popupStage.showAndWait(); //wait until the popup stops
-            }else {
+            } else {
                 FXMLLoader selectBeverageVariationLoader = new FXMLLoader(getClass().getResource("/fxml/client/select_beverage_variation.fxml"));
                 Parent root = selectBeverageVariationLoader.load();
 
@@ -345,13 +437,13 @@ public class MainMenuClientPageController {
                 popupStage.setScene(scene);
                 popupStage.showAndWait(); //wait until the popup stops
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         //check whether what order type was produced
-        if (product instanceof Food){ //means the product is food being added to cart is food
-            if (selectFoodController.getFinalOrderedQuantity() != 0){
+        if (product instanceof Food) { //means the product is food being added to cart is food
+            if (selectFoodController.getFinalOrderedQuantity() != 0) {
                 //update first the models
                 updateModelsData(product, selectFoodController);
 
@@ -361,9 +453,9 @@ public class MainMenuClientPageController {
                 //update the cart totals and the view
                 updateCartTotalPrice(selectFoodController.getFinalOrderedPrice());
             }
-        }else { //means the product being added is food
+        } else { //means the product being added is food
             //process the small
-            if (selectBeverageVariationController.getFinalSmallOrderedQuantity() != 0){
+            if (selectBeverageVariationController.getFinalSmallOrderedQuantity() != 0) {
                 //update the models first
                 updateModelsData(product, selectBeverageVariationController.getFinalSmallOrderedQuantity(), "small", selectBeverageVariationController.getFinalSmallOrderedPrice());
 
@@ -376,7 +468,7 @@ public class MainMenuClientPageController {
             }
 
             //process the medium
-            if (selectBeverageVariationController.getFinalMediumOrderedQuantity() != 0){
+            if (selectBeverageVariationController.getFinalMediumOrderedQuantity() != 0) {
                 //update the models first
                 updateModelsData(product, selectBeverageVariationController.getFinalMediumOrderedQuantity(), "medium", selectBeverageVariationController.getFinalMediumOrderedPrice());
 
@@ -388,7 +480,7 @@ public class MainMenuClientPageController {
             }
 
             //process the medium
-            if (selectBeverageVariationController.getFinalLargeOrderedQuantity() != 0){
+            if (selectBeverageVariationController.getFinalLargeOrderedQuantity() != 0) {
                 //update the models first
                 updateModelsData(product, selectBeverageVariationController.getFinalLargeOrderedQuantity(), "large", selectBeverageVariationController.getFinalLargeOrderedPrice());
 
@@ -401,13 +493,17 @@ public class MainMenuClientPageController {
         }
     }
 
-    /**This method updates the total price being shown in the cart display.*/
-    private void updateCartTotalPrice(double productPrice){
+    /**
+     * This method updates the total price being shown in the cart display.
+     */
+    private void updateCartTotalPrice(double productPrice) {
         cartTotalPrice += productPrice;
         this.mainMenuView.getPriceLabel().setText("P " + cartTotalPrice + "0");
     }
 
-    /**This method updates the models for beverage*/
+    /**
+     * This method updates the models for beverage
+     */
     private void updateModelsData(Product product, int count, String size, double totalPrice) {
         try {
             //update the quantity of the main menu food
@@ -419,19 +515,19 @@ public class MainMenuClientPageController {
             double sPrice = 0;
             double mPrice = 0;
             double lPrice = 0;
-            if (size.equals("small")){
+            if (size.equals("small")) {
                 sQuantity = count;
                 sPrice = totalPrice;
             } else if (size.equals("medium")) {
                 mQuantity = count;
                 mPrice = totalPrice;
-            }else if (size.equals("large")){
+            } else if (size.equals("large")) {
                 lQuantity = count;
                 lPrice = totalPrice;
             }
 
             Object[] imageData = {product.getImageName(), ImageUtility.getImageBytes(product.getImageName())};
-            Beverage beverage = new Beverage(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), imageData, product.getDescription(), sQuantity,mQuantity,lQuantity,sPrice,mPrice,lPrice);
+            Beverage beverage = new Beverage(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), imageData, product.getDescription(), sQuantity, mQuantity, lQuantity, sPrice, mPrice, lPrice);
             //update first the cart of the client model which resides in MainMenuModel.getClientModel()
             mainMenuModel.getClientModel().getCart().add(beverage);
 
@@ -442,12 +538,14 @@ public class MainMenuClientPageController {
 
             //add to grid pane
             mainMenuView.getGridPaneCart().setVisible(true);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**This method updates the models for food*/
+    /**
+     * This method updates the models for food
+     */
     private void updateModelsData(Product product, SelectFoodController selectFoodController) {
         try {
             //update the quantity of the main menu food
@@ -467,13 +565,15 @@ public class MainMenuClientPageController {
 
             //add to grid pane
             mainMenuView.getGridPaneCart().setVisible(true);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**A helper method that creates a new cards in the cart grid view*/
-    private void addToCartGridPane(Product product, int finalOrderedQuantity, double finalOrderedPrice, String size){
+    /**
+     * A helper method that creates a new cards in the cart grid view
+     */
+    private void addToCartGridPane(Product product, int finalOrderedQuantity, double finalOrderedPrice, String size) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/fxml/client/cart_item_card.fxml"));
@@ -484,12 +584,12 @@ public class MainMenuClientPageController {
             CartItemCardController cardCart = new CartItemCardController(new CartItemCardModel(product, finalOrderedQuantity, finalOrderedPrice, size), loader.getController());
             cardCart.setData();
 
-            if (cartColumn == 1){
+            if (cartColumn == 1) {
                 cartColumn = 0;
                 cartRow++;
             }
             mainMenuView.getGridPaneCart().add(card, cartColumn++, cartRow);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -581,6 +681,4 @@ public class MainMenuClientPageController {
     public void setIn(ObjectInputStream in) {
         this.in = in;
     }
-
-
-}
+} // end of MainMenuClientPageController class
