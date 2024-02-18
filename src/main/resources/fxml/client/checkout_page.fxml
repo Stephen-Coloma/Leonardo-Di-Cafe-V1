@@ -1,284 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="455.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.CheckoutPageView">
+<AnchorPane prefHeight="497.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.CheckoutPageView">
    <children>
-      <Pane prefHeight="39.0" prefWidth="807.0" style="-fx-background-color: #604A24;">
+      <Pane prefHeight="35.0" prefWidth="846.0" style="-fx-background-color: #604A24;">
          <children>
-            <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="43.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="28.0" fitWidth="24.0" layoutX="43.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../images/client/checkout/coffeeIcon.png" />
                </image>
             </ImageView>
-            <Label layoutX="69.0" layoutY="15.0" text="LEONARDO DI'CAFE" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="10.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="checkoutBackButton" fitHeight="26.0" fitWidth="14.0" layoutX="13.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/client/checkout/sidearrow.png" />
-               </image>
-            </ImageView>
-            <Label id="nameLabel" fx:id="nameLabel" layoutX="669.0" layoutY="12.0" text="Sample Name" textFill="WHITE">
+            <Label layoutX="69.0" layoutY="10.0" text="LEONARDO DI'CAFE" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="10.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <Pane layoutY="39.0" prefHeight="416.0" prefWidth="807.0" style="-fx-background-color: #F5F5F5;">
+      <Pane layoutY="39.0" prefHeight="457.0" prefWidth="846.0" style="-fx-background-color: #F5F5F5;">
          <children>
             <Label layoutX="25.0" layoutY="21.0" text="Cart" textFill="#66382a">
                <font>
                   <Font name="Arial Bold" size="19.0" />
                </font>
             </Label>
-            <Label layoutX="400.0" layoutY="20.0" text="Checkout" textFill="#66382a">
+            <Label layoutX="435.0" layoutY="21.0" text="Checkout" textFill="#66382a">
                <font>
                   <Font name="Arial Bold" size="19.0" />
                </font>
             </Label>
-            <Pane fx:id="cartPane" layoutX="23.0" layoutY="61.0" prefHeight="331.0" prefWidth="351.0" style="-fx-background-color: #EEEDF4; -fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;">
-               <children>
-                  <ScrollPane layoutX="5.0" layoutY="5.0" prefHeight="272.0" prefWidth="341.0">
-                     <content>
-                        <Pane prefHeight="345.0" prefWidth="331.0" style="-fx-border-radius: 5;">
-                           <children>
-                              <Pane layoutX="18.0" layoutY="10.0" prefHeight="59.0" prefWidth="304.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;">
-                                 <children>
-                                    <HBox layoutX="9.0" prefHeight="58.0" prefWidth="294.0">
-                                       <children>
-                                          <VBox prefHeight="58.0" prefWidth="48.0">
-                                             <children>
-                                                <Pane prefHeight="6.0" prefWidth="48.0" />
-                                                <ImageView fitHeight="46.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../../images/client/checkout/bread.jpg" />
-                                                   </image>
-                                                </ImageView>
-                                                <Pane prefHeight="6.0" prefWidth="48.0" />
-                                             </children>
-                                          </VBox>
-                                          <Pane prefHeight="58.0" prefWidth="55.0" />
-                                          <VBox prefHeight="58.0" prefWidth="165.0">
-                                             <children>
-                                                <Pane prefHeight="5.0" prefWidth="100.0" />
-                                                <Label text="Item 1" />
-                                                <Label text="Size: Small ">
-                                                   <font>
-                                                      <Font size="7.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <Pane prefHeight="58.0" prefWidth="113.0" />
-                                          <VBox prefHeight="200.0" prefWidth="100.0">
-                                             <children>
-                                                <Pane prefHeight="21.0" prefWidth="56.0" />
-                                                <Label text="P 180.00">
-                                                   <font>
-                                                      <Font name="Arial" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </Pane>
-                              <Pane layoutX="17.0" layoutY="81.0" prefHeight="59.0" prefWidth="304.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;">
-                                 <children>
-                                    <HBox layoutX="9.0" layoutY="1.0" prefHeight="58.0" prefWidth="294.0">
-                                       <children>
-                                          <VBox prefHeight="58.0" prefWidth="48.0">
-                                             <children>
-                                                <Pane prefHeight="6.0" prefWidth="48.0" />
-                                                <ImageView fitHeight="46.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../../images/client/checkout/bread.jpg" />
-                                                   </image>
-                                                </ImageView>
-                                                <Pane prefHeight="6.0" prefWidth="48.0" />
-                                             </children>
-                                          </VBox>
-                                          <Pane prefHeight="58.0" prefWidth="55.0" />
-                                          <VBox prefHeight="58.0" prefWidth="165.0">
-                                             <children>
-                                                <Pane prefHeight="5.0" prefWidth="100.0" />
-                                                <Label text="Item 1" />
-                                                <Label text="Size: Small ">
-                                                   <font>
-                                                      <Font size="7.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <Pane prefHeight="58.0" prefWidth="113.0" />
-                                          <VBox prefHeight="200.0" prefWidth="100.0">
-                                             <children>
-                                                <Pane prefHeight="21.0" prefWidth="56.0" />
-                                                <Label text="P 180.00">
-                                                   <font>
-                                                      <Font name="Arial" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </Pane>
-                              <Pane layoutX="16.0" layoutY="149.0" prefHeight="59.0" prefWidth="304.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;">
-                                 <children>
-                                    <HBox layoutX="9.0" layoutY="1.0" prefHeight="58.0" prefWidth="294.0">
-                                       <children>
-                                          <VBox prefHeight="58.0" prefWidth="48.0">
-                                             <children>
-                                                <Pane prefHeight="6.0" prefWidth="48.0" />
-                                                <ImageView fitHeight="46.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../../images/client/checkout/bread.jpg" />
-                                                   </image>
-                                                </ImageView>
-                                                <Pane prefHeight="6.0" prefWidth="48.0" />
-                                             </children>
-                                          </VBox>
-                                          <Pane prefHeight="58.0" prefWidth="55.0" />
-                                          <VBox prefHeight="58.0" prefWidth="165.0">
-                                             <children>
-                                                <Pane prefHeight="5.0" prefWidth="100.0" />
-                                                <Label text="Item 1" />
-                                                <Label text="Size: Small ">
-                                                   <font>
-                                                      <Font size="7.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <Pane prefHeight="58.0" prefWidth="113.0" />
-                                          <VBox prefHeight="200.0" prefWidth="100.0">
-                                             <children>
-                                                <Pane prefHeight="21.0" prefWidth="56.0" />
-                                                <Label text="P 180.00">
-                                                   <font>
-                                                      <Font name="Arial" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </Pane>
-                              <Pane layoutX="16.0" layoutY="217.0" prefHeight="59.0" prefWidth="304.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;">
-                                 <children>
-                                    <HBox layoutX="9.0" layoutY="1.0" prefHeight="58.0" prefWidth="294.0">
-                                       <children>
-                                          <VBox prefHeight="58.0" prefWidth="48.0">
-                                             <children>
-                                                <Pane prefHeight="6.0" prefWidth="48.0" />
-                                                <ImageView fitHeight="46.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../../images/client/checkout/bread.jpg" />
-                                                   </image>
-                                                </ImageView>
-                                                <Pane prefHeight="6.0" prefWidth="48.0" />
-                                             </children>
-                                          </VBox>
-                                          <Pane prefHeight="58.0" prefWidth="55.0" />
-                                          <VBox prefHeight="58.0" prefWidth="165.0">
-                                             <children>
-                                                <Pane prefHeight="5.0" prefWidth="100.0" />
-                                                <Label text="Item 1" />
-                                                <Label text="Size: Small ">
-                                                   <font>
-                                                      <Font size="7.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <Pane prefHeight="58.0" prefWidth="113.0" />
-                                          <VBox prefHeight="200.0" prefWidth="100.0">
-                                             <children>
-                                                <Pane prefHeight="21.0" prefWidth="56.0" />
-                                                <Label text="P 180.00">
-                                                   <font>
-                                                      <Font name="Arial" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </Pane>
-                              <Pane layoutX="15.0" layoutY="282.0" prefHeight="59.0" prefWidth="304.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;">
-                                 <children>
-                                    <HBox layoutX="9.0" layoutY="1.0" prefHeight="58.0" prefWidth="294.0">
-                                       <children>
-                                          <VBox prefHeight="58.0" prefWidth="48.0">
-                                             <children>
-                                                <Pane prefHeight="6.0" prefWidth="48.0" />
-                                                <ImageView fitHeight="46.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                                                   <image>
-                                                      <Image url="@../../images/client/checkout/bread.jpg" />
-                                                   </image>
-                                                </ImageView>
-                                                <Pane prefHeight="6.0" prefWidth="48.0" />
-                                             </children>
-                                          </VBox>
-                                          <Pane prefHeight="58.0" prefWidth="55.0" />
-                                          <VBox prefHeight="58.0" prefWidth="165.0">
-                                             <children>
-                                                <Pane prefHeight="5.0" prefWidth="100.0" />
-                                                <Label text="Item 1" />
-                                                <Label text="Size: Small ">
-                                                   <font>
-                                                      <Font size="7.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                          <Pane prefHeight="58.0" prefWidth="113.0" />
-                                          <VBox prefHeight="200.0" prefWidth="100.0">
-                                             <children>
-                                                <Pane prefHeight="21.0" prefWidth="56.0" />
-                                                <Label text="P 180.00">
-                                                   <font>
-                                                      <Font name="Arial" size="12.0" />
-                                                   </font>
-                                                </Label>
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </Pane>
-                           </children>
-                        </Pane>
-                     </content>
-                  </ScrollPane>
-                  <Pane layoutX="23.0" layoutY="286.0" prefHeight="22.0" prefWidth="304.0" style="-fx-background-color: #634921;">
-                     <children>
-                        <Label layoutX="6.0" layoutY="3.0" text="TOTAL" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="10.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="255.0" layoutY="3.0" text="P 560.00" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="10.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
-               </children></Pane>
-            <Pane layoutX="400.0" layoutY="58.0" prefHeight="334.0" prefWidth="386.0" style="-fx-background-color: #EEEDF4; -fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;">
+            <ScrollPane fx:id="scrollPaneCartOnCheckOut" hbarPolicy="NEVER" layoutX="25.0" layoutY="58.0" prefHeight="353.0" prefWidth="360.0" style="-fx-background-color: #b59c7a;">
+               <content>
+                  <GridPane fx:id="gridPaneCartOnCheckOut" prefHeight="0.0" prefWidth="0.0" style="-fx-background-color: #b59c7a;" vgap="3.0">
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+            <Pane layoutX="435.0" layoutY="58.0" prefHeight="353.0" prefWidth="386.0" style="-fx-background-color: #EEEDF4; -fx-border-color: black; -fx-border-radius: 5; -fx-border-width: 0.5;">
                <children>
                   <VBox layoutX="-1.0" prefHeight="334.0" prefWidth="386.0">
                      <children>
@@ -294,7 +67,7 @@
                               <Pane layoutX="10.0" layoutY="10.0" prefHeight="51.0" prefWidth="6.0" />
                               <Label text="Delivery Information">
                                  <font>
-                                    <Font name="System Bold" size="10.0" />
+                                    <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
                            </children>
@@ -302,24 +75,23 @@
                         <HBox layoutX="10.0" layoutY="29.0" prefHeight="22.0" prefWidth="386.0">
                            <children>
                               <Pane prefHeight="22.0" prefWidth="47.0" />
-                              <Label fx:id="clientName" text="Leonhard Leung">
+                              <Label fx:id="clientName" prefHeight="19.0" prefWidth="332.0" text="Leonhard Leung">
                                  <font>
-                                    <Font size="8.3" />
+                                    <Font size="13.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
-                        <HBox layoutX="10.0" layoutY="52.0" prefHeight="20.0" prefWidth="386.0">
+                        <HBox layoutX="10.0" layoutY="52.0" prefHeight="50.0" prefWidth="386.0">
                            <children>
                               <Pane prefHeight="22.0" prefWidth="47.0" />
-                              <Label fx:id="clientAddress" text="Ciudad Grande, Bakakeng Sur, Baguio City, Benguet">
+                              <Label fx:id="clientAddress" alignment="TOP_LEFT" prefHeight="49.0" prefWidth="338.0" text="Ciudad Grande, Bakakeng Sur, Baguio City, Benguet">
                                  <font>
-                                    <Font size="8.3" />
+                                    <Font size="13.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
-                        <Pane layoutX="10.0" layoutY="10.0" prefHeight="19.0" prefWidth="386.0" />
                         <HBox layoutX="10.0" layoutY="29.0" prefHeight="26.0" prefWidth="386.0">
                            <children>
                               <Pane prefHeight="51.0" prefWidth="14.0" />
@@ -331,7 +103,7 @@
                               <Pane layoutX="10.0" layoutY="10.0" prefHeight="22.0" prefWidth="9.0" />
                               <Label text="Order Summary">
                                  <font>
-                                    <Font name="System Bold" size="10.0" />
+                                    <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
                            </children>
@@ -341,13 +113,13 @@
                               <Pane prefHeight="22.0" prefWidth="47.0" />
                               <Label text="Subtotal" textFill="#7e7e82">
                                  <font>
-                                    <Font size="8.3" />
+                                    <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Pane layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="257.0" />
+                              <Pane layoutX="10.0" layoutY="10.0" prefHeight="22.0" prefWidth="198.0" />
                               <Label fx:id="subtotalPriceLabel" text="P 560.00" textFill="#7e7e82">
                                  <font>
-                                    <Font size="8.3" />
+                                    <Font size="13.0" />
                                  </font>
                               </Label>
                            </children>
@@ -357,13 +129,13 @@
                               <Pane prefHeight="22.0" prefWidth="47.0" />
                               <Label text="Delivery Fee" textFill="#7e7e82">
                                  <font>
-                                    <Font size="8.3" />
+                                    <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Pane layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="244.0" />
+                              <Pane layoutX="10.0" layoutY="10.0" prefHeight="22.0" prefWidth="178.0" />
                               <Label fx:id="deliveryFeeLabel" text="P   60.00" textFill="#7e7e82">
                                  <font>
-                                    <Font size="8.3" />
+                                    <Font size="13.0" />
                                  </font>
                               </Label>
                            </children>
@@ -371,20 +143,20 @@
                         <HBox layoutX="10.0" layoutY="161.0" prefHeight="20.0" prefWidth="386.0">
                            <children>
                               <Pane prefHeight="22.0" prefWidth="47.0" />
-                              <Label text="Total Amount to be paid">
+                              <Label prefHeight="19.0" prefWidth="166.0" text="Total Amount to be paid">
                                  <font>
-                                    <Font size="8.3" />
+                                    <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
-                              <Pane layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="198.0" />
-                              <Label fx:id="totalAmountLabel" text="P  620.00" textFill="#7e7e82">
+                              <Pane layoutX="10.0" layoutY="10.0" prefHeight="20.0" prefWidth="82.0" />
+                              <Label fx:id="totalAmountLabel" text="P  620.00">
                                  <font>
-                                    <Font size="8.3" />
+                                    <Font size="13.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
-                        <Pane layoutX="10.0" layoutY="94.0" prefHeight="14.0" prefWidth="386.0" />
+                        <Pane layoutX="10.0" layoutY="94.0" prefHeight="30.0" prefWidth="386.0" />
                         <HBox layoutX="10.0" layoutY="113.0" prefHeight="26.0" prefWidth="386.0">
                            <children>
                               <Pane prefHeight="51.0" prefWidth="14.0" />
@@ -396,7 +168,7 @@
                               <Pane layoutX="10.0" layoutY="10.0" prefHeight="22.0" prefWidth="9.0" />
                               <Label text="Payment">
                                  <font>
-                                    <Font name="System Bold" size="10.0" />
+                                    <Font name="System Bold" size="13.0" />
                                  </font>
                               </Label>
                            </children>
@@ -404,24 +176,27 @@
                         <HBox layoutX="10.0" layoutY="218.0" prefHeight="26.0" prefWidth="386.0">
                            <children>
                               <Pane prefHeight="26.0" prefWidth="42.0" />
-                              <RadioButton mnemonicParsing="false" text="Online Payment" textFill="#545454">
+                              <RadioButton fx:id="onlinePayment" focusTraversable="false" mnemonicParsing="false" text="Online Payment" textFill="#545454">
                                  <font>
-                                    <Font size="10.0" />
+                                    <Font size="13.0" />
                                  </font>
                               </RadioButton>
                               <Pane layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="64.0" />
-                              <RadioButton mnemonicParsing="false" text="Cash on Delivery" textFill="#545454">
+                              <RadioButton fx:id="cashOnDelivery" focusTraversable="false" mnemonicParsing="false" text="Cash on Delivery" textFill="#545454">
                                  <font>
-                                    <Font size="10.0" />
+                                    <Font size="13.0" />
                                  </font>
                               </RadioButton>
                            </children>
                         </HBox>
-                        <Pane layoutX="10.0" layoutY="204.0" prefHeight="28.0" prefWidth="386.0" />
+                        <Pane layoutX="10.0" layoutY="204.0" prefHeight="14.0" prefWidth="386.0">
+                           <children>
+                              <Label fx:id="noticeLabel" layoutX="15.0" layoutY="-1.0" text="Label" textFill="RED" visible="false" />
+                           </children></Pane>
                         <HBox layoutX="10.0" layoutY="244.0" prefHeight="35.0" prefWidth="386.0">
                            <children>
                               <Pane prefHeight="35.0" prefWidth="15.0" />
-                              <Button fx:id="placeOrderButton" mnemonicParsing="false" onAction="#placeOrder" onMouseEntered="#placeOrderButtonEntered" onMouseExited="#placeOrderButtonExited" prefHeight="33.0" prefWidth="360.0" style="-fx-background-color: #634921;" text="PLACE ORDER" textFill="WHITE">
+                              <Button fx:id="placeOrderButton" mnemonicParsing="false" onMouseEntered="#placeOrderButtonEntered" onMouseExited="#placeOrderButtonExited" prefHeight="33.0" prefWidth="360.0" style="-fx-background-color: #634921;" text="PLACE ORDER" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="11.0" />
                                  </font>

@@ -69,8 +69,6 @@ public class MainMenuClientPageView {
     @FXML
     private Label productTypeLabel;
 
-
-
     /**This method accepts the action listener implementation for foodButton from the main_menu_client_page controller*/
     public void setActionMainMenuFoodButton(EventHandler<ActionEvent> event){
         mainMenuFoodButton.setOnAction(event);
@@ -81,6 +79,10 @@ public class MainMenuClientPageView {
     }
     public void setActionClearCartButton(EventHandler<ActionEvent> event){
         clearCartButton.setOnAction(event);
+    }
+
+    public void setUpActionCheckoutButton(EventHandler<ActionEvent> event){
+        checkoutButton.setOnAction(event);
     }
 
     public void showMenuUI (ActionEvent event) throws IOException {
@@ -327,5 +329,21 @@ public class MainMenuClientPageView {
 
     public void setTimeLabel(String value) {
         timeLabel.setText(value);
+    }
+
+    public Label getDateLabel() {
+        return dateLabel;
+    }
+
+    public void setDateLabel(Label dateLabel) {
+        this.dateLabel = dateLabel;
+    }
+
+    public Label getTimeLabel() {
+        return timeLabel;
+    }
+
+    public void setTimeLabel(Label timeLabel) {
+        this.timeLabel = timeLabel;
     }
 }

@@ -19,7 +19,6 @@ public class ClientModel {
         beverageMenu = null;
         customer = null;
         cart = null;
-        order = null;
     }
 
     /**This constructor will be used solely for logging in.*/
@@ -39,31 +38,23 @@ public class ClientModel {
     }
 
     /**This method creates an order if the user wants to check out an order*/
-    public Order checkout(){
+    public Order placeOrder(){
         if (customer != null && cart != null && !cart.isEmpty()) {
             /*Logic for getting time stamp: The format is 01/05/2024*/
             String timestamp = java.time.LocalDate.now().toString();
             Order order = new Order(customer, cart, timestamp);
-            clearCart(); // Clears the cart after creating the order
             return order; // Return order if there's an item in cart
         } else {
             return null; // Can not check out if there's no customer or cart is empty
         }
     }
 
-    /**This method clears cart.*/
-    public void clearCart(){
-        // This method Clears the cart
-        cart.clear();
+    /**This method adds the order to customer's order history*/
+    public void orderProcessSuccessful(Order successfulOrder){
+        order = null;
+        cart.clear(); // Clears the cart after creating the order
+        customer.getOrderHistory().add(successfulOrder);
     }
-
-
-
-
-
-
-
-
 
     //getter and setter
     public HashMap<String, Food> getFoodMenu() {

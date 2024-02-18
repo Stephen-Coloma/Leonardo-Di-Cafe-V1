@@ -18,9 +18,11 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import shared.Beverage;
-import shared.Food;
-import shared.Product;
+import org.controlsfx.control.action.Action;
+import shared.*;
+import util.ImageUtility;
+import util.PushNotification;
+import util.XMLUtility;
 
 import javax.xml.transform.Source;
 import java.io.IOException;
@@ -57,8 +59,11 @@ public class MainMenuClientPageController {
         setActionMenuFoodButton();
         setActionMenuBeverageButton();
 
-        //setting up the action for clearCartButton
-        clearCart();
+        //setting up the action for setUpActionClearCartButtonButton
+        setUpActionClearCartButton();
+
+        //set up the action for checking out
+        seUpActionCheckoutButton();
     }
 
     public void setupClock() {
@@ -120,7 +125,7 @@ public class MainMenuClientPageController {
 
     /**This method sets up the action for menuBeverage button*/
     private void setActionMenuBeverageButton() {
-        mainMenuView.getMainMenuBeveragesButton().setOnAction((ActionEvent event)->{
+        mainMenuView.setActionMainMenuBeverageButton((ActionEvent event)->{
             mainMenuView.getProductTypeLabel().setText("Beverage Category");
 
             mainMenuView.getGridPaneMenu().getChildren().clear();//clears up the content
@@ -156,77 +161,80 @@ public class MainMenuClientPageController {
                 e.printStackTrace();
             }
         });
-
-
     }
 
     /**This method sets up action listener for menuFoodButton*/
     private void setActionMenuFoodButton() {
-        mainMenuView.getMainMenuFoodButton().setOnAction((ActionEvent event) ->{
+        mainMenuView.setActionMainMenuFoodButton((ActionEvent event) ->{
             mainMenuView.getGridPaneMenu().getChildren().clear();
             initializeFoodMenu();
         });
     }
 
-
     /**This method clears up all the contents of the cart.
-     * It implements the clearCartButton from the mainMenuClientPageView */
-    private void clearCart(){
+     * It implements the setUpActionClearCartButtonButton from the mainMenuClientPageView */
+    private void setUpActionClearCartButton(){
         this.mainMenuView.setActionClearCartButton((ActionEvent event) ->{
-            ObservableList<Node> cartItems = this.mainMenuView.getGridPaneCart().getChildren();
+            clearCart(true);
+        });
+    }
 
-            if (cartItems.size() == 0){
-                return;
-            }
+    private void clearCart(boolean isUpdateModel) {
+        ObservableList<Node> cartItems = this.mainMenuView.getGridPaneCart().getChildren();
 
-            //for each card
-            for (Node cartItem:cartItems) {
-                String productName = null;
-                int productQuantity = 0;
-                char productType = ' ';
-                String productSize = null;
-                double productPrice = 0;
+        if (cartItems.size() == 0){
+            return;
+        }
 
-                AnchorPane cartItemPane = (AnchorPane) cartItem;
-                for (Node label : cartItemPane.getChildren()) {
-                    if (label instanceof Label) {
-                        switch (label.getId()){
-                            case "productNameLabel":
-                                productName = ((Label) label).getText();
-                                break;
-                            case "quantityLabel":
-                                String quantityLabel = ((Label) label).getText();
-                                String cleanedQuantity = quantityLabel.replaceAll("[qty:\\s]", "");
-                                productQuantity = Integer.parseInt(cleanedQuantity);
-                                break;
-                            case "sizeLabel":
-                                String sizeLabel = ((Label) label).getText();
-                                String cleanedSize = sizeLabel.replaceAll("[size:\\s]", "");
-                                productSize = cleanedSize;
+        //for each card
+        for (Node cartItem:cartItems) {
+            String productName = null;
+            int productQuantity = 0;
+            char productType = ' ';
+            String productSize = null;
+            double productPrice = 0;
 
-                                if (productSize.equals("S")){
-                                    productSize = "small";
-                                    productType = 'b';
-                                } else if (productSize.equals("M")) {
-                                    productSize = "medium";
-                                    productType = 'b';
-                                } else if (productSize.equals("L")) {
-                                    productSize = "large";
-                                    productType = 'b';
-                                }else {
-                                    productSize = "";
-                                    productType = 'f';
-                                }
-                                break;
-                            case "priceLabel":
-                                String priceLabel = ((Label) label).getText();
-                                String cleanedPrice = priceLabel.replaceAll("[P\\s]", ""); //cleaning
-                                productPrice = Double.parseDouble(cleanedPrice);
-                        }
+            AnchorPane cartItemPane = (AnchorPane) cartItem;
+            for (Node label : cartItemPane.getChildren()) {
+                if (label instanceof Label) {
+                    switch (label.getId()){
+                        case "productNameLabel":
+                            productName = ((Label) label).getText();
+                            break;
+                        case "quantityLabel":
+                            String quantityLabel = ((Label) label).getText();
+                            String cleanedQuantity = quantityLabel.replaceAll("[qty:\\s]", "");
+                            productQuantity = Integer.parseInt(cleanedQuantity);
+                            break;
+                        case "sizeLabel":
+                            String sizeLabel = ((Label) label).getText();
+                            String cleanedSize = sizeLabel.replaceAll("[size:\\s]", "");
+                            productSize = cleanedSize;
+
+                            if (productSize.equals("S")){
+                                productSize = "small";
+                                productType = 'b';
+                            } else if (productSize.equals("M")) {
+                                productSize = "medium";
+                                productType = 'b';
+                            } else if (productSize.equals("L")) {
+                                productSize = "large";
+                                productType = 'b';
+                            }else {
+                                productSize = "";
+                                productType = 'f';
+                            }
+                            break;
+                        case "priceLabel":
+                            String priceLabel = ((Label) label).getText();
+                            String cleanedPrice = priceLabel.replaceAll("[P\\s]", ""); //cleaning
+                            productPrice = Double.parseDouble(cleanedPrice);
                     }
                 }
+            }
 
-                try {
+            try {
+                if (isUpdateModel){
                     //update the models
                     if (productType == 'f'){
                         this.mainMenuModel.getClientModel().getFoodMenu().get(productName).updateQuantity(-productQuantity); //negative because we want to add/revert back the subtracted from the menu
@@ -236,26 +244,65 @@ public class MainMenuClientPageController {
 
                     //clear the cart of the customer
                     this.mainMenuModel.getClientModel().getCart().clear();
+                }
 
-                    //update the price label
-                    cartTotalPrice-= productPrice;
+                //update the price label
+                cartTotalPrice-= productPrice;
 
-                    //update the UI
-                    //set visible the labels
-                    mainMenuView.getCartLabel1().setVisible(true);
-                    mainMenuView.getCartLabel2().setVisible(true);
-                    mainMenuView.getCartImage().setVisible(true);
+                //update the UI
+                //set visible the labels
+                mainMenuView.getCartLabel1().setVisible(true);
+                mainMenuView.getCartLabel2().setVisible(true);
+                mainMenuView.getCartImage().setVisible(true);
 
-                    //add to grid pane
-                    mainMenuView.getGridPaneCart().setVisible(false);
-                    mainMenuView.getPriceLabel().setText("P " + cartTotalPrice + "0");
+                //add to grid pane
+                mainMenuView.getGridPaneCart().setVisible(false);
+                mainMenuView.getPriceLabel().setText("P " + cartTotalPrice + "0");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        //after clearing, remove all the contents of the pane
+        this.mainMenuView.getGridPaneCart().getChildren().clear();
+    }
+
+    /**this method sets up the action for checking out button*/
+    private void seUpActionCheckoutButton() {
+        this.mainMenuView.setUpActionCheckoutButton((ActionEvent event) ->{
+            if (this.mainMenuModel.getClientModel().getCart().isEmpty()){
+                PushNotification.toastSuccess("Cart Empty", "So items to be checked out. Add items to cart.");
+                return;
+            }else {
+                try {
+                    FXMLLoader checkoutLoader = new FXMLLoader(getClass().getResource("/fxml/client/checkout_page.fxml"));
+                    Parent root = checkoutLoader.load();
+
+                    //passing now the data needed for checkout
+                    Order orderFromClient = this.mainMenuModel.getClientModel().placeOrder();
+                    Customer customer = this.mainMenuModel.getClientModel().getCustomer();
+                    List<Product> clientCart = this.mainMenuModel.getClientModel().getCart();
+
+                    double subtotal = cartTotalPrice; //get what is on the cartTotalLabelPrice
+
+                    CheckoutPageController checkoutPageController = new CheckoutPageController(new CheckoutPageModel(customer, clientCart, subtotal, orderFromClient), checkoutLoader.getController());
+                    Scene scene = new Scene(root);
+                    Stage popupStage = new Stage();
+                    popupStage.setScene(scene);
+                    popupStage.showAndWait(); //wait until the popup stops
+
+                    //after the pop up closed, access now the orderProcessedByServer
+                    if (checkoutPageController.isOrderSuccessful()){
+                        //clear the cart without updating the model
+                        clearCart(false);
+
+                        //update the client model
+                        this.mainMenuModel.getClientModel().orderProcessSuccessful(checkoutPageController.getOrderProcessedByServer());
+                    }
                 }catch (Exception e){
                     e.printStackTrace();
                 }
             }
-
-            //after clearing, remove all the contents of the pane
-            this.mainMenuView.getGridPaneCart().getChildren().clear();
         });
     }
 
@@ -342,7 +389,6 @@ public class MainMenuClientPageController {
                 updateCartTotalPrice(selectBeverageVariationController.getFinalLargeOrderedPrice());
             }
         }
-
     }
 
     /**This method updates the total price being shown in the cart display.*/
@@ -374,7 +420,8 @@ public class MainMenuClientPageController {
                 lPrice = totalPrice;
             }
 
-            Beverage beverage = new Beverage(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), new Image[]{product.getImage()}, product.getDescription(), sQuantity,mQuantity,lQuantity,sPrice,mPrice,lPrice);
+            Object[] imageData = {product.getImageName(), ImageUtility.getImageBytes(product.getImageName())};
+            Beverage beverage = new Beverage(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), imageData, product.getDescription(), sQuantity,mQuantity,lQuantity,sPrice,mPrice,lPrice);
             //update first the cart of the client model which resides in MainMenuModel.getClientModel()
             mainMenuModel.getClientModel().getCart().add(beverage);
 
@@ -397,9 +444,11 @@ public class MainMenuClientPageController {
             mainMenuModel.getClientModel().getFoodMenu().get(product.getName()).updateQuantity(selectFoodController.getFinalOrderedQuantity());
 
             //cast to create a new Food object to be passed on the cart
-            Food food = new Food(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), new Image[]{product.getImage()}, product.getDescription(), selectFoodController.getFinalOrderedQuantity(), selectFoodController.getFinalOrderedPrice());
+            Object[] imageData = {product.getImageName(), ImageUtility.getImageBytes(product.getImageName())};
+            Food food = new Food(product.getName(), product.getType(), product.getReview(), product.getReviewCount(), imageData, product.getDescription(), selectFoodController.getFinalOrderedQuantity(), selectFoodController.getFinalOrderedPrice());
             //update first the cart of the client model which resides in MainMenuModel.getClientModel()
             mainMenuModel.getClientModel().getCart().add(food);
+
 
             //set visible the labels
             mainMenuView.getCartLabel1().setVisible(false);
