@@ -1,12 +1,15 @@
 package server.model;
 
-import javafx.collections.ObservableList;
+import server.controller.ServerController;
+import server.model.listeners.ClientObserver;
 import shared.*;
 import util.XMLUtility;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 import util.exception.OutOfStockException;
+
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,10 +20,36 @@ import java.util.List;
  * There is a predefined menu products for food, beverage and orders which will be loaded from xml files when the server model is initialized.
  */
 public class ServerModel {
+    private final List<ServerController> serverControllers = new ArrayList<>();
+    private final List<ClientObserver> observers = new ArrayList<>();
     private HashMap<String, Food> foodMenu; //Hashmap for faster searching
     private HashMap<String, Beverage> beverageMenu;
-    private List<Customer> customerAccountList;
+    private final List<Customer> customerAccountList;
     private List<Order> orderList; //List for listing only orders
+
+    public void addObserver(ClientObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(ClientObserver observer) {
+        observers.remove(observer);
+    }
+
+    public void notifyObservers() {
+        System.out.println("Notifying Controllers");
+        System.out.println(observers.size());
+        for (ClientObserver observer : observers) {
+            observer.onDataChanged();
+        }
+    }
+
+    public void registerServerController(ServerController controller) {
+        serverControllers.add(controller);
+    }
+
+    public List<ServerController> getActiveServerControllers() {
+        return serverControllers;
+    }
 
     /**The constructor of the server model should load the predefined menu products*/
     public ServerModel() {
@@ -57,6 +86,7 @@ public class ServerModel {
             }
         }
 
+        System.out.println(foodMenu);
         return successfulOrder;
     }
 
@@ -91,7 +121,7 @@ public class ServerModel {
     /**This method checks the availability of products in the menu based on the customer's order.
      * @param order, client of the order
      * @throws Exception if the product menu is out of stock. */
-    private void checkAvailability(Order order) throws Exception{
+    private synchronized void checkAvailability(Order order) throws Exception{
         for (Product product: order.getOrders()) {
             if (product instanceof Food){ //check first what type of product
                 Food food = (Food) product; //cast it

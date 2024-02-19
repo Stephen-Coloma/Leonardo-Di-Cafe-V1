@@ -94,9 +94,7 @@ public class MainMenuClientPageController {
         //set up the action for checking out
         setUpActionCheckoutButton();
 
-        mainMenuView.getProductSearchBar().textProperty().addListener((observable, oldValue, newValue) -> {
-            debounceFilterMenuItems(newValue);
-        });
+        mainMenuView.getProductSearchBar().textProperty().addListener((observable, oldValue, newValue) -> debounceFilterMenuItems(newValue));
 
         setUpActionOrderHistoryButton();
     } // end of setComponentActions
@@ -181,6 +179,19 @@ public class MainMenuClientPageController {
             case "PROCESS_ORDER_SUCCESSFUL" -> {
                 mainMenuModel.getClientModel().orderProcessSuccessful((Order) data[2]);
                 PushNotification.toastSuccess("Checkout Status", "Your order has been placed");
+                Platform.runLater(() -> clearCart(false));
+            }
+            case "PROCESS_ORDER_FAILED" -> {
+                clearCart(false);
+                PushNotification.toastError("Checkout Status", "Order unsuccessful due to stock shortage");
+            }
+            case "DATA_UPDATE" -> {
+                System.out.println("Obtained Updated Products");
+                Object[] bundledData = (Object[]) data[2];
+                System.out.println(bundledData[0]);
+                System.out.println(bundledData[1]);
+                mainMenuModel.getClientModel().setFoodMenu((HashMap<String, Food>) bundledData[0]);
+                mainMenuModel.getClientModel().setBeverageMenu((HashMap<String, Beverage>) bundledData[1]);
             }
         }
     } // end of handleIncomingData
@@ -189,6 +200,8 @@ public class MainMenuClientPageController {
         Object[] response = {clientID, code, data};
         try {
             out.writeObject(response);
+            out.flush();
+            out.reset();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -309,6 +322,27 @@ public class MainMenuClientPageController {
 
             //this code setups up add to cart button of each card
             menuCardView.getAddProductButton().setOnAction(actionEvent -> {
+                MenuCardModel updatedMenuCardModel = new MenuCardModel();
+                MenuCardView updatedMenuModelCardView = loader.getController();
+                MenuCardController updatedMenuCardController = new MenuCardController(menuCardModel, menuCardView);
+
+                Product product1 = menuCardModel.getProduct();
+                if (product1 instanceof Food food) {
+                    for (Map.Entry<String, Food> entry : mainMenuModel.getClientModel().getFoodMenu().entrySet()) {
+                        if (entry.getValue().getName().equals(food.getName())) {
+                            updatedMenuCardController.setProductData(entry.getValue());
+                            break;
+                        }
+                    }
+                } else if (product1 instanceof Beverage beverage) {
+                    for (Map.Entry<String, Beverage> entry : mainMenuModel.getClientModel().getBeverageMenu().entrySet()) {
+                        if (entry.getValue().getName().equals(beverage.getName())) {
+                            updatedMenuCardController.setProductData(entry.getValue());
+                            break;
+                        }
+                    }
+                }
+
                 addToCart(menuCardModel.getProduct());
             });
 
@@ -497,15 +531,8 @@ public class MainMenuClientPageController {
                             Order order = checkoutPageModel.getOrderFromClient();
                             sendData(clientId, "PROCESS_ORDER",order);
 
-
                             checkoutPageView.closeCheckoutView();
 
-                            clearCart(false);
-
-
-                            PushNotification.toastSuccess("Order", "Order uploaded to the system");
-                        } else {
-                            checkoutPageView.closeCheckoutView();
                             PushNotification.toastSuccess("Order", "Order uploaded to the system");
                         }
                     });

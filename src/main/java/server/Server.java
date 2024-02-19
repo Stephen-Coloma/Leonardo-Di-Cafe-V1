@@ -4,15 +4,17 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import server.controller.ServerController;
 import server.model.ServerModel;
+import server.model.listeners.ClientObserver;
 import server.view.ServerView;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-public class Server extends Application {
+public class Server extends Application implements ClientObserver {
     private static final int PORT = 2000;
     private static final int THREAD_POOL_SIZE = 20;
     private static final int BROADCAST_PORT = 12345;
@@ -26,8 +28,12 @@ public class Server extends Application {
     @Override
     public void start(Stage stage) {
         model = new ServerModel();
+        model.addObserver(this);
         view = new ServerView(stage);
         view.runInterface();
+
+        ServerController adminController = new ServerController(model, view);
+        adminController.initializeAdminInterface();
 
         // launch the server
         startServer();
@@ -42,10 +48,12 @@ public class Server extends Application {
                  ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE)) {
                 System.out.println("Server listening on port " + PORT);
 
+                ServerController controller;
+
                 while (true) {
                     Socket client = server.accept();
                     System.out.println("Client connected: " + client.getInetAddress().getHostAddress());
-                    ServerController controller = new ServerController(model, view);
+                    controller = new ServerController(model, view);
                     controller.setClientSocket(client);
                     executorService.submit(controller::run);
                 }
@@ -79,4 +87,26 @@ public class Server extends Application {
             }
         }).start();
     } // end of startBroadcastingServer
+
+    @Override
+    public void onDataChanged() {
+        broadcastDataToClients();
+    }
+
+    private void broadcastDataToClients() {
+        System.out.println("Broadcasting update to all clients");
+        List<ServerController> controllers = model.getActiveServerControllers();
+        System.out.println(model.getActiveServerControllers().size());
+        for (ServerController controller : controllers) {
+            System.out.println(model.getFoodMenu());
+            System.out.println(model.getBeverageMenu());
+
+            String foodString = model.getFoodMenu().toString();
+            String beverageString = model.getBeverageMenu().toString();
+
+            Object[] data = new Object[]{model.getFoodMenu(), model.getBeverageMenu(), foodString, beverageString};
+
+            controller.sendData("", "DATA_UPDATE", data);
+        }
+    }
 } // end of Server class

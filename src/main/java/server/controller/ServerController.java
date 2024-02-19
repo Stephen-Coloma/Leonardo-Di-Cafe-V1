@@ -32,12 +32,6 @@ public class ServerController implements MainMenuAdminObserver {
     public ServerController(ServerModel model, ServerView view) {
         this.model = model;
         this. view = view;
-
-        Platform.runLater(() -> {
-            System.out.println("Obtained Main Menu Controller");
-            setComponentActions();
-            System.out.println("Successfully added actions");
-        });
     } // end of constructor
 
     public void setClientSocket(Socket clientSocket) {
@@ -65,6 +59,8 @@ public class ServerController implements MainMenuAdminObserver {
             streamReader = new ObjectInputStream(clientSocket.getInputStream());
             streamWriter = new ObjectOutputStream(clientSocket.getOutputStream());
 
+            model.registerServerController(this);
+
             listenToClient();
         } catch (IOException ioException) {
             ioException.printStackTrace();
@@ -73,11 +69,19 @@ public class ServerController implements MainMenuAdminObserver {
         }
     } // end of run
 
+    public void initializeAdminInterface() {
+        Platform.runLater(() -> {
+            System.out.println("Obtained Main Menu Controller");
+            setComponentActions();
+            System.out.println("Successfully added actions");
+        });
+    } // end of initializeAdminInterface
+
     private void listenToClient() throws IOException, ClassNotFoundException {
         while (!clientSocket.isClosed()) {
             Object[] data = (Object[]) streamReader.readObject();
             if (data != null) {
-                new Thread(() -> handleClientRequest(data)).start();
+                handleClientRequest(data);
             }
         }
     } // end of listenToClient
@@ -119,8 +123,10 @@ public class ServerController implements MainMenuAdminObserver {
                 try {
                     Order order = model.processOrder((Order) message[2]);
                     sendData(String.valueOf(message[0]), "PROCESS_ORDER_SUCCESSFUL", order);
+                    model.notifyObservers();
                 } catch (Exception exception) {
                     sendData(String.valueOf(message[0]), "PROCESS_ORDER_FAILED", null);
+                    exception.printStackTrace();
                     System.err.println("Error during the order processing");
                 }
             }
@@ -160,6 +166,8 @@ public class ServerController implements MainMenuAdminObserver {
                 System.out.println(model.getBeverageMenu());
             }
 
+            model.notifyObservers();
+
             /*
             TODO: Move this part into a method that executes once the server closes so that the writing of data will
                   only be done once the server closes
@@ -171,10 +179,12 @@ public class ServerController implements MainMenuAdminObserver {
         }
     } // end of notifyMenuChanges
 
-    private void sendData(String clientID, String code, Object data) {
+    public void sendData(String clientID, String code, Object data) {
         Object[] response = {clientID, code, data};
         try {
             streamWriter.writeObject(response);
+            streamWriter.flush();
+            streamWriter.reset();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
