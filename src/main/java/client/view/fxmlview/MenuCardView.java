@@ -1,97 +1,52 @@
 package client.view.fxmlview;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import shared.Beverage;
-import shared.Food;
-import shared.Product;
-
-import java.util.HashMap;
 
 public class MenuCardView {
     @FXML
-    private Button addProductButton;
-
+    private Label productName;
     @FXML
-    private Label productDetailsLabel;
-
+    private Label productDescription;
+    @FXML
+    private Label productRating;
+    @FXML
+    private Label productPrice;
+    @FXML
+    private Label sizeLabel;
+    @FXML
+    private Button addProductButton;
     @FXML
     private ImageView productImage;
 
-    @FXML
-    private Label productNameLabel;
+    public void setProductName(String value) {
+        productName.setText(value);
+    }
 
-    @FXML
-    private Label productPriceLabel;
+    public void setProductDescription(String value) {
+        productDescription.setText(value);
+    }
 
-    @FXML
-    private Label productRatingLabel;
-    @FXML
-    private Label sizeLabel;
-    //the data to be passed
+    public void setProductRating(String value) {
+        productRating.setText(value);
+    }
 
-    /*This method implements the action listener for the button*/
-    public void setActionAddProductButton(EventHandler<ActionEvent> event){
-        addProductButton.setOnAction(event);
+    public void setProductPrice(String value) {
+        productPrice.setText(value);
+    }
+
+    public void setSizeLabel(String value) {
+        sizeLabel.setText(value);
+    }
+
+    public void setProductImage(Image image) {
+        productImage.setImage(image);
     }
 
     public Button getAddProductButton() {
         return addProductButton;
     }
-
-    public void setAddProductButton(Button addProductButton) {
-        this.addProductButton = addProductButton;
-    }
-
-    public Label getProductDetailsLabel() {
-        return productDetailsLabel;
-    }
-
-    public void setProductDetailsLabel(Label productDetailsLabel) {
-        this.productDetailsLabel = productDetailsLabel;
-    }
-
-    public ImageView getProductImage() {
-        return productImage;
-    }
-
-    public void setProductImage(ImageView productImage) {
-        this.productImage = productImage;
-    }
-
-    public Label getProductNameLabel() {
-        return productNameLabel;
-    }
-
-    public void setProductNameLabel(Label productNameLabel) {
-        this.productNameLabel = productNameLabel;
-    }
-
-    public Label getProductPriceLabel() {
-        return productPriceLabel;
-    }
-
-    public void setProductPriceLabel(Label productPriceLabel) {
-        this.productPriceLabel = productPriceLabel;
-    }
-
-    public Label getProductRatingLabel() {
-        return productRatingLabel;
-    }
-
-    public void setProductRatingLabel(Label productRatingLabel) {
-        this.productRatingLabel = productRatingLabel;
-    }
-
-    public Label getSizeLabel() {
-        return sizeLabel;
-    }
-
-    public void setSizeLabel(Label sizeLabel) {
-        this.sizeLabel = sizeLabel;
-    }
-}
+} // end of MenuCardNewView

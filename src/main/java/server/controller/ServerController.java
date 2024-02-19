@@ -75,7 +75,7 @@ public class ServerController implements MainMenuAdminObserver {
         while (!clientSocket.isClosed()) {
             Object[] data = (Object[]) streamReader.readObject();
             if (data != null) {
-                handleClientRequest(data);
+                new Thread(() -> handleClientRequest(data)).start();
             }
         }
     } // end of listenToClient

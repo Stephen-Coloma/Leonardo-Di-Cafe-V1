@@ -44,22 +44,18 @@ public class LoginPageView {
 
 
     public void loginPageButtonEntered(MouseEvent event){
-        loginButton.setStyle("-fx-background-color: lightgray;");
-        loginButton.setTextFill(Paint.valueOf("Black"));
+        loginButton.setStyle("-fx-background-color: #c7a97f;");
     }
     public void loginPageButtonExited(MouseEvent event){
         loginButton.setStyle("-fx-background-color:  #A38157;");
-        loginButton.setTextFill(Paint.valueOf("White"));
     }
 
     public void homePageButtonEntered(MouseEvent event){
-        homeButton.setStyle("-fx-background-color: lightgray;");
-        homeButton.setTextFill(Paint.valueOf("Black"));
+        homeButton.setStyle("-fx-background-color: #8d5a47;");
     }
 
     public void homePageButtonExited(MouseEvent event){
-        homeButton.setStyle("-fx-background-color:  #A38157;");
-        homeButton.setTextFill(Paint.valueOf("White"));
+        homeButton.setStyle("-fx-background-color:  #66382a;");
     }
 
     public Button getLoginButton() {

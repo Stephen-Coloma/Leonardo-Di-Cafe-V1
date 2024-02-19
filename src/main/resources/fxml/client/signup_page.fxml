@@ -1,137 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="455.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.SignUpPageView">
-   <children>
-      <Pane prefHeight="455.0" prefWidth="810.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="890.0" style="-fx-background-color: #faf0e5;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.SignUpPageView">
+   <right>
+      <ImageView fitHeight="495.0" fitWidth="462.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../../images/client/accountregistration/registrationPageBackground.jpg" />
+         </image>
+      </ImageView>
+   </right>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <BorderPane prefHeight="455.0" prefWidth="810.0">
-               <center>
-                  <VBox alignment="CENTER" prefHeight="408.0" prefWidth="282.0" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_CENTER" layoutX="113.0" layoutY="1.0" prefHeight="495.0" prefWidth="181.0">
+               <children>
+                  <Label text="Account Registration" textFill="#66382a">
+                     <font>
+                        <Font name="Impact" size="30.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="7.0" />
+                     </VBox.margin>
+                  </Label>
+                  <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="269.0">
                      <children>
-                        <Label contentDisplay="CENTER" text="Account Registration" textFill="#66382a">
+                        <Label text="Full Name">
                            <font>
-                              <Font name="System Bold" size="21.0" />
+                              <Font name="Garamond" size="18.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
                         </Label>
-                        <Pane prefHeight="14.0" prefWidth="282.0" VBox.vgrow="ALWAYS" />
-                        <HBox prefHeight="18.0" prefWidth="282.0">
-                           <children>
-                              <Label fx:id="fullNameLabel" text="Full Name">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <TextField id="name" fx:id="fullNameTextField" prefHeight="34.0" prefWidth="262.0" promptText="Juan Dela Cruz" />
-                        <Pane layoutX="10.0" layoutY="373.0" prefHeight="8.0" prefWidth="282.0" VBox.vgrow="ALWAYS" />
-                        <HBox prefHeight="20.0" prefWidth="282.0">
-                           <children>
-                              <Label fx:id="userNameLabel" text="Username">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <TextField fx:id="userNameTextField" prefHeight="34.0" prefWidth="262.0" promptText="sampleUser" />
-                        <Pane prefHeight="8.0" prefWidth="282.0" VBox.vgrow="ALWAYS" />
-                        <HBox prefHeight="19.0" prefWidth="282.0">
-                           <children>
-                              <Label fx:id="addressLabel" text="Address">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <TextField fx:id="addressTextField" prefHeight="34.0" prefWidth="262.0" promptText="Bakakeng Sur, Baguio City" />
-                        <Pane prefHeight="8.0" prefWidth="282.0" VBox.vgrow="ALWAYS" />
-                        <HBox fx:id="emailLabel" prefHeight="18.0" prefWidth="282.0">
-                           <children>
-                              <Label text="Email">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <TextField fx:id="emailTextField" prefHeight="34.0" prefWidth="262.0" promptText="123sample@gmail.com" />
-                        <Pane prefHeight="8.0" prefWidth="282.0" VBox.vgrow="ALWAYS" />
-                        <HBox prefHeight="18.0" prefWidth="282.0">
-                           <children>
-                              <Label fx:id="passwordLabel" text="Password">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <PasswordField fx:id="passwordField" prefHeight="33.0" prefWidth="262.0" promptText="Minimun of Six Characters" />
-                        <Button id="meow" fx:id="createAccountButton" mnemonicParsing="false" onMouseEntered="#createAccountButtonEntered" onMouseExited="#createAccountButtonExited" prefHeight="31.0" prefWidth="285.0" style="-fx-background-color: #A38157;" text="Create Account" textFill="WHITE">
+                        <TextField fx:id="fullNameTextField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" promptText="Charlotte Dupont">
                            <font>
-                              <Font name="System Bold" size="15.0" />
+                              <Font name="Garamond" size="16.0" />
+                           </font>
+                        </TextField>
+                        <Label text="Username">
+                           <font>
+                              <Font name="Garamond" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="userNameTextField" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" promptText="CharCharm">
+                           <font>
+                              <Font name="Garamond" size="16.0" />
+                           </font>
+                        </TextField>
+                        <Label text="Address">
+                           <font>
+                              <Font name="Garamond" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="addressTextField" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" promptText="Rimando Road, Baguio City">
+                           <font>
+                              <Font name="Garamond" size="16.0" />
+                           </font>
+                        </TextField>
+                        <Label text="Email">
+                           <font>
+                              <Font name="Garamond" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="emailTextField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" promptText="charlottie@gmail.com">
+                           <font>
+                              <Font name="Garamond" size="16.0" />
+                           </font>
+                        </TextField>
+                        <Label text="Password">
+                           <font>
+                              <Font name="Garamond" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </Label>
+                        <PasswordField fx:id="passwordField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="38.0" promptText="Minimum of Six Characters">
+                           <font>
+                              <Font name="Garamond" size="16.0" />
+                           </font>
+                        </PasswordField>
+                        <Button fx:id="createAccountButton" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseEntered="#createAccountButtonEntered" onMouseExited="#createAccountButtonExited" prefHeight="35.0" prefWidth="286.0" style="-fx-background-color: #A38157;" text="CREATE ACCOUNT" textFill="WHITE">
+                           <font>
+                              <Font name="Copperplate Gothic Light" size="15.0" />
                            </font>
                         </Button>
-                        <Pane layoutX="10.0" layoutY="396.0" prefHeight="14.0" prefWidth="282.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label fx:id="noticeLabel" layoutY="-2.0" text="fill out all details" textFill="RED" visible="false" />
-                           </children></Pane>
-                        <Line endX="155.60003662109375" endY="-3.0517578125E-5" startX="-100.0" strokeWidth="1.5" style="-fx-stroke: #C8BCA9;" />
-                        <Pane layoutX="10.0" layoutY="403.0" prefHeight="14.0" prefWidth="282.0" VBox.vgrow="ALWAYS" />
-                        <CheckBox fx:id="termsAndServicesCheckBox" mnemonicParsing="false" text="By submitting your request you agree to our " textFill="#545454">
+                        <Label fx:id="noticeLabel" textFill="RED">
                            <font>
-                              <Font size="11.0" />
+                              <Font name="Arial" size="14.0" />
                            </font>
-                        </CheckBox>
-                        <Label text="Terms of Service and Privacy Policy" textFill="#593117">
-                           <font>
-                              <Font size="11.0" />
-                           </font>
+                           <VBox.margin>
+                              <Insets top="4.0" />
+                           </VBox.margin>
                         </Label>
+                        <Line endX="269.0" endY="-3.0517578125E-5" stroke="#c8bca9" strokeWidth="1.5" style="-fx-stroke: #C8BCA9;">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Line>
                      </children>
                   </VBox>
-               </center>
-               <right>
-                  <Pane prefHeight="406.0" prefWidth="268.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Pane layoutX="-38.0" layoutY="193.0" prefHeight="14.0" prefWidth="282.0" />
-                     </children></Pane>
-               </right>
-               <bottom>
-                  <Pane prefHeight="26.0" prefWidth="810.0" BorderPane.alignment="CENTER" />
-               </bottom>
-               <left>
-                  <Pane prefHeight="406.0" prefWidth="262.0" BorderPane.alignment="CENTER" />
-               </left>
-               <top>
-                  <Pane prefHeight="22.0" prefWidth="810.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <Button fx:id="homeButton" layoutX="263.0" layoutY="-1.0" mnemonicParsing="false" onMouseEntered="#homePageButtonEntered" onMouseExited="#homePageButtonExited" style="-fx-background-color: #A38157;" text="&lt;  Home" textFill="WHITE" />
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
-                     <BorderPane.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </BorderPane.margin></Pane>
-               </top>
-            </BorderPane>
+                  <CheckBox fx:id="termsAndServicesCheckBox" mnemonicParsing="false" text="By submitting your request you agree to our " textFill="#545454">
+                     <font>
+                        <Font name="Arial" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </CheckBox>
+                  <Label text="Terms of Service and Privacy Policy" textFill="#593117">
+                     <font>
+                        <Font name="Arial" size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Button fx:id="homeButton" layoutX="-115.0" layoutY="234.0" mnemonicParsing="false" onMouseEntered="#homePageButtonEntered" onMouseExited="#homePageButtonExited" prefHeight="28.0" prefWidth="254.0" rotate="90.0" style="-fx-background-color: #66382a;" text="Back To Home" textFill="WHITE">
+               <font>
+                  <Font name="Garamond" size="16.0" />
+               </font>
+            </Button>
          </children>
-      </Pane>
-   </children>
-</AnchorPane>
+      </AnchorPane>
+   </center>
+</BorderPane>

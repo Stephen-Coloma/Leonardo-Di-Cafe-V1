@@ -3,7 +3,6 @@ package client.view;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,8 +18,7 @@ public class ClientView {
             try {
                 System.out.println("Loading Client Interface");
                 loader = new FXMLLoader(getClass().getResource("/fxml/client/landing_page.fxml"));
-                AnchorPane root = loader.load();
-                Scene scene = new Scene(root);
+                Scene scene = new Scene(loader.load());
                 stage.setTitle("LEONARDO D' Cafe [CLIENT]");
                 stage.setScene(scene);
                 stage.show();

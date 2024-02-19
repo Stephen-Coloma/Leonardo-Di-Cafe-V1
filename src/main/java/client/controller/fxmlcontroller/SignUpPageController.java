@@ -2,7 +2,6 @@ package client.controller.fxmlcontroller;
 
 import client.model.fxmlmodel.LoginPageModel;
 import client.model.fxmlmodel.SignUpPageModel;
-import client.view.fxmlview.LoginPageView;
 import client.view.fxmlview.SignUpPageView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;

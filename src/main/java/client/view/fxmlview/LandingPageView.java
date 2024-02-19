@@ -53,20 +53,16 @@ public class LandingPageView {
 //    }
 
     public void loginFrontPageButtonEntered(MouseEvent event){
-        loginButtonFrontPage.setStyle("-fx-background-color: lightgray;");
-        loginButtonFrontPage.setTextFill(Paint.valueOf("Black"));
+        loginButtonFrontPage.setStyle("-fx-background-color: #c7a97f;");
     }
     public void loginFrontPageButtonExited(MouseEvent event){
         loginButtonFrontPage.setStyle("-fx-background-color:  #A38157;");
-        loginButtonFrontPage.setTextFill(Paint.valueOf("White"));
     }
     public void signupFrontPageButtonEntered(MouseEvent event){
-        signupButtonFrontPage.setStyle("-fx-background-color: lightgray;");
-        signupButtonFrontPage.setTextFill(Paint.valueOf("Black"));
+        signupButtonFrontPage.setStyle("-fx-background-color: #c7a97f;");
     }
     public void signupFrontPageButtonExited(MouseEvent event){
         signupButtonFrontPage.setStyle("-fx-background-color:  #A38157;");
-        signupButtonFrontPage.setTextFill(Paint.valueOf("White"));
     }
 
     public Button getLoginButtonFrontPage() {

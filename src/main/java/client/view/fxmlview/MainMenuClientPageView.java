@@ -10,13 +10,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.kordamp.bootstrapfx.scene.layout.Panel;
 
 import java.io.IOException;
 
@@ -68,6 +71,13 @@ public class MainMenuClientPageView {
 
     @FXML
     private Label productTypeLabel;
+
+    @FXML
+    private TextField productSearchBar;
+
+    @FXML
+    private Pane loadingIndicatorPanel;
+
 
     /**This method accepts the action listener implementation for foodButton from the main_menu_client_page controller*/
     public void setActionMainMenuFoodButton(EventHandler<ActionEvent> event){
@@ -345,5 +355,13 @@ public class MainMenuClientPageView {
 
     public void setTimeLabel(Label timeLabel) {
         this.timeLabel = timeLabel;
+    }
+
+    public TextField getProductSearchBar() {
+        return productSearchBar;
+    }
+
+    public Pane getLoadingIndicatorPanel() {
+        return loadingIndicatorPanel;
     }
 }

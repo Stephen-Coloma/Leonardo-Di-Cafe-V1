@@ -16,7 +16,8 @@ public class Server extends Application {
     private static final int PORT = 2000;
     private static final int THREAD_POOL_SIZE = 20;
     private static final int BROADCAST_PORT = 12345;
-    private static ServerController controller;
+    private ServerModel model;
+    private ServerView view;
 
     public static void main(String[] args) {
         launch(args);
@@ -24,10 +25,9 @@ public class Server extends Application {
 
     @Override
     public void start(Stage stage) {
-        ServerModel model = new ServerModel();
-        ServerView view = new ServerView(stage);
+        model = new ServerModel();
+        view = new ServerView(stage);
         view.runInterface();
-        controller = new ServerController(model, view);
 
         // launch the server
         startServer();
@@ -45,6 +45,7 @@ public class Server extends Application {
                 while (true) {
                     Socket client = server.accept();
                     System.out.println("Client connected: " + client.getInetAddress().getHostAddress());
+                    ServerController controller = new ServerController(model, view);
                     controller.setClientSocket(client);
                     executorService.submit(controller::run);
                 }

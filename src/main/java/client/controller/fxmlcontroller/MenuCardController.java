@@ -2,24 +2,41 @@ package client.controller.fxmlcontroller;
 
 import client.model.fxmlmodel.MenuCardModel;
 import client.view.fxmlview.MenuCardView;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import shared.Beverage;
 import shared.Food;
 import shared.Product;
 
-import java.util.HashMap;
-
 public class MenuCardController {
-    private MenuCardModel menuCardModel;
-    private MenuCardView menuCardView;
+    private MenuCardModel model;
+    private MenuCardView view;
 
-    public MenuCardController(MenuCardModel menuCardModel, MenuCardView menuCardView){
-        this.menuCardView = menuCardView;
-        this.menuCardModel = menuCardModel;
+    public MenuCardController(MenuCardModel model, MenuCardView view){
+        this.model = model;
+        this.view = view;
     }
 
+    public void setProductData(Product product) {
+        if (product instanceof Food food) {
+            view.setProductName(food.getName());
+            view.setProductDescription(food.getDescription());
+            view.setProductRating("Rating: " + food.getReview());
+            view.setProductPrice("₱" + food.getPrice());
+            view.setProductImage(food.getImage());
+            view.setSizeLabel("");
+            model.setProduct(food);
+        } else if (product instanceof Beverage beverage) {
+            view.setProductName(beverage.getName());
+            view.setProductDescription(beverage.getDescription());
+            view.setProductRating("Rating: " + beverage.getReview());
+            view.setProductPrice("₱" + beverage.getSizePrice().get("small") + "0 - " + "₱" + beverage.getSizePrice().get("large") + "0");
+            view.setProductImage(beverage.getImage());
+            view.setSizeLabel("size: S,M.L");
+            model.setProduct(beverage);
+        }
+    } // end of setProductData
 
+
+    /*
     public void setData(){
         Product product = menuCardModel.getProduct();
         if (product.getType() == 'f'){
@@ -31,7 +48,10 @@ public class MenuCardController {
         }
     }
 
-    /**This sets up Beverage data of in the card*/
+     */
+
+    /*
+
     private void setBeverageDataOnCard(Beverage beverage) {
         HashMap<String, Double> sizePrice = beverage.getSizePrice();
 
@@ -43,7 +63,6 @@ public class MenuCardController {
         menuCardView.getProductImage().setImage(menuCardModel.getProduct().getImage());
     }
 
-    /**This sets up Food data of in the card*/
     private void setFoodDataOnCard(Food food) {
         menuCardView.getSizeLabel().setVisible(false); //no sizes for food
 
@@ -54,7 +73,6 @@ public class MenuCardController {
         menuCardView.getProductImage().setImage(menuCardModel.getProduct().getImage());
     }
 
-    /*This method accepts method implementation from the main_menu_client page and passes the action to the button in the view*/
     public void setActionAddProductButton(EventHandler<ActionEvent> event){
         menuCardView.setActionAddProductButton(event);
     }
@@ -74,4 +92,6 @@ public class MenuCardController {
     public void setMenuCardView(MenuCardView menuCardView) {
         this.menuCardView = menuCardView;
     }
+
+     */
 }

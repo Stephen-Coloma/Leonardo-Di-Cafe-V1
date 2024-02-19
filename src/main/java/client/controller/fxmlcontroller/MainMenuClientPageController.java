@@ -4,10 +4,13 @@ package client.controller.fxmlcontroller;
 import client.model.fxmlmodel.*;
 import client.view.fxmlview.CheckoutPageView;
 import client.view.fxmlview.MainMenuClientPageView;
+import client.view.fxmlview.MenuCardView;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,10 +18,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import shared.*;
 import util.ImageUtility;
+import util.LoadingScreenUtility;
 import util.PushNotification;
 
 import java.io.IOException;
@@ -28,9 +33,11 @@ import java.net.Socket;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class MainMenuClientPageController {
+    private char currentLoadedMenu = 'f';
     private MainMenuClientPageView mainMenuView;
     private MainMenuClientPageModel mainMenuModel;
     private FXMLLoader loader;
@@ -42,6 +49,8 @@ public class MainMenuClientPageController {
     private int cartColumn = 0; //for cart scrollPane
     private int cartRow = 1; //for cart scrollPane
     private double cartTotalPrice = 0; //for cart purposes
+    private static final long DEBOUNCE_DELAY = 500;
+    private Timer debounceTimer;
 
     public MainMenuClientPageController(MainMenuClientPageModel mainMenuModel, MainMenuClientPageView mainMenuView) {
         this.mainMenuView = mainMenuView;
@@ -55,21 +64,38 @@ public class MainMenuClientPageController {
         String accountName = this.mainMenuModel.getClientModel().getCustomer().getName();
         this.mainMenuView.getAccountNameLabel().setText(accountName);
 
-        initializeFoodMenu();
+        // initial menu
+        loadFoodMenu();
 
         setComponentActions();
+
+        debounceTimer = new Timer();
     }
 
     private void setComponentActions() {
-        //setting up action listener for food button
-        setActionMenuFoodButton();
-        setActionMenuBeverageButton();
+        // set up action listener for food category button
+        mainMenuView.getMainMenuFoodButton().setOnAction(actionEvent -> {
+            mainMenuView.getGridPaneMenu().getChildren().clear(); // remove existing menu from the grid before switching menus
+            currentLoadedMenu = 'f';
+            loadFoodMenu();
+        });
+
+        // set up action listener for beverages category button
+        mainMenuView.getMainMenuBeveragesButton().setOnAction(actionEvent -> {
+            mainMenuView.getGridPaneMenu().getChildren().clear(); // remove existing menu from the grid before switching menus
+            currentLoadedMenu = 'b';
+            loadBeverageMenu();
+        });
 
         //setting up the action for setUpActionClearCartButtonButton
         setUpActionClearCartButton();
 
         //set up the action for checking out
-        seUpActionCheckoutButton();
+        setUpActionCheckoutButton();
+
+        mainMenuView.getProductSearchBar().textProperty().addListener((observable, oldValue, newValue) -> {
+            debounceFilterMenuItems(newValue);
+        });
     } // end of setComponentActions
 
     public void run() {
@@ -142,94 +168,166 @@ public class MainMenuClientPageController {
         mainMenuView.setDateLabel(formattedDate);
     } // end of setupDate
 
-    /**
-     * After login is successful, load the food menu
-     */
-    private void initializeFoodMenu() {
+    private void loadFoodMenu() {
         mainMenuView.getProductTypeLabel().setText("Food Category");
 
-        List<Food> foodMenu = mainMenuModel.getClientModel().getFoodMenu().values().stream().toList();
-        int column = 0;
-        int row = 1;
+        LoadingScreenUtility.showLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
 
-        //initializing the food menu cards from the hashmap
-        try {
-            for (Food product : foodMenu) {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/fxml/client/menu_card.fxml"));
+        HashMap<String, Food> foodMenu = mainMenuModel.getClientModel().getFoodMenu();
+        List<Food> foodProducts = new ArrayList<>(foodMenu.values());
 
-                //putting the card on the anchorPane
-                AnchorPane card = loader.load();
+        Task<Void> loadingTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                Thread.sleep(2000);
 
-                MenuCardController menuCard = new MenuCardController(new MenuCardModel(product), loader.getController());
-                menuCard.setData();
+                Platform.runLater(() -> {
+                    int columnIndex = 0;
+                    int rowIndex = 1;
 
-                //this code setups up add to cart button of each card
-                menuCard.setActionAddProductButton((ActionEvent event1) -> {
-                    addToCart(product);
-                });
+                    for (Food food : foodProducts) {
+                        Node productCard = createProductCard(food);
 
-                if (column == 2) {
-                    column = 0;
-                    row++;
-                }
-                mainMenuView.getGridPaneMenu().add(card, column++, row);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+                        mainMenuView.getGridPaneMenu().getChildren().add(productCard);
+                        GridPane.setConstraints(productCard, columnIndex, rowIndex);
 
-    /**
-     * This method sets up the action for menuBeverage button
-     */
-    private void setActionMenuBeverageButton() {
-        mainMenuView.setActionMainMenuBeverageButton((ActionEvent event) -> {
-            mainMenuView.getProductTypeLabel().setText("Beverage Category");
-
-            mainMenuView.getGridPaneMenu().getChildren().clear();//clears up the content
-
-            List<Beverage> beverageMenu = mainMenuModel.getClientModel().getBeverageMenu().values().stream().toList();
-            int column = 0;
-            int row = 1;
-
-            //initializing the food menu cards from the hashmap
-            try {
-                for (Beverage product : beverageMenu) {
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("/fxml/client/menu_card.fxml"));
-
-                    //putting the card on the anchorPane
-                    AnchorPane card = loader.load();
-
-                    MenuCardController menuCard = new MenuCardController(new MenuCardModel(product), loader.getController());
-                    menuCard.setData();
-
-                    //this code setups up add to cart button of each card
-                    menuCard.setActionAddProductButton((ActionEvent event1) -> {
-                        addToCart((Product) product);
-                    });
-
-                    if (column == 2) {
-                        column = 0;
-                        row++;
+                        if (columnIndex == 1) {
+                            columnIndex = 0;
+                            rowIndex++;
+                        } else {
+                            columnIndex++;
+                        }
                     }
-                    mainMenuView.getGridPaneMenu().add(card, column++, row);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
 
-    /**
-     * This method sets up action listener for menuFoodButton
-     */
-    private void setActionMenuFoodButton() {
-        mainMenuView.setActionMainMenuFoodButton((ActionEvent event) -> {
-            mainMenuView.getGridPaneMenu().getChildren().clear();
-            initializeFoodMenu();
-        });
+                    LoadingScreenUtility.hideLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
+                });
+                return null;
+            }
+        };
+
+        Thread loadingThread = new Thread(loadingTask);
+        loadingThread.start();
+    } // end of loadFoodMenu
+
+    private void loadBeverageMenu() {
+        mainMenuView.getProductTypeLabel().setText("Beverage Category");
+
+        LoadingScreenUtility.showLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
+
+        HashMap<String, Beverage> beverageMenu = mainMenuModel.getClientModel().getBeverageMenu();
+        List<Beverage> beverageProducts = new ArrayList<>(beverageMenu.values());
+
+        Task<Void> loadingTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                Thread.sleep(2000);
+
+                Platform.runLater(() -> {
+                    int columnIndex = 0;
+                    int rowIndex = 1;
+
+                    for (Beverage beverage : beverageProducts) {
+                        Node productCard = createProductCard(beverage);
+
+                        mainMenuView.getGridPaneMenu().getChildren().add(productCard);
+                        GridPane.setConstraints(productCard, columnIndex, rowIndex);
+
+                        if (columnIndex == 1) {
+                            columnIndex = 0;
+                            rowIndex++;
+                        } else {
+                            columnIndex++;
+                        }
+                    }
+
+                    LoadingScreenUtility.hideLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
+                });
+                return null;
+            }
+        };
+
+        Thread loadingThread = new Thread(loadingTask);
+        loadingThread.start();
+    } // end of loadBeverageMenu
+
+    private Node createProductCard(Product product) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/menu_card.fxml"));
+            Node productCard = loader.load();
+
+            MenuCardModel menuCardModel = new MenuCardModel();
+            MenuCardView menuCardView = loader.getController();
+            MenuCardController menuCardController = new MenuCardController(menuCardModel, menuCardView);
+            menuCardController.setProductData(product);
+
+            //this code setups up add to cart button of each card
+            menuCardView.getAddProductButton().setOnAction(actionEvent -> {
+                addToCart(menuCardModel.getProduct());
+            });
+
+            return productCard;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    } // end of createProductCard
+
+    private void debounceFilterMenuItems(String searchText) {
+        debounceTimer.cancel();
+        debounceTimer = new Timer();
+
+        LoadingScreenUtility.showLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
+        debounceTimer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    filterMenuItems(searchText);
+                    LoadingScreenUtility.hideLoadingIndicator(mainMenuView.getLoadingIndicatorPanel());
+                });
+            }
+        }, DEBOUNCE_DELAY);
+
+    } // end of debounceFilterMenuItems
+
+    private void filterMenuItems(String searchText) {
+        mainMenuView.getGridPaneMenu().getChildren().clear();
+
+        List<Node> filteredProductCards = new ArrayList<>();
+        int columnIndex = 0;
+        int rowIndex = 1;
+        if (currentLoadedMenu == 'f') {
+            HashMap<String, Food> foodMenu = mainMenuModel.getClientModel().getFoodMenu();
+            List<Food> filteredFoodProducts = foodMenu.values().stream()
+                    .filter(food -> food.getName().toLowerCase().contains(searchText.toLowerCase()))
+                    .collect(Collectors.toList());
+
+            for (Food food : filteredFoodProducts) {
+                Node productCard = createProductCard(food);
+                filteredProductCards.add(productCard);
+            }
+        } else {
+            HashMap<String, Beverage> beverageMenu = mainMenuModel.getClientModel().getBeverageMenu();
+            List<Beverage> filteredBeverageProducts = beverageMenu.values().stream()
+                    .filter(beverage -> beverage.getName().toLowerCase().contains(searchText.toLowerCase()))
+                    .collect(Collectors.toList());
+
+            for (Beverage beverage : filteredBeverageProducts) {
+                Node productCard = createProductCard(beverage);
+                filteredProductCards.add(productCard);
+            }
+        }
+
+        for (Node productCard : filteredProductCards) {
+            mainMenuView.getGridPaneMenu().getChildren().add(productCard);
+            GridPane.setConstraints(productCard, columnIndex, rowIndex);
+            if (columnIndex == 1) {
+                columnIndex = 0;
+                rowIndex++;
+            } else {
+                columnIndex++;
+            }
+        }
     }
 
     /**
@@ -333,11 +431,10 @@ public class MainMenuClientPageController {
     /**
      * this method sets up the action for checking out button
      */
-    private void seUpActionCheckoutButton() {
+    private void setUpActionCheckoutButton() {
         this.mainMenuView.setUpActionCheckoutButton((ActionEvent event) -> {
             if (this.mainMenuModel.getClientModel().getCart().isEmpty()) {
                 PushNotification.toastSuccess("Cart Empty", "No items to be checked out. Add items to cart.");
-                return;
             } else {
                 try {
                     CheckoutPageModel checkoutPageModel = new CheckoutPageModel(mainMenuModel.getClientModel().getCustomer(), mainMenuModel.getClientModel().getCart(), cartTotalPrice, mainMenuModel.getClientModel().placeOrder());
@@ -365,40 +462,6 @@ public class MainMenuClientPageController {
                             PushNotification.toastSuccess("Order", "Order uploaded to the system");
                         }
                     });
-
-
-                    /*
-                    FXMLLoader checkoutLoader = new FXMLLoader(getClass().getResource("/fxml/client/checkout_page.fxml"));
-                    Parent root = checkoutLoader.load();
-
-                    //passing now the data needed for checkout
-                    Order orderFromClient = this.mainMenuModel.getClientModel().placeOrder();
-                    Customer customer = this.mainMenuModel.getClientModel().getCustomer();
-                    List<Product> clientCart = this.mainMenuModel.getClientModel().getCart();
-
-                    double subtotal = cartTotalPrice; //get what is on the cartTotalLabelPrice
-
-                    checkoutPageController.setSocket(this.getSocket());
-                    checkoutPageController.setIn(in); //in and out of the main menu client page
-                    checkoutPageController.setOut(out);
-
-                    Scene scene = new Scene(root);
-                    Stage popupStage = new Stage();
-                    popupStage.setScene(scene);
-                    popupStage.showAndWait(); //wait until the popup stops
-
-                     */
-
-                    //after the pop up closed, access now the orderProcessedByServer
-                    /*
-                    if (checkoutPageController.isOrderSuccessful()) {
-                        //clear the cart without updating the model
-                        clearCart(false);
-
-                        //update the client model
-                        this.mainMenuModel.getClientModel().orderProcessSuccessful(checkoutPageController.getOrderProcessedByServer());
-                    }
-                     */
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
