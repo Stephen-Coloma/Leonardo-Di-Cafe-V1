@@ -64,7 +64,7 @@ public class MainMenuClientPageView {
     private Button mainMenuFoodButton;
 
     @FXML
-    private Button orderHistoryMenuButton;
+    private Button orderHistoryButton;
 
     @FXML
     private Label priceLabel;
@@ -93,6 +93,10 @@ public class MainMenuClientPageView {
 
     public void setUpActionCheckoutButton(EventHandler<ActionEvent> event){
         checkoutButton.setOnAction(event);
+    }
+
+    public void setUpActionOrderHistoryButton(EventHandler<ActionEvent> event){
+        orderHistoryButton.setOnAction(event);
     }
 
     public void showMenuUI (ActionEvent event) throws IOException {
@@ -166,13 +170,14 @@ public class MainMenuClientPageView {
         checkoutButton.setStyle("-fx-background-color:  #A38157;");
         checkoutButton.setTextFill(Paint.valueOf("White"));
     }
+
     public void orderHistoryMenuButtonEntered(MouseEvent event){
-        orderHistoryMenuButton.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 3");
-        orderHistoryMenuButton.setTextFill(Paint.valueOf("black"));
+        orderHistoryButton.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 3");
+        orderHistoryButton.setTextFill(Paint.valueOf("black"));
     }
     public void orderHistoryMenuButtonExited(MouseEvent event){
-        orderHistoryMenuButton.setStyle("-fx-background-color:  #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3");
-        orderHistoryMenuButton.setTextFill(Paint.valueOf("#A38157"));
+        orderHistoryButton.setStyle("-fx-background-color:  #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3");
+        orderHistoryButton.setTextFill(Paint.valueOf("#A38157"));
     }
 
     public void foodButtonEntered(MouseEvent event){
@@ -277,12 +282,12 @@ public class MainMenuClientPageView {
         this.mainMenuFoodButton = mainMenuFoodButton;
     }
 
-    public Button getOrderHistoryMenuButton() {
-        return orderHistoryMenuButton;
+    public Button getOrderHistoryButton() {
+        return orderHistoryButton;
     }
 
-    public void setOrderHistoryMenuButton(Button orderHistoryMenuButton) {
-        this.orderHistoryMenuButton = orderHistoryMenuButton;
+    public void setOrderHistoryButton(Button orderHistoryButton) {
+        this.orderHistoryButton = orderHistoryButton;
     }
 
     public Label getPriceLabel() {

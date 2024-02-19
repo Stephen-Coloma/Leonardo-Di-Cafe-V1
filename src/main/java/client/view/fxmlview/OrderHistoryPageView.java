@@ -1,63 +1,88 @@
 package client.view.fxmlview;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class OrderHistoryPageView {
 
     @FXML
-    private Button orderHistoryExit;
-
-
-    // Defining all sets of stars
-    @FXML private ToggleButton star1, star2, star3, star4, star5;
-    @FXML private ToggleButton star11, star21, star31, star41, star51;
-    @FXML private ToggleButton star111, star211, star311, star411, star511;
-    @FXML private ToggleButton star12, star22, star32, star42, star52;
-    // Add more sets as necessary...
+    private Button cancelButton;
+    @FXML
+    private GridPane gridPaneOrderHistory;
+    @FXML
+    private ScrollPane scrollPaneOrderHistory;
 
     @FXML
-    public void initialize() {
-        setupStarRatingListeners(new ToggleButton[]{star1, star2, star3, star4, star5});
-        setupStarRatingListeners(new ToggleButton[]{star11, star21, star31, star41, star51});
-        setupStarRatingListeners(new ToggleButton[]{star111, star211, star311, star411, star511});
-        setupStarRatingListeners(new ToggleButton[]{star12, star22, star32, star42, star52});
-        // Initialize more sets as required...
-    }
+    private Button submitReviewButton;
+    private static Stage popupStage;
 
-    private void setupStarRatingListeners(ToggleButton[] stars) {
-        for (int i = 0; i < stars.length; i++) {
-            int rating = i + 1; // Rating value for each star
-            ToggleButton star = stars[i];
-            star.setOnAction(event -> {
-                updateStarSelection(stars, rating);
-            });
+    public static <T> T loadCheckoutPage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(CheckoutPageView.class.getResource("/fxml/client/order_history_page.fxml"));
+            popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setTitle("Order History");
+            popupStage.setScene(new Scene(loader.load()));
+            popupStage.show();
+            return loader.getController();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+    } // end of loadCheckoutPage
+
+    public void closeCheckoutView() {
+        this.getGridPaneOrderHistory().getChildren().clear(); //make sure to clear all the items in the pane before closing
+        popupStage.close();
     }
 
-    private void updateStarSelection(ToggleButton[] stars, int rating) {
-        for (int i = 0; i < stars.length; i++) {
-            stars[i].setSelected(i < rating);
-        }
+
+    public GridPane getGridPaneOrderHistory() {
+        return gridPaneOrderHistory;
     }
 
-    public void orderHistoryExit(ActionEvent event){
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
+    public void setGridPaneOrderHistory(GridPane gridPaneOrderHistory) {
+        this.gridPaneOrderHistory = gridPaneOrderHistory;
     }
-    public void orderHistoryExitButtonEntered(MouseEvent event){
-        orderHistoryExit.setStyle("-fx-background-color: white;");
-        orderHistoryExit.setTextFill(Paint.valueOf("red"));
+
+    public ScrollPane getScrollPaneOrderHistory() {
+        return scrollPaneOrderHistory;
     }
-    public void orderHistoryExitButtonExited(MouseEvent event){
-        orderHistoryExit.setStyle("-fx-background-color:  #FFFFFF;");
-        orderHistoryExit.setTextFill(Paint.valueOf("Black"));
+
+    public void setScrollPaneOrderHistory(ScrollPane scrollPaneOrderHistory) {
+        this.scrollPaneOrderHistory = scrollPaneOrderHistory;
+    }
+
+    public Button getSubmitReviewButton() {
+        return submitReviewButton;
+    }
+
+    public void setSubmitReviewButton(Button submitReviewButton) {
+        this.submitReviewButton = submitReviewButton;
+    }
+
+    public Button getCancelButton() {
+        return cancelButton;
+    }
+
+    public void setCancelButton(Button cancelButton) {
+        this.cancelButton = cancelButton;
+    }
+
+    public static Stage getPopupStage() {
+        return popupStage;
+    }
+
+    public static void setPopupStage(Stage popupStage) {
+        OrderHistoryPageView.popupStage = popupStage;
     }
 }
