@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.IllegalFormatCodePointException;
 
 public class LoginPageController {
     private LoginPageView loginView;
@@ -89,6 +90,12 @@ public class LoginPageController {
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
+
+            }else if (serverResponse[1].equals("ALREADY_LOGGED_IN")){
+                this.loginView.getNoticeLabel().setText("account already logged in");
+                this.loginView.getNoticeLabel().setVisible(true);
+                this.loginView.getUsernameTextField().clear();
+                this.loginView.getPasswordField().clear();
             }else {
                 this.loginView.getNoticeLabel().setText("wrong credentials");
                 this.loginView.getNoticeLabel().setVisible(true);

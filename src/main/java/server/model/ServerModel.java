@@ -3,12 +3,15 @@ package server.model;
 import javafx.collections.ObservableList;
 import shared.*;
 import util.XMLUtility;
+import util.exception.AccountAlreadyLoggedIn;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 import util.exception.OutOfStockException;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**Server Model class holds the data that will eventually be accessed by all the clients.
  * The idea is, when a client places an order,it will update the menu of this server model (e.g. by decrementing it)
@@ -21,6 +24,7 @@ public class ServerModel {
     private HashMap<String, Beverage> beverageMenu;
     private List<Customer> customerAccountList;
     private List<Order> orderList; //List for listing only orders
+    private List<String> userLoggedIn;
 
     /**The constructor of the server model should load the predefined menu products*/
     public ServerModel() {
@@ -29,6 +33,8 @@ public class ServerModel {
         customerAccountList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/java/server/model/customer_account_list.xml"));
         orderList = (List<Order>) XMLUtility.loadXMLData(new File("src/main/java/server/model/order_list.xml"));
 
+        //set up
+        userLoggedIn = new ArrayList<>();
         /*Todo
            1. When the server is closed by the admin, it must write all these data in the necessary xmk files to be used for another run*/
     }
@@ -155,15 +161,27 @@ public class ServerModel {
         for (Customer customerAccount: customerAccountList) {
             //account
             if (customerAccount.getUsername().equals(username) && customerAccount.getPassword().equals(password)){
-                HashMap<String, Food> clientFoodMenuToLoad = new HashMap<>(foodMenu);
-                HashMap<String, Beverage> clientBeverageMenuToLoad = new HashMap<>(beverageMenu);
-                Object[] sendToClient = new Object[]{customerAccount, clientFoodMenuToLoad, clientBeverageMenuToLoad};
+                if (!userLoggedIn.contains(String.valueOf(username.hashCode()))){
+                    //adds the value to the user logged in
+                    userLoggedIn.add(String.valueOf(username.hashCode()));
 
-                //return to controller
-                return sendToClient;
+                    HashMap<String, Food> clientFoodMenuToLoad = new HashMap<>(foodMenu);
+                    HashMap<String, Beverage> clientBeverageMenuToLoad = new HashMap<>(beverageMenu);
+                    Object[] sendToClient = new Object[]{customerAccount, clientFoodMenuToLoad, clientBeverageMenuToLoad};
+
+                    //return to controller
+                    return sendToClient;
+                }else {
+                    throw new AccountAlreadyLoggedIn("Account already logged in");
+                }
             }
         }
         throw new InvalidCredentialsException("Invalid credentials");
+    }
+
+    /**This removes the client from the server if the client logged out already*/
+    public void processLogout(String clientID){
+        this.userLoggedIn.remove(clientID);
     }
 
     /**This method updates the reviews for the products*/

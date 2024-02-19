@@ -28,6 +28,8 @@ public class MainMenuClientPageView {
     private Scene scene;
     private Parent root;
     @FXML
+    private Button logoutButton;
+    @FXML
     private Label dateLabel;
     @FXML
     private Label timeLabel;
@@ -368,5 +370,29 @@ public class MainMenuClientPageView {
 
     public Pane getLoadingIndicatorPanel() {
         return loadingIndicatorPanel;
+    }
+
+    public Button getLogoutButton() {
+        return logoutButton;
+    }
+
+    public void setLogoutButton(Button logoutButton) {
+        this.logoutButton = logoutButton;
+    }
+
+    public Button getOrderHistoryMenuButton() {
+        return orderHistoryMenuButton;
+    }
+
+    public void setOrderHistoryMenuButton(Button orderHistoryMenuButton) {
+        this.orderHistoryMenuButton = orderHistoryMenuButton;
+    }
+
+    public void setProductSearchBar(TextField productSearchBar) {
+        this.productSearchBar = productSearchBar;
+    }
+
+    public void setLoadingIndicatorPanel(Pane loadingIndicatorPanel) {
+        this.loadingIndicatorPanel = loadingIndicatorPanel;
     }
 }
