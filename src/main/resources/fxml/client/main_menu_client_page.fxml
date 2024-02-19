@@ -87,7 +87,7 @@
                               <Font name="Copperplate Gothic Light" size="18.0" />
                            </font>
                         </Button>
-                        <Button fx:id="orderHistoryMenuButton" mnemonicParsing="false" onAction="#showOrderHistoryUI" onMouseEntered="#orderHistoryMenuButtonEntered" onMouseExited="#orderHistoryMenuButtonExited" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3;" text="ORDER HISTORY" textFill="#a38157">
+                        <Button fx:id="orderHistoryButton" mnemonicParsing="false" onAction="#showOrderHistoryUI" onMouseEntered="#orderHistoryMenuButtonEntered" onMouseExited="#orderHistoryMenuButtonExited" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3;" text="ORDER HISTORY" textFill="#a38157">
                            <font>
                               <Font name="Copperplate Gothic Light" size="18.0" />
                            </font>

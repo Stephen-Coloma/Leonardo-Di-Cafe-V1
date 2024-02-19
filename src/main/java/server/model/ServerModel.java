@@ -166,6 +166,19 @@ public class ServerModel {
         throw new InvalidCredentialsException("Invalid credentials");
     }
 
+    /**This method updates the reviews for the products*/
+    public void processReview(List<Product> ratedProducts){
+        for (Product product : ratedProducts) {
+            String productName = product.getName();
+            double review = product.getReview();
+            if (product instanceof Food){
+                foodMenu.get(productName).updateReview(review);
+            }else{
+                beverageMenu.get(productName).updateReview(review);
+            }
+        }
+    }
+
     public void setFoodMenu(HashMap<String, Food> foodMenu) {
         this.foodMenu = foodMenu;
     }

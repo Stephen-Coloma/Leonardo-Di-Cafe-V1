@@ -8,6 +8,7 @@ import server.view.MainMenuAdminView;
 import server.view.ServerView;
 import shared.Customer;
 import shared.Order;
+import shared.Product;
 import util.PushNotification;
 import util.XMLUtility;
 import util.exception.AccountExistsException;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.List;
 
 public class ServerController implements MainMenuAdminObserver {
     private final ServerModel model;
@@ -120,6 +122,15 @@ public class ServerController implements MainMenuAdminObserver {
                 } catch (Exception exception) {
                     sendData(String.valueOf(message[0]), "PROCESS_ORDER_FAILED", null);
                     System.err.println("Error during the order processing");
+                }
+            }
+            case "PROCESS_REVIEW" -> {
+                try {
+                    List<Product> ratedProducts = (List<Product>) message[2];
+                    model.processReview(ratedProducts);
+                    //TODO sendData(); @LEONHARD HERE YUNG DELAY SOMETHING --------------------------------------------------------------------------->>>>>>>>>>>>>>>>>
+                } catch (Exception exception) {
+                    System.err.println("Error during the review processing");
                 }
             }
 

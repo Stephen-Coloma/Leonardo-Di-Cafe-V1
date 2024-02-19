@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+import java.util.Arrays;
+
 public class OrderHistoryCardView {
 
     @FXML
@@ -43,14 +45,6 @@ public class OrderHistoryCardView {
 
     @FXML
     private HBox starRating;
-
-    public OrderHistoryCardView(){
-        setActionStar1();
-        setActionStar2();
-        setActionStar3();
-        setActionStar4();
-        setActionStar5();
-    }
 
     public void setActionStar1(){
         star1.setOnAction((EventHandler<ActionEvent>) event ->{

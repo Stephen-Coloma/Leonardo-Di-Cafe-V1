@@ -29,6 +29,11 @@ public class Beverage extends Product{
         this.sizeQuantity = sizeQuantity;
     }
 
+    /**This constructor will only be used for client side rating function*/
+    public Beverage(String name, char type, double review){
+        super(name, type, review, 0, null, null);
+    }
+
     //getters setter
     public HashMap<String, Integer> getSizeQuantity() {
         return sizeQuantity;

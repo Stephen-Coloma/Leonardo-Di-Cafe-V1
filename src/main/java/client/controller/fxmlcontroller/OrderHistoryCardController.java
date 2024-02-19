@@ -10,9 +10,14 @@ public class OrderHistoryCardController {
     private OrderHistoryCardView view;
     private OrderHistoryCardModel model;
 
-    public OrderHistoryCardController(OrderHistoryCardView view, OrderHistoryCardModel model){
+    public OrderHistoryCardController(OrderHistoryCardModel model, OrderHistoryCardView view){
         this.model = model;
         this.view = view;
+        this.view.setActionStar1();
+        this.view.setActionStar2();
+        this.view.setActionStar3();
+        this.view.setActionStar4();
+        this.view.setActionStar5();
     }
 
     public void setData(){
@@ -29,8 +34,8 @@ public class OrderHistoryCardController {
         view.getProductImage().setImage(this.model.getProduct().getImage());
         view.getProductDescriptionLabel().setText(this.model.getProduct().getDescription());
 
-        if (this.model.getProduct() instanceof Food){
-            view.getTypeLabel().setText("Type: Food");
+        if (this.model.getProduct() instanceof Beverage){
+            view.getTypeLabel().setText("Type: Beverage");
         }
     }
 
@@ -39,8 +44,8 @@ public class OrderHistoryCardController {
         view.getProductImage().setImage(this.model.getProduct().getImage());
         view.getProductDescriptionLabel().setText(this.model.getProduct().getDescription());
 
-        if (this.model.getProduct() instanceof Beverage){
-            view.getTypeLabel().setText("Type: Beverage");
+        if (this.model.getProduct() instanceof Food){
+            view.getTypeLabel().setText("Type: Food");
         }
     }
 
@@ -58,6 +63,4 @@ public class OrderHistoryCardController {
         }
         return 0;
     }
-
-
 }

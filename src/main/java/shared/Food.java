@@ -15,6 +15,12 @@ public class Food extends Product {
         this.price = price;
     }
 
+    /**This constructor will only be used for client side rating function*/
+    public Food(String name, char type, double review){
+        super(name, type, review, 0, null, null);
+    }
+
+
     //getters setters
     public int getQuantity() {
         return quantity;

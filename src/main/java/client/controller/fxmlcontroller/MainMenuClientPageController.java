@@ -4,11 +4,13 @@ package client.controller.fxmlcontroller;
 import client.model.fxmlmodel.*;
 import client.view.fxmlview.CheckoutPageView;
 import client.view.fxmlview.MainMenuClientPageView;
+import client.view.fxmlview.OrderHistoryPageView;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -28,7 +30,7 @@ import java.net.Socket;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.*;
 
 public class MainMenuClientPageController {
     private MainMenuClientPageView mainMenuView;
@@ -70,6 +72,9 @@ public class MainMenuClientPageController {
 
         //set up the action for checking out
         seUpActionCheckoutButton();
+
+        //set up action for order history button
+        setUpActionOrderHistoryButton();
     } // end of setComponentActions
 
     public void run() {
@@ -232,6 +237,56 @@ public class MainMenuClientPageController {
         });
     }
 
+    /**This method implements the order history button*/
+    private void setUpActionOrderHistoryButton() {
+        //data to be sent to server
+
+        this.mainMenuView.setUpActionOrderHistoryButton((ActionEvent event) ->{
+            if (this.mainMenuModel.getClientModel().getCustomer().getOrderHistory().isEmpty()){
+                PushNotification.toastSuccess("Order History Empty", "Your history is empty, try ordering first!");
+            }else{
+               try {
+                   List<Product> distinctProductsOnOrderHistory = getProductsOnOrderHistory();
+                   OrderHistoryPageModel orderHistoryPageModel = new OrderHistoryPageModel(distinctProductsOnOrderHistory);
+                   OrderHistoryPageView orderHistoryPageView = OrderHistoryPageView.loadCheckoutPage();
+                   OrderHistoryPageController orderHistoryPageController = new OrderHistoryPageController(orderHistoryPageModel, orderHistoryPageView);
+
+                   orderHistoryPageView.getSubmitReviewButton().setOnAction(actionEvent ->{
+                       orderHistoryPageController.submitRatedProducts();
+                       orderHistoryPageController.getView().closeCheckoutView();
+                   });
+
+                   List<Product> ratedProducts = orderHistoryPageController.getRatedProducts();
+
+                   if (!ratedProducts.isEmpty()){
+                       String clientId = String.valueOf(this.mainMenuModel.getClientModel().getCustomer().getName().hashCode());
+                       sendData(clientId, "PROCESS_REVIEW", ratedProducts);
+                       PushNotification.toastSuccess("Review Sent", "Thank You for your reviews!");
+                   }
+               }catch (Exception e){
+                   e.printStackTrace();
+               }
+                //sendData shit make requests to the server and handle the response properly.
+            }
+        });
+    }
+
+    /**This method gets all the distinct product from the customer's order history*/
+    private List<Product> getProductsOnOrderHistory() {
+        Set<Product> uniqueProducts = new HashSet<>();
+
+        List<Order> orderHistory = this.mainMenuModel.getClientModel().getCustomer().getOrderHistory();
+        for (Order order: orderHistory) {
+            List<Product> products= order.getOrders();
+            for (Product product: products) {
+                // Add each product to the HashSet
+                uniqueProducts.add(product);
+            }
+        }
+        return new ArrayList<>(uniqueProducts);
+    }
+
+
     /**
      * This method clears up all the contents of the cart.
      * It implements the setUpActionClearCartButtonButton from the mainMenuClientPageView
@@ -353,16 +408,13 @@ public class MainMenuClientPageController {
                             Order order = checkoutPageModel.getOrderFromClient();
                             sendData(clientId, "PROCESS_ORDER",order);
 
-
                             checkoutPageView.closeCheckoutView();
 
                             clearCart(false);
 
-
                             PushNotification.toastSuccess("Order", "Order uploaded to the system");
                         } else {
                             checkoutPageView.closeCheckoutView();
-                            PushNotification.toastSuccess("Order", "Order uploaded to the system");
                         }
                     });
                 } catch (Exception e) {

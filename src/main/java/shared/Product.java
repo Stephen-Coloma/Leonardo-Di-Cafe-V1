@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Food does not have any variations, meaning same price and quantity.
  * Whereas for beverage, it may be small, medium, large and has different price and quantity for each
  * @author  Stephen Coloma*/
-public abstract class Product implements Serializable {
+public abstract class Product implements Serializable{
     private String name;
     private char type;
     private double review; //average of 1-5
@@ -101,6 +101,23 @@ public abstract class Product implements Serializable {
 
     public int getQuantity() {
         return 0;
+    }
+
+    /**Will only be used for reviews*/
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Product product = (Product) obj;
+        return name.equals(product.name);
+    }
+
+    /**Will only be used for reviews*/
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 
     @Override
