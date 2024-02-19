@@ -173,10 +173,6 @@ public class ServerController implements MainMenuAdminObserver {
 
     private void sendData(String clientID, String code, Object data) {
         Object[] response = {clientID, code, data};
-        System.out.println("before sending back to client");
-        System.out.println(response[0]);
-        System.out.println(response[1]);
-        System.out.println(response[2]);
         try {
             streamWriter.writeObject(response);
         } catch (IOException e) {

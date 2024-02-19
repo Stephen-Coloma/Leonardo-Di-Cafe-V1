@@ -64,7 +64,7 @@ public class MainMenuClientPageView {
     private Button mainMenuFoodButton;
 
     @FXML
-    private Button orderHistoryButton;
+    private Button orderHistoryMenuButton;
 
     @FXML
     private Label priceLabel;
@@ -96,7 +96,7 @@ public class MainMenuClientPageView {
     }
 
     public void setUpActionOrderHistoryButton(EventHandler<ActionEvent> event){
-        orderHistoryButton.setOnAction(event);
+        orderHistoryMenuButton.setOnAction(event);
     }
 
     public void showMenuUI (ActionEvent event) throws IOException {
@@ -172,12 +172,12 @@ public class MainMenuClientPageView {
     }
 
     public void orderHistoryMenuButtonEntered(MouseEvent event){
-        orderHistoryButton.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 3");
-        orderHistoryButton.setTextFill(Paint.valueOf("black"));
+        orderHistoryMenuButton.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 3");
+        orderHistoryMenuButton.setTextFill(Paint.valueOf("black"));
     }
     public void orderHistoryMenuButtonExited(MouseEvent event){
-        orderHistoryButton.setStyle("-fx-background-color:  #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3");
-        orderHistoryButton.setTextFill(Paint.valueOf("#A38157"));
+        orderHistoryMenuButton.setStyle("-fx-background-color:  #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3");
+        orderHistoryMenuButton.setTextFill(Paint.valueOf("#A38157"));
     }
 
     public void foodButtonEntered(MouseEvent event){
@@ -283,11 +283,11 @@ public class MainMenuClientPageView {
     }
 
     public Button getOrderHistoryButton() {
-        return orderHistoryButton;
+        return orderHistoryMenuButton;
     }
 
-    public void setOrderHistoryButton(Button orderHistoryButton) {
-        this.orderHistoryButton = orderHistoryButton;
+    public void setOrderHistoryButton(Button orderHistoryMenuButton) {
+        this.orderHistoryMenuButton = orderHistoryMenuButton;
     }
 
     public Label getPriceLabel() {

@@ -5,6 +5,7 @@ import client.model.fxmlmodel.*;
 import client.view.fxmlview.CheckoutPageView;
 import client.view.fxmlview.MainMenuClientPageView;
 import client.view.fxmlview.MenuCardView;
+import client.view.fxmlview.OrderHistoryPageView;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -96,7 +97,57 @@ public class MainMenuClientPageController {
         mainMenuView.getProductSearchBar().textProperty().addListener((observable, oldValue, newValue) -> {
             debounceFilterMenuItems(newValue);
         });
+
+        setUpActionOrderHistoryButton();
     } // end of setComponentActions
+
+    /**This method implements the order history button*/
+    private void setUpActionOrderHistoryButton() {
+        //data to be sent to server
+
+        this.mainMenuView.setUpActionOrderHistoryButton((ActionEvent event) ->{
+            if (this.mainMenuModel.getClientModel().getCustomer().getOrderHistory().isEmpty()){
+                PushNotification.toastSuccess("Order History Empty", "Your history is empty, try ordering first!");
+            }else{
+                try {
+                    List<Product> distinctProductsOnOrderHistory = getProductsOnOrderHistory();
+                    OrderHistoryPageModel orderHistoryPageModel = new OrderHistoryPageModel(distinctProductsOnOrderHistory);
+                    OrderHistoryPageView orderHistoryPageView = OrderHistoryPageView.loadCheckoutPage();
+                    OrderHistoryPageController orderHistoryPageController = new OrderHistoryPageController(orderHistoryPageModel, orderHistoryPageView);
+
+                    orderHistoryPageView.getSubmitReviewButton().setOnAction(actionEvent ->{
+                        orderHistoryPageController.submitRatedProducts();
+                        List<Product> ratedProducts = orderHistoryPageController.getRatedProducts();
+                        orderHistoryPageController.getView().closeCheckoutView();
+                        if (!ratedProducts.isEmpty()){
+                            String clientId = String.valueOf(this.mainMenuModel.getClientModel().getCustomer().getName().hashCode());
+                            sendData(clientId, "PROCESS_REVIEW", ratedProducts);
+                            PushNotification.toastSuccess("Review Sent", "Thank You for your reviews!");
+                        }
+                    });
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                //sendData shit make requests to the server and handle the response properly.
+            }
+        });
+    }
+
+    /**This method gets all the distinct product from the customer's order history*/
+    private List<Product> getProductsOnOrderHistory() {
+        Set<Product> uniqueProducts = new HashSet<>();
+
+        List<Order> orderHistory = this.mainMenuModel.getClientModel().getCustomer().getOrderHistory();
+        for (Order order: orderHistory) {
+            List<Product> products= order.getOrders();
+            for (Product product: products) {
+                // Add each product to the HashSet
+                uniqueProducts.add(product);
+            }
+        }
+        return new ArrayList<>(uniqueProducts);
+    }
+
 
     public void run() {
         try {
@@ -136,10 +187,6 @@ public class MainMenuClientPageController {
 
     private void sendData(String clientID, String code, Object data) {
         Object[] response = {clientID, code, data};
-        System.out.println("before sending back to client");
-        System.out.println(response[0]);
-        System.out.println(response[1]);
-        System.out.println(response[2]);
         try {
             out.writeObject(response);
         } catch (IOException e) {

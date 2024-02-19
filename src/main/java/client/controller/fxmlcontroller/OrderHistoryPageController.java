@@ -83,15 +83,11 @@ public class OrderHistoryPageController {
                     review = counter;
                 }
             }
-
-
             if (type == 'f' && review > 0){
                 Food food = new Food(name, type, review);
-                System.out.println("Name: " + name + " Type: " + type + " Rating" + review);
                 ratedProducts.add(food);
             }else if (type == 'b' && review > 0){
                 Beverage beverage = new Beverage(name, type, review);
-                System.out.println("Name: " + name + " Type: " + type + " Rating" + review);
                 ratedProducts.add(beverage);
             }
         }
