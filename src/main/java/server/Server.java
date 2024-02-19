@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import server.controller.ServerController;
 import server.model.ServerModel;
 import server.view.ServerView;
+import util.XMLUtility;
 
 import java.io.IOException;
 import java.net.*;
@@ -29,6 +30,14 @@ public class Server extends Application {
         view = new ServerView(stage);
         view.runInterface();
 
+        //implement an action when the window is closed
+        view.getStage().setOnCloseRequest(windowEvent -> {
+            XMLUtility.saveFoodMenu(model.getFoodMenu());
+            XMLUtility.saveBeverageMenu(model.getBeverageMenu());
+            XMLUtility.saveOrders(model.getOrderList());
+            XMLUtility.saveCustomerAccounts(model.getCustomerAccountList());
+        });
+
         // launch the server
         startServer();
 
@@ -41,11 +50,11 @@ public class Server extends Application {
             try (ServerSocket server = new ServerSocket(PORT);
                  ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE)) {
                 System.out.println("Server listening on port " + PORT);
+                ServerController controller = new ServerController(model, view);
 
                 while (true) {
                     Socket client = server.accept();
                     System.out.println("Client connected: " + client.getInetAddress().getHostAddress());
-                    ServerController controller = new ServerController(model, view);
                     controller.setClientSocket(client);
                     executorService.submit(controller::run);
                 }
