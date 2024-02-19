@@ -41,6 +41,7 @@ public class MainMenuClientPageController {
     private char currentLoadedMenu = 'f';
     private MainMenuClientPageView mainMenuView;
     private MainMenuClientPageModel mainMenuModel;
+    private LoginPageController loginPageController;
     private FXMLLoader loader;
     private Parent root;
     private Object[] serverResponse;
@@ -95,6 +96,9 @@ public class MainMenuClientPageController {
         setUpActionCheckoutButton();
 
         mainMenuView.getProductSearchBar().textProperty().addListener((observable, oldValue, newValue) -> debounceFilterMenuItems(newValue));
+
+        //set up action for logout button
+        setUpActionLogoutButton();
 
         setUpActionOrderHistoryButton();
     } // end of setComponentActions
@@ -203,6 +207,8 @@ public class MainMenuClientPageController {
             out.flush();
             out.reset();
         } catch (IOException e) {
+            /**This shows the server error UI*/
+            showServerErrorUI();
             throw new RuntimeException(e);
         }
     } // end of sendData
@@ -418,6 +424,16 @@ public class MainMenuClientPageController {
     private void setUpActionClearCartButton() {
         this.mainMenuView.setActionClearCartButton((ActionEvent event) -> {
             clearCart(true);
+        });
+    }
+
+
+    /*This method sets up the logout button*/
+    private void setUpActionLogoutButton() {
+        this.mainMenuView.getLogoutButton().setOnAction(event -> {
+            String clientID = String.valueOf(this.mainMenuModel.getClientModel().getCustomer().getUsername().hashCode());
+            sendData(clientID, "LOGOUT", null);
+            showLoginPage(event);
         });
     }
 
@@ -817,5 +833,35 @@ public class MainMenuClientPageController {
 
     public void setIn(ObjectInputStream in) {
         this.in = in;
+    }
+
+
+    /**This method brings back to login page*/
+    private void showLoginPage(ActionEvent event) {
+        try {
+            loader = new FXMLLoader(getClass().getResource("/fxml/client/login_page.fxml"));
+            root = loader.load(); //load
+
+            loginPageController = new LoginPageController(loader.getController(), new LoginPageModel()); //get controller
+
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    /**This shows the server error UI*/
+    private void showServerErrorUI() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/client/server_error.fxml"));
+            Scene serverErrorScene = new Scene(root);
+            Stage popUpStage = new Stage();
+            popUpStage.setScene(serverErrorScene);
+            popUpStage.show();
+        }catch (IOException exception){
+            exception.printStackTrace();
+        }
     }
 } // end of MainMenuClientPageController class

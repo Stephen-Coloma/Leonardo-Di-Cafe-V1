@@ -40,4 +40,8 @@ public class ServerView {
     public boolean UIExit() {
         return stage.isShowing();
     }
+
+    public Stage getStage() {
+        return stage;
+    }
 } // end of ServerView class

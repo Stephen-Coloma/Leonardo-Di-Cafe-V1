@@ -308,34 +308,24 @@ public class XMLUtility {
                     createElement(document, productElement, "name", product.getName());
                     createElement(document, productElement, "type", String.valueOf(product.getType()));
                     createElement(document, productElement, "review", String.valueOf(product.getReview()));
-
-                    if (product.hasImage()) {
-                        createElement(document, productElement, "image", product.getImageName());
-                    }
+                    createElement(document, productElement, "image", product.getImageName());
 
                     if (product instanceof Beverage beverage) {
 
                         for (Map.Entry<String, Integer> sizeEntry : beverage.getSizeQuantity().entrySet()) {
                             String size = sizeEntry.getKey();
                             Integer quantity = sizeEntry.getValue();
-                            Double price = beverage.getSizePrice().get(size);
 
-                            Element variationElement = document.createElement("variation");
-                            productElement.appendChild(variationElement);
-
-                            createElement(document, variationElement, "size", size);
-                            createElement(document, variationElement, "quantity", String.valueOf(quantity));
-                            createElement(document, variationElement, "price", String.valueOf(price));
-
-                            if (beverage.hasImage()) {
-                                createElement(document, variationElement, "image", beverage.getImageName());
+                            if (quantity != 0){
+                                createElement(document, productElement, "size", size);
+                                createElement(document, productElement, "quantity", String.valueOf(quantity));
+                                break;
                             }
                         }
                     } else if (product instanceof Food food) {
                         createElement(document, productElement, "quantity", String.valueOf(food.getQuantity()));
                     }
                 }
-
                 createElement(document, orderElement, "orderID", String.valueOf(order.getID()));
                 createElement(document, orderElement, "timeStamp", order.getTimeStamp());
                 createElement(document, orderElement, "totalPrice", String.valueOf(order.getTotalPrice()));
@@ -586,9 +576,10 @@ public class XMLUtility {
     public static void saveCustomerAccounts(List<Customer> customerList) {
         File file =  new File("src/main/java/server/model/customer_account_list.xml");
         try {
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.newDocument();
+            dbf = DocumentBuilderFactory.newInstance();
+            dbf.setIgnoringElementContentWhitespace(true);
+            db = dbf.newDocumentBuilder();
+            Document doc = db.newDocument();
 
             // Create the root element <accounts>
             Element rootElement = doc.createElement("accounts");
@@ -720,7 +711,7 @@ public class XMLUtility {
             StreamResult result = new StreamResult(file);
             transformer.transform(source, result);
 
-            System.out.println("XML file saved successfully!");
+            System.out.println("Customer Accounts have been updated and written to file: " + file.getAbsolutePath());
 
         } catch (Exception e) {
             e.printStackTrace();

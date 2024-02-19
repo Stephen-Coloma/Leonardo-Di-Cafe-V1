@@ -6,6 +6,7 @@ import server.controller.ServerController;
 import server.model.ServerModel;
 import server.model.listeners.ClientObserver;
 import server.view.ServerView;
+import util.XMLUtility;
 
 import java.io.IOException;
 import java.net.*;
@@ -34,6 +35,14 @@ public class Server extends Application implements ClientObserver {
 
         ServerController adminController = new ServerController(model, view);
         adminController.initializeAdminInterface();
+
+        //implement an action when the window is closed
+        view.getStage().setOnCloseRequest(windowEvent -> {
+            XMLUtility.saveFoodMenu(model.getFoodMenu());
+            XMLUtility.saveBeverageMenu(model.getBeverageMenu());
+            XMLUtility.saveOrders(model.getOrderList());
+            XMLUtility.saveCustomerAccounts(model.getCustomerAccountList());
+        });
 
         // launch the server
         startServer();

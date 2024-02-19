@@ -11,6 +11,7 @@ import shared.Order;
 import shared.Product;
 import util.PushNotification;
 import util.XMLUtility;
+import util.exception.AccountAlreadyLoggedIn;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.security.spec.ECField;
 import java.util.List;
 
 public class ServerController implements MainMenuAdminObserver {
@@ -104,7 +106,9 @@ public class ServerController implements MainMenuAdminObserver {
                     sendData(String.valueOf(((Customer) client[0]).getUsername().hashCode()), "LOGIN_SUCCESSFUL", client);
                 } catch (InvalidCredentialsException exception) {
                     sendData("", "LOGIN_FAILED", null);
-                } catch (Exception e) {
+                }catch (AccountAlreadyLoggedIn exception) {
+                    sendData("", "ALREADY_LOGGED_IN", false);
+                }catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -115,8 +119,8 @@ public class ServerController implements MainMenuAdminObserver {
                     sendData(String.valueOf(client.getUsername().hashCode()), "SIGN_UP_SUCCESSFUL", true);
                 } catch (AccountExistsException accountExistsException) {
                     sendData("", "SIGN_UP_FAILED", false);
-                } catch (Exception exception) {
-                    throw new RuntimeException(exception);
+                } catch (Exception e){
+                    throw new RuntimeException();
                 }
             }
             case "PROCESS_ORDER" -> {
@@ -138,6 +142,10 @@ public class ServerController implements MainMenuAdminObserver {
                 } catch (Exception exception) {
                     System.err.println("Error during the review processing");
                 }
+            }
+            case "LOGOUT" ->{
+                String clientID = (String) message[0];
+                this.model.processLogout(clientID);
             }
 
             // PRODUCT_CHANGES: This code is used for updating menu for clients
