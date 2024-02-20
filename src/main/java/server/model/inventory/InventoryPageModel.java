@@ -47,6 +47,10 @@ public class InventoryPageModel {
     }
 
     public void updateInventory(ObservableList<Object> list) {
+        System.out.println(list);
+
+
+
         HashMap<String, Food> newFoodList = new HashMap<>();
         HashMap<String, Beverage> newBeverageList = new HashMap<>();
 
@@ -57,6 +61,10 @@ public class InventoryPageModel {
                 newBeverageList.put(beverage.getName(), beverage);
             }
         }
+
+        System.out.println("\nNew Food And Beverage");
+        System.out.println(newFoodList);
+        System.out.println(newBeverageList);
 
         setFoodList(newFoodList);
         setBeverageList(newBeverageList);

@@ -229,14 +229,14 @@ public class InventoryPageController {
         popupController.setComponentActions();
 
         popupView.getYesButton().setOnAction(actionEvent -> {
-            if (originalIndex >= 0 && originalIndex < view.getProductList().size()) {
-                view.getProductList().remove(originalIndex);
-                if (product instanceof Food food) {
-                    model.getFoodList().remove(food);
-                } else if (product instanceof Beverage beverage) {
-                    model.getBeverageList().remove(beverage);
+                if (originalIndex >= 0 && originalIndex < view.getProductList().size()) {
+                    view.getProductList().remove(originalIndex);
+                    if (product instanceof Food) {
+                        model.getFoodList().remove(((Food) product).getName());
+                    } else if (product instanceof Beverage) {
+                        model.getBeverageList().remove(((Beverage) product).getName());
+                    }
                 }
-            }
             popupView.closePopupStage();
         });
     } // end of handleDeleteProductButtonClick
