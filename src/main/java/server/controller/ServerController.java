@@ -1,50 +1,37 @@
 package server.controller;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import server.view.fxmlcontroller.*;
-import server.view.fxmlcontroller.inventory.InventoryPageController;
+import server.model.MainMenuAdminModel;
 import server.model.ServerModel;
+import server.model.listeners.MainMenuAdminObserver;
+import server.view.MainMenuAdminView;
 import server.view.ServerView;
-import shared.*;
-import util.ImageCopier;
-import util.XMLUtility;
+import shared.Customer;
+import shared.Order;
+import shared.Product;
+import util.PushNotification;
+import util.exception.AccountAlreadyLoggedIn;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class ServerController {
+public class ServerController implements MainMenuAdminObserver {
     private final ServerModel model;
     private final ServerView view;
     private Socket clientSocket;
     private ObjectInputStream streamReader;
     private ObjectOutputStream streamWriter;
-    private AccountsListPageController accountsListPageController;
-    private AddProductsPageController addProductsPageController;
-    private AnalyticsPageController analyticsPageController;
-    private InventoryPageController inventoryPageController;
-    private MainMenuAdminController mainMenuAdminController;
-    private OrdersListPageController ordersListPageController;
+
+    private MainMenuAdminModel mainMenuAdminModel;
 
     public ServerController(ServerModel model, ServerView view) {
         this.model = model;
         this. view = view;
-
-        Platform.runLater(() -> {
-            System.out.println("Obtained Main Menu Controller");
-            mainMenuAdminController = view.getLoader().getController();
-
-            setComponentActions();
-            System.out.println("Successfully added actions");
-        });
     } // end of constructor
 
     public void setClientSocket(Socket clientSocket) {
@@ -53,88 +40,26 @@ public class ServerController {
 
     // TODO
     private void setComponentActions() {
-        mainMenuAdminController.getViewInventoryButton().setOnAction(actionEvent -> {
-            HashMap<String, Beverage> beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/java/server/model/beverage_menu.xml"));
-            HashMap<String, Food> foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/java/server/model/food_menu.xml"));
+        Platform.runLater(() -> {
+            mainMenuAdminModel = new MainMenuAdminModel();
+            mainMenuAdminModel.setCustomerAccountList(model.getCustomerAccountList());
+            mainMenuAdminModel.setOrderList(model.getOrderList());
+            mainMenuAdminModel.setFoodMenu(model.getFoodMenu());
+            mainMenuAdminModel.setBeverageMenu(model.getBeverageMenu());
+            mainMenuAdminModel.registerObserver(this);
+            MainMenuAdminView mainMenuAdminView = view.getLoader().getController();
 
-            Platform.runLater(() -> {
-                inventoryPageController = mainMenuAdminController.getInventoryPageController();
-                inventoryPageController.populateTableFromMap(foodMenu, beverageMenu);
-
-                inventoryPageController.getSaveChangesButton().setOnAction(actionEvent1 -> {
-                    ObservableList<Object> productList = inventoryPageController.getProductList();
-                    model.updateMenuFromInventory(productList);
-                });
-            });
+            MainMenuAdminController mainMenuAdminController = new MainMenuAdminController(mainMenuAdminModel, mainMenuAdminView);
+            mainMenuAdminController.start();
         });
-
-        mainMenuAdminController.getViewOrderButton().setOnAction(actionEvent -> {
-            List<Order> orderList = (ArrayList<Order>) XMLUtility.loadXMLData(new File("src/main/java/server/model/order_list.xml"));
-
-            Platform.runLater(() -> {
-                ordersListPageController = mainMenuAdminController.getOrdersListPageController();
-                ordersListPageController.populateTableFromList(orderList);
-            });
-        });
-
-        mainMenuAdminController.getViewAccountsButton().setOnAction(actionEvent -> {
-            List<Customer> accountList = (ArrayList<Customer>) XMLUtility.loadXMLData(new File("src/main/java/server/model/customer_account_list.xml"));
-
-            Platform.runLater(() -> {
-                accountsListPageController = mainMenuAdminController.getAccountsListPageController();
-                accountsListPageController.populateTableFromList(accountList);
-            });
-        });
-
-        mainMenuAdminController.getAddProductsPageButton().setOnAction(actionEvent -> Platform.runLater(() -> {
-            addProductsPageController = mainMenuAdminController.getAddProductsPageController();
-            addProductsPageController.getAddProductButton().setOnAction(actionEvent1 -> addProduct());
-        }));
     } // end of setComponentActions
 
-    public void addProduct() {
-        if (addProductsPageController.getTypeOfProductMenuButton().getText().equalsIgnoreCase("food")) {
-            String name = addProductsPageController.getProductNameTextField().getText().trim();
-            String description = addProductsPageController.getProductDescriptionTextField().getText().trim();
-            int quantity = Integer.parseInt(addProductsPageController.getMainQuantityTextField().getText().trim());
-            double price = Double.parseDouble(addProductsPageController.getMainPriceTextField().getText().trim());
-
-            String absolutePath = new File(addProductsPageController.getImageTextField().getText()).getAbsolutePath();
-            String extension = absolutePath.substring(absolutePath.lastIndexOf('.'));
-            String copiedImagePath = ImageCopier.copyImage(absolutePath, name + extension);
-
-            SerializableImage image = new SerializableImage("file:" + copiedImagePath);
-
-            Food food = new Food(name, 'f', 0.0, 0, image, description, quantity, price);
-            System.out.println(food);
-            //model.getFoodMenu().put(name, food);
-        } else {
-            String name = addProductsPageController.getProductNameTextField().getText().trim();
-            String description = addProductsPageController.getProductDescriptionTextField().getText().trim();
-            int sQuantity = Integer.parseInt(addProductsPageController.getMainQuantityTextField().getText().trim());
-            int mQuantity = Integer.parseInt(addProductsPageController.getMediumQuantityTextField().getText().trim());
-            int lQuantity = Integer.parseInt(addProductsPageController.getLargeQuantityTextField().getText().trim());
-            double sPrice = Double.parseDouble(addProductsPageController.getMainPriceTextField().getText().trim());
-            double mPrice = Double.parseDouble(addProductsPageController.getMediumPriceTextField().getText().trim());
-            double lPrice = Double.parseDouble(addProductsPageController.getLargePriceTextField().getText().trim());
-
-            String absolutePath = new File(addProductsPageController.getImageTextField().getText()).getAbsolutePath();
-            String extension = absolutePath.substring(absolutePath.lastIndexOf('.'));
-            String copiedImagePath = ImageCopier.copyImage(absolutePath, name + extension);
-
-            SerializableImage image = new SerializableImage("file:" + copiedImagePath);
-
-            Beverage beverage = new Beverage(name, 'b', 0.0, 0, image, description, sQuantity, mQuantity, lQuantity, sPrice, mPrice, lPrice);
-            System.out.println(beverage);
-            //model.getBeverageMenu().put(name, beverage);
-        }
-    } // end of addProduct
-
-    // TODO
     public void run() {
         try {
             streamReader = new ObjectInputStream(clientSocket.getInputStream());
             streamWriter = new ObjectOutputStream(clientSocket.getOutputStream());
+
+            model.registerServerController(this);
 
             listenToClient();
         } catch (IOException ioException) {
@@ -143,6 +68,14 @@ public class ServerController {
             throw new RuntimeException(e);
         }
     } // end of run
+
+    public void initializeAdminInterface() {
+        Platform.runLater(() -> {
+            System.out.println("Obtained Main Menu Controller");
+            setComponentActions();
+            System.out.println("Successfully added actions");
+        });
+    } // end of initializeAdminInterface
 
     private void listenToClient() throws IOException, ClassNotFoundException {
         while (!clientSocket.isClosed()) {
@@ -153,42 +86,93 @@ public class ServerController {
         }
     } // end of listenToClient
 
-    // TODO
+    // TODO: guide from a client request Object[]{string clientID, string requestType, Object[] data}
     private void handleClientRequest(Object[] message) {
-        String requestCode = (String) message[0];
+        String requestCode = (String) message[1];
+        System.out.println("\nServer received request from client id: " + message[0]);
+        System.out.println("Request Code: " + message[1]);
         switch (requestCode) {
             case "LOGIN" -> {
                 try {
-                    String[] information = (String[]) message[1];
+                    String[] information = (String[]) message[2];
                     String username = information[0];
                     String password = information[1];
-
                     Object[] client = model.processLogin(username, password);
-                    sendData("LOGIN_SUCCESSFUL", client);
+
+                    sendData(String.valueOf(((Customer) client[0]).getUsername().hashCode()), "LOGIN_SUCCESSFUL", client);
                 } catch (InvalidCredentialsException exception) {
-                    sendData("LOGIN_FAILED", null);
-                } catch (Exception e) {
+                    sendData("", "LOGIN_FAILED", null);
+                }catch (AccountAlreadyLoggedIn exception) {
+                    sendData("", "ALREADY_LOGGED_IN", false);
+                }catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }
             case "SIGN_UP" -> {
                 try {
-                    Customer client = (Customer) message[1];
+                    Customer client = (Customer) message[2];
                     model.processSignUp(client);
-                    sendData("SIGN_UP_SUCCESSFUL", true);
+                    sendData(String.valueOf(client.getUsername().hashCode()), "SIGN_UP_SUCCESSFUL", true);
                 } catch (AccountExistsException accountExistsException) {
-                    sendData("SIGN_UP_FAILED", false);
-                } catch (Exception exception) {
-                    throw new RuntimeException(exception);
+                    sendData("", "SIGN_UP_FAILED", false);
+                } catch (Exception e){
+                    throw new RuntimeException();
                 }
+            }
+            case "PROCESS_ORDER" -> {
+                try {
+                    Order order = model.processOrder((Order) message[2]);
+                    sendData(String.valueOf(message[0]), "PROCESS_ORDER_SUCCESSFUL", order);
+                    model.notifyObservers();
+                } catch (Exception exception) {
+                    sendData(String.valueOf(message[0]), "PROCESS_ORDER_FAILED", null);
+                    exception.printStackTrace();
+                    System.err.println("Error during the order processing");
+                }
+            }
+            case "PROCESS_REVIEW" -> {
+                try {
+                    List<Product> ratedProducts = (List<Product>) message[2];
+                    System.out.println("PROCESSING REVIEW");
+                    model.processReview(ratedProducts);
+                    model.notifyObservers();
+                } catch (Exception exception) {
+                    System.err.println("Error during the review processing");
+                }
+            }
+            case "LOGOUT" ->{
+                String clientID = (String) message[0];
+                this.model.processLogout(clientID);
             }
         }
     } // end of handleClientRequest
 
-    private void sendData(String code, Object data) {
-        Object[] response = {code, data};
+    @Override
+    public void notifyMenuChanges(String code, boolean menuChanges) {
+        if (menuChanges) {
+            if ("STATUS_CHANGE".equals(code)) {
+                model.setOrderList(mainMenuAdminModel.getOrderList());
+            } else if ("INVENTORY_CHANGE".equals(code)) {
+                model.setFoodMenu(mainMenuAdminModel.getFoodMenu());
+                model.setBeverageMenu(mainMenuAdminModel.getBeverageMenu());
+                PushNotification.toastSuccess("Inventory Status", "Updated inventory stocks and details");
+            } else if ("NEW_FOOD_PRODUCT".equals(code)) {
+                model.setFoodMenu(mainMenuAdminModel.getFoodMenu());
+                PushNotification.toastSuccess("New Product", "Food added to the list");
+            } else if ("NEW_BEVERAGE_PRODUCT".equals(code)) {
+                model.setBeverageMenu(mainMenuAdminModel.getBeverageMenu());
+                PushNotification.toastSuccess("New Product", "Beverage added to the list");
+            }
+            model.notifyObservers();
+        }
+    } // end of notifyMenuChanges
+
+    public void sendData(String clientID, String code, Object data) {
+        Object[] response = {clientID, code, data};
         try {
             streamWriter.writeObject(response);
+            streamWriter.flush();
+            streamWriter.reset();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

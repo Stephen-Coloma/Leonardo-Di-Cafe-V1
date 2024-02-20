@@ -1,56 +1,64 @@
 package server.model;
 
-import javafx.collections.ObservableList;
+import server.controller.ServerController;
+import server.model.listeners.ClientObserver;
 import shared.*;
 import util.XMLUtility;
+import util.exception.AccountAlreadyLoggedIn;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 import util.exception.OutOfStockException;
+
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 /**Server Model class holds the data that will eventually be accessed by all the clients.
  * The idea is, when a client places an order,it will update the menu of this server model (e.g. by decrementing it)
  * and that the updated menu will be visible to other clients.
- *
+ * <p>
  * There is a predefined menu products for food, beverage and orders which will be loaded from xml files when the server model is initialized.
  */
 public class ServerModel {
+    private final List<ServerController> serverControllers = new ArrayList<>();
+    private final List<ClientObserver> observers = new ArrayList<>();
     private HashMap<String, Food> foodMenu; //Hashmap for faster searching
     private HashMap<String, Beverage> beverageMenu;
-    private List<Customer> customerAccountList;
+    private final List<Customer> customerAccountList;
     private List<Order> orderList; //List for listing only orders
+    private final List<String> userLoggedIn;
+
+    public void addObserver(ClientObserver observer) {
+        observers.add(observer);
+    }
+
+    public void notifyObservers() {
+        System.out.println("Notifying Controllers");
+        System.out.println(observers.size());
+        for (ClientObserver observer : observers) {
+            observer.onDataChanged();
+        }
+    }
+
+    public void registerServerController(ServerController controller) {
+        serverControllers.add(controller);
+    }
+
+    public List<ServerController> getActiveServerControllers() {
+        return serverControllers;
+    }
 
     /**The constructor of the server model should load the predefined menu products*/
     public ServerModel() {
-        foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/java/server/model/food_menu.xml"));
-        beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/java/server/model/beverage_menu.xml"));
-        customerAccountList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/java/server/model/customer_account_list.xml"));
-        orderList = (List<Order>) XMLUtility.loadXMLData(new File("src/main/java/server/model/order_list.xml"));
+        foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/resources/data/food_menu.xml"));
+        beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/resources/data/beverage_menu.xml"));
+        customerAccountList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/resources/data/customer_account_list.xml"));
+        orderList = (List<Order>) XMLUtility.loadXMLData(new File("src/main/resources/data/order_list.xml"));
 
-        /*Todo
-           1. When the server is closed by the admin, it must write all these data in the necessary xmk files to be used for another run*/
+        //set up
+        userLoggedIn = new ArrayList<>();
     }
-
-    public void updateMenuFromInventory(ObservableList<Object> list) {
-        HashMap<String, Food> newFoodMenu = new HashMap<>();
-        HashMap<String, Beverage> newBeverageMenu = new HashMap<>();
-
-        for (Object entry : list) {
-            if (entry instanceof Food food) {
-                newFoodMenu.put(food.getName(), food);
-            } else if (entry instanceof Beverage beverage) {
-                newBeverageMenu.put(beverage.getName(), beverage);
-            }
-        }
-
-        System.out.println(foodMenu);
-        System.out.println(newFoodMenu);
-        System.out.println(beverageMenu);
-        System.out.println(newBeverageMenu);
-    }
-
 
     /**Process client orders and updates the food menu if necessary
      * Algorithm
@@ -58,9 +66,9 @@ public class ServerModel {
      * 2. If there are non, throw an exception
      * 3. If there are available products, then decrement it from the product quantity
      * 4. Save the order to orders list
-     * 5. Return true
+     * 5. Return the successfulOrder
      * 2. */
-    public boolean processOrder(Order order) throws Exception{
+    public Order processOrder(Order order) throws Exception {
         checkAvailability(order); //order that is not successful
         updateMenu(order);
 
@@ -76,23 +84,23 @@ public class ServerModel {
             }
         }
 
-        return true; //temporary. If it reaches here, order is successful
+        System.out.println(foodMenu);
+        return successfulOrder;
     }
 
     /**This method update the product in the menu there are available products. Synchronization is handled here already.
      * @throws Exception if the product in the menu is out of stock */
     private void updateMenu(Order order) throws Exception {
         for (Product product: order.getOrders()) {
-            if (product instanceof Food){
-                Food food = (Food) product; //cast it
+            if (product instanceof Food food){
+                //cast it
                 int orderQuantity = food.getQuantity();
 
                 Food productListed = foodMenu.get(food.getName());
 
                 //updates the menu
                 productListed.updateQuantity(orderQuantity); // this throws an exception
-            }else if (product instanceof Beverage){
-                Beverage beverage = (Beverage) product;
+            }else if (product instanceof Beverage beverage){
 
                 Beverage productListed = beverageMenu.get(beverage.getName());
 
@@ -110,17 +118,16 @@ public class ServerModel {
     /**This method checks the availability of products in the menu based on the customer's order.
      * @param order, client of the order
      * @throws Exception if the product menu is out of stock. */
-    private void checkAvailability(Order order) throws Exception{
+    private synchronized void checkAvailability(Order order) throws Exception{
         for (Product product: order.getOrders()) {
-            if (product instanceof Food){ //check first what type of product
-                Food food = (Food) product; //cast it
+            if (product instanceof Food food){ //check first what type of product
+                //cast it
 
                 if (food.getQuantity() > foodMenu.get(food.getName()).getQuantity()){
                     //checks if the order food quantity is greater than what is on the menu
                     throw new OutOfStockException("Out of stock");
                 }
-            }else if (product instanceof Beverage){
-                Beverage beverage = (Beverage) product;
+            }else if (product instanceof Beverage beverage){
 
                 //check if all variation
                 //small = 10
@@ -174,15 +181,51 @@ public class ServerModel {
         for (Customer customerAccount: customerAccountList) {
             //account
             if (customerAccount.getUsername().equals(username) && customerAccount.getPassword().equals(password)){
-                HashMap<String, Food> clientFoodMenuToLoad = new HashMap<>(foodMenu);
-                HashMap<String, Beverage> clientBeverageMenuToLoad = new HashMap<>(beverageMenu);
-                Object[] sendToClient = new Object[]{customerAccount, clientFoodMenuToLoad, clientBeverageMenuToLoad};
+                if (!userLoggedIn.contains(String.valueOf(username.hashCode()))){
+                    //adds the value to the user logged in
+                    userLoggedIn.add(String.valueOf(username.hashCode()));
 
-                //return to controller
-                return sendToClient;
+                    HashMap<String, Food> clientFoodMenuToLoad = new HashMap<>(foodMenu);
+                    HashMap<String, Beverage> clientBeverageMenuToLoad = new HashMap<>(beverageMenu);
+
+                    //return to controller
+                    return new Object[]{customerAccount, clientFoodMenuToLoad, clientBeverageMenuToLoad};
+                }else {
+                    throw new AccountAlreadyLoggedIn("Account already logged in");
+                }
             }
         }
         throw new InvalidCredentialsException("Invalid credentials");
+    }
+
+    /**This removes the client from the server if the client logged out already*/
+    public void processLogout(String clientID){
+        this.userLoggedIn.remove(clientID);
+    }
+
+    /**This method updates the reviews for the products*/
+    public void processReview(List<Product> ratedProducts){
+        for (Product product : ratedProducts) {
+            String productName = product.getName();
+            double review = product.getReview();
+            if (product instanceof Food){
+                foodMenu.get(productName).updateReview(review);
+            }else{
+                beverageMenu.get(productName).updateReview(review);
+            }
+        }
+    }
+
+    public void setFoodMenu(HashMap<String, Food> foodMenu) {
+        this.foodMenu = foodMenu;
+    }
+
+    public void setBeverageMenu(HashMap<String, Beverage> beverageMenu) {
+        this.beverageMenu = beverageMenu;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 
     public HashMap<String, Food> getFoodMenu() {

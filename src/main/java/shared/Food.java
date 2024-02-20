@@ -9,11 +9,17 @@ public class Food extends Product {
     private double price;
 
     //constructors
-    public Food(String name, char type, double review, int reviewCount, SerializableImage image, String description, int quantity, double price) {
+    public Food(String name, char type, double review, int reviewCount, Object[] image, String description, int quantity, double price) {
         super(name, type, review, reviewCount, image, description);
         this.quantity = quantity;
         this.price = price;
     }
+
+    /**This constructor will only be used for client side rating function*/
+    public Food(String name, char type, double review){
+        super(name, type, review, 0, null, null);
+    }
+
 
     //getters setters
     public int getQuantity() {
@@ -54,21 +60,6 @@ public class Food extends Product {
 
         //reaches here means no error updating the value
         int sold = super.getAmountSold() + count;
-        super.setAmountSold(sold);
-    }
-
-    /**This method updates the quantity of the product by the quantity ordered by a single client
-     * @throws Exception when the quantity cannot accommodate the order*/
-    public synchronized void updateQuantity() throws Exception{
-        quantity--;
-
-        if (quantity < 0){
-            quantity++; //reverting back the changes
-            throw new OutOfStockException("Out of stock");
-        }
-
-        //reaches here means no error updating the value
-        int sold =  super.getAmountSold() + 1;
         super.setAmountSold(sold);
     }
 

@@ -1,22 +1,25 @@
 package shared;
 
+import javafx.scene.image.Image;
+
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
 /**This abstract class represent a product. A product is classified into f - food, and b - beverage.
  * Food does not have any variations, meaning same price and quantity.
  * Whereas for beverage, it may be small, medium, large and has different price and quantity for each
  * @author  Stephen Coloma*/
-public abstract class Product implements Serializable {
+public abstract class Product implements Serializable{
     private String name;
     private char type;
     private double review; //average of 1-5
     private int reviewCount;
-    private SerializableImage image;
+    private Object[] image;
     private String description;
     private int amountSold;
 
     /**A constructor initializes the details of the classes whose direct descendant of this class.*/
-    public Product(String name, char type, double review, int reviewCount, SerializableImage image, String description) {
+    public Product(String name, char type, double review, int reviewCount, Object[] image, String description) {
         this.name = name;
         this.type = type;
         this.review = review;
@@ -28,14 +31,15 @@ public abstract class Product implements Serializable {
     //getters setters
     public String getName(){
         return name;
-    };
+    }
+
     public char getType(){
         return type;
-    };
+    }
 
     public double getReview(){
         return review;
-    };
+    }
 
     public int getReviewCount() {
         return reviewCount;
@@ -49,10 +53,6 @@ public abstract class Product implements Serializable {
 
     public void setReview(double review) {
         this.review = review;
-    }
-
-    public void setReviewCount(int reviewCount) {
-        this.reviewCount = reviewCount;
     }
 
     public String getDescription() {
@@ -71,24 +71,43 @@ public abstract class Product implements Serializable {
         this.amountSold = amountSold;
     }
 
-    public SerializableImage getImage() {
-        return image;
+    public String getImageName() {
+        return (String) image[0];
     }
 
-    public void setImage(SerializableImage image) {
+    public Image getImage() {
+        return new Image(new ByteArrayInputStream((byte[]) image[1]));
+    }
+
+    public void setImage(Object[] image) {
         this.image = image;
     }
 
     /**This method updates the review and reviewCount in a synchronized manner*/
     public synchronized void updateReview(double review){
+        this.review = (this.review * this.reviewCount + review) / (this.reviewCount + 1);
         reviewCount++;
-        double updatedReview = (this.review + review)/this.reviewCount;
-
-        this.review = updatedReview;
     }
 
     public int getQuantity() {
         return 0;
+    }
+
+    /**Will only be used for reviews*/
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Product product = (Product) obj;
+        return name.equals(product.name);
+    }
+
+    /**Will only be used for reviews*/
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 
     @Override
@@ -97,7 +116,7 @@ public abstract class Product implements Serializable {
                 ", type=" + type +
                 ", review=" + review +
                 ", reviewCount=" + reviewCount +
-                ", image=" + image +
+                ", image=" + image[0] +
                 ", description='" + description + '\'' +
                 ", amountSold=" + amountSold ;
     }
