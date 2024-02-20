@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -19,7 +20,6 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.kordamp.bootstrapfx.scene.layout.Panel;
 
 import java.io.IOException;
 
@@ -118,6 +118,7 @@ public class MainMenuClientPageView {
 
         Stage selectVariationStage = new Stage();
         Scene selectVariationScene = new Scene(root);
+        selectVariationStage.getIcons().add(new Image(getClass().getResource("/images/client/client_app_logo.png").toExternalForm()));
 
         selectVariationStage.initOwner(stage);
 
@@ -136,6 +137,7 @@ public class MainMenuClientPageView {
 
         Stage selectVariationStage = new Stage();
         Scene selectVariationScene = new Scene(root);
+        selectVariationStage.getIcons().add(new Image(getClass().getResource("/images/client/client_app_logo.png").toExternalForm()));
 
         selectVariationStage.initOwner(((Node)event.getSource()).getScene().getWindow()); // Get the owner window
 
@@ -160,6 +162,7 @@ public class MainMenuClientPageView {
         root = loader.load();
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResource("/images/client/client_app_logo.png").toExternalForm()));
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -174,11 +177,11 @@ public class MainMenuClientPageView {
     }
 
     public void orderHistoryMenuButtonEntered(MouseEvent event){
-        orderHistoryMenuButton.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 3");
+        orderHistoryMenuButton.setStyle("-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 3;");
         orderHistoryMenuButton.setTextFill(Paint.valueOf("black"));
     }
     public void orderHistoryMenuButtonExited(MouseEvent event){
-        orderHistoryMenuButton.setStyle("-fx-background-color:  #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3");
+        orderHistoryMenuButton.setStyle("-fx-background-color:  #FFFFFF; -fx-border-color: #A38157; -fx-border-radius: 3;");
         orderHistoryMenuButton.setTextFill(Paint.valueOf("#A38157"));
     }
 

@@ -21,5 +21,4 @@ public class ClientControllerNew {
             landingPageController = new LandingPageController(view.getLoader().getController());
         });
     }
-
 }

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -28,6 +29,7 @@ public class FoodInventoryPopupView {
         try {
             FXMLLoader loader = new FXMLLoader(FoodInventoryPopupView.class.getResource("/fxml/server/inventory/food_inventory_popup.fxml"));
             popupStage = new Stage();
+            popupStage.getIcons().add(new Image(FoodInventoryPopupView.class.getResource("/images/server/server_app_logo.png").toExternalForm()));
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setTitle("Edit Food Quantity");
             popupStage.setScene(new Scene(loader.load()));

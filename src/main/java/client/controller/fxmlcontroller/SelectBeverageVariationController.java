@@ -23,21 +23,21 @@ public class SelectBeverageVariationController {
 
         //setting up the view
         this.view.getProductNameLabel().setText(model.getProductName());
-        this.view.getProductDetailsLabel().setText(model.getProductDetails());
-        this.view.getProductPriceLabel().setText("P " + model.getSmallPrice() + " - " + "P " + model.getLargePrice());
-        this.view.getProductAvailabilityLabel().setText("Stock Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
+        this.view.getProductDescriptionLabel().setText(model.getProductDetails());
+        this.view.getProductPriceLabel().setText("₱ " + model.getSmallPrice() + " - " + "₱ " + model.getLargePrice());
+        this.view.getProductAvailabilityLabel().setText("Item Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
         this.view.getProductImage().setImage(model.getProductImage());
         this.view.getAddToCartButton().setDisable(true);
 
         //setting up data below
-        this.view.getSmallStockLabel().setText("Stocks: " + model.getSmallAvailability());
-        this.view.getMediumStockLabel().setText("Stocks: " + model.getMediumAvailability());
-        this.view.getLargeStockLabel().setText("Stocks: " + model.getLargeAvailability());
+        this.view.getSmallStockLabel().setText("Availability: " + model.getSmallAvailability());
+        this.view.getMediumStockLabel().setText("Availability: " + model.getMediumAvailability());
+        this.view.getLargeStockLabel().setText("Availability: " + model.getLargeAvailability());
 
         //setting the prices below
-        this.view.getSmallTotalPriceLabel().setText("P 0" + model.getSmallTotal());
-        this.view.getMediumTotalPriceLabel().setText("P 0" + model.getMediumTotal());
-        this.view.getLargeTotalPriceLabel().setText("P 0" + model.getLargeTotal());
+        this.view.getSmallTotalPriceLabel().setText("₱ 0" + model.getSmallTotal());
+        this.view.getMediumTotalPriceLabel().setText("₱ 0" + model.getMediumTotal());
+        this.view.getLargeTotalPriceLabel().setText("₱ 0" + model.getLargeTotal());
 
         //setting the quantity below
         this.view.getSmallQuantityLabel().setText(String.valueOf(model.getSmallOrderedQuantity()));
@@ -46,38 +46,38 @@ public class SelectBeverageVariationController {
 
         //if a variation is 0
         if (this.model.getSmallAvailability() == 0){
-            this.view.getSmallStockLabel().setText("no stocks");
+            this.view.getSmallStockLabel().setText("out of stock");
             this.view.getSmallStockLabel().setTextFill(Color.RED);
             this.view.getSmallDecrementButton().setDisable(true);
             this.view.getSmallIncrementButton().setDisable(true);
-            this.view.getSmallTotalPriceLabel().setText("no stocks");
+            this.view.getSmallTotalPriceLabel().setText("out of stock");
             this.view.getSmallTotalPriceLabel().setTextFill(Color.RED);
         }
 
         if (this.model.getMediumAvailability() == 0){
-            this.view.getMediumStockLabel().setText("no stocks");
+            this.view.getMediumStockLabel().setText("out of stock");
             this.view.getMediumStockLabel().setTextFill(Color.RED);
             this.view.getMediumDecrementButton().setDisable(true);
             this.view.getMediumIncrementButton().setDisable(true);
-            this.view.getMediumTotalPriceLabel().setText("no stocks");
+            this.view.getMediumTotalPriceLabel().setText("out of stock");
             this.view.getMediumTotalPriceLabel().setTextFill(Color.RED);
         }
 
         if (this.model.getLargeAvailability() == 0) {
-            this.view.getLargeStockLabel().setText("no stocks");
+            this.view.getLargeStockLabel().setText("out of stock");
             this.view.getLargeStockLabel().setTextFill(Color.RED);
             this.view.getLargeDecrementButton().setDisable(true);
             this.view.getLargeIncrementButton().setDisable(true);
-            this.view.getLargeTotalPriceLabel().setText("no stocks");
+            this.view.getLargeTotalPriceLabel().setText("out of stock");
             this.view.getLargeTotalPriceLabel().setTextFill(Color.RED);
         }
 
         //all sizes dont have stocks
         if (this.model.getSmallAvailability() == 0 && this.model.getMediumAvailability() == 0 && this.model.getLargeAvailability() == 0){
-            this.view.getProductAvailabilityLabel().setText("out of stocks");
+            this.view.getProductAvailabilityLabel().setText("out of stock");
             this.view.getProductAvailabilityLabel().setTextFill(Color.RED);
             this.view.getAddToCartButton().setDisable(true);
-            this.view.getNoticeLabel().setText("out of stocks on all sizes");
+            this.view.getNoticeLabel().setText("out of stock on all sizes");
             this.view.getNoticeLabel().setVisible(true);
         }
 
@@ -111,14 +111,14 @@ public class SelectBeverageVariationController {
             if (model.incrementSmallQuantity() != null){
                 this.view.getAddToCartButton().setDisable(false);
                 String qty = String.valueOf(model.getSmallOrderedQuantity());
-                String totalPrice = ("P" + model.getSmallTotal());
+                String totalPrice = ("₱ " + model.getSmallTotal());
 
                 view.getSmallQuantityLabel().setText(qty);
                 view.getSmallTotalPriceLabel().setText(totalPrice);
 
                 //check the updated the stock availability
-                this.view.getSmallStockLabel().setText("Stocks: " + model.getSmallAvailability());
-                this.view.getProductAvailabilityLabel().setText("Stock Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
+                this.view.getSmallStockLabel().setText("Availability: " + model.getSmallAvailability());
+                this.view.getProductAvailabilityLabel().setText("Item Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
             }else {
                 this.view.getNoticeLabel().setText("amount exceeded");
                 this.view.getNoticeLabel().setVisible(true);
@@ -130,24 +130,24 @@ public class SelectBeverageVariationController {
             this.view.getNoticeLabel().setVisible(false);
             if (model.decrementSmallQuantity() != null){
                 String qty = String.valueOf(model.getSmallOrderedQuantity());
-                String totalPrice = String.valueOf(model.getSmallTotal());
+                String totalPrice = ("₱ " + model.getSmallTotal());
 
                 view.getSmallQuantityLabel().setText(qty);
                 view.getSmallTotalPriceLabel().setText(totalPrice);
 
                 //check the updated stock availability
-                this.view.getSmallStockLabel().setText("Stocks: " + model.getSmallAvailability());
+                this.view.getSmallStockLabel().setText("Availability: " + model.getSmallAvailability());
 
 
                 if (model.getSmallOrderedQuantity() == 0){
-                    this.view.getSmallTotalPriceLabel().setText("P 0" + model.getSmallTotal());
+                    this.view.getSmallTotalPriceLabel().setText("₱ 0" + model.getSmallTotal());
                     if (model.getSmallOrderedQuantity() == 0 && model.getMediumOrderedQuantity() == 0 && model.getMediumOrderedQuantity() == 0){
                         this.view.getAddToCartButton().setDisable(true);
                     }
                 }
-                this.view.getProductAvailabilityLabel().setText("Stock Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
+                this.view.getProductAvailabilityLabel().setText("Item Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
             }else {
-                this.view.getNoticeLabel().setText("amount no below 0");
+                this.view.getNoticeLabel().setText("amount not below 0");
                 this.view.getNoticeLabel().setVisible(true);
             }
         });
@@ -157,14 +157,14 @@ public class SelectBeverageVariationController {
             if (model.incrementMediumQuantity() != null){
                 this.view.getAddToCartButton().setDisable(false);
                 String qty = String.valueOf(model.getMediumOrderedQuantity());
-                String totalPrice = ("P" + model.getMediumTotal());
+                String totalPrice = ("₱ " + model.getMediumTotal());
 
                 view.getMediumQuantityLabel().setText(qty);
                 view.getMediumTotalPriceLabel().setText(totalPrice);
 
                 //check the updated the stock availability
-                this.view.getMediumStockLabel().setText("Stocks: " + model.getMediumAvailability());
-                this.view.getProductAvailabilityLabel().setText("Stock Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
+                this.view.getMediumStockLabel().setText("Availability: " + model.getMediumAvailability());
+                this.view.getProductAvailabilityLabel().setText("Item Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
             }else {
                 this.view.getNoticeLabel().setText("amount exceeded");
                 this.view.getNoticeLabel().setVisible(true);
@@ -176,23 +176,23 @@ public class SelectBeverageVariationController {
             this.view.getNoticeLabel().setVisible(false);
             if (model.decrementMediumQuantity() != null){
                 String qty = String.valueOf(model.getMediumOrderedQuantity());
-                String totalPrice = String.valueOf(model.getMediumTotal());
+                String totalPrice = ("₱ " + model.getMediumTotal());
 
                 view.getMediumQuantityLabel().setText(qty);
                 view.getMediumTotalPriceLabel().setText(totalPrice);
 
                 //check the updated stock availability
-                this.view.getMediumStockLabel().setText("Stocks: " + model.getMediumAvailability());
+                this.view.getMediumStockLabel().setText("Availability: " + model.getMediumAvailability());
 
                 if (model.getMediumOrderedQuantity() == 0){
-                    this.view.getMediumTotalPriceLabel().setText("P 0" + model.getMediumTotal());
+                    this.view.getMediumTotalPriceLabel().setText("₱ 0" + model.getMediumTotal());
                     if (model.getSmallOrderedQuantity() == 0 && model.getMediumOrderedQuantity() == 0 && model.getLargeOrderedQuantity() == 0){
                         this.view.getAddToCartButton().setDisable(true);
                     }
                 }
-                this.view.getProductAvailabilityLabel().setText("Stock Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
+                this.view.getProductAvailabilityLabel().setText("Item Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
             }else {
-                this.view.getNoticeLabel().setText("amount no below 0");
+                this.view.getNoticeLabel().setText("amount not below 0");
                 this.view.getNoticeLabel().setVisible(true);
             }
         });
@@ -202,14 +202,14 @@ public class SelectBeverageVariationController {
             if (model.incrementLargeQuantity() != null){
                 this.view.getAddToCartButton().setDisable(false);
                 String qty = String.valueOf(model.getLargeOrderedQuantity());
-                String totalPrice = ("P" + model.getLargeTotal());
+                String totalPrice = ("₱ " + model.getLargeTotal());
 
                 view.getLargeQuantityLabel().setText(qty);
                 view.getLargeTotalPriceLabel().setText(totalPrice);
 
                 //check the updated the stock availability
-                this.view.getLargeStockLabel().setText("Stocks: " + model.getLargeAvailability());
-                this.view.getProductAvailabilityLabel().setText("Stock Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
+                this.view.getLargeStockLabel().setText("Availability: " + model.getLargeAvailability());
+                this.view.getProductAvailabilityLabel().setText("Item Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
             }else {
                 this.view.getNoticeLabel().setText("amount exceeded");
                 this.view.getNoticeLabel().setVisible(true);
@@ -221,24 +221,24 @@ public class SelectBeverageVariationController {
             this.view.getNoticeLabel().setVisible(false);
             if (model.decrementLargeQuantity() != null){
                 String qty = String.valueOf(model.getLargeOrderedQuantity());
-                String totalPrice = String.valueOf(model.getLargeTotal());
+                String totalPrice = ("₱ " + model.getLargeTotal());
 
                 view.getLargeQuantityLabel().setText(qty);
                 view.getLargeTotalPriceLabel().setText(totalPrice);
 
                 //check the updated stock availability
-                this.view.getLargeStockLabel().setText("Stocks: " + model.getLargeAvailability());
+                this.view.getLargeStockLabel().setText("Availability: " + model.getLargeAvailability());
 
 
                 if (model.getLargeOrderedQuantity() == 0){
-                    this.view.getLargeTotalPriceLabel().setText("P 0" + model.getLargeTotal());
+                    this.view.getLargeTotalPriceLabel().setText("₱ 0" + model.getLargeTotal());
                     if (model.getSmallOrderedQuantity() == 0 && model.getMediumOrderedQuantity() == 0 && model.getLargeOrderedQuantity() == 0){
                         this.view.getAddToCartButton().setDisable(true);
                     }
                 }
-                this.view.getProductAvailabilityLabel().setText("Stock Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
+                this.view.getProductAvailabilityLabel().setText("Item Availability: " + (model.getSmallAvailability() + model.getMediumAvailability() + model.getLargeAvailability()));
             }else {
-                this.view.getNoticeLabel().setText("amount no below 0");
+                this.view.getNoticeLabel().setText("amount not below 0");
                 this.view.getNoticeLabel().setVisible(true);
             }
         });

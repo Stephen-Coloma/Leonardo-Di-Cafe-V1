@@ -20,30 +20,30 @@ public class SelectFoodController {
 
         //setting up the view
         this.view.getProductNameLabel().setText(model.getProductName());
-        this.view.getProductDetailsLabel().setText(model.getProductDetails());
-        this.view.getProductPriceLabel().setText("P " + model.getProductPrice());
+        this.view.getProductDescriptionLabel().setText(model.getProductDetails());
+        this.view.getProductPriceLabel().setText("₱ " + model.getProductPrice());
         this.view.getProductImage().setImage(model.getProductImage());
         this.view.getAddToCartButton().setDisable(true);
 
         //if stocks is 0
         if (this.model.getProductAvailability() == 0){
-            this.view.getProductAvailabilityLabel().setText("out of stocks");
+            this.view.getProductAvailabilityLabel().setText("out of stock");
             this.view.getProductAvailabilityLabel().setTextFill(Color.RED);
             this.view.getDecrementButton().setDisable(true);
             this.view.getIncrementButton().setDisable(true);
             this.view.getAddToCartButton().setDisable(true);
-            this.view.getTotalPriceLabel().setText("out of stocks");
+            this.view.getTotalPriceLabel().setText("out of stock");
             this.view.getTotalPriceLabel().setTextFill(Color.RED);
-            this.view.getNoticeLabel().setText("out of stocks");
+            this.view.getNoticeLabel().setText("out of stock");
             this.view.getNoticeLabel().setVisible(true);
         }else {
-            this.view.getTotalPriceLabel().setText("P 0" + model.getTotal());
-            this.view.getProductAvailabilityLabel().setText("Stock Availability: " + model.getProductAvailability());
+            this.view.getTotalPriceLabel().setText("₱ 0" + model.getTotal());
+            this.view.getProductAvailabilityLabel().setText("Item Availability: " + model.getProductAvailability());
         }
 
         //set up the data of the view
         this.view.getQuantityLabel().setText(String.valueOf(model.getOrderedQuantity()));
-        this.view.getTotalPriceLabel().setText("P 0" + model.getTotal());
+        this.view.getTotalPriceLabel().setText("₱ 0" + model.getTotal());
 
         //set up action for add to cart button
         this.view.setActionAddToCartButton((ActionEvent event) ->{
@@ -58,13 +58,13 @@ public class SelectFoodController {
             if (model.incrementQuantity() != null){
                 this.view.getAddToCartButton().setDisable(false);
                 String qty = String.valueOf(model.getOrderedQuantity());
-                String totalPrice = ("P" + model.getTotal());
+                String totalPrice = ("₱ " + model.getTotal());
 
                 view.getQuantityLabel().setText(qty);
                 view.getTotalPriceLabel().setText(totalPrice);
 
                 //check the updated the stock availability
-                this.view.getProductAvailabilityLabel().setText("Stock Availability: " + model.getProductAvailability());
+                this.view.getProductAvailabilityLabel().setText("Item Availability: " + model.getProductAvailability());
             }else {
                 this.view.getNoticeLabel().setText("amount exceeded");
                 this.view.getNoticeLabel().setVisible(true);
@@ -76,19 +76,19 @@ public class SelectFoodController {
             this.view.getNoticeLabel().setVisible(false);
             if (model.decrementQuantity() != null){
                 String qty = String.valueOf(model.getOrderedQuantity());
-                String totalPrice = String.valueOf(model.getTotal());
+                String totalPrice = ("₱ " + model.getTotal());
 
                 view.getQuantityLabel().setText(qty);
                 view.getTotalPriceLabel().setText(totalPrice);
 
                 //check the updated stock availability
-                this.view.getProductAvailabilityLabel().setText("Stock Availability: " + model.getProductAvailability());
+                this.view.getProductAvailabilityLabel().setText("Item Availability: " + model.getProductAvailability());
                 if (model.getOrderedQuantity() == 0){
                     this.view.getAddToCartButton().setDisable(true);
-                    this.view.getTotalPriceLabel().setText("P 0" + model.getTotal());
+                    this.view.getTotalPriceLabel().setText("₱ 0" + model.getTotal());
                 }
             }else {
-                this.view.getNoticeLabel().setText("amount no below 0");
+                this.view.getNoticeLabel().setText("no amount below 0");
                 this.view.getAddToCartButton().setDisable(true);
                 this.view.getNoticeLabel().setVisible(true);
             }
@@ -126,8 +126,6 @@ public class SelectFoodController {
     public void setFinalOrderedPrice(double finalOrderedPrice) {
         this.finalOrderedPrice = finalOrderedPrice;
     }
-
-
 }
 
 

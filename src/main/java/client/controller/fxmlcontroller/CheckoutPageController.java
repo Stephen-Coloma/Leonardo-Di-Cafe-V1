@@ -90,10 +90,10 @@ public class CheckoutPageController {
         // Calculate the deliveryPayment within the specified range and intervals
         deliveryPayment = 8 + interval * 10;
 
-        this.view.getSubtotalPriceLabel().setText("P " + model.getSubTotal() + "0");
-        this.view.getDeliveryFeeLabel().setText("P " + deliveryPayment + "0");
+        this.view.getSubtotalPriceLabel().setText("₱ " + model.getSubTotal() + "0");
+        this.view.getDeliveryFeeLabel().setText("₱ " + deliveryPayment + "0");
         double totalAmount = model.getSubTotal() + deliveryPayment;
-        this.view.getTotalAmountLabel().setText("P " + totalAmount + "0");
+        this.view.getTotalAmountLabel().setText("₱ " + totalAmount + "0");
     }
 
     public CheckoutPageModel getModel() {

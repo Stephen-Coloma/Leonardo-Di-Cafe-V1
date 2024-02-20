@@ -4,6 +4,7 @@ import client.controller.ClientControllerNew;
 import client.model.ClientModel;
 import client.view.ClientView;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,9 +22,11 @@ public class Client extends Application {
     public void start(Stage stage) throws Exception {
         requestServerAddress();
 
+        stage.getIcons().add(new Image(getClass().getResource("/images/client/client_app_logo.png").toExternalForm()));
         ClientModel model = new ClientModel();
         ClientView view = new ClientView(stage);
         view.runInterface();
+
         new ClientControllerNew(model, view);
     } //
 
@@ -31,7 +34,7 @@ public class Client extends Application {
      * Requests the IP address of the server by broadcasting a request message to the network.
      */
     public void requestServerAddress() {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             try (DatagramSocket socket = new DatagramSocket()) {
                 System.out.println("Requesting server address");
                 socket.setBroadcast(true);
@@ -47,6 +50,8 @@ public class Client extends Application {
             } catch (IOException e) {
                 System.err.println("Error during server discovery: " + e.getMessage());
             }
-        }).start();
+        });
+        thread.setDaemon(true);
+        thread.start();
     } // end of requestServerAddress
 } // end of Client class

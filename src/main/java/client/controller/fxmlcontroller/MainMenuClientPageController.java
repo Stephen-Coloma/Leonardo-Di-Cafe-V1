@@ -18,8 +18,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import shared.*;
@@ -31,6 +33,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +41,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class MainMenuClientPageController {
+    private Stage primaryStage;
     private char currentLoadedMenu = 'f';
     private MainMenuClientPageView mainMenuView;
     private MainMenuClientPageModel mainMenuModel;
@@ -153,6 +157,13 @@ public class MainMenuClientPageController {
 
     public void run() {
         try {
+            primaryStage.setOnCloseRequest(event -> {
+                String clientID = String.valueOf(this.mainMenuModel.getClientModel().getCustomer().getUsername().hashCode());
+                sendData(clientID, "LOGOUT", null);
+                closeResources();
+                System.exit(0);
+            });
+
             listenToHost();
         } catch (IOException ioException) {
             ioException.printStackTrace();
@@ -162,11 +173,15 @@ public class MainMenuClientPageController {
     } // end of run
 
     private void listenToHost() throws IOException, ClassNotFoundException {
-        while (true) {
-            Object[] data = (Object[]) in.readObject();
-            if (data != null) {
-                handleIncomingData(data);
+        try {
+            while (true) {
+                Object[] data = (Object[]) in.readObject();
+                if (data != null) {
+                    handleIncomingData(data);
+                }
             }
+        } catch (SocketException e) {
+            System.out.println("Socket closed by the server.");
         }
     } // end of listenToHost
 
@@ -485,7 +500,7 @@ public class MainMenuClientPageController {
                             break;
                         case "priceLabel":
                             String priceLabel = ((Label) label).getText();
-                            String cleanedPrice = priceLabel.replaceAll("[P\\s]", ""); //cleaning
+                            String cleanedPrice = priceLabel.replaceAll("[₱\\s]", ""); //cleaning
                             productPrice = Double.parseDouble(cleanedPrice);
                     }
                 }
@@ -515,7 +530,7 @@ public class MainMenuClientPageController {
 
                 //add to grid pane
                 mainMenuView.getGridPaneCart().setVisible(false);
-                mainMenuView.getPriceLabel().setText("P " + cartTotalPrice + "0");
+                mainMenuView.getPriceLabel().setText("₱ " + cartTotalPrice + "0");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -578,7 +593,9 @@ public class MainMenuClientPageController {
                 selectFoodController = new SelectFoodController(new SelectFoodModel(product), selectFoodLoader.getController());
                 Scene scene = new Scene(root);
                 Stage popupStage = new Stage();
+                popupStage.getIcons().add(new Image(getClass().getResource("/images/client/client_app_logo.png").toExternalForm()));
                 popupStage.setScene(scene);
+                popupStage.initModality(Modality.APPLICATION_MODAL);
                 popupStage.showAndWait(); //wait until the popup stops
             } else {
                 FXMLLoader selectBeverageVariationLoader = new FXMLLoader(getClass().getResource("/fxml/client/select_beverage_variation.fxml"));
@@ -587,7 +604,9 @@ public class MainMenuClientPageController {
                 selectBeverageVariationController = new SelectBeverageVariationController(new SelectBeverageVariationModel(product), selectBeverageVariationLoader.getController());
                 Scene scene = new Scene(root);
                 Stage popupStage = new Stage();
+                popupStage.getIcons().add(new Image(getClass().getResource("/images/client/client_app_logo.png").toExternalForm()));
                 popupStage.setScene(scene);
+                popupStage.initModality(Modality.APPLICATION_MODAL);
                 popupStage.showAndWait(); //wait until the popup stops
             }
         } catch (IOException e) {
@@ -651,7 +670,7 @@ public class MainMenuClientPageController {
      */
     private void updateCartTotalPrice(double productPrice) {
         cartTotalPrice += productPrice;
-        this.mainMenuView.getPriceLabel().setText("P " + cartTotalPrice + "0");
+        this.mainMenuView.getPriceLabel().setText("₱ " + cartTotalPrice + "0");
     }
 
     /**
@@ -863,5 +882,22 @@ public class MainMenuClientPageController {
         }catch (IOException exception){
             exception.printStackTrace();
         }
+    }
+
+    private void closeResources() {
+        try {
+            socket.close();
+            in.close();
+            out.close();
+            if (in == null && out == null) {
+                System.out.println("closed stream resources");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    } // end of closeResources
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 } // end of MainMenuClientPageController class

@@ -22,7 +22,7 @@ public class CartItemCardController {
             this.view.getSizeLabel().setText("size: " + model.getSize());
             this.view.getSizeLabel().setVisible(true);
         }
-        this.view.getPriceLabel().setText("P " + model.getTotalPrice() + "0");
+        this.view.getPriceLabel().setText("₱ " + model.getTotalPrice() + "0");
     }
 
     public CartItemCardView getView() {

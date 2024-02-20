@@ -1,112 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="236.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.SelectFoodView">
-   <children>
-      <Pane prefHeight="34.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="550.0" style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.view.fxmlview.SelectFoodView">
+   <top>
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #634921;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="171.0" layoutY="13.0" text="Add To Cart" textFill="#66382a">
+            <Label text="Add To Cart" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="10.0" />
-               </font>
-            </Label>
+                  <Font name="Monospaced Regular" size="24.0" />
+               </font></Label>
          </children>
-      </Pane>
-      <Pane layoutY="34.0" prefHeight="213.0" prefWidth="400.0" style="-fx-background-color: #ECE9E3;">
+      </HBox>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" prefHeight="269.0" prefWidth="550.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane layoutX="14.0" layoutY="14.0" prefHeight="94.0" prefWidth="367.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #FFFFFF;">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="167.0" prefWidth="510.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #66382a; -fx-border-radius: 5; -fx-background-radius: 5;">
                <children>
-                  <HBox layoutY="2.0" prefHeight="91.0" prefWidth="367.0">
+                  <VBox prefHeight="160.0" prefWidth="390.0">
                      <children>
-                        <Pane prefHeight="94.0" prefWidth="5.0" />
-                        <VBox prefHeight="91.0" prefWidth="268.0">
-                           <children>
-                              <Pane prefHeight="2.0" prefWidth="106.0" />
-                              <Label fx:id="productNameLabel" prefHeight="18.0" prefWidth="270.0" text="Item 1">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="productDetailsLabel" alignment="TOP_LEFT" prefHeight="39.0" prefWidth="267.0" text="Product Details" wrapText="true">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="productAvailabilityLabel" text="Stock Availability: 100" textFill="#0cff00">
-                                 <font>
-                                    <Font name="System Bold" size="11.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="productPriceLabel" text="P 180.00 ">
-                                 <font>
-                                    <Font name="System Bold" size="10.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Pane prefHeight="4.0" prefWidth="138.0" />
-                              <ImageView fx:id="productImage" fitHeight="81.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../images/client/variation/cake.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </VBox>
+                        <Label fx:id="productNameLabel" text="Product" textFill="#634921">
+                           <font>
+                              <Font name="Garamond Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="productDescriptionLabel" alignment="TOP_LEFT" prefHeight="76.0" prefWidth="434.0" text="Product Description" textFill="#634921" wrapText="true">
+                           <font>
+                              <Font name="Garamond" size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="productAvailabilityLabel" text="Item Availability:  100" textFill="#634921">
+                           <font>
+                              <Font name="Impact" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="productPriceLabel" text="₱ 180.00" textFill="#634921">
+                           <font>
+                              <Font name="Impact" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </padding></VBox>
+                  <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="165.0" prefWidth="165.0">
+                     <children>
+                        <ImageView fx:id="productImage" fitHeight="155.0" fitWidth="155.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/client/variation/cake.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding></VBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="510.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #66382a; -fx-border-radius: 5; -fx-background-radius: 5;">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="150.0">
+                     <children>
+                        <Label text="Quantity" textFill="#634921">
+                           <font>
+                              <Font name="Garamond" size="24.0" />
+                           </font></Label>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="42.0" prefWidth="175.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="decrementButton" mnemonicParsing="false" onMouseEntered="#decrementButtonEntered" onMouseExited="#decrementButtonExited" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #c7a97f;" text="-" textFill="WHITE">
+                           <font>
+                              <Font name="Rockwell Extra Bold" size="12.0" />
+                           </font></Button>
+                        <Label fx:id="quantityLabel" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="49.0" text="1" textFill="#634921">
+                           <font>
+                              <Font name="Garamond Bold" size="22.0" />
+                           </font></Label>
+                        <Button fx:id="incrementButton" mnemonicParsing="false" onMouseEntered="#incrementButtonEntered" onMouseExited="#incrementButtonExited" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #A38157;" text="+" textFill="WHITE">
+                           <font>
+                              <Font name="Rockwell Extra Bold" size="12.0" />
+                           </font></Button>
                      </children>
                   </HBox>
-               </children>
-            </Pane>
-            <Button fx:id="addToCartButton" layoutX="26.0" layoutY="175.0" mnemonicParsing="false" onMouseEntered="#addToCartButtonEntered" onMouseExited="#addToCartButtonExited" prefHeight="25.0" prefWidth="348.0" style="-fx-background-color: #A38157;" text="ADD TO CART" textFill="WHITE">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Button>
-            <Pane layoutX="16.0" layoutY="120.0" prefHeight="34.0" prefWidth="368.0" style="-fx-border-color: black; -fx-border-radius: 5; -fx-background-color: #FFFFFF;">
-               <children>
-                  <Label layoutX="14.0" layoutY="9.0" prefHeight="17.0" prefWidth="56.0" text="Quantity">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="totalPriceLabel" layoutX="302.0" layoutY="9.0" text="P 180.00">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
-                  </Label>
-                  <HBox alignment="CENTER" layoutX="82.0" layoutY="6.0" prefHeight="24.0" prefWidth="115.0">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="255.0">
                      <children>
-                        <Button fx:id="decrementButton" mnemonicParsing="false" prefHeight="24.0" prefWidth="26.0" style="-fx-background-color: #E1D0BB;" text="-">
+                        <Label fx:id="totalPriceLabel" text="₱ 180.00" textFill="#634921">
                            <font>
-                              <Font name="System Bold" size="11.0" />
+                              <Font name="Impact" size="22.0" />
                            </font>
-                        </Button>
-                        <Label fx:id="quantityLabel" alignment="CENTER" prefHeight="18.0" prefWidth="20.0" text="1" />
-                        <Button fx:id="incrementButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="29.0" style="-fx-background-color: #D6B48B;" text="+">
-                           <font>
-                              <Font size="11.0" />
-                           </font>
-                        </Button>
+                        </Label>
                      </children>
-                  </HBox>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding></HBox>
                </children>
-            </Pane>
-            <Label fx:id="noticeLabel" layoutX="16.0" layoutY="154.0" text="message" textFill="RED" visible="false" />
-         </children>
-      </Pane>
-   </children>
-</AnchorPane>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></HBox>
+            <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="16.0" prefWidth="550.0">
+               <children>
+                  <Label fx:id="noticeLabel" textFill="RED">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" top="2.0" />
+               </VBox.margin>
+            </HBox>
+         </children></VBox>
+   </center>
+   <bottom>
+      <Button fx:id="addToCartButton" mnemonicParsing="false" onMouseEntered="#addToCartButtonEntered" onMouseExited="#addToCartButtonExited" prefHeight="32.0" prefWidth="445.0" style="-fx-background-color: #A38157;" text="ADD TO CART" textFill="WHITE" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Copperplate Gothic Light" size="17.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="15.0" />
+         </BorderPane.margin></Button>
+   </bottom>
+</BorderPane>

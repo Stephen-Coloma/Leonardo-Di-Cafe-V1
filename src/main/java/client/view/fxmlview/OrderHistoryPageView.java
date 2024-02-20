@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
@@ -30,6 +31,7 @@ public class OrderHistoryPageView {
         try {
             FXMLLoader loader = new FXMLLoader(CheckoutPageView.class.getResource("/fxml/client/order_history_page.fxml"));
             popupStage = new Stage();
+            popupStage.getIcons().add(new Image(CheckoutPageView.class.getResource("/images/client/client_app_logo.png").toExternalForm()));
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setTitle("Order History");
             popupStage.setScene(new Scene(loader.load()));
@@ -84,5 +86,22 @@ public class OrderHistoryPageView {
 
     public static void setPopupStage(Stage popupStage) {
         OrderHistoryPageView.popupStage = popupStage;
+    }
+
+
+    public void submitReviewButtonEntered() {
+        submitReviewButton.setStyle("-fx-background-color: #71d079;");
+    }
+
+    public void submitReviewButtonExited() {
+        submitReviewButton.setStyle("-fx-background-color: #5dae65;");
+    }
+
+    public void cancelButtonEntered() {
+        cancelButton.setStyle("-fx-background-color:  #D07179;");
+    }
+
+    public void cancelButtonExited() {
+        cancelButton.setStyle("-fx-background-color:  #FF5A65;");
     }
 }

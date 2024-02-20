@@ -59,7 +59,7 @@ public class SelectBeverageVariationView {
     private Label productAvailabilityLabel;
 
     @FXML
-    private Label productDetailsLabel;
+    private Label productDescriptionLabel;
 
     @FXML
     private ImageView productImage;
@@ -189,12 +189,12 @@ public class SelectBeverageVariationView {
         this.productAvailabilityLabel = productAvailabilityLabel;
     }
 
-    public Label getProductDetailsLabel() {
-        return productDetailsLabel;
+    public Label getProductDescriptionLabel() {
+        return productDescriptionLabel;
     }
 
-    public void setProductDetailsLabel(Label productDetailsLabel) {
-        this.productDetailsLabel = productDetailsLabel;
+    public void setProductDescriptionLabel(Label productDescriptionLabel) {
+        this.productDescriptionLabel = productDescriptionLabel;
     }
 
     public ImageView getProductImage() {
@@ -309,12 +309,60 @@ public class SelectBeverageVariationView {
         this.largeCheckBox = largeCheckBox;
     }
 
-    public void addToCartButtonEntered(MouseEvent event){
-        addToCartButton.setStyle("-fx-background-color: lightgray;");
-        addToCartButton.setTextFill(Paint.valueOf("Black"));
+    public void smallIncrementButtonEntered() {
+        smallIncrementButton.setStyle("-fx-background-color: #c7a97f");
     }
-    public void addToCartButtonExited(MouseEvent event){
+
+    public void smallIncrementButtonExited() {
+        smallIncrementButton.setStyle("-fx-background-color: #A38157;");
+    }
+
+    public void mediumIncrementButtonEntered() {
+        mediumIncrementButton.setStyle("-fx-background-color: #c7a97f");
+    }
+
+    public void mediumIncrementButtonExited() {
+        mediumIncrementButton.setStyle("-fx-background-color: #A38157;");
+    }
+
+    public void largeIncrementButtonEntered() {
+        largeIncrementButton.setStyle("-fx-background-color: #c7a97f");
+    }
+
+    public void largeIncrementButtonExited() {
+        largeIncrementButton.setStyle("-fx-background-color: #A38157;");
+    }
+
+    public void smallDecrementButtonEntered() {
+        smallDecrementButton.setStyle("-fx-background-color: #A38157;");
+    }
+
+    public void smallDecrementButtonExited() {
+        smallDecrementButton.setStyle("-fx-background-color: #c7a97f");
+    }
+
+    public void mediumDecrementButtonEntered() {
+        mediumDecrementButton.setStyle("-fx-background-color: #A38157;");
+    }
+
+    public void mediumDecrementButtonExited() {
+        mediumDecrementButton.setStyle("-fx-background-color: #c7a97f");
+    }
+
+    public void largeDecrementButtonEntered() {
+        largeDecrementButton.setStyle("-fx-background-color: #A38157;");
+    }
+
+    public void largeDecrementButtonExited() {
+        largeDecrementButton.setStyle("-fx-background-color: #c7a97f");
+    }
+
+
+    public void addToCartButtonEntered() {
+        addToCartButton.setStyle("-fx-background-color:#c7a97f;");
+    }
+
+    public void addToCartButtonExited() {
         addToCartButton.setStyle("-fx-background-color:  #A38157;");
-        addToCartButton.setTextFill(Paint.valueOf("White"));
     }
 }

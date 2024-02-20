@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
@@ -48,6 +49,7 @@ public class BeverageEditDetailsPopupView implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(BeverageEditDetailsPopupView.class.getResource("/fxml/server/inventory/beverage_edit_details_popup.fxml"));
             popupStage = new Stage();
+            popupStage.getIcons().add(new Image(BeverageEditDetailsPopupView.class.getResource("/images/server/server_app_logo.png").toExternalForm()));
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setTitle("Edit Beverage Details");
             popupStage.setScene(new Scene(loader.load()));

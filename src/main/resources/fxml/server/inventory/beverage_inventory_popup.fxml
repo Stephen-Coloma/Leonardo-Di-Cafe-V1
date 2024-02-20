@@ -5,52 +5,44 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="285.0" prefWidth="600.0" style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.view.inventory.BeverageInventoryPopupView">
-   <children>
-      <Button fx:id="acceptButton" layoutX="243.0" layoutY="244.0" mnemonicParsing="false" onMouseEntered="#setAcceptButtonMouseEntered" onMouseExited="#setAcceptButtonMouseExited" prefHeight="27.0" prefWidth="114.0" style="-fx-background-color: #5dae65;" text="Accept" textFill="WHITE">
-         <font>
-            <Font name="Arial" size="15.0" />
-         </font></Button>
-      <Pane prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #634921;">
-         <children>
-            <Label layoutX="172.0" layoutY="14.0" text="Add Quantity For Beverages" textFill="WHITE">
-               <font>
-                  <Font name="Arial Bold" size="19.0" />
-               </font></Label>
-         </children></Pane>
-      <HBox layoutY="50.0" prefHeight="187.0" prefWidth="600.0">
+<BorderPane style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.view.inventory.BeverageInventoryPopupView">
+   <center>
+      <HBox prefHeight="187.0" prefWidth="600.0">
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
                   <Label text="Small">
                      <font>
                         <Font name="Arial" size="18.0" />
-                     </font></Label>
-                  <Label fx:id="smallQuantity" text="0">
+                     </font>
+                  </Label>
+                  <Label fx:id="smallQuantity" prefHeight="0.0" prefWidth="17.0" text="0">
                      <font>
                         <Font name="Arial" size="30.0" />
                      </font>
                   </Label>
-                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0" spacing="10.0">
+                  <HBox alignment="CENTER" prefHeight="80.0" prefWidth="200.0" spacing="10.0">
                      <children>
                         <Button fx:id="smallDecrementButton" mnemonicParsing="false" onMouseEntered="#setSmallDecrementButtonMouseEntered" onMouseExited="#setSmallDecrementButtonMouseExited" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #634921;" text="-" textFill="WHITE">
                            <font>
                               <Font name="Arial Black" size="12.0" />
-                           </font></Button>
-                        <Button fx:id="smallIncrementButton" mnemonicParsing="false" onMouseEntered="#setSmallIncrementButtonMouseEntered" onMouseExited="#setSmallIncrementButtonMouseExited" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #634921;" text="+" textFill="WHITE">
+                           </font>
+                        </Button>
+                        <Button fx:id="smallIncrementButton" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onMouseEntered="#setSmallIncrementButtonMouseEntered" onMouseExited="#setSmallIncrementButtonMouseExited" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #634921;" text="+" textFill="WHITE">
                            <font>
                               <Font name="Arial Black" size="12.0" />
-                           </font></Button>
+                           </font>
+                        </Button>
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" />
-                  <Label fx:id="totalSmallQuantityLabel" text="Total">
+                  <Label fx:id="totalSmallQuantityLabel" prefHeight="53.0" prefWidth="27.0" text="Total">
                      <VBox.margin>
                         <Insets bottom="7.0" />
                      </VBox.margin>
                      <font>
                         <Font name="Arial" size="12.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                </children>
                <HBox.margin>
                   <Insets top="10.0" />
@@ -61,7 +53,8 @@
                   <Label text="Medium">
                      <font>
                         <Font name="Arial" size="18.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <Label fx:id="mediumQuantity" text="0">
                      <font>
                         <Font name="Arial" size="30.0" />
@@ -72,11 +65,13 @@
                         <Button fx:id="mediumDecrementButton" mnemonicParsing="false" onMouseEntered="#setMediumDecrementButtonMouseEntered" onMouseExited="#setMediumDecrementButtonMouseExited" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #634921;" text="-" textFill="WHITE">
                            <font>
                               <Font name="Arial Black" size="12.0" />
-                           </font></Button>
+                           </font>
+                        </Button>
                         <Button fx:id="mediumIncrementButton" mnemonicParsing="false" onMouseEntered="#setMediumIncrementButtonMouseEntered" onMouseExited="#setMediumIncrementButtonMouseExited" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #634921;" text="+" textFill="WHITE">
                            <font>
                               <Font name="Arial Black" size="12.0" />
-                           </font></Button>
+                           </font>
+                        </Button>
                      </children>
                   </HBox>
                   <Label fx:id="totalMediumQuantityLabel" text="Total">
@@ -85,7 +80,8 @@
                      </VBox.margin>
                      <font>
                         <Font name="Arial" size="12.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                </children>
                <HBox.margin>
                   <Insets top="10.0" />
@@ -96,7 +92,8 @@
                   <Label text="Large">
                      <font>
                         <Font name="Arial" size="18.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <Label fx:id="largeQuantity" text="0">
                      <font>
                         <Font name="Arial" size="30.0" />
@@ -107,11 +104,13 @@
                         <Button fx:id="largeDecrementButton" mnemonicParsing="false" onMouseEntered="#setLargeDecrementButtonMouseEntered" onMouseExited="#setLargeDecrementButtonMouseExited" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #634921;" text="-" textFill="WHITE">
                            <font>
                               <Font name="Arial Black" size="12.0" />
-                           </font></Button>
+                           </font>
+                        </Button>
                         <Button fx:id="largeIncrementButton" mnemonicParsing="false" onMouseEntered="#setLargeIncrementButtonMouseEntered" onMouseExited="#setLargeIncrementButtonMouseExited" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #634921;" text="+" textFill="WHITE">
                            <font>
                               <Font name="Arial Black" size="12.0" />
-                           </font></Button>
+                           </font>
+                        </Button>
                      </children>
                   </HBox>
                   <Label fx:id="totalLargeQuantityLabel" text="Total">
@@ -120,12 +119,35 @@
                      </VBox.margin>
                      <font>
                         <Font name="Arial" size="12.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                </children>
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin>
             </VBox>
-         </children></HBox>
-   </children>
-</AnchorPane>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <Button fx:id="acceptButton" mnemonicParsing="false" onMouseEntered="#setAcceptButtonMouseEntered" onMouseExited="#setAcceptButtonMouseExited" prefHeight="27.0" prefWidth="114.0" style="-fx-background-color: #5dae65;" text="Accept" textFill="WHITE" BorderPane.alignment="CENTER">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="20.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
+   <top>
+      <Pane prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #634921;" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="172.0" layoutY="14.0" text="Add Quantity For Beverages" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </top>
+</BorderPane>

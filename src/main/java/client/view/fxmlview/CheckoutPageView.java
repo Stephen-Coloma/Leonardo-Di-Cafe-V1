@@ -4,13 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
@@ -23,7 +21,6 @@ import java.io.IOException;
 public class CheckoutPageView {
     @FXML
     private RadioButton cashOnDelivery;
-
 
     @FXML
     private Label clientAddress;
@@ -60,6 +57,7 @@ public class CheckoutPageView {
         try {
             FXMLLoader loader = new FXMLLoader(CheckoutPageView.class.getResource("/fxml/client/checkout_page.fxml"));
             popupStage = new Stage();
+            popupStage.getIcons().add(new Image(CheckoutPageView.class.getResource("/images/client/client_app_logo.png").toExternalForm()));
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setTitle("Checkout");
             popupStage.setScene(new Scene(loader.load()));

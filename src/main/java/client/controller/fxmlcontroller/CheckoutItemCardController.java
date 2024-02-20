@@ -45,7 +45,7 @@ public class CheckoutItemCardController {
         view.getItemQuantity().setText("qty: " + beverageQuantity);
 
         double beveragePrice = ((Beverage) this.model.getProduct()).getSizePrice().get(size);
-        view.getItemPriceLabel().setText("P  " + beveragePrice + "0");
+        view.getItemPriceLabel().setText("₱  " + beveragePrice + "0");
         
         view.getItemSizeLabel().setText(size);
         view.getItemSizeLabel().setVisible(true);
@@ -59,7 +59,7 @@ public class CheckoutItemCardController {
         view.getItemImage().setImage(this.getModel().getProduct().getImage());
         view.getItemQuantity().setText("qty: " + this.getModel().getProduct().getQuantity());
         double foodTotal = ((Food) this.getModel().getProduct()).getPrice();
-        view.getItemPriceLabel().setText("P " +  foodTotal + "0");
+        view.getItemPriceLabel().setText("₱ " +  foodTotal + "0");
     }
 
     public CheckoutItemCardModel getModel() {

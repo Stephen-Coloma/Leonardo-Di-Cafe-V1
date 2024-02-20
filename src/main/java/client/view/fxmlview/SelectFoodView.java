@@ -6,8 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Paint;
 
 public class SelectFoodView {
     @FXML
@@ -26,7 +24,7 @@ public class SelectFoodView {
     private Label productAvailabilityLabel;
 
     @FXML
-    private Label productDetailsLabel;
+    private Label productDescriptionLabel;
 
     @FXML
     private ImageView productImage;
@@ -44,14 +42,15 @@ public class SelectFoodView {
     private Label totalPriceLabel;
 
 
-    public void setActionAddToCartButton(EventHandler<ActionEvent> event){
+    public void setActionAddToCartButton(EventHandler<ActionEvent> event) {
         addToCartButton.setOnAction(event);
     }
 
-    public void setActionIncrementButton(EventHandler<ActionEvent> event){
+    public void setActionIncrementButton(EventHandler<ActionEvent> event) {
         incrementButton.setOnAction(event);
     }
-    public void setActionDecrementButton(EventHandler<ActionEvent> event){
+
+    public void setActionDecrementButton(EventHandler<ActionEvent> event) {
         decrementButton.setOnAction(event);
     }
 
@@ -59,40 +58,20 @@ public class SelectFoodView {
         return addToCartButton;
     }
 
-    public void setAddToCartButton(Button addToCartButton) {
-        this.addToCartButton = addToCartButton;
-    }
-
     public Button getDecrementButton() {
         return decrementButton;
-    }
-
-    public void setDecrementButton(Button decrementButton) {
-        this.decrementButton = decrementButton;
     }
 
     public Button getIncrementButton() {
         return incrementButton;
     }
 
-    public void setIncrementButton(Button incrementButton) {
-        this.incrementButton = incrementButton;
-    }
-
     public Label getProductAvailabilityLabel() {
         return productAvailabilityLabel;
     }
 
-    public void setProductAvailabilityLabel(Label productAvailabilityLabel) {
-        this.productAvailabilityLabel = productAvailabilityLabel;
-    }
-
-    public Label getProductDetailsLabel() {
-        return productDetailsLabel;
-    }
-
-    public void setProductDetailsLabel(Label productDetailsLabel) {
-        this.productDetailsLabel = productDetailsLabel;
+    public Label getProductDescriptionLabel() {
+        return productDescriptionLabel;
     }
 
     public ImageView getProductImage() {
@@ -115,24 +94,12 @@ public class SelectFoodView {
         return productPriceLabel;
     }
 
-    public void setProductPriceLabel(Label productPriceLabel) {
-        this.productPriceLabel = productPriceLabel;
-    }
-
     public Label getQuantityLabel() {
         return quantityLabel;
     }
 
-    public void setQuantityLabel(Label quantityLabel) {
-        this.quantityLabel = quantityLabel;
-    }
-
     public Label getTotalPriceLabel() {
         return totalPriceLabel;
-    }
-
-    public void setTotalPriceLabel(Label totalPriceLabel) {
-        this.totalPriceLabel = totalPriceLabel;
     }
 
     public Label getNoticeLabel() {
@@ -143,12 +110,27 @@ public class SelectFoodView {
         this.noticeLabel = noticeLabel;
     }
 
-    public void addToCartButtonEntered(MouseEvent event){
-        addToCartButton.setStyle("-fx-background-color: lightgray;");
-        addToCartButton.setTextFill(Paint.valueOf("Black"));
+    public void addToCartButtonEntered() {
+        addToCartButton.setStyle("-fx-background-color: #c7a97f;");
     }
-    public void addToCartButtonExited(MouseEvent event){
+
+    public void addToCartButtonExited() {
         addToCartButton.setStyle("-fx-background-color:  #A38157;");
-        addToCartButton.setTextFill(Paint.valueOf("White"));
+    }
+
+    public void incrementButtonEntered() {
+        incrementButton.setStyle("-fx-background-color: #c7a97f");
+    }
+
+    public void incrementButtonExited() {
+        incrementButton.setStyle("-fx-background-color: #A38157;");
+    }
+
+    public void decrementButtonEntered() {
+        decrementButton.setStyle("-fx-background-color: #A38157;");
+    }
+
+    public void decrementButtonExited() {
+        decrementButton.setStyle("-fx-background-color: #c7a97f");
     }
 }

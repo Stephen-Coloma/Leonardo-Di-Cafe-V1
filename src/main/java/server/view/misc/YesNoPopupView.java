@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -23,6 +24,7 @@ public class YesNoPopupView {
         try {
             FXMLLoader loader = new FXMLLoader(YesNoPopupView.class.getResource("/fxml/server/misc/yes_no_popup.fxml"));
             popupStage = new Stage();
+            popupStage.getIcons().add(new Image(YesNoPopupView.class.getResource("/images/server/server_app_logo.png").toExternalForm()));
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(new Scene(loader.load()));
             popupStage.show();

@@ -93,10 +93,9 @@ public abstract class Product implements Serializable{
 
     /**This method updates the review and reviewCount in a synchronized manner*/
     public synchronized void updateReview(double review){
-        reviewCount++;
-        double updatedReview = (this.review + review)/this.reviewCount;
-
+        double updatedReview = (this.review * this.reviewCount + review) / (this.reviewCount + 1);
         this.review = updatedReview;
+        reviewCount++;
     }
 
     public int getQuantity() {

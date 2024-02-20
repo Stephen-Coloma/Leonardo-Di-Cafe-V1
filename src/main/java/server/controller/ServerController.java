@@ -89,12 +89,10 @@ public class ServerController implements MainMenuAdminObserver {
     } // end of listenToClient
 
     // TODO: guide from a client request Object[]{string clientID, string requestType, Object[] data}
-    private void handleClientRequest(Object[] message) {
+    private void handleClientRequest(Object[] message) throws IOException {
         String requestCode = (String) message[1];
-        System.out.println("server received");
-        System.out.println(message[0]);
-        System.out.println(message[1]);
-        System.out.println(message[2]);
+        System.out.println("\nServer received request from client id: " + message[0]);
+        System.out.println("Request Code: " + message[1]);
         switch (requestCode) {
             case "LOGIN" -> {
                 try {
@@ -137,7 +135,9 @@ public class ServerController implements MainMenuAdminObserver {
             case "PROCESS_REVIEW" -> {
                 try {
                     List<Product> ratedProducts = (List<Product>) message[2];
+                    System.out.println("PROCESSING REVIEW");
                     model.processReview(ratedProducts);
+                    model.notifyObservers();
                     //TODO sendData(); @LEONHARD HERE YUNG DELAY SOMETHING --------------------------------------------------------------------------->>>>>>>>>>>>>>>>>
                 } catch (Exception exception) {
                     System.err.println("Error during the review processing");
@@ -147,8 +147,6 @@ public class ServerController implements MainMenuAdminObserver {
                 String clientID = (String) message[0];
                 this.model.processLogout(clientID);
             }
-
-            // PRODUCT_CHANGES: This code is used for updating menu for clients
         }
     } // end of handleClientRequest
 
@@ -173,17 +171,7 @@ public class ServerController implements MainMenuAdminObserver {
                 PushNotification.toastSuccess("New Product", "Beverage added to the list");
                 System.out.println(model.getBeverageMenu());
             }
-
             model.notifyObservers();
-
-            /*
-            TODO: Move this part into a method that executes once the server closes so that the writing of data will
-                  only be done once the server closes
-
-               XMLUtility.saveFoodMenu(model.getFoodMenu());
-               XMLUtility.saveBeverageMenu(model.getBeverageMenu());
-                XMLUtility.saveOrders(model.getOrderList());
-             */
         }
     } // end of notifyMenuChanges
 

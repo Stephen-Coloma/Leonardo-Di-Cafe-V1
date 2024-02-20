@@ -11,11 +11,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.IllegalFormatCodePointException;
 
 public class LoginPageController {
-    private LoginPageView loginView;
-    private LoginPageModel loginModel;
+    private final LoginPageView loginView;
+    private final LoginPageModel loginModel;
     private LandingPageController landingPageController;
     private MainMenuClientPageController mainMenu;
     private FXMLLoader loader;
@@ -31,7 +30,7 @@ public class LoginPageController {
             String username = loginView.getUsernameTextField().getText();
             String password = loginView.getPasswordField().getText();
 
-            if (username.equals("") || password.equals("")){
+            if (username.isEmpty() || password.isEmpty()){
                 loginView.getNoticeLabel().setText("fill out all details");
                 loginView.getNoticeLabel().setVisible(true);
             }else {
@@ -44,6 +43,7 @@ public class LoginPageController {
                     parseServerResponse(serverResponse, event);
 
                 } catch (IOException e) { //load a new popup when failed to connect to server
+                    // close the socket connection here
                     showServerErrorUI();
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
@@ -79,15 +79,19 @@ public class LoginPageController {
                 loader = new FXMLLoader(getClass().getResource("/fxml/client/main_menu_client_page.fxml"));
                 root = loader.load();
 
+                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+
                 //when loading the main menu, pass the clientModel received from the server
                 mainMenu = new MainMenuClientPageController(new MainMenuClientPageModel((Object[]) serverResponse[2]), loader.getController());
                 mainMenu.setSocket(this.loginModel.getSocket()); //todo: getting the socket from the login controller
                 mainMenu.setIn(this.loginModel.getIn());
                 mainMenu.setOut(this.loginModel.getOut());
-                new Thread(() -> mainMenu.run()).start();
+                mainMenu.setPrimaryStage(stage);
+                Thread thread = new Thread(() -> mainMenu.run());
+                thread.setDaemon(true);
+                thread.start();
 
-                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
 

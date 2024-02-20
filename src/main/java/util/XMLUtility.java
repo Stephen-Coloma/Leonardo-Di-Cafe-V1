@@ -228,13 +228,14 @@ public class XMLUtility {
                             // Parse image
                             String imageFilename = getElementValue(productElement, "image");
                             Object[] image = new Object[]{imageFilename, ImageUtility.getImageBytes(imageFilename)};
-                            String prodSize = productElement.getElementsByTagName("size").item(0).getTextContent();
                             int prodQuantity = (int) Double.parseDouble(productElement.getElementsByTagName("quantity").item(0).getTextContent());
 
                             Product product = null;
                             if (prodType == 'f') {
                                 product = new Food(prodName, prodType, prodReview, 0, image, "", prodQuantity, 0);
                             }else if (prodType == 'b'){
+                                String prodSize = productElement.getElementsByTagName("size").item(0).getTextContent();
+
                                 int sQuantity = 0;
                                 int mQuantity = 0;
                                 int lQuantity = 0;
@@ -246,7 +247,6 @@ public class XMLUtility {
                                 }
                                 product = new Beverage(prodName, prodType, prodReview, 0, image, null, sQuantity, mQuantity, lQuantity, 0,0,0);
                             }
-
                             productList.add(product);
                         }
                     }

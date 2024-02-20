@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
@@ -45,6 +46,7 @@ public class FoodEditDetailsPopupView implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(FoodEditDetailsPopupView.class.getResource("/fxml/server/inventory/food_edit_details_popup.fxml"));
             popupStage = new Stage();
+            popupStage.getIcons().add(new Image(FoodEditDetailsPopupView.class.getResource("/images/server/server_app_logo.png").toExternalForm()));
             popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setTitle("Edit Food Details");
             popupStage.setScene(new Scene(loader.load()));

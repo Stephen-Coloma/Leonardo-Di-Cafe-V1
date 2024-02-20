@@ -1,6 +1,7 @@
 package server;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import server.controller.ServerController;
 import server.model.ServerModel;
@@ -28,6 +29,8 @@ public class Server extends Application implements ClientObserver {
 
     @Override
     public void start(Stage stage) {
+        stage.getIcons().add(new Image(getClass().getResource("/images/server/server_app_logo.png").toExternalForm()));
+
         model = new ServerModel();
         model.addObserver(this);
         view = new ServerView(stage);
