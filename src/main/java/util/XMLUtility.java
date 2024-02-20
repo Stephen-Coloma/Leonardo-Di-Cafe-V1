@@ -275,7 +275,7 @@ public class XMLUtility {
      * @param orderList A map containing orders with customer names as keys and corresponding Order objects as values.
      */
     public static void saveOrders(List<Order> orderList) {
-        File file = new File("src/main/java/server/model/order_list.xml");
+        File file = new File("src/main/resources/data/order_list.xml");
 
         try {
             dbf = DocumentBuilderFactory.newInstance();
@@ -397,7 +397,7 @@ public class XMLUtility {
      * @param foodMenu A Map containing food items with their names as keys and Food objects as values.
      */
     public static void saveFoodMenu(Map<String, Food> foodMenu) {
-        File file = new File("src/main/java/server/model/food_menu.xml");
+        File file = new File("src/main/resources/data/food_menu.xml");
 
         try {
             dbf = DocumentBuilderFactory.newInstance();
@@ -473,7 +473,7 @@ public class XMLUtility {
      * @param beverageMenu a map containing beverage names as keys and Beverage objects as values.
      */
     public static void saveBeverageMenu(Map<String, Beverage> beverageMenu) {
-        File file = new File("src/main/java/server/model/beverage_menu.xml");
+        File file = new File("src/main/resources/data/beverage_menu.xml");
 
         try {
             dbf = DocumentBuilderFactory.newInstance();
@@ -555,7 +555,7 @@ public class XMLUtility {
 
     /**This method saves the customer list to an xml file*/
     public static void saveCustomerAccounts(List<Customer> customerList) {
-        File file =  new File("src/main/java/server/model/customer_account_list.xml");
+        File file =  new File("src/main/resources/data/customer_account_list.xml");
         try {
             dbf = DocumentBuilderFactory.newInstance();
             dbf.setIgnoringElementContentWhitespace(true);

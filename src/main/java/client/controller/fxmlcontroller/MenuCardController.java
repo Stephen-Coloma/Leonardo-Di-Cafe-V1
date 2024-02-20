@@ -16,10 +16,11 @@ public class MenuCardController {
     }
 
     public void setProductData(Product product) {
+        double review = Math.round(product.getReview() * 10.0) / 10.0;
         if (product instanceof Food food) {
             view.setProductName(food.getName());
             view.setProductDescription(food.getDescription());
-            view.setProductRating("Rating: " + food.getReview());
+            view.setProductRating("Rating: " + review);
             view.setProductPrice("₱ " + food.getPrice());
             view.setProductImage(food.getImage());
             view.setSizeLabel("");
@@ -27,7 +28,7 @@ public class MenuCardController {
         } else if (product instanceof Beverage beverage) {
             view.setProductName(beverage.getName());
             view.setProductDescription(beverage.getDescription());
-            view.setProductRating("Rating: " + beverage.getReview());
+            view.setProductRating("Rating: " + review);
             view.setProductPrice("₱ " + beverage.getSizePrice().get("small") + "0 - " + "₱ " + beverage.getSizePrice().get("large") + "0");
             view.setProductImage(beverage.getImage());
             view.setSizeLabel("size: S,M.L");
