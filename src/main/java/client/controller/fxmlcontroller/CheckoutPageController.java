@@ -3,31 +3,18 @@ package client.controller.fxmlcontroller;
 import client.model.fxmlmodel.CheckoutItemCardModel;
 import client.model.fxmlmodel.CheckoutPageModel;
 import client.view.fxmlview.CheckoutPageView;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import shared.Beverage;
 import shared.Food;
-import shared.Order;
 import shared.Product;
-import util.PushNotification;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.util.List;
 import java.util.Random;
 
 public class CheckoutPageController {
     private CheckoutPageModel model;
     private CheckoutPageView view;
-    private double deliveryPayment;
 
     public CheckoutPageController(CheckoutPageModel model, CheckoutPageView view){
         this.model = model;
@@ -39,7 +26,6 @@ public class CheckoutPageController {
         //setting up the view
         setUpView();
     }
-
 
     /**This method populates the grid pane in the checkout page*/
     private void populateGridPane() {
@@ -55,12 +41,10 @@ public class CheckoutPageController {
                 //putting the card on the anchorPane
                 Pane card = loader.load();
 
-                if (product instanceof Food){
-                    Food food = (Food) product;
+                if (product instanceof Food food){
                     CheckoutItemCardController cardOnCheckout = new CheckoutItemCardController(new CheckoutItemCardModel(food), loader.getController());
                     cardOnCheckout.setData();
-                }else if (product instanceof Beverage){
-                    Beverage beverage = (Beverage) product;
+                }else if (product instanceof Beverage beverage){
                     CheckoutItemCardController cardOnCheckout = new CheckoutItemCardController(new CheckoutItemCardModel(beverage), loader.getController());
                     cardOnCheckout.setData();
                 }
@@ -88,7 +72,7 @@ public class CheckoutPageController {
         int interval = random.nextInt(4);
 
         // Calculate the deliveryPayment within the specified range and intervals
-        deliveryPayment = 8 + interval * 10;
+        double deliveryPayment = 8 + interval * 10;
 
         this.view.getSubtotalPriceLabel().setText("₱ " + model.getSubTotal() + "0");
         this.view.getDeliveryFeeLabel().setText("₱ " + deliveryPayment + "0");

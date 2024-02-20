@@ -13,8 +13,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class SignUpPageController {
-    private SignUpPageView signUpView;
-    private SignUpPageModel signUpModel;
+    private final SignUpPageView signUpView;
+    private final SignUpPageModel signUpModel;
     private LandingPageController landingPageController;
     private LoginPageController loginPageController;
     private FXMLLoader loader;
@@ -33,10 +33,10 @@ public class SignUpPageController {
             String email = signUpView.getEmailTextField().getText();
             String password = signUpView.getPasswordField().getText();
 
-            if (fullName.equals("") || username.equals("") || address.equals("") || email.equals("") || password.equals("")){
+            if (fullName.isEmpty() || username.isEmpty() || address.isEmpty() || email.isEmpty() || password.isEmpty()){
                 signUpView.getNoticeLabel().setText("fill out all details");
                 signUpView.getNoticeLabel().setVisible(true);
-            }else if (!fullName.equals("") && !username.equals("") && !address.equals("") && !email.equals("") && !password.equals("") && !signUpView.getTermsAndServicesCheckBox().isSelected()) {
+            }else if (!fullName.isEmpty() && !username.isEmpty() && !address.isEmpty() && !email.isEmpty() && !password.isEmpty() && !signUpView.getTermsAndServicesCheckBox().isSelected()) {
                 signUpView.getNoticeLabel().setText("accept terms and policies");
                 signUpView.getNoticeLabel().setVisible(true);
             }else {
@@ -75,7 +75,7 @@ public class SignUpPageController {
         });
     }
 
-    /**This method parses the response from the server. If Login in successful, laod the main menu client page*/
+    /**This method parses the response from the server. If Login in successful, load the main menu client page*/
     private void parseServerResponse(Object[] serverResponse, ActionEvent event) {
         //load login UI if successful
         try {

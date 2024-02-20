@@ -6,7 +6,6 @@ import client.view.fxmlview.OrderHistoryPageView;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.PointLight;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
@@ -17,7 +16,6 @@ import shared.Product;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class OrderHistoryPageController {
     private OrderHistoryPageModel model;
@@ -72,8 +70,7 @@ public class OrderHistoryPageController {
                 if (productPart instanceof HBox){
                     int counter = 0;
                     for (Node star: ((HBox) productPart).getChildren()) {
-                        if (star instanceof ToggleButton) {
-                            ToggleButton toggleButton = (ToggleButton) star;
+                        if (star instanceof ToggleButton toggleButton) {
                             boolean isSelected = toggleButton.isSelected();
                             if (isSelected) {
                                 counter++;
@@ -108,12 +105,10 @@ public class OrderHistoryPageController {
                 //putting the card on the anchorPane
                 Pane card = loader.load();
 
-                if (product instanceof Food) {
-                    Food food = (Food) product;
+                if (product instanceof Food food) {
                     OrderHistoryCardController cardOnHistoryPage = new OrderHistoryCardController(new OrderHistoryCardModel(food), loader.getController());
                     cardOnHistoryPage.setData();
-                } else if (product instanceof Beverage) {
-                    Beverage beverage = (Beverage) product;
+                } else if (product instanceof Beverage beverage) {
                     OrderHistoryCardController cardOnHistoryPage = new OrderHistoryCardController(new OrderHistoryCardModel(beverage), loader.getController());
                     cardOnHistoryPage.setData();
                 }

@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class ClientView {
     private FXMLLoader loader;
-    private Stage stage;
+    private final Stage stage;
     public ClientView(Stage stage) {
         this.stage = stage;
     }

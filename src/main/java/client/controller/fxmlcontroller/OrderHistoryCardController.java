@@ -7,8 +7,8 @@ import shared.Food;
 import shared.Product;
 
 public class OrderHistoryCardController {
-    private OrderHistoryCardView view;
-    private OrderHistoryCardModel model;
+    private final OrderHistoryCardView view;
+    private final OrderHistoryCardModel model;
 
     public OrderHistoryCardController(OrderHistoryCardModel model, OrderHistoryCardView view){
         this.model = model;

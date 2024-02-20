@@ -55,10 +55,6 @@ public abstract class Product implements Serializable{
         this.review = review;
     }
 
-    public void setReviewCount(int reviewCount) {
-        this.reviewCount = reviewCount;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -75,10 +71,6 @@ public abstract class Product implements Serializable{
         this.amountSold = amountSold;
     }
 
-    public boolean hasImage() {
-        return image == null;
-    }
-
     public String getImageName() {
         return (String) image[0];
     }
@@ -93,8 +85,7 @@ public abstract class Product implements Serializable{
 
     /**This method updates the review and reviewCount in a synchronized manner*/
     public synchronized void updateReview(double review){
-        double updatedReview = (this.review * this.reviewCount + review) / (this.reviewCount + 1);
-        this.review = updatedReview;
+        this.review = (this.review * this.reviewCount + review) / (this.reviewCount + 1);
         reviewCount++;
     }
 

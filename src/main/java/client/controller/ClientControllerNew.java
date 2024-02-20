@@ -3,13 +3,12 @@ package client.controller;
 import client.controller.fxmlcontroller.LandingPageController;
 import client.model.ClientModel;
 import client.view.ClientView;
-import client.view.fxmlview.LandingPageView;
 import javafx.application.Platform;
 
 public class ClientControllerNew {
     //Client Model and Views
-    private ClientModel model;
-    private ClientView view;
+    private final ClientModel model;
+    private final ClientView view;
     private LandingPageController landingPageController;
     public ClientControllerNew(ClientModel model, ClientView view){
         this.model = model;

@@ -141,7 +141,7 @@ public class SelectBeverageVariationController {
 
                 if (model.getSmallOrderedQuantity() == 0){
                     this.view.getSmallTotalPriceLabel().setText("₱ 0" + model.getSmallTotal());
-                    if (model.getSmallOrderedQuantity() == 0 && model.getMediumOrderedQuantity() == 0 && model.getMediumOrderedQuantity() == 0){
+                    if (model.getSmallOrderedQuantity() == 0 && model.getMediumOrderedQuantity() == 0){
                         this.view.getAddToCartButton().setDisable(true);
                     }
                 }
@@ -264,47 +264,24 @@ public class SelectBeverageVariationController {
         return finalSmallOrderedQuantity;
     }
 
-    public void setFinalSmallOrderedQuantity(int finalSmallOrderedQuantity) {
-        this.finalSmallOrderedQuantity = finalSmallOrderedQuantity;
-    }
-
     public int getFinalMediumOrderedQuantity() {
         return finalMediumOrderedQuantity;
-    }
-
-    public void setFinalMediumOrderedQuantity(int finalMediumOrderedQuantity) {
-        this.finalMediumOrderedQuantity = finalMediumOrderedQuantity;
     }
 
     public int getFinalLargeOrderedQuantity() {
         return finalLargeOrderedQuantity;
     }
 
-    public void setFinalLargeOrderedQuantity(int finalLargeOrderedQuantity) {
-        this.finalLargeOrderedQuantity = finalLargeOrderedQuantity;
-    }
-
     public double getFinalSmallOrderedPrice() {
         return finalSmallOrderedPrice;
-    }
-
-    public void setFinalSmallOrderedPrice(double finalSmallOrderedPrice) {
-        this.finalSmallOrderedPrice = finalSmallOrderedPrice;
     }
 
     public double getFinalMediumOrderedPrice() {
         return finalMediumOrderedPrice;
     }
 
-    public void setFinalMediumOrderedPrice(double finalMediumOrderedPrice) {
-        this.finalMediumOrderedPrice = finalMediumOrderedPrice;
-    }
-
     public double getFinalLargeOrderedPrice() {
         return finalLargeOrderedPrice;
     }
 
-    public void setFinalLargeOrderedPrice(double finalLargeOrderedPrice) {
-        this.finalLargeOrderedPrice = finalLargeOrderedPrice;
-    }
 }

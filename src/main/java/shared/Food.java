@@ -63,21 +63,6 @@ public class Food extends Product {
         super.setAmountSold(sold);
     }
 
-    /**This method updates the quantity of the product by the quantity ordered by a single client
-     * @throws Exception when the quantity cannot accommodate the order*/
-    public synchronized void updateQuantity() throws Exception{
-        quantity--;
-
-        if (quantity < 0){
-            quantity++; //reverting back the changes
-            throw new OutOfStockException("Out of stock");
-        }
-
-        //reaches here means no error updating the value
-        int sold =  super.getAmountSold() + 1;
-        super.setAmountSold(sold);
-    }
-
     @Override
     public String toString() {
         String concat = super.toString();

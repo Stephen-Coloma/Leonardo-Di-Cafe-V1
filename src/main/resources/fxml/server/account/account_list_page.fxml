@@ -15,7 +15,7 @@
                </font></TextField>
             <Text fill="#634921" layoutX="14.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ACCOUNTS LIST">
                <font>
-                  <Font name="Arial Black" size="22.0" />
+                  <Font name="Copperplate Gothic Light" size="22.0" />
                </font>
             </Text>
             </children>

@@ -13,12 +13,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**Server Model class holds the data that will eventually be accessed by all the clients.
  * The idea is, when a client places an order,it will update the menu of this server model (e.g. by decrementing it)
  * and that the updated menu will be visible to other clients.
- *
+ * <p>
  * There is a predefined menu products for food, beverage and orders which will be loaded from xml files when the server model is initialized.
  */
 public class ServerModel {
@@ -28,14 +27,10 @@ public class ServerModel {
     private HashMap<String, Beverage> beverageMenu;
     private final List<Customer> customerAccountList;
     private List<Order> orderList; //List for listing only orders
-    private List<String> userLoggedIn;
+    private final List<String> userLoggedIn;
 
     public void addObserver(ClientObserver observer) {
         observers.add(observer);
-    }
-
-    public void removeObserver(ClientObserver observer) {
-        observers.remove(observer);
     }
 
     public void notifyObservers() {
@@ -56,15 +51,13 @@ public class ServerModel {
 
     /**The constructor of the server model should load the predefined menu products*/
     public ServerModel() {
-        foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/java/server/model/food_menu.xml"));
-        beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/java/server/model/beverage_menu.xml"));
-        customerAccountList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/java/server/model/customer_account_list.xml"));
-        orderList = (List<Order>) XMLUtility.loadXMLData(new File("src/main/java/server/model/order_list.xml"));
+        foodMenu = (HashMap<String, Food>) XMLUtility.loadXMLData(new File("src/main/resources/data/food_menu.xml"));
+        beverageMenu = (HashMap<String, Beverage>) XMLUtility.loadXMLData(new File("src/main/resources/data/beverage_menu.xml"));
+        customerAccountList = (List<Customer>) XMLUtility.loadXMLData(new File("src/main/resources/data/customer_account_list.xml"));
+        orderList = (List<Order>) XMLUtility.loadXMLData(new File("src/main/resources/data/order_list.xml"));
 
         //set up
         userLoggedIn = new ArrayList<>();
-        /*Todo
-           1. When the server is closed by the admin, it must write all these data in the necessary xmk files to be used for another run*/
     }
 
     /**Process client orders and updates the food menu if necessary
@@ -99,16 +92,15 @@ public class ServerModel {
      * @throws Exception if the product in the menu is out of stock */
     private void updateMenu(Order order) throws Exception {
         for (Product product: order.getOrders()) {
-            if (product instanceof Food){
-                Food food = (Food) product; //cast it
+            if (product instanceof Food food){
+                //cast it
                 int orderQuantity = food.getQuantity();
 
                 Food productListed = foodMenu.get(food.getName());
 
                 //updates the menu
                 productListed.updateQuantity(orderQuantity); // this throws an exception
-            }else if (product instanceof Beverage){
-                Beverage beverage = (Beverage) product;
+            }else if (product instanceof Beverage beverage){
 
                 Beverage productListed = beverageMenu.get(beverage.getName());
 
@@ -128,15 +120,14 @@ public class ServerModel {
      * @throws Exception if the product menu is out of stock. */
     private synchronized void checkAvailability(Order order) throws Exception{
         for (Product product: order.getOrders()) {
-            if (product instanceof Food){ //check first what type of product
-                Food food = (Food) product; //cast it
+            if (product instanceof Food food){ //check first what type of product
+                //cast it
 
                 if (food.getQuantity() > foodMenu.get(food.getName()).getQuantity()){
                     //checks if the order food quantity is greater than what is on the menu
                     throw new OutOfStockException("Out of stock");
                 }
-            }else if (product instanceof Beverage){
-                Beverage beverage = (Beverage) product;
+            }else if (product instanceof Beverage beverage){
 
                 //check if all variation
                 //small = 10
@@ -196,10 +187,9 @@ public class ServerModel {
 
                     HashMap<String, Food> clientFoodMenuToLoad = new HashMap<>(foodMenu);
                     HashMap<String, Beverage> clientBeverageMenuToLoad = new HashMap<>(beverageMenu);
-                    Object[] sendToClient = new Object[]{customerAccount, clientFoodMenuToLoad, clientBeverageMenuToLoad};
 
                     //return to controller
-                    return sendToClient;
+                    return new Object[]{customerAccount, clientFoodMenuToLoad, clientBeverageMenuToLoad};
                 }else {
                     throw new AccountAlreadyLoggedIn("Account already logged in");
                 }

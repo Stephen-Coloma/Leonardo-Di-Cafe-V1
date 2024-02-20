@@ -24,7 +24,10 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import shared.*;
+import shared.Beverage;
+import shared.Food;
+import shared.Order;
+import shared.Product;
 import util.ImageUtility;
 import util.LoadingScreenUtility;
 import util.PushNotification;
@@ -38,13 +41,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MainMenuClientPageController {
     private Stage primaryStage;
     private char currentLoadedMenu = 'f';
-    private MainMenuClientPageView mainMenuView;
-    private MainMenuClientPageModel mainMenuModel;
+    private final MainMenuClientPageView mainMenuView;
+    private final MainMenuClientPageModel mainMenuModel;
     private LoginPageController loginPageController;
     private FXMLLoader loader;
     private Parent root;
@@ -146,14 +148,11 @@ public class MainMenuClientPageController {
         List<Order> orderHistory = this.mainMenuModel.getClientModel().getCustomer().getOrderHistory();
         for (Order order: orderHistory) {
             List<Product> products= order.getOrders();
-            for (Product product: products) {
-                // Add each product to the HashSet
-                uniqueProducts.add(product);
-            }
+            // Add each product to the HashSet
+            uniqueProducts.addAll(products);
         }
         return new ArrayList<>(uniqueProducts);
     }
-
 
     public void run() {
         try {
@@ -165,10 +164,8 @@ public class MainMenuClientPageController {
             });
 
             listenToHost();
-        } catch (IOException ioException) {
+        } catch (IOException | ClassNotFoundException ioException) {
             ioException.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     } // end of run
 
@@ -185,7 +182,6 @@ public class MainMenuClientPageController {
         }
     } // end of listenToHost
 
-    // TODO: guide from incoming data from server <Object[]{String clientId, String dataCode, Object[] data}
     private void handleIncomingData(Object[] data) {
         String dataCode = (String) data[1];
         System.out.println("received data from server");
@@ -222,7 +218,6 @@ public class MainMenuClientPageController {
             out.flush();
             out.reset();
         } catch (IOException e) {
-            /**This shows the server error UI*/
             showServerErrorUI();
             throw new RuntimeException(e);
         }
@@ -257,7 +252,7 @@ public class MainMenuClientPageController {
         HashMap<String, Food> foodMenu = mainMenuModel.getClientModel().getFoodMenu();
         List<Food> foodProducts = new ArrayList<>(foodMenu.values());
 
-        Task<Void> loadingTask = new Task<Void>() {
+        Task<Void> loadingTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
                 Thread.sleep(2000);
@@ -298,7 +293,7 @@ public class MainMenuClientPageController {
         HashMap<String, Beverage> beverageMenu = mainMenuModel.getClientModel().getBeverageMenu();
         List<Beverage> beverageProducts = new ArrayList<>(beverageMenu.values());
 
-        Task<Void> loadingTask = new Task<Void>() {
+        Task<Void> loadingTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
                 Thread.sleep(2000);
@@ -402,7 +397,7 @@ public class MainMenuClientPageController {
             HashMap<String, Food> foodMenu = mainMenuModel.getClientModel().getFoodMenu();
             List<Food> filteredFoodProducts = foodMenu.values().stream()
                     .filter(food -> food.getName().toLowerCase().contains(searchText.toLowerCase()))
-                    .collect(Collectors.toList());
+                    .toList();
 
             for (Food food : filteredFoodProducts) {
                 Node productCard = createProductCard(food);
@@ -412,7 +407,7 @@ public class MainMenuClientPageController {
             HashMap<String, Beverage> beverageMenu = mainMenuModel.getClientModel().getBeverageMenu();
             List<Beverage> filteredBeverageProducts = beverageMenu.values().stream()
                     .filter(beverage -> beverage.getName().toLowerCase().contains(searchText.toLowerCase()))
-                    .collect(Collectors.toList());
+                    .toList();
 
             for (Beverage beverage : filteredBeverageProducts) {
                 Node productCard = createProductCard(beverage);
@@ -437,11 +432,8 @@ public class MainMenuClientPageController {
      * It implements the setUpActionClearCartButtonButton from the mainMenuClientPageView
      */
     private void setUpActionClearCartButton() {
-        this.mainMenuView.setActionClearCartButton((ActionEvent event) -> {
-            clearCart(true);
-        });
+        this.mainMenuView.setActionClearCartButton((ActionEvent event) -> clearCart(true));
     }
-
 
     /*This method sets up the logout button*/
     private void setUpActionLogoutButton() {
@@ -455,7 +447,7 @@ public class MainMenuClientPageController {
     private void clearCart(boolean isUpdateModel) {
         ObservableList<Node> cartItems = this.mainMenuView.getGridPaneCart().getChildren();
 
-        if (cartItems.size() == 0) {
+        if (cartItems.isEmpty()) {
             return;
         }
 
@@ -481,21 +473,25 @@ public class MainMenuClientPageController {
                             break;
                         case "sizeLabel":
                             String sizeLabel = ((Label) label).getText();
-                            String cleanedSize = sizeLabel.replaceAll("[size:\\s]", "");
-                            productSize = cleanedSize;
+                            productSize = sizeLabel.replaceAll("[size:\\s]", "");
 
-                            if (productSize.equals("S")) {
-                                productSize = "small";
-                                productType = 'b';
-                            } else if (productSize.equals("M")) {
-                                productSize = "medium";
-                                productType = 'b';
-                            } else if (productSize.equals("L")) {
-                                productSize = "large";
-                                productType = 'b';
-                            } else {
-                                productSize = "";
-                                productType = 'f';
+                            switch (productSize) {
+                                case "S" -> {
+                                    productSize = "small";
+                                    productType = 'b';
+                                }
+                                case "M" -> {
+                                    productSize = "medium";
+                                    productType = 'b';
+                                }
+                                case "L" -> {
+                                    productSize = "large";
+                                    productType = 'b';
+                                }
+                                default -> {
+                                    productSize = "";
+                                    productType = 'f';
+                                }
                             }
                             break;
                         case "priceLabel":
@@ -578,8 +574,6 @@ public class MainMenuClientPageController {
      * Adds a product into a cart. It also loads the selection panels
      */
     private void addToCart(Product product) {
-        int quantity = 0;
-
         SelectFoodController selectFoodController = null;
         SelectBeverageVariationController selectBeverageVariationController = null;
 
@@ -687,15 +681,19 @@ public class MainMenuClientPageController {
             double sPrice = 0;
             double mPrice = 0;
             double lPrice = 0;
-            if (size.equals("small")) {
-                sQuantity = count;
-                sPrice = totalPrice;
-            } else if (size.equals("medium")) {
-                mQuantity = count;
-                mPrice = totalPrice;
-            } else if (size.equals("large")) {
-                lQuantity = count;
-                lPrice = totalPrice;
+            switch (size) {
+                case "small" -> {
+                    sQuantity = count;
+                    sPrice = totalPrice;
+                }
+                case "medium" -> {
+                    mQuantity = count;
+                    mPrice = totalPrice;
+                }
+                case "large" -> {
+                    lQuantity = count;
+                    lPrice = totalPrice;
+                }
             }
 
             Object[] imageData = {product.getImageName(), ImageUtility.getImageBytes(product.getImageName())};
@@ -766,22 +764,6 @@ public class MainMenuClientPageController {
         }
     }
 
-    public MainMenuClientPageView getMainMenuView() {
-        return mainMenuView;
-    }
-
-    public void setMainMenuView(MainMenuClientPageView mainMenuView) {
-        this.mainMenuView = mainMenuView;
-    }
-
-    public MainMenuClientPageModel getMainMenuModel() {
-        return mainMenuModel;
-    }
-
-    public void setMainMenuModel(MainMenuClientPageModel mainMenuModel) {
-        this.mainMenuModel = mainMenuModel;
-    }
-
     public FXMLLoader getLoader() {
         return loader;
     }
@@ -802,40 +784,8 @@ public class MainMenuClientPageController {
         return serverResponse;
     }
 
-    public void setServerResponse(Object[] serverResponse) {
-        this.serverResponse = serverResponse;
-    }
-
-    public Socket getSocket() {
-        return socket;
-    }
-
     public void setSocket(Socket socket) {
         this.socket = socket;
-    }
-
-    public int getCartColumn() {
-        return cartColumn;
-    }
-
-    public void setCartColumn(int cartColumn) {
-        this.cartColumn = cartColumn;
-    }
-
-    public int getCartRow() {
-        return cartRow;
-    }
-
-    public void setCartRow(int cartRow) {
-        this.cartRow = cartRow;
-    }
-
-    public double getCartTotalPrice() {
-        return cartTotalPrice;
-    }
-
-    public void setCartTotalPrice(double cartTotalPrice) {
-        this.cartTotalPrice = cartTotalPrice;
     }
 
     public ObjectOutputStream getOut() {
@@ -854,8 +804,6 @@ public class MainMenuClientPageController {
         this.in = in;
     }
 
-
-    /**This method brings back to login page*/
     private void showLoginPage(ActionEvent event) {
         try {
             loader = new FXMLLoader(getClass().getResource("/fxml/client/login_page.fxml"));
@@ -871,7 +819,7 @@ public class MainMenuClientPageController {
             throw new RuntimeException(e);
         }
     }
-    /**This shows the server error UI*/
+
     private void showServerErrorUI() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/client/server_error.fxml"));

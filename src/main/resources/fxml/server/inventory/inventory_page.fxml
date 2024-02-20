@@ -4,12 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
 <AnchorPane prefHeight="717.6" prefWidth="1000.0" style="-fx-background-color: #ECE9E3;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.view.inventory.InventoryPageView">
     <children>
         <Text fill="#634921" layoutX="14.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INVENTORY" AnchorPane.leftAnchor="14.0">
             <font>
-                <Font name="Arial Black" size="22.0" />
+                <Font name="Copperplate Gothic Light" size="22.0" />
             </font>
         </Text>
         <TextField fx:id="searchInventoryTextField" layoutX="736.0" layoutY="18.0" prefHeight="25.0" prefWidth="250.0" promptText="Search by product" AnchorPane.rightAnchor="14.0">
@@ -29,6 +28,9 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
           </TableView>
-      <Button fx:id="saveChangesButton" layoutX="449.0" layoutY="679.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" text="Save Changes" />
+      <Button fx:id="saveChangesButton" layoutX="405.0" layoutY="680.0" mnemonicParsing="false" onMouseEntered="#saveChangesButtonEntered" onMouseExited="#saveChangesButtonExited" prefHeight="24.0" prefWidth="191.0" style="-fx-background-color: #A38157;" text="Save Changes" textFill="WHITE">
+         <font>
+            <Font name="Copperplate Gothic Light" size="16.0" />
+         </font></Button>
     </children>
 </AnchorPane>

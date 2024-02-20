@@ -39,10 +39,6 @@ public class Beverage extends Product{
         return sizeQuantity;
     }
 
-    public void setSizeQuantity(HashMap<String, Integer> sizeQuantity) {
-        this.sizeQuantity = sizeQuantity;
-    }
-
     public HashMap<String, Double> getSizePrice() {
         return sizePrice;
     }
@@ -73,80 +69,26 @@ public class Beverage extends Product{
         sizeQuantity.put(size, quantity);
     } // end of decrementQuantity
 
-    /**This method is used to update quantity of the variation of the beverage.
-     It accommodates multiple threads but will only allow one thread to make an update to a specific size
-     @throws Exception when out of stocks*/
-    public void updateQuantity(String size) throws Exception {
-        //separated per size to accommodate multiple threads
-        switch (size) {
-            case "small", "medium", "large" -> {
-                synchronized (this) {
-                    int quantity = sizeQuantity.get(size);
-                    quantity--;
-                    sizeQuantity.put(size, quantity); //updates
-
-                    if (quantity < 0) {
-                        quantity++;
-                        sizeQuantity.put(size, quantity);
-                        throw new OutOfStockException("Out of Stock");
-                    }
-
-                    //reaches here means no error updating the value
-                    int sold = super.getAmountSold() + 1;
-                    super.setAmountSold(sold);
-                }
-            }
-        }
-    }
-
     /**This method is used to update quantity of the variation of the beverage for a given amount of order
      It accommodates multiple threads but will only allow one thread to make an update to a specific size
      @throws Exception when out of stocks*/
     public void updateQuantity(String size, int count) throws Exception{
-        if (size.equals("small")){
-            synchronized (this){
-                int temp = sizeQuantity.get(size);
-                int left = temp - count;
-                sizeQuantity.put(size, left);
+        switch (size) {
+            case "small", "medium", "large" -> {
+                synchronized (this) {
+                    int temp = sizeQuantity.get(size);
+                    int left = temp - count;
+                    sizeQuantity.put(size, left);
 
-                if (left < 0){
-                    sizeQuantity.put(size, temp);
-                    throw new OutOfStockException("Out of Stock");
+                    if (left < 0) {
+                        sizeQuantity.put(size, temp);
+                        throw new OutOfStockException("Out of Stock");
+                    }
+
+                    //reaches here means no error updating the value
+                    int sold = super.getAmountSold() + count;
+                    super.setAmountSold(sold);
                 }
-
-                //reaches here means no error updating the value
-                int sold = super.getAmountSold() + count;
-                super.setAmountSold(sold);
-            }
-        }else if (size.equals("medium")){
-            synchronized (this){
-                int temp = sizeQuantity.get(size);
-                int left = temp - count;
-                sizeQuantity.put(size, left);
-
-                if (left < 0){
-                    sizeQuantity.put(size, temp);
-                    throw new OutOfStockException("Out of Stock");
-                }
-
-                //reaches here means no error updating the value
-                int sold = super.getAmountSold() + count;
-                super.setAmountSold(sold);
-            }
-        }else if (size.equals("large")){
-            synchronized (this){
-                int temp = sizeQuantity.get(size);
-                int left = temp - count;
-                sizeQuantity.put(size, left);
-
-                if (left < 0){
-                    sizeQuantity.put(size, temp);
-                    throw new OutOfStockException("Out of Stock");
-                }
-
-                //reaches here means no error updating the value
-                int sold = super.getAmountSold() + count;
-                super.setAmountSold(sold);
             }
         }
     }

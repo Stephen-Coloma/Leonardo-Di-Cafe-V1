@@ -1,20 +1,13 @@
 package server.view.addproducts;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Paint;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.NumberFormat;
@@ -95,7 +88,7 @@ public class AddProductPageView implements Initializable {
 
     private TextFormatter<Double> createNumberTextFormatter() {
         NumberFormat format = NumberFormat.getInstance();
-        format.setGroupingUsed(false); // Disables thousand separator
+        format.setGroupingUsed(false); // Disables a thousand separator
         DoubleStringConverter converter = new DoubleStringConverter();
         return new TextFormatter<>(converter, null, c ->
                 c.getControlNewText().matches("-?\\d*\\.?\\d*") ? c : null);
@@ -103,13 +96,13 @@ public class AddProductPageView implements Initializable {
 
     private TextFormatter<Integer> createIntegerTextFormatter() {
         NumberFormat format = NumberFormat.getIntegerInstance();
-        format.setGroupingUsed(false); // Disables thousand separator
+        format.setGroupingUsed(false); // Disables a thousand separator
         IntegerStringConverter converter = new IntegerStringConverter();
         return new TextFormatter<>(converter, null, c ->
                 c.getControlNewText().matches("\\d*") ? c : null);
     } // end of createIntegerTextFormatter
 
-    public void chooseFoodMenuItem(ActionEvent actionEvent) {
+    public void chooseFoodMenuItem() {
         typeOfProductMenuButton.setText("Food");
 
         //Price TextFields
@@ -134,7 +127,7 @@ public class AddProductPageView implements Initializable {
         largeQuantityLabel.setText("...");
     } // end of chooseFoodMenuItem
 
-    public void chooseBeverageMenuItem(ActionEvent actionEvent) {
+    public void chooseBeverageMenuItem() {
         typeOfProductMenuButton.setText("Beverage");
 
         //TextFields
@@ -154,11 +147,11 @@ public class AddProductPageView implements Initializable {
         largeQuantityLabel.setText("Quantity for Large");
     } // end of chooseBeverageMenuItem
 
-    public void addProductButtonEntered(MouseEvent mouseEvent) {
+    public void addProductButtonEntered() {
         addProductButton.setStyle("-fx-background-color: #634950;");
     }
 
-    public void addProductButtonExited(MouseEvent mouseEvent) {
+    public void addProductButtonExited() {
         addProductButton.setStyle("-fx-background-color: #634921;");
     }
 

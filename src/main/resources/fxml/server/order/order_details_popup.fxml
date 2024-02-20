@@ -11,7 +11,7 @@
          <children>
             <Label text="Order Details" textFill="WHITE">
                <font>
-                  <Font name="Arial Bold" size="19.0" />
+                  <Font name="Monospaced Regular" size="24.0" />
                </font></Label>
          </children>
       </HBox>
@@ -21,7 +21,7 @@
          <children>
             <Button fx:id="closeButton" mnemonicParsing="false" onMouseEntered="#setCloseButtonMouseEntered" onMouseExited="#setCloseButtonMouseExited" prefWidth="114.0" style="-fx-background-color: #5dae65;" text="Close" textFill="WHITE">
                <font>
-                  <Font name="Arial" size="15.0" />
+                  <Font name="Copperplate Gothic Light" size="14.0" />
                </font>
             </Button>
          </children>
@@ -32,18 +32,18 @@
          <bottom>
             <HBox alignment="CENTER" prefHeight="38.0" prefWidth="500.0" spacing="40.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="TOTAL" textFill="#634921">
+                  <Label text="TOTAL" textFill="#66382a">
                      <font>
-                        <Font name="Arial Black" size="15.0" />
+                        <Font name="Impact" size="20.0" />
                      </font>
                   </Label>
                   <Label fx:id="totalPriceLabel" text="totalLabel" textFill="#634921">
                      <font>
-                        <Font name="Arial" size="13.0" />
+                        <Font name="Garamond" size="20.0" />
                      </font></Label>
-                  <Label text="STATUS" textFill="#634921">
+                  <Label text="STATUS" textFill="#66382a">
                      <font>
-                        <Font name="Arial Black" size="15.0" />
+                        <Font name="Impact" size="20.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="40.0" />
@@ -51,7 +51,7 @@
                   </Label>
                   <Label fx:id="statusLabel" text="statusLabel" textFill="#634921">
                      <font>
-                        <Font name="Arial" size="13.0" />
+                        <Font name="Garamond" size="20.0" />
                      </font></Label>
                </children></HBox>
          </bottom>
@@ -60,7 +60,7 @@
                <children>
                   <Label text="Order Summary" textFill="#634921">
                      <font>
-                        <Font name="Arial Bold" size="13.0" />
+                        <Font name="Garamond Bold" size="15.0" />
                      </font>
                      <padding>
                         <Insets top="5.0" />
@@ -77,14 +77,14 @@
                      <children>
                         <Label text="Date and Time" textFill="#634921">
                            <font>
-                              <Font name="Arial Bold" size="13.0" />
+                              <Font name="Garamond Bold" size="15.0" />
                            </font>
                            <VBox.margin>
                               <Insets bottom="15.0" />
                            </VBox.margin></Label>
                         <Label text="Delivery Information" textFill="#634921">
                            <font>
-                              <Font name="Arial Bold" size="13.0" />
+                              <Font name="Garamond Bold" size="15.0" />
                            </font></Label>
                      </children>
                      <padding>
@@ -94,7 +94,7 @@
                      <children>
                         <Label fx:id="dateAndTimeLabel" text="dateAndTimeDate" textFill="#634921">
                            <font>
-                              <Font name="Arial" size="13.0" />
+                              <Font name="Garamond" size="15.0" />
                            </font>
                            <VBox.margin>
                               <Insets bottom="15.0" />
@@ -102,12 +102,12 @@
                         </Label>
                         <Label fx:id="customerNameLabel" text="customerName" textFill="#634921">
                            <font>
-                              <Font name="Arial" size="13.0" />
+                              <Font name="Garamond" size="15.0" />
                            </font>
                         </Label>
                         <Label fx:id="addressLabel" text="address" textFill="#634921" wrapText="true">
                            <font>
-                              <Font name="Arial" size="13.0" />
+                              <Font name="Garamond" size="15.0" />
                            </font>
                         </Label>
                      </children>
@@ -128,6 +128,9 @@
                <padding>
                   <Insets left="10.0" right="5.0" />
                </padding>
+               <font>
+                  <Font name="Garamond" size="15.0" />
+               </font>
             </TextArea>
          </center>
       </BorderPane>

@@ -155,4 +155,12 @@ public class InventoryPageView implements Initializable {
     public TableColumn<Object, Void> getDeleteProductColumn() {
         return deleteProductColumn;
     }
+
+    public void saveChangesButtonEntered() {
+        saveChangesButton.setStyle("-fx-background-color: #c7a97f;");
+    }
+
+    public void saveChangesButtonExited() {
+        saveChangesButton.setStyle("-fx-background-color: #A38157;");
+    }
 } // end of InventoryPageController class

@@ -9,7 +9,7 @@
     <children>
         <Label layoutX="52.0" layoutY="15.0" text="ADD A PRODUCT" textFill="#634921">
             <font>
-                <Font name="Arial Black" size="32.0" />
+                <Font name="Copperplate Gothic Light" size="32.0" />
             </font></Label>
         <AnchorPane layoutX="31.0" layoutY="72.0" prefHeight="611.0" prefWidth="935.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10 10 10 10;">
             <children>
@@ -21,7 +21,7 @@
                                     <children>
                                         <Label prefHeight="23.0" prefWidth="195.0" text="PRODUCT NAME:" textFill="#634921">
                                             <font>
-                                                <Font name="Arial Rounded MT Bold" size="20.0" />
+                                                <Font name="Garamond Bold" size="22.0" />
                                             </font>
                                         </Label>
                                         <TextField fx:id="productNameTextField" minHeight="-Infinity" prefHeight="43.0" prefWidth="274.0" promptText="Enter Product Name">
@@ -31,7 +31,7 @@
                                         </TextField>
                                         <Label text="PRODUCT TYPE" textFill="#634921">
                                             <font>
-                                                <Font name="Arial Rounded MT Bold" size="20.0" />
+                                                <Font name="Garamond Bold" size="22.0" />
                                             </font>
                                  <VBox.margin>
                                     <Insets top="30.0" />
@@ -43,12 +43,12 @@
                                                 <MenuItem fx:id="beverageMenuItem" mnemonicParsing="false" onAction="#chooseBeverageMenuItem" text="Beverage" />
                                             </items>
                                             <font>
-                                                <Font name="Arial Rounded MT Bold" size="17.0" />
+                                                <Font name="Garamond" size="20.0" />
                                             </font>
                                         </MenuButton>
                                         <Label text="PRODUCT DESCRIPTION" textFill="#634921">
                                             <font>
-                                                <Font name="Arial Rounded MT Bold" size="20.0" />
+                                                <Font name="Garamond Bold" size="22.0" />
                                             </font>
                                  <VBox.margin>
                                     <Insets top="30.0" />
@@ -68,7 +68,7 @@
                                     <children>
                                         <Label fx:id="mainPriceLabel" text="Price for" textFill="#634921">
                                             <font>
-                                                <Font name="Arial Rounded MT Bold" size="20.0" />
+                                                <Font name="Garamond Bold" size="22.0" />
                                             </font>
                                         </Label>
                                         <TextField fx:id="mainPriceTextField" editable="false" prefHeight="43.0" prefWidth="95.0" promptText="eg. 1500">
@@ -78,7 +78,7 @@
                                         </TextField>
                                         <Label fx:id="mediumPriceLabel" text="Price for" textFill="#634921">
                                             <font>
-                                                <Font name="Arial Rounded MT Bold" size="20.0" />
+                                                <Font name="Garamond Bold" size="22.0" />
                                             </font>
                                  <VBox.margin>
                                     <Insets top="30.0" />
@@ -91,7 +91,7 @@
                                         </TextField>
                                         <Label fx:id="largePriceLabel" text="Price for" textFill="#634921">
                                             <font>
-                                                <Font name="Arial Rounded MT Bold" size="20.0" />
+                                                <Font name="Garamond Bold" size="22.0" />
                                             </font>
                                  <VBox.margin>
                                     <Insets top="30.0" />
@@ -111,7 +111,7 @@
                                     <children>
                                         <Label fx:id="mainQuantityLabel" text="Quantity for " textFill="#634921">
                                             <font>
-                                                <Font name="Arial Rounded MT Bold" size="20.0" />
+                                                <Font name="Garamond Bold" size="22.0" />
                                             </font>
                                         </Label>
                                         <TextField fx:id="mainQuantityTextField" editable="false" prefHeight="43.0" prefWidth="95.0" promptText="eg. 10">
@@ -121,7 +121,7 @@
                                         </TextField>
                                         <Label fx:id="mediumQuantityLabel" text="Quantity for " textFill="#634921">
                                             <font>
-                                                <Font name="Arial Rounded MT Bold" size="20.0" />
+                                                <Font name="Garamond Bold" size="22.0" />
                                             </font>
                                  <VBox.margin>
                                     <Insets top="30.0" />
@@ -134,7 +134,7 @@
                                         </TextField>
                                         <Label fx:id="largeQuantityLabel" text="Quantity for " textFill="#634921">
                                             <font>
-                                                <Font name="Arial Rounded MT Bold" size="20.0" />
+                                                <Font name="Garamond Bold" size="22.0" />
                                             </font>
                                  <VBox.margin>
                                     <Insets top="30.0" />
@@ -166,7 +166,7 @@
                            </HBox.margin></TextField>
                                 <Button fx:id="addProductButton" mnemonicParsing="false" onMouseEntered="#addProductButtonEntered" onMouseExited="#addProductButtonExited" prefHeight="43.0" prefWidth="163.0" style="-fx-background-color: #634921;" text="Add Product" textFill="WHITE">
                                     <font>
-                                        <Font name="Arial Black" size="18.0" />
+                                        <Font name="Copperplate Gothic Light" size="18.0" />
                                     </font>
                            <HBox.margin>
                               <Insets left="50.0" />

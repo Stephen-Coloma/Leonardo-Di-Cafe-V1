@@ -8,9 +8,9 @@ import java.util.List;
 
 public class CheckoutPageModel{
     private Customer customer;
-    private List<Product> cart;
-    private Order orderFromClient;
-    private double subTotal;
+    private final List<Product> cart;
+    private final Order orderFromClient;
+    private final double subTotal;
 
     public CheckoutPageModel(Customer customer, List<Product> cart, double subTotal, Order orderFromClient){
         this.customer = customer;
@@ -31,23 +31,12 @@ public class CheckoutPageModel{
         return cart;
     }
 
-    public void setCart(List<Product> cart) {
-        this.cart = cart;
-    }
-
     public double getSubTotal() {
         return subTotal;
-    }
-
-    public void setSubTotal(double subTotal) {
-        this.subTotal = subTotal;
     }
 
     public Order getOrderFromClient() {
         return orderFromClient;
     }
 
-    public void setOrderFromClient(Order orderFromClient) {
-        this.orderFromClient = orderFromClient;
-    }
 }

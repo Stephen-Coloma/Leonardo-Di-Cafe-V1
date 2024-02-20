@@ -42,12 +42,10 @@ public class Order implements Serializable {
         //get total price of the order
         totalPrice = 0;
         for (Product product: successfullOrder.getOrders()) {
-            if (product instanceof Food){
-                Food food = (Food) product;
+            if (product instanceof Food food){
 
                 totalPrice+=food.getPrice()*food.getQuantity(); //price for food
-            }else if (product instanceof Beverage){
-                Beverage beverage = (Beverage) product;
+            }else if (product instanceof Beverage beverage){
 
                 for (String variation: beverage.getSizeQuantity().keySet()) {
                     totalPrice += beverage.getVariationPrice(variation)*beverage.getVariationQuantity(variation);
@@ -93,24 +91,12 @@ public class Order implements Serializable {
         return timeStamp;
     }
 
-    public void setTimeStamp(String timeStamp) {
-        this.timeStamp = timeStamp;
-    }
-
     public int getID() {
         return ID;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
     public double getTotalPrice() {
         return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public boolean isStatus() {

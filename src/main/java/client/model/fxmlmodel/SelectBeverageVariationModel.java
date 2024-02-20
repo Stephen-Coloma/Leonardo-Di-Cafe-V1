@@ -2,15 +2,14 @@ package client.model.fxmlmodel;
 
 import javafx.scene.image.Image;
 import shared.Beverage;
-import shared.Food;
 import shared.Product;
 
 import java.text.DecimalFormat;
 
 public class SelectBeverageVariationModel {
-    private String productName;
-    private String productDetails;
-    private Image productImage;
+    private final String productName;
+    private final String productDetails;
+    private final Image productImage;
     private Beverage beverage;
     private int smallAvailability;
     private int mediumAvailability;
@@ -20,9 +19,9 @@ public class SelectBeverageVariationModel {
     private double mediumTotal;
     private double largeTotal;
 
-    private double smallPrice;
-    private double mediumPrice;
-    private double largePrice;
+    private final double smallPrice;
+    private final double mediumPrice;
+    private final double largePrice;
 
     private int smallOrderedQuantity;
     private int mediumOrderedQuantity;
@@ -131,24 +130,12 @@ public class SelectBeverageVariationModel {
         return productName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
     public String getProductDetails() {
         return productDetails;
     }
 
-    public void setProductDetails(String productDetails) {
-        this.productDetails = productDetails;
-    }
-
     public Image getProductImage() {
         return productImage;
-    }
-
-    public void setProductImage(Image productImage) {
-        this.productImage = productImage;
     }
 
     public Beverage getBeverage() {
@@ -163,107 +150,49 @@ public class SelectBeverageVariationModel {
         return smallAvailability;
     }
 
-    public void setSmallAvailability(int smallAvailability) {
-        this.smallAvailability = smallAvailability;
-    }
-
     public int getMediumAvailability() {
         return mediumAvailability;
-    }
-
-    public void setMediumAvailability(int mediumAvailability) {
-        this.mediumAvailability = mediumAvailability;
     }
 
     public int getLargeAvailability() {
         return largeAvailability;
     }
 
-    public void setLargeAvailability(int largeAvailability) {
-        this.largeAvailability = largeAvailability;
-    }
-
     public String getSmallTotal() {
         DecimalFormat df = new DecimalFormat("#.00");
-        String formattedTotal = df.format(smallTotal);
-        return formattedTotal;
-    }
-
-    public void setSmallTotal(double smallTotal) {
-        this.smallTotal = smallTotal;
+        return df.format(smallTotal);
     }
 
     public String getMediumTotal() {
         DecimalFormat df = new DecimalFormat("#.00");
-        String formattedTotal = df.format(mediumTotal);
-        return formattedTotal;
-    }
-
-    public void setMediumTotal(double mediumTotal) {
-        this.mediumTotal = mediumTotal;
+        return df.format(mediumTotal);
     }
 
     public String  getLargeTotal() {
         DecimalFormat df = new DecimalFormat("#.00");
-        String formattedTotal = df.format(largeTotal);
-        return formattedTotal;
-    }
-
-    public void setLargeTotal(double largeTotal) {
-        this.largeTotal = largeTotal;
+        return df.format(largeTotal);
     }
 
     public String getSmallPrice() {
         DecimalFormat df = new DecimalFormat("#.00");
-        String formattedPrice = df.format(smallPrice);
-        return formattedPrice;
-    }
-
-    public void setSmallPrice(double smallPrice) {
-        this.smallPrice = smallPrice;
-    }
-
-    public String getMediumPrice() {
-        DecimalFormat df = new DecimalFormat("#.00");
-        String formattedPrice = df.format(mediumPrice);
-        return formattedPrice;
-    }
-
-    public void setMediumPrice(double mediumPrice) {
-        this.mediumPrice = mediumPrice;
+        return df.format(smallPrice);
     }
 
     public String getLargePrice() {
         DecimalFormat df = new DecimalFormat("#.00");
-        String formattedPrice = df.format(largePrice);
-        return formattedPrice;
-    }
-
-    public void setLargePrice(double largePrice) {
-        this.largePrice = largePrice;
+        return df.format(largePrice);
     }
 
     public int getSmallOrderedQuantity() {
         return smallOrderedQuantity;
     }
 
-    public void setSmallOrderedQuantity(int smallOrderedQuantity) {
-        this.smallOrderedQuantity = smallOrderedQuantity;
-    }
-
     public int getMediumOrderedQuantity() {
         return mediumOrderedQuantity;
-    }
-
-    public void setMediumOrderedQuantity(int mediumOrderedQuantity) {
-        this.mediumOrderedQuantity = mediumOrderedQuantity;
     }
 
     public int getLargeOrderedQuantity() {
         return largeOrderedQuantity;
     }
 
-    public void setLargeOrderedQuantity(int largeOrderedQuantity) {
-        this.largeOrderedQuantity = largeOrderedQuantity;
-    }
 }

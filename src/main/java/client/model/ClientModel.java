@@ -10,7 +10,7 @@ public class ClientModel {
     private HashMap<String, Food> foodMenu; // return from server
     private HashMap<String, Beverage> beverageMenu; //return from server
     private Customer customer; //return from server
-    private List<Product> cart;
+    private final List<Product> cart;
     private Order order;
 
     /**This initially sets all fields to null.*/
@@ -30,20 +30,12 @@ public class ClientModel {
         this.cart = new ArrayList<>();
     }
 
-    /**This method updates the foodMenu and beverageMenu from server*/
-    public void updateMenu(HashMap<String, Food> foodMenu, HashMap<String, Beverage> beverageMenu){
-        /*Update the menu*/
-        this.foodMenu = foodMenu;
-        this.beverageMenu = beverageMenu;
-    }
-
     /**This method creates an order if the user wants to check out an order*/
     public Order placeOrder(){
         if (customer != null && cart != null && !cart.isEmpty()) {
             /*Logic for getting time stamp: The format is 01/05/2024*/
             String timestamp = java.time.LocalDate.now().toString();
-            Order order = new Order(customer, cart, timestamp);
-            return order; // Return order if there's an item in cart
+            return new Order(customer, cart, timestamp); // Return order if there's an item in cart
         } else {
             return null; // Can not check out if there's no customer or cart is empty
         }
@@ -83,10 +75,6 @@ public class ClientModel {
 
     public List<Product> getCart() {
         return cart;
-    }
-
-    public void setCart(List<Product> cart) {
-        this.cart = cart;
     }
 
     public Order getOrder() {

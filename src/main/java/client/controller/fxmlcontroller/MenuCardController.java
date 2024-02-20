@@ -7,8 +7,8 @@ import shared.Food;
 import shared.Product;
 
 public class MenuCardController {
-    private MenuCardModel model;
-    private MenuCardView view;
+    private final MenuCardModel model;
+    private final MenuCardView view;
 
     public MenuCardController(MenuCardModel model, MenuCardView view){
         this.model = model;

@@ -10,7 +10,6 @@ import shared.Customer;
 import shared.Order;
 import shared.Product;
 import util.PushNotification;
-import util.XMLUtility;
 import util.exception.AccountAlreadyLoggedIn;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.security.spec.ECField;
 import java.util.List;
 
 public class ServerController implements MainMenuAdminObserver {
@@ -89,7 +87,7 @@ public class ServerController implements MainMenuAdminObserver {
     } // end of listenToClient
 
     // TODO: guide from a client request Object[]{string clientID, string requestType, Object[] data}
-    private void handleClientRequest(Object[] message) throws IOException {
+    private void handleClientRequest(Object[] message) {
         String requestCode = (String) message[1];
         System.out.println("\nServer received request from client id: " + message[0]);
         System.out.println("Request Code: " + message[1]);
@@ -138,7 +136,6 @@ public class ServerController implements MainMenuAdminObserver {
                     System.out.println("PROCESSING REVIEW");
                     model.processReview(ratedProducts);
                     model.notifyObservers();
-                    //TODO sendData(); @LEONHARD HERE YUNG DELAY SOMETHING --------------------------------------------------------------------------->>>>>>>>>>>>>>>>>
                 } catch (Exception exception) {
                     System.err.println("Error during the review processing");
                 }
@@ -155,21 +152,16 @@ public class ServerController implements MainMenuAdminObserver {
         if (menuChanges) {
             if ("STATUS_CHANGE".equals(code)) {
                 model.setOrderList(mainMenuAdminModel.getOrderList());
-                System.out.println(model.getOrderList());
             } else if ("INVENTORY_CHANGE".equals(code)) {
                 model.setFoodMenu(mainMenuAdminModel.getFoodMenu());
                 model.setBeverageMenu(mainMenuAdminModel.getBeverageMenu());
                 PushNotification.toastSuccess("Inventory Status", "Updated inventory stocks and details");
-                System.out.println(model.getFoodMenu());
-                System.out.println(model.getBeverageMenu());
             } else if ("NEW_FOOD_PRODUCT".equals(code)) {
                 model.setFoodMenu(mainMenuAdminModel.getFoodMenu());
                 PushNotification.toastSuccess("New Product", "Food added to the list");
-                System.out.println(model.getFoodMenu());
             } else if ("NEW_BEVERAGE_PRODUCT".equals(code)) {
                 model.setBeverageMenu(mainMenuAdminModel.getBeverageMenu());
                 PushNotification.toastSuccess("New Product", "Beverage added to the list");
-                System.out.println(model.getBeverageMenu());
             }
             model.notifyObservers();
         }

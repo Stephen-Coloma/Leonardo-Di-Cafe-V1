@@ -10,7 +10,6 @@ import java.net.Socket;
 
 /*This model represents the model for signup. The model will hold all the processes for the application*/
 public class SignUpPageModel {
-    private String fullName;
     private String username;
     private String address;
     private String email;
@@ -21,8 +20,6 @@ public class SignUpPageModel {
     private Object[] serverResponse;
 
     /**This method tries to make connection to the server
-     * @throws RuntimeException
-     * @throws IOException
      * @throws ClassNotFoundException
      *
      * Exceptions will be handled by the LoginPage Controller*/
@@ -52,14 +49,6 @@ public class SignUpPageModel {
         out.writeObject(request);
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -76,28 +65,12 @@ public class SignUpPageModel {
         this.address = address;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Socket getSocket() {
-        return socket;
-    }
-
-    public void setSocket(Socket socket) {
-        this.socket = socket;
     }
 
     public ObjectOutputStream getOut() {
@@ -118,9 +91,5 @@ public class SignUpPageModel {
 
     public Object[] getServerResponse() {
         return serverResponse;
-    }
-
-    public void setServerResponse(Object[] serverResponse) {
-        this.serverResponse = serverResponse;
     }
 }

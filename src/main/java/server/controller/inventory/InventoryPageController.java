@@ -12,7 +12,10 @@ import server.view.misc.YesNoPopupView;
 import server.view.inventory.*;
 import shared.Beverage;
 import shared.Food;
+import shared.Product;
+
 import java.util.HashMap;
+import java.util.List;
 
 public class InventoryPageController {
     private final InventoryPageModel model;
@@ -213,6 +216,8 @@ public class InventoryPageController {
         Button button = (Button) event.getSource();
         TableCell<Object, Void> cell = (TableCell<Object, Void>) button.getParent();
 
+        Object product = cell.getTableRow().getItem();
+
         int filteredIndex = cell.getTableRow().getIndex();
         int originalIndex = view.getFilteredList().getSourceIndex(filteredIndex);
 
@@ -226,6 +231,11 @@ public class InventoryPageController {
         popupView.getYesButton().setOnAction(actionEvent -> {
             if (originalIndex >= 0 && originalIndex < view.getProductList().size()) {
                 view.getProductList().remove(originalIndex);
+                if (product instanceof Food food) {
+                    model.getFoodList().remove(food);
+                } else if (product instanceof Beverage beverage) {
+                    model.getBeverageList().remove(beverage);
+                }
             }
             popupView.closePopupStage();
         });

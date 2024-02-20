@@ -2,18 +2,11 @@ package client.model.fxmlmodel;
 
 
 import client.Client;
-import shared.Beverage;
-import shared.Customer;
-import shared.Food;
-import util.XMLUtility;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.List;
 
 /*This model represents the model for login. The model will hold all the processes for the application*/
 public class LoginPageModel {
@@ -26,8 +19,6 @@ public class LoginPageModel {
     private Object[] serverResponse;
 
     /**This method tries to make connection to the server
-     * @throws RuntimeException
-     * @throws IOException
      * @throws ClassNotFoundException
      *
      * Exceptions will be handled by the LoginPage Controller*/
@@ -63,10 +54,6 @@ public class LoginPageModel {
         return socket;
     }
 
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
-
     public ObjectOutputStream getOut() {
         return out;
     }
@@ -85,10 +72,6 @@ public class LoginPageModel {
 
     public Object[] getServerResponse() {
         return serverResponse;
-    }
-
-    public void setServerResponse(Object[] serverResponse) {
-        this.serverResponse = serverResponse;
     }
 
     public String getUsername() {

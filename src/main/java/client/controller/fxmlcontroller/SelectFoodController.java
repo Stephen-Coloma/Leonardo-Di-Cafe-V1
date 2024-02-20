@@ -115,17 +115,10 @@ public class SelectFoodController {
         return finalOrderedQuantity;
     }
 
-    public void setFinalOrderedQuantity(int finalOrderedQuantity) {
-        this.finalOrderedQuantity = finalOrderedQuantity;
-    }
-
     public double getFinalOrderedPrice() {
         return finalOrderedPrice;
     }
 
-    public void setFinalOrderedPrice(double finalOrderedPrice) {
-        this.finalOrderedPrice = finalOrderedPrice;
-    }
 }
 
 

@@ -367,25 +367,6 @@ public class XMLUtility {
         parent.appendChild(element);
     }
 
-    /**
-     * Helper metjod
-     * Retrieves the image path for a given product name.
-     * This method converts the product name to match the naming convention of the image files.
-     *
-     * @param productName The name of the product.
-     * @return The image file path, assuming the file exists.
-     */
-    private static String getProductImagePath(String productName) {
-        // The base directory where product images are stored
-        String baseDir = "src/main/resources/productimages/";
-
-        // Convert the product name to the expected image file name format
-        String sanitizedProductName = productName.trim().replace(" ", "_") + ".png";
-
-        // Construct the full image path
-        return baseDir + sanitizedProductName;
-    }
-
     /**This method loads the customer accounts from a xml file where it was saved.
      * @param filePath the filepath of the xml file
      * @return Object object which will be casted to List<Customer>

@@ -1,14 +1,13 @@
 package client.model.fxmlmodel;
 
 
-import shared.Food;
 import shared.Product;
 
 public class CartItemCardModel {
-    private String productName;
-    private int productQuantity;
+    private final String productName;
+    private final int productQuantity;
     private String size;
-    private double totalPrice;
+    private final double totalPrice;
 
     public CartItemCardModel(Product product, int orderQuantity, double orderTotalPrice, String orderSize){
         productName = product.getName();
@@ -21,16 +20,8 @@ public class CartItemCardModel {
         return productName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
     public int getProductQuantity() {
         return productQuantity;
-    }
-
-    public void setProductQuantity(int productQuantity) {
-        this.productQuantity = productQuantity;
     }
 
     public String getSize() {
@@ -45,7 +36,4 @@ public class CartItemCardModel {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
 }

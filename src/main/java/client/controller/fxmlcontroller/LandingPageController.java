@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LandingPageController {
-    private LandingPageView view;
     private FXMLLoader loader;
     private Parent root;
     private LoginPageController loginPageController;
@@ -21,10 +20,9 @@ public class LandingPageController {
 
     /**Constructor*/
     public LandingPageController(LandingPageView view){
-        this.view = view;
 
         //setting up action for login button. this action loads up the login view
-        this.view.setActionLoginButton((ActionEvent event)->{
+        view.setActionLoginButton((ActionEvent event)->{
             //load first the view before getting its controller
             try {
                 loader = new FXMLLoader(getClass().getResource("/fxml/client/login_page.fxml"));
@@ -42,7 +40,7 @@ public class LandingPageController {
         });
 
         //setting up signup button listeners
-        this.view.setActionSignUpButton((ActionEvent event)->{
+        view.setActionSignUpButton((ActionEvent event)->{
             //load first the view before getting its controller
             try {
                 loader = new FXMLLoader(getClass().getResource("/fxml/client/signup_page.fxml"));

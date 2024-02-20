@@ -42,9 +42,6 @@ public class AnalyticsPageView implements Initializable {
     @FXML
     private TableColumn<Beverage, Integer> beverageProductsOrderCountColumn;
 
-    private FilteredList<Food> filteredFoodList;
-    private FilteredList<Beverage> filteredBeverageList;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         foodProductsColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
@@ -68,8 +65,8 @@ public class AnalyticsPageView implements Initializable {
         ObservableList<Food> foodList = FXCollections.observableArrayList(foodHashMap.values());
         ObservableList<Beverage> beverageList = FXCollections.observableArrayList(beverageHashMap.values());
 
-        filteredFoodList = new FilteredList<>(foodList, item -> true);
-        filteredBeverageList = new FilteredList<>(beverageList, item -> true);
+        FilteredList<Food> filteredFoodList = new FilteredList<>(foodList, item -> true);
+        FilteredList<Beverage> filteredBeverageList = new FilteredList<>(beverageList, item -> true);
 
         SortedList<Food> sortedFoodList = new SortedList<>(filteredFoodList, Comparator.comparingInt(Food::getAmountSold).reversed());
         SortedList<Beverage> sortedBeverageList = new SortedList<>(filteredBeverageList, Comparator.comparingInt(Beverage::getAmountSold).reversed());
@@ -77,26 +74,6 @@ public class AnalyticsPageView implements Initializable {
         foodAnalyticsTableView.setItems(sortedFoodList);
         beverageAnalyticsTableView.setItems(sortedBeverageList);
     } // end of populateTableFromMap
-
-    private void filterTable(String searchText) {
-        filteredFoodList.setPredicate(item -> {
-            if (searchText == null || searchText.isEmpty()) {
-                return true;
-            }
-
-            return item.getName().toLowerCase().contains(searchText.toLowerCase());
-        });
-
-        filteredBeverageList.setPredicate(item -> {
-            if (searchText == null || searchText.isEmpty()) {
-                return true;
-            }
-
-            return item.getName().toLowerCase().contains(searchText.toLowerCase());
-        });
-        foodAnalyticsTableView.setItems(filteredFoodList);
-        beverageAnalyticsTableView.setItems(filteredBeverageList);
-    } // end of filterTable
 
     public void setDateLabel(String value) {
         dateLabel.setText(value);

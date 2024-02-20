@@ -7,11 +7,11 @@ import shared.Product;
 import java.text.DecimalFormat;
 
 public class SelectFoodModel {
-    private String productName;
-    private String productDetails;
+    private final String productName;
+    private final String productDetails;
     private int productAvailability;
-    private double productPrice;
-    private Image productImage;
+    private final double productPrice;
+    private final Image productImage;
     private Food food;
     private double total;
     private int orderedQuantity;
@@ -59,48 +59,26 @@ public class SelectFoodModel {
         return productName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
     public String getProductDetails() {
         return productDetails;
-    }
-
-    public void setProductDetails(String productDetails) {
-        this.productDetails = productDetails;
     }
 
     public int getProductAvailability() {
         return productAvailability;
     }
 
-    public void setProductAvailability(int productAvailability) {
-        this.productAvailability = productAvailability;
-    }
-
     public String getProductPrice() {
         DecimalFormat df = new DecimalFormat("#.00");
-        String formattedPrice = df.format(productPrice);
-        return formattedPrice;
+        return df.format(productPrice);
     }
 
     public int getOrderedQuantity() {
         return orderedQuantity;
     }
 
-    public void setOrderedQuantity(int orderedQuantity) {
-        this.orderedQuantity = orderedQuantity;
-    }
-
-    public void setProductPrice(double productPrice) {
-        this.productPrice = productPrice;
-    }
-
     public String getTotal() {
         DecimalFormat df = new DecimalFormat("#.00");
-        String formattedTotal = df.format(total);
-        return formattedTotal;
+        return df.format(total);
     }
 
     public void setTotal(double total) {
@@ -109,10 +87,6 @@ public class SelectFoodModel {
 
     public Image getProductImage() {
         return productImage;
-    }
-
-    public void setProductImage(Image productImage) {
-        this.productImage = productImage;
     }
 
     public Food getFood() {

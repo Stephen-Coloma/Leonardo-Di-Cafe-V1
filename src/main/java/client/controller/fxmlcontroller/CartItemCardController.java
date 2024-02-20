@@ -2,8 +2,6 @@ package client.controller.fxmlcontroller;
 
 import client.model.fxmlmodel.CartItemCardModel;
 import client.view.fxmlview.CartItemCardView;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 public class CartItemCardController {
     private CartItemCardView view;

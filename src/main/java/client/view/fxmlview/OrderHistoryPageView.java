@@ -6,9 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -52,32 +50,12 @@ public class OrderHistoryPageView {
         return gridPaneOrderHistory;
     }
 
-    public void setGridPaneOrderHistory(GridPane gridPaneOrderHistory) {
-        this.gridPaneOrderHistory = gridPaneOrderHistory;
-    }
-
-    public ScrollPane getScrollPaneOrderHistory() {
-        return scrollPaneOrderHistory;
-    }
-
-    public void setScrollPaneOrderHistory(ScrollPane scrollPaneOrderHistory) {
-        this.scrollPaneOrderHistory = scrollPaneOrderHistory;
-    }
-
     public Button getSubmitReviewButton() {
         return submitReviewButton;
     }
 
-    public void setSubmitReviewButton(Button submitReviewButton) {
-        this.submitReviewButton = submitReviewButton;
-    }
-
     public Button getCancelButton() {
         return cancelButton;
-    }
-
-    public void setCancelButton(Button cancelButton) {
-        this.cancelButton = cancelButton;
     }
 
     public static Stage getPopupStage() {

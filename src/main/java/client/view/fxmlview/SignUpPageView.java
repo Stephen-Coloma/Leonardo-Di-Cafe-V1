@@ -4,16 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import shared.Customer;
-
-import java.io.IOException;
 
 public class SignUpPageView {
     @FXML
@@ -47,89 +40,47 @@ public class SignUpPageView {
     }
 
 
-    public void createAccountButtonEntered(MouseEvent event){
+    public void createAccountButtonEntered(){
         createAccountButton.setStyle("-fx-background-color: #c7a97f;");
     }
-    public void createAccountButtonExited(MouseEvent event){
+    public void createAccountButtonExited(){
         createAccountButton.setStyle("-fx-background-color:  #A38157;");
     }
 
-    public void homePageButtonEntered(MouseEvent event){
+    public void homePageButtonEntered(){
         homeButton.setStyle("-fx-background-color: #8d5a47;");
     }
 
-    public void homePageButtonExited(MouseEvent event){
+    public void homePageButtonExited(){
         homeButton.setStyle("-fx-background-color:  #66382a;");
-    }
-
-    public Button getCreateAccountButton() {
-        return createAccountButton;
-    }
-
-    public void setCreateAccountButton(Button createAccountButton) {
-        this.createAccountButton = createAccountButton;
     }
 
     public TextField getFullNameTextField() {
         return fullNameTextField;
     }
 
-    public void setFullNameTextField(TextField fullNameTextField) {
-        this.fullNameTextField = fullNameTextField;
-    }
-
     public TextField getUserNameTextField() {
         return userNameTextField;
-    }
-
-    public void setUserNameTextField(TextField userNameTextField) {
-        this.userNameTextField = userNameTextField;
     }
 
     public TextField getAddressTextField() {
         return addressTextField;
     }
 
-    public void setAddressTextField(TextField addressTextField) {
-        this.addressTextField = addressTextField;
-    }
-
     public TextField getEmailTextField() {
         return emailTextField;
-    }
-
-    public void setEmailTextField(TextField emailTextField) {
-        this.emailTextField = emailTextField;
     }
 
     public PasswordField getPasswordField() {
         return passwordField;
     }
 
-    public void setPasswordField(PasswordField passwordField) {
-        this.passwordField = passwordField;
-    }
-
     public CheckBox getTermsAndServicesCheckBox() {
         return termsAndServicesCheckBox;
     }
 
-    public void setTermsAndServicesCheckBox(CheckBox termsAndServicesCheckBox) {
-        this.termsAndServicesCheckBox = termsAndServicesCheckBox;
-    }
-    public Button getBackButton() {
-        return homeButton;
-    }
-
-    public void setBackButton(Button homeButton) {
-        this.homeButton = SignUpPageView.this.homeButton;
-    }
     public Label getNoticeLabel() {
         return noticeLabel;
-    }
-
-    public void setNoticeLabel(Label noticeLabel) {
-        this.noticeLabel = noticeLabel;
     }
 
     public FXMLLoader getLoader() {

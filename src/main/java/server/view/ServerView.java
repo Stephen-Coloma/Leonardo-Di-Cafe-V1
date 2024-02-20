@@ -39,10 +39,6 @@ public class ServerView {
         return loader;
     }
 
-    public boolean UIExit() {
-        return stage.isShowing();
-    }
-
     public Stage getStage() {
         return stage;
     }

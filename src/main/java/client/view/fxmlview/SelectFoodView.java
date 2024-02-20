@@ -78,16 +78,8 @@ public class SelectFoodView {
         return productImage;
     }
 
-    public void setProductImage(ImageView productImage) {
-        this.productImage = productImage;
-    }
-
     public Label getProductNameLabel() {
         return productNameLabel;
-    }
-
-    public void setProductNameLabel(Label productNameLabel) {
-        this.productNameLabel = productNameLabel;
     }
 
     public Label getProductPriceLabel() {
@@ -104,10 +96,6 @@ public class SelectFoodView {
 
     public Label getNoticeLabel() {
         return noticeLabel;
-    }
-
-    public void setNoticeLabel(Label noticeLabel) {
-        this.noticeLabel = noticeLabel;
     }
 
     public void addToCartButtonEntered() {

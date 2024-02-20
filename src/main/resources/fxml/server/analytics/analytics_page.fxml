@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
@@ -15,9 +14,9 @@
                <center>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0 0 10 10;" BorderPane.alignment="CENTER">
                      <children>
-                        <Label fx:id="salesLabel" text="₱1,500" textFill="#634921">
+                        <Label fx:id="salesLabel" text="₱1,500" textFill="#66382a">
                            <font>
-                              <Font name="Arial Bold" size="35.0" />
+                              <Font name="Impact" size="38.0" />
                            </font>
                         </Label>
                      </children></VBox>
@@ -27,7 +26,7 @@
                      <children>
                         <Label text="Sales" textFill="WHITE">
                            <font>
-                              <Font name="Arial Bold" size="20.0" />
+                              <Font name="Garamond Bold" size="25.0" />
                            </font>
                         </Label>
                      </children></HBox>
@@ -36,9 +35,9 @@
                <center>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 0 0 10 10;" BorderPane.alignment="CENTER">
                      <children>
-                        <Label fx:id="totalOrdersLabel" text="55" textFill="#634921">
+                        <Label fx:id="totalOrdersLabel" text="55" textFill="#66382a">
                            <font>
-                              <Font name="Arial Bold" size="60.0" />
+                              <Font name="Impact" size="60.0" />
                            </font>
                         </Label>
                      </children></VBox>
@@ -48,7 +47,7 @@
                      <children>
                         <Label text="Total Orders" textFill="WHITE">
                            <font>
-                              <Font name="Arial Bold" size="20.0" />
+                              <Font name="Garamond Bold" size="25.0" />
                            </font>
                         </Label>
                      </children></HBox>
@@ -63,9 +62,9 @@
          <children>
             <VBox prefHeight="200.0" prefWidth="400.0" spacing="10.0">
                <children>
-                  <Label text="FOOD" textFill="#634921">
+                  <Label text="FOOD" textFill="#66382a">
                      <font>
-                        <Font name="Arial Black" size="24.0" />
+                        <Font name="Impact" size="29.0" />
                      </font></Label>
                   <TableView fx:id="foodAnalyticsTableView" focusTraversable="false" prefHeight="638.0" prefWidth="370.0" style="-fx-font-size: 13;" stylesheets="@../../../values/table_style.css">
                     <columns>
@@ -82,9 +81,9 @@
                </padding></VBox>
             <VBox prefHeight="200.0" prefWidth="400.0" spacing="10.0">
                <children>
-                  <Label text="BEVERAGE" textFill="#634921">
+                  <Label text="BEVERAGE" textFill="#66382a">
                      <font>
-                        <Font name="Arial Black" size="24.0" />
+                        <Font name="Impact" size="29.0" />
                      </font>
                   </Label>
                   <TableView fx:id="beverageAnalyticsTableView" focusTraversable="false" prefHeight="638.0" prefWidth="370.0" style="-fx-font-size: 13;" stylesheets="@../../../values/table_style.css">
@@ -108,32 +107,27 @@
                   <HBox prefHeight="75.0" prefWidth="1000.0">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="500.0" spacing="10.0">
-                           <children>
-                              <ImageView fitHeight="41.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                  <image>
-                                      <Image url="@../../../images/server/filterIcon.png" />
-                                  </image>
-                              </ImageView>
-                              <Button mnemonicParsing="false" style="-fx-background-color: #ECE9E3;" text="+" textFill="#634921">
-                                 <font>
-                                    <Font name="Arial Bold" size="20.0" />
-                                 </font>
-                              </Button>
-                           </children>
                            <padding>
                               <Insets left="25.0" right="25.0" />
                            </padding>
+                           <children>
+                              <Label text="ANALYTICS" textFill="#634921">
+                                 <font>
+                                    <Font name="Copperplate Gothic Light" size="22.0" />
+                                 </font>
+                              </Label>
+                           </children>
                         </HBox>
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="500.0" spacing="10.0">
                            <children>
                               <Label text="Current Date:" textFill="#634921">
                                  <font>
-                                    <Font name="Arial" size="22.0" />
+                                    <Font name="Rockwell" size="22.0" />
                                  </font>
                               </Label>
                               <Label fx:id="dateLabel" text="11/22/2024" textFill="#634921">
                                  <font>
-                                    <Font name="Arial" size="22.0" />
+                                    <Font name="Rockwell" size="22.0" />
                                  </font>
                               </Label>
                            </children>
