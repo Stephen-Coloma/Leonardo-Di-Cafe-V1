@@ -1,6 +1,6 @@
 package client;
 
-import client.controller.ClientControllerNew;
+import client.controller.ClientController;
 import client.model.ClientModel;
 import client.view.ClientView;
 import javafx.application.Application;
@@ -27,7 +27,7 @@ public class Client extends Application {
         ClientView view = new ClientView(stage);
         view.runInterface();
 
-        new ClientControllerNew(model, view);
+        new ClientController(view);
     } //
 
     /**

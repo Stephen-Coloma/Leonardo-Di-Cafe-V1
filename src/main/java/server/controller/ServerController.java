@@ -27,7 +27,6 @@ public class ServerController implements MainMenuAdminObserver {
     private Socket clientSocket;
     private ObjectInputStream streamReader;
     private ObjectOutputStream streamWriter;
-
     private MainMenuAdminModel mainMenuAdminModel;
 
     public ServerController(ServerModel model, ServerView view) {
@@ -39,7 +38,6 @@ public class ServerController implements MainMenuAdminObserver {
         this.clientSocket = clientSocket;
     } // end of setClientSocket
 
-    // TODO
     private void setComponentActions() {
         Platform.runLater(() -> {
             mainMenuAdminModel = new MainMenuAdminModel();
@@ -71,11 +69,9 @@ public class ServerController implements MainMenuAdminObserver {
     } // end of run
 
     public void initializeAdminInterface() {
-        Platform.runLater(() -> {
-            System.out.println("Obtained Main Menu Controller");
-            setComponentActions();
-            System.out.println("Successfully added actions");
-        });
+        System.out.println("Obtained Main Menu Controller");
+        setComponentActions();
+        System.out.println("Successfully added actions");
     } // end of initializeAdminInterface
 
     private void listenToClient() throws IOException, ClassNotFoundException {
@@ -92,7 +88,6 @@ public class ServerController implements MainMenuAdminObserver {
         }
     } // end of listenToClient
 
-    // TODO: guide from a client request Object[]{string clientID, string requestType, Object[] data}
     private void handleClientRequest(Object[] message) {
         String requestCode = (String) message[1];
         System.out.println("\nServer received request from client id: " + message[0]);
@@ -178,6 +173,7 @@ public class ServerController implements MainMenuAdminObserver {
             if (!clientSocket.isClosed()) {
                 streamWriter.writeObject(response);
                 streamWriter.flush();
+                streamWriter.reset();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

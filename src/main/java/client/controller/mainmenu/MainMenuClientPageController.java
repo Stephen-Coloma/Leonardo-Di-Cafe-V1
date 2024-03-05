@@ -1,6 +1,10 @@
-package client.controller.fxmlcontroller;
+package client.controller.mainmenu;
 
 
+import client.controller.checkout.CheckoutPageController;
+import client.controller.checkout.CartItemCardController;
+import client.controller.login.LoginPageController;
+import client.controller.orderhistory.OrderHistoryPageController;
 import client.model.fxmlmodel.*;
 import client.view.fxmlview.CheckoutPageView;
 import client.view.fxmlview.MainMenuClientPageView;

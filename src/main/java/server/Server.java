@@ -106,18 +106,11 @@ public class Server extends Application implements ClientObserver {
     }
 
     private void broadcastDataToClients() {
-        System.out.println("Broadcasting update to all clients");
+        System.out.print("Broadcasting update to all clients: ");
         List<ServerController> controllers = model.getActiveServerControllers();
-        System.out.println(model.getActiveServerControllers().size());
+        System.out.println(controllers.size() + "clients");
         for (ServerController controller : controllers) {
-            System.out.println(model.getFoodMenu());
-            System.out.println(model.getBeverageMenu());
-
-            String foodString = model.getFoodMenu().toString();
-            String beverageString = model.getBeverageMenu().toString();
-
-            Object[] data = new Object[]{model.getFoodMenu(), model.getBeverageMenu(), foodString, beverageString};
-
+            Object[] data = new Object[]{model.getFoodMenu(), model.getBeverageMenu()};
             controller.sendData("", "DATA_UPDATE", data);
         }
     }

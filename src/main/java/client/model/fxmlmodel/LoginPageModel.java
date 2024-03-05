@@ -35,7 +35,7 @@ public class LoginPageModel {
             Object[] response = (Object[]) in.readObject();
 
             //Close the connection when it is not login successful
-            if (!response[1].equals("LOGIN_SUCCESSFUL")){ //todo: if login is successful, set the socket for the main menu client page
+            if (!response[1].equals("LOGIN_SUCCESSFUL")){
                 socket.close();
                 in.close();
                 out.close();
@@ -48,6 +48,7 @@ public class LoginPageModel {
     private void sendData(String clientID, String requestType, Object data) throws IOException{
         Object[] request = new Object[]{clientID, requestType, data};
         out.writeObject(request);
+        out.flush();
     }
 
     public Socket getSocket() {

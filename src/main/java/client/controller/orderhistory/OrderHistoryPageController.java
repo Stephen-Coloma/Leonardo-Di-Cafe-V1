@@ -1,4 +1,4 @@
-package client.controller.fxmlcontroller;
+package client.controller.orderhistory;
 
 import client.model.fxmlmodel.OrderHistoryCardModel;
 import client.model.fxmlmodel.OrderHistoryPageModel;

@@ -1,4 +1,4 @@
-package client.controller.fxmlcontroller;
+package client.controller.checkout;
 
 import client.model.fxmlmodel.CheckoutItemCardModel;
 import client.view.fxmlview.CheckoutItemCardView;
