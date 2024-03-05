@@ -14,6 +14,7 @@ import util.exception.AccountAlreadyLoggedIn;
 import util.exception.AccountExistsException;
 import util.exception.InvalidCredentialsException;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -78,11 +79,16 @@ public class ServerController implements MainMenuAdminObserver {
     } // end of initializeAdminInterface
 
     private void listenToClient() throws IOException, ClassNotFoundException {
-        while (!clientSocket.isClosed()) {
-            Object[] data = (Object[]) streamReader.readObject();
-            if (data != null) {
-                handleClientRequest(data);
+        try {
+            while (!clientSocket.isClosed()) {
+                Object[] data = (Object[]) streamReader.readObject();
+                if (data != null) {
+                    handleClientRequest(data);
+                }
             }
+        } catch (EOFException exception) {
+            System.out.println("Client disconnected: " + clientSocket.getInetAddress());
+            closeConnection();
         }
     } // end of listenToClient
 
@@ -126,8 +132,7 @@ public class ServerController implements MainMenuAdminObserver {
                     model.notifyObservers();
                 } catch (Exception exception) {
                     sendData(String.valueOf(message[0]), "PROCESS_ORDER_FAILED", null);
-                    exception.printStackTrace();
-                    System.err.println("Error during the order processing");
+                    System.out.println("Error during the order processing");
                 }
             }
             case "PROCESS_REVIEW" -> {
@@ -167,14 +172,25 @@ public class ServerController implements MainMenuAdminObserver {
         }
     } // end of notifyMenuChanges
 
-    public void sendData(String clientID, String code, Object data) {
+    public synchronized void sendData(String clientID, String code, Object data) {
         Object[] response = {clientID, code, data};
         try {
-            streamWriter.writeObject(response);
-            streamWriter.flush();
-            streamWriter.reset();
+            if (!clientSocket.isClosed()) {
+                streamWriter.writeObject(response);
+                streamWriter.flush();
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     } // end of sendData
+
+    private void closeConnection() {
+        try {
+            streamReader.close();
+            streamWriter.close();
+            clientSocket.close();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
 } // end of ServerController
