@@ -123,11 +123,15 @@ public class ServerController implements MainMenuAdminObserver {
             case "PROCESS_ORDER" -> {
                 try {
                     Order order = model.processOrder((Order) message[2]);
-                    sendData(String.valueOf(message[0]), "PROCESS_ORDER_SUCCESSFUL", order);
-                    model.notifyObservers();
+                    if (order != null) {
+                        sendData(String.valueOf(message[0]), "PROCESS_ORDER_SUCCESSFUL", order);
+                        model.notifyObservers();
+                    } else {
+                        sendData(String.valueOf(message[0]), "PROCESS_ORDER_FAILED", null);
+                    }
                 } catch (Exception exception) {
-                    sendData(String.valueOf(message[0]), "PROCESS_ORDER_FAILED", null);
-                    System.out.println("Error during the order processing");
+                    exception.printStackTrace();
+                    System.err.println("Error during the order processing");
                 }
             }
             case "PROCESS_REVIEW" -> {
