@@ -1,5 +1,7 @@
-package client.controller.fxmlcontroller;
+package client.controller.landingpage;
 
+import client.controller.login.LoginPageController;
+import client.controller.signup.SignUpPageController;
 import client.model.fxmlmodel.LoginPageModel;
 import client.model.fxmlmodel.SignUpPageModel;
 import client.view.fxmlview.LandingPageView;
@@ -26,9 +28,9 @@ public class LandingPageController {
             //load first the view before getting its controller
             try {
                 loader = new FXMLLoader(getClass().getResource("/fxml/client/login_page.fxml"));
-                root = loader.load(); //load
+                root = loader.load();
 
-                loginPageController = new LoginPageController(loader.getController(), new LoginPageModel()); //get controller
+                loginPageController = new LoginPageController(loader.getController(), new LoginPageModel());
 
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);

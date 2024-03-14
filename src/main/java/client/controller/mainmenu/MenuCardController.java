@@ -1,4 +1,4 @@
-package client.controller.fxmlcontroller;
+package client.controller.mainmenu;
 
 import client.model.fxmlmodel.MenuCardModel;
 import client.view.fxmlview.MenuCardView;

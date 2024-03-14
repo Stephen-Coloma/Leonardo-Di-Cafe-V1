@@ -31,4 +31,6 @@ module LeonardoDiCafe {
     opens server.view.misc to javafx.fxml;
     exports server.view.analytics;
     opens server.view.analytics to javafx.fxml;
+    exports client.controller.orderhistory;
+    opens client.controller.orderhistory to javafx.fxml;
 }

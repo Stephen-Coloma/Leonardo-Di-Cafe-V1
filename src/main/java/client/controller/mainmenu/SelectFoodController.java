@@ -1,4 +1,4 @@
-package client.controller.fxmlcontroller;
+package client.controller.mainmenu;
 
 import client.model.fxmlmodel.SelectFoodModel;
 import client.view.fxmlview.SelectFoodView;

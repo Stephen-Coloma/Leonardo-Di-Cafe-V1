@@ -1,5 +1,6 @@
-package client.controller.fxmlcontroller;
+package client.controller.checkout;
 
+import client.controller.checkout.CheckoutItemCardController;
 import client.model.fxmlmodel.CheckoutItemCardModel;
 import client.model.fxmlmodel.CheckoutPageModel;
 import client.view.fxmlview.CheckoutPageView;
